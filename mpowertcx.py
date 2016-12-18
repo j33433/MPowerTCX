@@ -133,9 +133,13 @@ class MPower(object):
             hr = ET.SubElement(point, "HeartRateBpm")
             ET.SubElement(hr, "Value").text = d['HR']
             hr = ET.SubElement(point, "Cadence").text = d['RPM']
-            distance = float(d['DISTANCE']) * 1609.34
+
+            if self.use_distance:
+                distance = float(d['DISTANCE']) * 1609.34
+            else:
+                distance = 0
+                
             hr = ET.SubElement(point, "DistanceMeters").text = str(distance)
-            
             ext = ET.SubElement(point, "Extensions")
             tpx = ET.SubElement(ext, "TPX", xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2")
             ET.SubElement(tpx, "Speed").text = "0"
