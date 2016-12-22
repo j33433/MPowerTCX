@@ -96,11 +96,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.settings.setValue(self.include_speed_key, include_speed)
         self.settings.setValue(self.power_adjust_key, power_adjust)
 
-app = QApplication(sys.argv)
-mainWin = MainWindow()
-ret = app.exec_()
-sys.exit(ret)
-
-#mpower = MPower(sys.argv[1], sys.argv[2])
-#mpower.process()
+if len(sys.argv) == 3:
+    mpower = MPower(sys.argv[1])
+    mpower.load_csv()
+    mpower.save_data(sys.argv[2], datetime.now())
+else:
+    app = QApplication(sys.argv)
+    mainWin = MainWindow()
+    ret = app.exec_()
+    sys.exit(ret)
 

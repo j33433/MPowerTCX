@@ -3,6 +3,41 @@ import sys
 import datetime
 import xml.etree.cElementTree as ET
 
+
+class RideHeader(object):
+    def __init__(self):
+        pass
+
+    def setSummary(self, time=0, distance=0, avg_power=0, max_power=0, avg_rpm=0, max_rpm=0, avg_hr=0, max_hr=0, calories=0):
+        self.time = time
+        self.distance = distance
+        self.avg_power = avg_power
+        self.max_power = max_power
+        self.avg_rpm = avg_rpm
+        self.max_rpm = max_rpm
+        self.avg_hr = avg_hr
+        self.max_hr = max_hr
+        self.calories = calories
+
+
+class Ride(object):
+    def __init__(self):
+        self.power = []
+        self.rpm = []
+        self.hr = []
+        self.distance = []
+        self.header = RideHeader()
+
+    def addSample(self, power=0, rpm=0, hr=0, distance=0):
+        self.power.append(str(power))
+        self.rpm.append(str(rpm))
+        self.hr.append(str(hr))
+        self.distance.append(str(distance))
+
+    def count(self):
+        return len(self.power)
+
+
 class MPower(object):
     def __init__(self, in_filename):
         self.in_filename = in_filename
@@ -18,6 +53,8 @@ class MPower(object):
         # Distance sometimes results in erratic speed values (84 mph)
         self.use_distance = True
 
+        self.ride = Ride()
+
     def set_include_speed_data(self, value):
         self.use_distance = value
 
@@ -28,9 +65,8 @@ class MPower(object):
         with open(self.in_filename, 'r') as infile:
             reader = csv.reader(infile, skipinitialspace=True)
             blank = reader.next()
-            header = self.load_header(reader)
-            data = self.load_data(reader)
-            self.ride = {'header': header, 'data': data}
+            self.load_header(reader)
+            self.load_data(reader)
 
     def load_header(self, reader):
         header = {}
@@ -43,21 +79,34 @@ class MPower(object):
             else:
                 break
 
-        return header
+        self.ride.header.setSummary(
+            time=float(header["Total Time"]) * 60.0,
+            distance=float(header["Total Distance"]) * 1609.34,
+            avg_power=header["AVG Power"],
+            max_power=header["MAX Power"],
+            avg_rpm=header["AVG RPM"],
+            max_rpm=header["MAX RPM"],
+            avg_hr=header["AVG HR"],
+            max_hr=header["MAX HR"],
+            calories=header["CAL"]
+        )
 
     def load_data(self, reader):
-        data = []
         title = reader.next()
         assert(title[0] == 'RIDE DATA')
         keys = reader.next()
 
         for row in reader:
             if len(row):
-                data.append(dict(zip(keys, row)))
+                data = dict(zip(keys, row))
+                self.ride.addSample(
+                    power=data["Power"],
+                    rpm=data["RPM"],
+                    hr=data["HR"],
+                    distance=float(data["DISTANCE"]) * 1609.34
+                )
             else:
                 break
-
-        return data
 
     def format_time(self, dt):
         return dt.isoformat() + "Z"
@@ -75,14 +124,7 @@ class MPower(object):
 
         return filtered
 
-    def save_data(self, filename, start_time):
-        print ("use distance %r, power fudge %r" % (self.use_distance, self.power_fudge))
-        #start_time = datetime.datetime.utcnow()
-        now = self.format_time(start_time)
-        header = self.ride['header']
-        data = self.ride['data']
-
-        root = ET.Element("TrainingCenterDatabase")
+    def save_xml_cruft(self, root):
         root.set("xmlns:ns5", "http://www.garmin.com/xmlschemas/ActivityGoals/v1")
         root.set("xmlns:ns3", "http://www.garmin.com/xmlschemas/ActivityExtension/v2")
         root.set("xmlns:ns2", "http://www.garmin.com/xmlschemas/UserProfile/v2")
@@ -90,16 +132,23 @@ class MPower(object):
         root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
         root.set("xsi:schemaLocation", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd")
 
+    def save_data(self, filename, start_time):
+        print ("use distance %r, power fudge %r" % (self.use_distance, self.power_fudge))
+        now = self.format_time(start_time)
+
+        root = ET.Element("TrainingCenterDatabase")
+        self.save_xml_cruft(root)
+
         doc = ET.SubElement(root, "Activities")
         activity = ET.SubElement(doc, "Activity", Sport=self.sport)
         ET.SubElement(activity, "Id").text = now
 
         lap = ET.SubElement(activity, "Lap", StartTime=now)
-        seconds = float(header['Total Time']) * 60
+        seconds = self.ride.header.time
         ET.SubElement(lap, "TotalTimeSeconds").text = str(seconds)
 
         if self.use_distance:
-            meters = float(header['Total Distance']) * 1609.34
+            meters = float(self.ride.header.distance)
         else:
             meters = 0
 
@@ -108,32 +157,29 @@ class MPower(object):
         ET.SubElement(lap, "Calories").text = "0"
 
         avg_hr = ET.SubElement(lap, "AverageHeartRateBpm")
-        ET.SubElement(avg_hr, "Value").text = header['AVG HR']
+        ET.SubElement(avg_hr, "Value").text = self.ride.header.avg_hr
 
         max_hr = ET.SubElement(lap, "MaximumHeartRateBpm")
-        ET.SubElement(max_hr, "Value").text = header['MAX HR']
+        ET.SubElement(max_hr, "Value").text = self.ride.header.max_hr
 
         ET.SubElement(lap, "Intensity").text = "Active"
         ET.SubElement(lap, "Cadence").text = "0"
         ET.SubElement(lap, "TriggerMethod").text = "Manual"
 
-        # Approximately 3.01, why is not closer to 3? Maybe I/O time.
-        secs_per_sample = seconds / float(len(data))
-
+        secs_per_sample = seconds / self.ride.count()
         track = ET.SubElement(lap, "Track")
-        i = 0
 
-        for d in data:
+        for i in xrange(0, self.ride.count()):
             point = ET.SubElement(track, "Trackpoint")
             delta_time = start_time + datetime.timedelta(seconds=i * secs_per_sample)
             ET.SubElement(point, "Time").text = self.format_time(delta_time)
 
             hr = ET.SubElement(point, "HeartRateBpm")
-            ET.SubElement(hr, "Value").text = d['HR']
-            hr = ET.SubElement(point, "Cadence").text = d['RPM']
+            ET.SubElement(hr, "Value").text = self.ride.hr[i]
+            hr = ET.SubElement(point, "Cadence").text = self.ride.rpm[i]
 
             if self.use_distance:
-                distance = float(d['DISTANCE']) * 1609.34
+                distance = self.ride.distance[i]
             else:
                 distance = 0
 
@@ -141,7 +187,7 @@ class MPower(object):
             ext = ET.SubElement(point, "Extensions")
             tpx = ET.SubElement(ext, "TPX", xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2")
             ET.SubElement(tpx, "Speed").text = "0"
-            power = float(d['Power']) * self.power_fudge
+            power = float(self.ride.power[i]) * self.power_fudge
             ET.SubElement(tpx, "Watts").text = str(power)
             i += 1
 
