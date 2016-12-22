@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created: Thu Dec 22 10:53:33 2016
+# Created: Thu Dec 22 14:34:58 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -67,12 +67,12 @@ class Ui_MainWindow(object):
         self.label_2 = QtGui.QLabel(self.groupBox)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
-        self.powerAdjustments = QtGui.QDoubleSpinBox(self.groupBox)
-        self.powerAdjustments.setMinimum(-100.0)
-        self.powerAdjustments.setMaximum(100.0)
-        self.powerAdjustments.setSingleStep(0.1)
-        self.powerAdjustments.setObjectName("powerAdjustments")
-        self.gridLayout.addWidget(self.powerAdjustments, 1, 1, 1, 1)
+        self.powerAdjustment = QtGui.QDoubleSpinBox(self.groupBox)
+        self.powerAdjustment.setMinimum(-100.0)
+        self.powerAdjustment.setMaximum(100.0)
+        self.powerAdjustment.setSingleStep(0.1)
+        self.powerAdjustment.setObjectName("powerAdjustment")
+        self.gridLayout.addWidget(self.powerAdjustment, 1, 1, 1, 1)
         self.includeSpeedData = QtGui.QCheckBox(self.groupBox)
         self.includeSpeedData.setChecked(True)
         self.includeSpeedData.setObjectName("includeSpeedData")
@@ -114,6 +114,6 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Options", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Workout Time:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Power Adjustment:", None, QtGui.QApplication.UnicodeUTF8))
-        self.powerAdjustments.setSuffix(QtGui.QApplication.translate("MainWindow", "%", None, QtGui.QApplication.UnicodeUTF8))
+        self.powerAdjustment.setSuffix(QtGui.QApplication.translate("MainWindow", "%", None, QtGui.QApplication.UnicodeUTF8))
         self.includeSpeedData.setText(QtGui.QApplication.translate("MainWindow", "Include Speed Data", None, QtGui.QApplication.UnicodeUTF8))
 

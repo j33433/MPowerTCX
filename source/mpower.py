@@ -18,6 +18,12 @@ class MPower(object):
         # Distance sometimes results in erratic speed values (84 mph)
         self.use_distance = True
 
+    def set_include_speed_data(self, value):
+        self.use_distance = value
+
+    def set_power_adjust(self, value):
+        self.power_fudge = 1.0 + value / 100.0
+
     def load_csv(self):
         with open(self.in_filename, 'r') as infile:
             reader = csv.reader(infile, skipinitialspace=True)
@@ -70,6 +76,7 @@ class MPower(object):
         return filtered
 
     def save_data(self, filename, start_time):
+        print ("use distance %r, power fudge %r" % (self.use_distance, self.power_fudge))
         #start_time = datetime.datetime.utcnow()
         now = self.format_time(start_time)
         header = self.ride['header']
