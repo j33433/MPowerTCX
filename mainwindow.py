@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created: Thu Dec 22 10:11:23 2016
+# Created: Thu Dec 22 10:41:48 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -22,12 +22,12 @@ class Ui_MainWindow(object):
         self.gridLayout_4 = QtGui.QGridLayout(self.widget)
         self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.pushButton = QtGui.QPushButton(self.widget)
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout_4.addWidget(self.pushButton, 0, 0, 1, 1)
-        self.pushButton_2 = QtGui.QPushButton(self.widget)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.gridLayout_4.addWidget(self.pushButton_2, 0, 1, 1, 1)
+        self.loadButton = QtGui.QPushButton(self.widget)
+        self.loadButton.setObjectName("loadButton")
+        self.gridLayout_4.addWidget(self.loadButton, 0, 0, 1, 1)
+        self.saveButton = QtGui.QPushButton(self.widget)
+        self.saveButton.setObjectName("saveButton")
+        self.gridLayout_4.addWidget(self.saveButton, 0, 1, 1, 1)
         self.gridLayout_3.addWidget(self.widget, 3, 1, 1, 3)
         self.groupBox_2 = QtGui.QGroupBox(self.centralwidget)
         self.groupBox_2.setObjectName("groupBox_2")
@@ -61,22 +61,22 @@ class Ui_MainWindow(object):
         self.label = QtGui.QLabel(self.groupBox)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-        self.dateTimeEdit = QtGui.QDateTimeEdit(self.groupBox)
-        self.dateTimeEdit.setObjectName("dateTimeEdit")
-        self.gridLayout.addWidget(self.dateTimeEdit, 0, 1, 1, 1)
+        self.workoutTime = QtGui.QDateTimeEdit(self.groupBox)
+        self.workoutTime.setObjectName("workoutTime")
+        self.gridLayout.addWidget(self.workoutTime, 0, 1, 1, 1)
         self.label_2 = QtGui.QLabel(self.groupBox)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
-        self.doubleSpinBox = QtGui.QDoubleSpinBox(self.groupBox)
-        self.doubleSpinBox.setMinimum(-100.0)
-        self.doubleSpinBox.setMaximum(100.0)
-        self.doubleSpinBox.setSingleStep(0.1)
-        self.doubleSpinBox.setObjectName("doubleSpinBox")
-        self.gridLayout.addWidget(self.doubleSpinBox, 1, 1, 1, 1)
-        self.checkBox = QtGui.QCheckBox(self.groupBox)
-        self.checkBox.setChecked(True)
-        self.checkBox.setObjectName("checkBox")
-        self.gridLayout.addWidget(self.checkBox, 2, 0, 1, 2)
+        self.powerAdjustments = QtGui.QDoubleSpinBox(self.groupBox)
+        self.powerAdjustments.setMinimum(-100.0)
+        self.powerAdjustments.setMaximum(100.0)
+        self.powerAdjustments.setSingleStep(0.1)
+        self.powerAdjustments.setObjectName("powerAdjustments")
+        self.gridLayout.addWidget(self.powerAdjustments, 1, 1, 1, 1)
+        self.includeSpeedData = QtGui.QCheckBox(self.groupBox)
+        self.includeSpeedData.setChecked(True)
+        self.includeSpeedData.setObjectName("includeSpeedData")
+        self.gridLayout.addWidget(self.includeSpeedData, 2, 0, 1, 2)
         self.gridLayout_3.addWidget(self.groupBox, 1, 1, 1, 1)
         spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout_3.addItem(spacerItem1, 2, 1, 1, 1)
@@ -102,8 +102,8 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MPowerTCX", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton.setText(QtGui.QApplication.translate("MainWindow", "Load CSV", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_2.setText(QtGui.QApplication.translate("MainWindow", "Save TCX", None, QtGui.QApplication.UnicodeUTF8))
+        self.loadButton.setText(QtGui.QApplication.translate("MainWindow", "Load CSV", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveButton.setText(QtGui.QApplication.translate("MainWindow", "Save TCX", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox_2.setTitle(QtGui.QApplication.translate("MainWindow", "Workout Statistics", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("MainWindow", "Duration:", None, QtGui.QApplication.UnicodeUTF8))
         self.labelDuration.setText(QtGui.QApplication.translate("MainWindow", "---", None, QtGui.QApplication.UnicodeUTF8))
@@ -114,6 +114,6 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Options", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Workout Time:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Power Adjustment:", None, QtGui.QApplication.UnicodeUTF8))
-        self.doubleSpinBox.setSuffix(QtGui.QApplication.translate("MainWindow", "%", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkBox.setText(QtGui.QApplication.translate("MainWindow", "Include speed data", None, QtGui.QApplication.UnicodeUTF8))
+        self.powerAdjustments.setSuffix(QtGui.QApplication.translate("MainWindow", "%", None, QtGui.QApplication.UnicodeUTF8))
+        self.includeSpeedData.setText(QtGui.QApplication.translate("MainWindow", "Include Speed Data", None, QtGui.QApplication.UnicodeUTF8))
 
