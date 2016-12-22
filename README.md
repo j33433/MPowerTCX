@@ -1,10 +1,10 @@
 # MPowerTCX
-Use Schwinn MPower Echelon2 spin bike data with Strava, GoldenCheetah and other apps.
+Share Schwinn A.C. indoor cycle data with Strava, GoldenCheetah and other apps
 
 ![Schwinn MPower Console](docs/components.png)
 
 ## What it Does
-This python script converts the CSV data produced by MPower consoles to TCX format.
+This python script converts the CSV data produced by MPower Echelon2 consoles to TCX format
 
 The TCX file can then be uploaded to Strava, imported into GoldenCheetah or used with any number of other 
 applications that support TCX
@@ -33,12 +33,12 @@ applications that support TCX
 (todo)
 
 ## Problems with USB Thumb Drives
-This MPower Console appears to reject or even crash when a newer model USB drive is used. A 1GB drive is your best bet.
+This MPower Console appears to reject or even crash when a newer model USB drive is used. A 1GB drive is your best bet
 
-If the USB logo fails to flash at the end of a ride, or the unit shuts off (crashes), you probably have an incompatible drive.
+If the USB logo fails to flash at the end of a ride, or the unit shuts off (crashes), you probably have an incompatible drive
 
 ## Problems with Files
-I only have one model of indoor bike. It's possible that your bike produces a different file format.
+I only have one model of indoor bike. It's possible that your bike produces a different file format
 
-If you file doesn't work, feel free to send it my way.
+If you file doesn't work, feel free to send it my way
 
