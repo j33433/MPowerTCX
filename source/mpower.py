@@ -4,9 +4,9 @@ import datetime
 import xml.etree.cElementTree as ET
 
 class MPower(object):
-    def __init__(self, in_filename, out_filename):
+    def __init__(self, in_filename):
         self.in_filename = in_filename
-        self.out_filename = out_filename
+        self.out_filename = None
 
         # The power meter on my favorite bike is at least 5% high.
         # In that case, this value could be set to 0.95.
@@ -17,10 +17,6 @@ class MPower(object):
 
         # Distance sometimes results in erratic speed values (84 mph)
         self.use_distance = True
-
-    def process(self):
-        self.load_csv()
-        self.save_data()
 
     def load_csv(self):
         with open(self.in_filename, 'r') as infile:
@@ -73,9 +69,8 @@ class MPower(object):
 
         return filtered
 
-    def save_data(self):
-        # Using now as the start time and actvity id, since there is no reliable time stamp
-        start_time = datetime.datetime.utcnow()
+    def save_data(self, filename, start_time):
+        #start_time = datetime.datetime.utcnow()
         now = self.format_time(start_time)
         header = self.ride['header']
         data = self.ride['data']
@@ -144,4 +139,4 @@ class MPower(object):
             i += 1
 
         tree = ET.ElementTree(root)
-        tree.write(self.out_filename, encoding='utf-8', xml_declaration=True)
+        tree.write(filename, encoding='utf-8', xml_declaration=True)
