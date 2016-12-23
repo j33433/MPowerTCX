@@ -64,14 +64,32 @@ class MPower(object):
     def load_csv(self):
         with open(self.in_filename, 'r') as infile:
             reader = csv.reader(infile, skipinitialspace=True)
-            blank = reader.next()
-            self.load_header(reader)
-            self.load_data(reader)
 
-    def load_header(self, reader):
+            try:
+                while True:
+                    line = reader.next()
+
+                    if line == []:
+                        pass
+                    elif line == ['RIDE SUMMARY', '']:
+                        self.load_v2_header(reader)
+                    elif line == ['RIDE DATA', '']:
+                        self.load_v2_data(reader)
+                    else:
+                       print ("skip %r" % line)
+
+                       while True:
+                           line = reader.next()
+
+                           if line == []:
+                               break
+
+                           print ("skip %r" % line)
+            except StopIteration:
+                print ("done reading")
+
+    def load_v2_header(self, reader):
         header = {}
-        title = reader.next()
-        assert(title[0] == 'RIDE SUMMARY')
 
         for row in reader:
             if len(row):
@@ -91,9 +109,7 @@ class MPower(object):
             calories=header["CAL"]
         )
 
-    def load_data(self, reader):
-        title = reader.next()
-        assert(title[0] == 'RIDE DATA')
+    def load_v2_data(self, reader):
         keys = reader.next()
 
         for row in reader:
@@ -110,19 +126,6 @@ class MPower(object):
 
     def format_time(self, dt):
         return dt.isoformat() + "Z"
-
-    # This low-pass doesn't seem to help much
-    def filter_distances(self, dist):
-        y = 0.0
-        a = 0.25
-        ap = 1.0 - a
-        filtered = []
-
-        for d in dist:
-            y = d * a + y * ap
-            filtered.append(y)
-
-        return filtered
 
     def save_xml_cruft(self, root):
         root.set("xmlns:ns5", "http://www.garmin.com/xmlschemas/ActivityGoals/v1")
