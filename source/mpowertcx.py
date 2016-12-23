@@ -34,11 +34,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.saveButton.clicked.connect(self.savePushed)
         self.saveButton.setEnabled(False)
 
+    def alert(self, message):
+        box = QMessageBox()
+        box.setText("MPowerTCX\n - %s" % message)
+        box.exec_()
+
     def loadPushed(self):
         csv_dir_key = "file/csv_dir"
         csv_dir = self.settings.value(csv_dir_key, ".")
         (filename, filter) = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv)")
+
         self.saveButton.setEnabled(False)
+        self.labelDuration.setText("---")
+        self.labelAveragePower.setText("---")
+        self.labelMaxPower.setText("---")
 
         if filename:
             print (filename)
@@ -47,14 +56,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.mpower = MPower(filename)
                 self.mpower.load_csv()
             except Exception as error:
-                print ("got an error")
+                self.alert("There was an error: %s" % error)
             else:
                 self.saveButton.setEnabled(True)
                 header = self.mpower.header()
 
                 m, s = divmod(int(header.time), 60)
                 h, m = divmod(m, 60)
-
+                self.alert("The CSV file was loaded successfully.")
                 self.labelDuration.setText("%d:%02d:%02d" % (h, m, s))
                 self.labelAveragePower.setText(str(header.average_power))
                 self.labelMaxPower.setText(str(header.max_power))
@@ -94,9 +103,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         try:
             self.mpower.save_data(filename, start_time)
         except Exception as error:
-            print ("got an error")
+            self.alert("There was an error: %s" % error)
         else:
-            print ("ok")
+            self.alert("The TCX file was saved successfully.")
 
         info = QFileInfo(filename)
         tcx_dir = info.absoluteDir().path()
