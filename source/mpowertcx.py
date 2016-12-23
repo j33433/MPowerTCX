@@ -15,6 +15,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.settings = QSettings("j33433", "MPowerTCX")
         self.include_speed_key = "include_speed"
         self.power_adjust_key = "power_adjust"
+        self.file_date_key = "use_file_date"
         self.setupUi(self)
         self.assignWidgets()
         self.configure()
@@ -24,12 +25,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def configure(self):
         self.workoutTime.setDateTime(datetime.now())
+
+        use_file_date = self.settings.value(self.file_date_key, "True")
+        self.useFileDate.setChecked(use_file_date in ['True', 'true'])
+
         include_speed = self.settings.value(self.include_speed_key, "True")
         self.includeSpeedData.setChecked(include_speed in ['True', 'true'])
+
         power_adjust = float(self.settings.value(self.power_adjust_key, 0.0))
         self.powerAdjustment.setValue(power_adjust)
 
     def assignWidgets(self):
+        self.useFileDate.stateChanged.connect(self.useFileDateChanged)
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
         self.saveButton.setEnabled(False)
@@ -39,10 +46,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         box.setText("MPowerTCX\n - %s" % message)
         box.exec_()
 
+    def useFileDateChanged(self, state):
+        self.workoutTime.setEnabled(state != Qt.Checked)
+        print ("state %r" % state)
+
     def loadPushed(self):
         csv_dir_key = "file/csv_dir"
         csv_dir = self.settings.value(csv_dir_key, ".")
-        (filename, filter) = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv)")
+        (filename, filter) = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
 
         self.saveButton.setEnabled(False)
         self.labelDuration.setText("---")
@@ -58,12 +69,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             except Exception as error:
                 self.alert("There was an error: %s" % error)
             else:
-                self.saveButton.setEnabled(True)
                 header = self.mpower.header()
 
                 m, s = divmod(int(header.time), 60)
                 h, m = divmod(m, 60)
-                self.alert("The CSV file was loaded successfully.")
+
+                if self.mpower.count():
+                    self.alert("The CSV file was loaded successfully.")
+                else:
+                    self.alert("This file does not appear to contain ride data.")
+                    return
+
+                self.saveButton.setEnabled(True)
                 self.labelDuration.setText("%d:%02d:%02d" % (h, m, s))
                 self.labelAveragePower.setText(str(header.average_power))
                 self.labelMaxPower.setText(str(header.max_power))
@@ -75,7 +92,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def savePushed(self):
         tcx_dir_key = "file/tcx_dir"
         tcx_dir = self.settings.value(tcx_dir_key, ".")
-        start_time = self.workoutTime.dateTime().toPython()
+
+        if self.useFileDate.isChecked():
+            start_time = self.in_file_info.created().toPython()
+        else:
+            start_time = self.workoutTime.dateTime().toPython()
 
         dialog = QFileDialog(self)
         dialog.selectFile(self.in_file_info.baseName() + ".tcx")

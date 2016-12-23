@@ -42,7 +42,7 @@
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="0" column="0">
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="labelDurationName">
          <property name="text">
           <string>Duration:</string>
          </property>
@@ -56,7 +56,7 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="labelAveragePowerName">
          <property name="text">
           <string>Average Power:</string>
          </property>
@@ -70,7 +70,7 @@
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="labelMaxPowerName">
          <property name="text">
           <string>Max Power:</string>
          </property>
@@ -106,7 +106,7 @@
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="labelWorkoutTime">
          <property name="text">
           <string>Workout Time:</string>
          </property>
@@ -115,14 +115,14 @@
        <item row="0" column="1">
         <widget class="QDateTimeEdit" name="workoutTime"/>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
+       <item row="2" column="0">
+        <widget class="QLabel" name="labelPowerAdjustment">
          <property name="text">
           <string>Power Adjustment:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QDoubleSpinBox" name="powerAdjustment">
          <property name="suffix">
           <string>%</string>
@@ -138,13 +138,20 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
+       <item row="3" column="0" colspan="2">
         <widget class="QCheckBox" name="includeSpeedData">
          <property name="text">
           <string>Include Speed Data</string>
          </property>
          <property name="checked">
           <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QCheckBox" name="useFileDate">
+         <property name="text">
+          <string>Use File Time as Workout Time</string>
          </property>
         </widget>
        </item>

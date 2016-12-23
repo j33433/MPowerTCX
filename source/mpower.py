@@ -55,6 +55,9 @@ class MPower(object):
 
         self.ride = Ride()
 
+    def count(self):
+        return self.ride.count()
+
     def header(self):
         return self.ride.header
 
