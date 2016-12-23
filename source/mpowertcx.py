@@ -50,6 +50,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 print ("got an error")
             else:
                 self.saveButton.setEnabled(True)
+                header = self.mpower.header()
+
+                m, s = divmod(int(header.time), 60)
+                h, m = divmod(m, 60)
+
+                self.labelDuration.setText("%d:%02d:%02d" % (h, m, s))
+                self.labelAveragePower.setText(str(header.average_power))
+                self.labelMaxPower.setText(str(header.max_power))
 
             self.in_file_info = QFileInfo(filename)
             csv_dir = self.in_file_info.absoluteDir().path()

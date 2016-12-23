@@ -8,14 +8,14 @@ class RideHeader(object):
     def __init__(self):
         self.setSummary()
 
-    def setSummary(self, time=0, distance=0, avg_power=0, max_power=0, avg_rpm=0, max_rpm=0, avg_hr=0, max_hr=0, calories=0):
+    def setSummary(self, time=0, distance=0, average_power=0, max_power=0, average_rpm=0, max_rpm=0, average_hr=0, max_hr=0, calories=0):
         self.time = time
         self.distance = distance
-        self.avg_power = avg_power
+        self.average_power = average_power
         self.max_power = max_power
-        self.avg_rpm = avg_rpm
+        self.average_rpm = average_rpm
         self.max_rpm = max_rpm
-        self.avg_hr = avg_hr
+        self.average_hr = average_hr
         self.max_hr = max_hr
         self.calories = calories
 
@@ -54,6 +54,9 @@ class MPower(object):
         self.use_distance = True
 
         self.ride = Ride()
+
+    def header(self):
+        return self.ride.header
 
     def set_include_speed_data(self, value):
         self.use_distance = value
@@ -103,11 +106,11 @@ class MPower(object):
         self.ride.header.setSummary(
             time=float(header["Total Time"]) * 60.0,
             distance=float(header["Total Distance"]) * 1609.34,
-            avg_power=header["AVG Power"],
+            average_power=header["AVG Power"],
             max_power=header["MAX Power"],
-            avg_rpm=header["AVG RPM"],
+            average_rpm=header["AVG RPM"],
             max_rpm=header["MAX RPM"],
-            avg_hr=header["AVG HR"],
+            average_hr=header["AVG HR"],
             max_hr=header["MAX HR"],
             calories=header["CAL"]
         )
@@ -163,7 +166,7 @@ class MPower(object):
         ET.SubElement(lap, "Calories").text = "0"
 
         avg_hr = ET.SubElement(lap, "AverageHeartRateBpm")
-        ET.SubElement(avg_hr, "Value").text = self.ride.header.avg_hr
+        ET.SubElement(avg_hr, "Value").text = self.ride.header.average_hr
 
         max_hr = ET.SubElement(lap, "MaximumHeartRateBpm")
         ET.SubElement(max_hr, "Value").text = self.ride.header.max_hr
