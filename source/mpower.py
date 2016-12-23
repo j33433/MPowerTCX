@@ -6,7 +6,7 @@ import xml.etree.cElementTree as ET
 
 class RideHeader(object):
     def __init__(self):
-        pass
+        self.setSummary()
 
     def setSummary(self, time=0, distance=0, avg_power=0, max_power=0, avg_rpm=0, max_rpm=0, avg_hr=0, max_hr=0, calories=0):
         self.time = time
@@ -61,34 +61,37 @@ class MPower(object):
     def set_power_adjust(self, value):
         self.power_fudge = 1.0 + value / 100.0
 
+    def _load_csv_chunk(self, reader):
+        line = reader.next()
+
+        if line == []:
+            pass
+        elif line == ['RIDE SUMMARY', '']:
+            self._load_v2_header(reader)
+        elif line == ['RIDE DATA', '']:
+            self._load_v2_data(reader)
+        else:
+           print ("skip start %r" % line)
+
+           while True:
+               line = reader.next()
+
+               if line == []:
+                   break
+
+               print ("skip %r" % line)
+
     def load_csv(self):
         with open(self.in_filename, 'r') as infile:
             reader = csv.reader(infile, skipinitialspace=True)
 
             try:
                 while True:
-                    line = reader.next()
-
-                    if line == []:
-                        pass
-                    elif line == ['RIDE SUMMARY', '']:
-                        self.load_v2_header(reader)
-                    elif line == ['RIDE DATA', '']:
-                        self.load_v2_data(reader)
-                    else:
-                       print ("skip %r" % line)
-
-                       while True:
-                           line = reader.next()
-
-                           if line == []:
-                               break
-
-                           print ("skip %r" % line)
+                    self._load_csv_chunk(reader)
             except StopIteration:
                 print ("done reading")
 
-    def load_v2_header(self, reader):
+    def _load_v2_header(self, reader):
         header = {}
 
         for row in reader:
@@ -109,7 +112,7 @@ class MPower(object):
             calories=header["CAL"]
         )
 
-    def load_v2_data(self, reader):
+    def _load_v2_data(self, reader):
         keys = reader.next()
 
         for row in reader:
@@ -124,10 +127,10 @@ class MPower(object):
             else:
                 break
 
-    def format_time(self, dt):
+    def _format_time(self, dt):
         return dt.isoformat() + "Z"
 
-    def save_xml_cruft(self, root):
+    def _save_xml_cruft(self, root):
         root.set("xmlns:ns5", "http://www.garmin.com/xmlschemas/ActivityGoals/v1")
         root.set("xmlns:ns3", "http://www.garmin.com/xmlschemas/ActivityExtension/v2")
         root.set("xmlns:ns2", "http://www.garmin.com/xmlschemas/UserProfile/v2")
@@ -137,10 +140,10 @@ class MPower(object):
 
     def save_data(self, filename, start_time):
         print ("use distance %r, power fudge %r" % (self.use_distance, self.power_fudge))
-        now = self.format_time(start_time)
+        now = self._format_time(start_time)
 
         root = ET.Element("TrainingCenterDatabase")
-        self.save_xml_cruft(root)
+        self._save_xml_cruft(root)
 
         doc = ET.SubElement(root, "Activities")
         activity = ET.SubElement(doc, "Activity", Sport=self.sport)
@@ -169,13 +172,17 @@ class MPower(object):
         ET.SubElement(lap, "Cadence").text = "0"
         ET.SubElement(lap, "TriggerMethod").text = "Manual"
 
-        secs_per_sample = seconds / self.ride.count()
+        if self.ride.count():
+            secs_per_sample = seconds / self.ride.count()
+        else:
+            secs_per_sample = 0
+
         track = ET.SubElement(lap, "Track")
 
         for i in xrange(0, self.ride.count()):
             point = ET.SubElement(track, "Trackpoint")
             delta_time = start_time + datetime.timedelta(seconds=i * secs_per_sample)
-            ET.SubElement(point, "Time").text = self.format_time(delta_time)
+            ET.SubElement(point, "Time").text = self._format_time(delta_time)
 
             hr = ET.SubElement(point, "HeartRateBpm")
             ET.SubElement(hr, "Value").text = self.ride.hr[i]
