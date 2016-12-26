@@ -22,6 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show()
         self.mpower = None
         self.in_file_info = None
+        self.statusBar().showMessage("v1.1.0")
 
     def configure(self):
         self.workoutTime.setDateTime(datetime.now())
