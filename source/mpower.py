@@ -5,6 +5,7 @@ import xml.etree.cElementTree as ET
 
 
 class RideHeader(object):
+    """ Summary statistics for a ride """
     def __init__(self):
         self.setSummary()
 
@@ -21,6 +22,7 @@ class RideHeader(object):
 
 
 class Ride(object):
+    """ Hold the time series data for the ride and a header """
     def __init__(self):
         self.power = []
         self.rpm = []
@@ -35,10 +37,12 @@ class Ride(object):
         self.distance.append(str(distance))
 
     def count(self):
+        """ The number of samples in the time series """
         return len(self.power)
 
 
 class MPower(object):
+    """ Process the CSV into TCX """
     def __init__(self, in_filename):
         self.in_filename = in_filename
         self.out_filename = None
@@ -62,12 +66,15 @@ class MPower(object):
         return self.ride.header
 
     def set_include_speed_data(self, value):
+        """ Allow estimated speed data to be excluded. They aren't really worth much. """
         self.use_distance = value
 
     def set_power_adjust(self, value):
+        """ Power readings vary quite a bit from bike to bike. Allow adjustment """
         self.power_fudge = 1.0 + value / 100.0
 
     def _load_csv_chunk(self, reader):
+        """ Guess what the next block of CSV data is an process it """
         line = reader.next()
 
         if line == []:
@@ -92,6 +99,7 @@ class MPower(object):
                print ("skip %r" % line)
 
     def load_csv(self):
+        """ Read the CSV into a summary and time series """
         with open(self.in_filename, 'r') as infile:
             reader = csv.reader(infile, skipinitialspace=True)
 
@@ -99,9 +107,10 @@ class MPower(object):
                 while True:
                     self._load_csv_chunk(reader)
             except StopIteration:
-                print ("done reading")
+                pass
 
     def _load_v2_header(self, reader):
+        """ Read Echelon2 header data """
         header = {}
 
         for row in reader:
@@ -123,6 +132,7 @@ class MPower(object):
         )
 
     def _load_v2_data(self, reader):
+        """ Read Echelon2 time series """
         keys = reader.next()
 
         for row in reader:
@@ -138,6 +148,7 @@ class MPower(object):
                 break
 
     def _load_v1_header(self, reader):
+        """ Read Echelon header data """
         header = {}
 
         for row in reader:
@@ -159,6 +170,7 @@ class MPower(object):
         )
 
     def _load_v1_data(self, reader):
+        """ Read Echelon2 time series """
         for row in reader:
             if len(row):
                 self.ride.addSample(
@@ -171,9 +183,11 @@ class MPower(object):
                 break
 
     def _format_time(self, dt):
+        """ Return a time string in TCX format """
         return dt.isoformat() + "Z"
 
     def _save_xml_cruft(self, root):
+        """ The header stuff for the TCX XML """
         root.set("xmlns:ns5", "http://www.garmin.com/xmlschemas/ActivityGoals/v1")
         root.set("xmlns:ns3", "http://www.garmin.com/xmlschemas/ActivityExtension/v2")
         root.set("xmlns:ns2", "http://www.garmin.com/xmlschemas/UserProfile/v2")
@@ -182,7 +196,7 @@ class MPower(object):
         root.set("xsi:schemaLocation", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd")
 
     def save_data(self, filename, start_time):
-        print ("use distance %r, power fudge %r" % (self.use_distance, self.power_fudge))
+        """ Save the parsed CSV to TCX """
         now = self._format_time(start_time)
 
         root = ET.Element("TrainingCenterDatabase")
@@ -215,6 +229,7 @@ class MPower(object):
         ET.SubElement(lap, "Cadence").text = "0"
         ET.SubElement(lap, "TriggerMethod").text = "Manual"
 
+        # Infer the time between samples
         if self.ride.count():
             secs_per_sample = seconds / self.ride.count()
         else:

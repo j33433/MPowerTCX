@@ -25,6 +25,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.statusBar().showMessage("v1.1.0")
 
     def configure(self):
+        """ Put UI elements into their initial states """
         self.workoutTime.setDateTime(datetime.now())
 
         use_file_date = self.settings.value(self.file_date_key, "True")
@@ -37,21 +38,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.powerAdjustment.setValue(power_adjust)
 
     def assignWidgets(self):
+        """ Connect signals to slots """
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
         self.saveButton.setEnabled(False)
 
     def alert(self, message):
+        """ Simple alert box """
         box = QMessageBox()
         box.setText("MPowerTCX\n - %s" % message)
         box.exec_()
 
     def useFileDateChanged(self, state):
+        """ The checkbox was clicked """
         self.workoutTime.setEnabled(state != Qt.Checked)
-        print ("state %r" % state)
 
     def loadPushed(self):
+        """ Let the user select a CSV file. Load if possible. """
         csv_dir_key = "file/csv_dir"
         csv_dir = self.settings.value(csv_dir_key, ".")
         (filename, filter) = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
@@ -62,8 +66,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.labelMaxPower.setText("---")
 
         if filename:
-            print (filename)
-
             try:
                 self.mpower = MPower(filename)
                 self.mpower.load_csv()
@@ -72,14 +74,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             else:
                 header = self.mpower.header()
 
-                m, s = divmod(int(header.time), 60)
-                h, m = divmod(m, 60)
-
                 if self.mpower.count():
                     self.alert("The CSV file was loaded successfully.")
                 else:
                     self.alert("This file does not appear to contain ride data.")
                     return
+
+                # Time to h:m:s
+                m, s = divmod(int(header.time), 60)
+                h, m = divmod(m, 60)
 
                 self.saveButton.setEnabled(True)
                 self.labelDuration.setText("%d:%02d:%02d" % (h, m, s))
@@ -91,6 +94,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.settings.setValue(csv_dir_key, csv_dir)
 
     def savePushed(self):
+        """ Let the user select a TCX file to save to. Store the data. """
         tcx_dir_key = "file/tcx_dir"
         tcx_dir = self.settings.value(tcx_dir_key, ".")
 
@@ -135,11 +139,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.settings.setValue(self.include_speed_key, include_speed)
         self.settings.setValue(self.power_adjust_key, power_adjust)
 
+
+# Main logic
 if len(sys.argv) == 3:
+    # Run from the command line
     mpower = MPower(sys.argv[1])
     mpower.load_csv()
     mpower.save_data(sys.argv[2], datetime.now())
 else:
+    # Run from the UI
     app = QApplication(sys.argv)
     mainWin = MainWindow()
     ret = app.exec_()
