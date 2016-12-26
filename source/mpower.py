@@ -76,6 +76,10 @@ class MPower(object):
             self._load_v2_header(reader)
         elif line == ['RIDE DATA', '']:
             self._load_v2_data(reader)
+        elif line == ['Stage_Totals']:
+            self._load_v1_header(reader)
+        elif line == ['Stage_Workout (min)', 'Distance(km)', 'Speed(km/h)', 'Watts ', 'HR ', 'RPM ']:
+            self._load_v1_data(reader)
         else:
            print ("skip start %r" % line)
 
@@ -129,6 +133,39 @@ class MPower(object):
                     rpm=data["RPM"],
                     hr=data["HR"],
                     distance=float(data["DISTANCE"]) * 1609.34
+                )
+            else:
+                break
+
+    def _load_v1_header(self, reader):
+        header = {}
+
+        for row in reader:
+            if len(row):
+                header[row[0]] = row[1]
+            else:
+                break
+
+        self.ride.header.setSummary(
+            time=float(header["Total Time"]) * 60.0,
+            distance=float(header["Total_distance:"]) * 1000.0,
+            average_power=header["Watts Avg"],
+            max_power=header["Watts Max"],
+            average_rpm=header["RPM Avg"],
+            max_rpm=header["RPM Max"],
+            average_hr=header["HR Avg"],
+            max_hr=header["HR Max"],
+            calories=header["KCal"]
+        )
+
+    def _load_v1_data(self, reader):
+        for row in reader:
+            if len(row):
+                self.ride.addSample(
+                    power=row[3],
+                    rpm=row[5],
+                    hr=row[4],
+                    distance=float(row[1]) * 1000.0
                 )
             else:
                 break
