@@ -10,22 +10,21 @@ Find the latest release for Windows and OS X here: https://github.com/j33433/MPo
 ## What it Does
 This software converts the CSV data produced by MPower Echelon and Echelon2 consoles to TCX format.
 
-The TCX file can then be uploaded to Strava, imported into GoldenCheetah or used with any number of other 
-applications that support TCX.
+The TCX file can then be uploaded to Strava, imported into GoldenCheetah or used with most other cycling data viewers.
 
 ### Support
 
 Contact j33433@gmail.com
 
 ### Supported Fields
-1. Power (watts)
+1. Power
 1. Cadence
 1. Heart Rate
-1. Speed (as estimated by Schwinn)
+1. Speed
 
 ## Getting the MPower CSV Data
 1. Insert the USB thumb drive into the slot at the top of the MPower unit
-1. Spin so hard you break the pedals off!
+1. Work out
 1. Stop pedalling
 1. Press "AVG/MAX" for 5 seconds
 1. The USB logo will flash a few times. Wait for the flashing to stop and remove the drive
@@ -41,7 +40,7 @@ I only have one model of indoor bike. It's possible that your bike produces a di
 
 If you file doesn't work, feel free to send it my way.
 
-## Use
+## Converting your workout file to TCX
 
 ### Step 1 - Click "Load CSV..." to select your workout file
 
