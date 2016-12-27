@@ -1,17 +1,44 @@
 #!/usr/bin/python
+license = """\
+ MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, GoldenCheetah and other apps
+ Copyright (C) 2016 James Roth
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
 
 import sys
 from datetime import datetime
 
 from PySide.QtGui import *
 from PySide.QtCore import *
+from about import Ui_Dialog
 from mainwindow import Ui_MainWindow
 from mpower import MPower
 
 
+class About(QDialog, Ui_Dialog):
+    """ Show license, version, etc """
+    def __init__(self, version):
+        super(About, self).__init__()
+        self.setupUi(self)
+        self.licenseEdit.appendPlainText(license)
+        self.labelVersion.setText("Version: " + version)
+
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.version = "v1.1.1"
         self.settings = QSettings("j33433", "MPowerTCX")
         self.include_speed_key = "include_speed"
         self.power_adjust_key = "power_adjust"
@@ -22,10 +49,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.show()
         self.mpower = None
         self.in_file_info = None
-        self.statusBar().showMessage("v1.1.0")
 
     def configure(self):
         """ Put UI elements into their initial states """
+        self.statusBar().showMessage(self.version)
+        self.saveButton.setEnabled(False)
         self.workoutTime.setDateTime(datetime.now())
 
         use_file_date = self.settings.value(self.file_date_key, "True")
@@ -42,7 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
-        self.saveButton.setEnabled(False)
+        self.actionAbout.triggered.connect(self.showAbout)
 
     def alert(self, message):
         """ Simple alert box """
@@ -53,6 +81,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def useFileDateChanged(self, state):
         """ The checkbox was clicked """
         self.workoutTime.setEnabled(state != Qt.Checked)
+
+    def showAbout(self):
+        print ("about")
+        about = About(self.version)
+        about.exec_()
 
     def loadPushed(self):
         """ Let the user select a CSV file. Load if possible. """
