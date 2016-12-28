@@ -58,7 +58,7 @@ By default, the workout time will be set to the timestamp on the CSV file. If yo
 
 ![Step 3](docs/mp3.png)
 
-### Step 4 - Done. Now you have TCX file.
+### Step 4 - Done. Now you have a TCX file.
 
 ![Step 4](docs/mp4.png)
 
