@@ -1,5 +1,5 @@
 # MPowerTCX
-Share Schwinn A.C. indoor cycle data with Strava, GoldenCheetah and other apps
+Share Schwinn A.C. indoor cycle data with Strava, Golden Cheetah and other apps
 
 ![Schwinn MPower Console](docs/components.png)
 
@@ -10,7 +10,7 @@ Find the latest release for Windows and OS X here: https://github.com/j33433/MPo
 ## What it Does
 This software converts the CSV data produced by MPower Echelon and Echelon2 consoles to TCX format.
 
-The TCX file can then be uploaded to Strava, imported into GoldenCheetah or used with most other cycling data viewers.
+The TCX file can be uploaded to most cycling data viewers.
 
 ### Support
 
@@ -21,6 +21,11 @@ Contact j33433@gmail.com
 1. Cadence
 1. Heart Rate
 1. Speed
+
+### Tested With
+1. Strava
+1. Golden Cheetah
+1. Garmin Connect
 
 ## Getting the MPower CSV Data
 1. Insert the USB thumb drive into the slot at the top of the MPower unit
