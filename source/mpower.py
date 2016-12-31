@@ -68,13 +68,10 @@ class MPower(object):
         # The power meter on my favorite bike is at least 5% high.
         # In that case, this value could be set to 0.95.
         self.power_fudge = 1.0
-
-        # Look in to how Strava uses this
-        self.sport = "Virtual Ride"
+        self.sport = "Biking"
 
         # Distance sometimes results in erratic speed values (84 mph)
         self.use_distance = True
-
         self.ride = Ride()
 
     def count(self):
@@ -272,9 +269,8 @@ class MPower(object):
             hr = ET.SubElement(point, "DistanceMeters").text = str(distance)
             ext = ET.SubElement(point, "Extensions")
             tpx = ET.SubElement(ext, "TPX", xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2")
-            ET.SubElement(tpx, "Speed").text = "0"
             power = float(self.ride.power[i]) * self.power_fudge
-            ET.SubElement(tpx, "Watts").text = str(power)
+            ET.SubElement(tpx, "Watts").text = str(int(power))
             i += 1
 
         tree = ET.ElementTree(root)
