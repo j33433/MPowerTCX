@@ -38,7 +38,7 @@ class About(QDialog, Ui_Dialog):
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.version = "v1.1.2"
+        self.version = "v1.1.3"
         self.settings = QSettings("j33433", "MPowerTCX")
         self.include_speed_key = "include_speed"
         self.power_adjust_key = "power_adjust"
