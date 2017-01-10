@@ -163,7 +163,7 @@ class MPower(object):
                 break
 
     def _load_v1_header(self, reader):
-        """ Read Echelon header data """
+        """ Read Echelon 1 header data """
         header = {}
 
         for row in reader:
@@ -185,7 +185,7 @@ class MPower(object):
         )
 
     def _load_v1_data(self, reader):
-        """ Read Echelon2 time series """
+        """ Read Echelon 1 time series """
         for row in reader:
             if len(row):
                 self.ride.addSample(
