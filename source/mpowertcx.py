@@ -25,7 +25,7 @@ from PySide.QtCore import *
 from about import Ui_Dialog
 from mainwindow import Ui_MainWindow
 from mpower import MPower
-
+import traceback
 
 class About(QDialog, Ui_Dialog):
     """ Show license, version, etc """
@@ -38,7 +38,7 @@ class About(QDialog, Ui_Dialog):
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.version = "v1.1.3"
+        self.version = "v1.1.4"
         self.settings = QSettings("j33433", "MPowerTCX")
         self.include_speed_key = "include_speed"
         self.power_adjust_key = "power_adjust"
@@ -103,7 +103,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.mpower = MPower(filename)
                 self.mpower.load_csv()
             except Exception as error:
-                self.alert("There was an error: %s" % error)
+                oops = traceback.format_exc().splitlines()
+                self.alert("\nThere was an error.\nPlease report this to j33433@gmail.com.\nInclude your file in the email.\n\n%s\n%s\n%s\n" % 
+                    (oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
             else:
                 header = self.mpower.header()
 
