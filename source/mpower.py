@@ -144,7 +144,8 @@ class MPower(object):
             result = -1
             
         return result
-        
+
+    # TODO: unify this        
     def _stages_distance(self, d):
         if self._stages_metric:
             return d * 1000.0
@@ -165,13 +166,14 @@ class MPower(object):
                 
                 if time >= 0:
                     # ['Time', 'Miles', 'MPH', 'Watts', 'HR', 'RPM']
+                    # TODO: maybe use this method on all file formats.
+                    #       Infer distance from MPH.
                     distance += float(row[2]) / (60.0 * 60.0)
                     
                     self.ride.addSample(
                         power=row[3],
                         rpm=row[5],
                         hr=row[4],
-#                        distance=self._stages_distance(float(row[1]))
                         distance=self._stages_distance(distance)
                     )
                     pass
@@ -408,3 +410,4 @@ class MPower(object):
 
         tree = ET.ElementTree(root)
         tree.write(filename, encoding='utf-8', xml_declaration=True)
+
