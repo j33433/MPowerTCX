@@ -25,7 +25,7 @@ from PySide.QtCore import *
 from about import Ui_Dialog
 from mainwindow import Ui_MainWindow
 from mpower import MPower
-
+import traceback
 
 class About(QDialog, Ui_Dialog):
     """ Show license, version, etc """
@@ -103,7 +103,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.mpower = MPower(filename)
                 self.mpower.load_csv()
             except Exception as error:
-                self.alert("\nThere was an error.\nPlease report this to j33433@gmail.com: \"%s\"\n\nInclude your file in the email." % error)
+                oops = traceback.format_exc().splitlines()
+                self.alert("\nThere was an error.\nPlease report this to j33433@gmail.com.\nInclude your file in the email.\n\n%s\n%s\n%s\n" % 
+                    (oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
             else:
                 header = self.mpower.header()
 
