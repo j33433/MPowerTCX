@@ -16,11 +16,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import re
 import csv
 import sys
 import datetime
 import xml.etree.cElementTree as ET
-
+import xml.dom.minidom as minidom
 
 class RideHeader(object):
     """ Summary statistics for a ride """
@@ -58,6 +59,19 @@ class Ride(object):
         """ The number of samples in the time series """
         return len(self.power)
 
+class LineIterator(object):
+    def __init__(self, stream):
+        self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read())
+        
+    def __iter__(self):
+        return self
+        
+    def next(self):
+        if len(self._parts):
+            n = self._parts.pop(0)
+            return n
+            
+        raise StopIteration()
 
 class MPower(object):
     """ Process the CSV into TCX """
@@ -91,7 +105,7 @@ class MPower(object):
     def _load_csv_chunk(self, reader):
         """ Guess what the next block of CSV data is an process it """
         line = reader.next()
-
+        
         if line == []:
             pass
         elif line == ['Stages_Data', '', '', '', '', '']:
@@ -120,8 +134,9 @@ class MPower(object):
 
     def load_csv(self):
         """ Read the CSV into a summary and time series """
-        with open(self.in_filename, 'rU') as infile:
-            reader = csv.reader(infile, skipinitialspace=True)
+        with open(self.in_filename, 'rb') as infile:
+            iterator = LineIterator(infile)
+            reader = csv.reader(iterator, skipinitialspace=True)
 
             try:
                 while True:
@@ -144,7 +159,8 @@ class MPower(object):
             result = -1
             
         return result
-        
+
+    # TODO: unify this        
     def _stages_distance(self, d):
         if self._stages_metric:
             return d * 1000.0
@@ -165,13 +181,14 @@ class MPower(object):
                 
                 if time >= 0:
                     # ['Time', 'Miles', 'MPH', 'Watts', 'HR', 'RPM']
+                    # TODO: maybe use this method on all file formats.
+                    #       Infer distance from MPH.
                     distance += float(row[2]) / (60.0 * 60.0)
                     
                     self.ride.addSample(
                         power=row[3],
                         rpm=row[5],
                         hr=row[4],
-#                        distance=self._stages_distance(float(row[1]))
                         distance=self._stages_distance(distance)
                     )
                     pass
@@ -341,6 +358,11 @@ class MPower(object):
         root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
         root.set("xsi:schemaLocation", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd")
 
+    def prettify(self, elem):
+        rough_string = ET.tostring(elem, 'utf-8')
+        reparsed = minidom.parseString(rough_string)
+        return reparsed.toprettyxml()
+        
     def save_data(self, filename, start_time):
         """ Save the parsed CSV to TCX """
         now = self._format_time(start_time)
@@ -407,4 +429,8 @@ class MPower(object):
             i += 1
 
         tree = ET.ElementTree(root)
-        tree.write(filename, encoding='utf-8', xml_declaration=True)
+        nice = self.prettify(root)
+        
+        with open(filename, "w") as f:
+            f.write(nice)
+
