@@ -56,18 +56,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.saveButton.setEnabled(False)
         self.workoutTime.setDateTime(datetime.now())
 
-        use_file_date = self.settings.value(self.file_date_key, "True")
-        self.useFileDate.setChecked(use_file_date in ['True', 'true'])
+        use_file_date = self.settings.value(self.file_date_key, 'True')
+        self.useFileDate.setChecked(use_file_date in [True, 'True', 'true'])
 
-        include_speed = self.settings.value(self.include_speed_key, "True")
-        self.includeSpeedData.setChecked(include_speed in ['True', 'true'])
-
+        include_speed = self.settings.value(self.include_speed_key, 'True')
+        self.includeSpeedData.setChecked(include_speed in [True, 'True', 'true'])
+        
         power_adjust = float(self.settings.value(self.power_adjust_key, 0.0))
         self.powerAdjustment.setValue(power_adjust)
 
     def assignWidgets(self):
         """ Connect signals to slots """
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
+        self.includeSpeedData.stateChanged.connect(self.includeSpeedDataChanged)
+        self.powerAdjustment.valueChanged.connect(self.powerAdjustmenChanged)
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
         self.actionAbout.triggered.connect(self.showAbout)
@@ -78,12 +80,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         box.setText("MPowerTCX\n - %s" % message)
         box.exec_()
 
+    def powerAdjustmenChanged(self, value):
+        self.settings.setValue(self.power_adjust_key, value)
+    
+    def includeSpeedDataChanged(self, state):
+        value = state == Qt.Checked
+        self.settings.setValue(self.include_speed_key, value)
+    
     def useFileDateChanged(self, state):
         """ The checkbox was clicked """
-        self.workoutTime.setEnabled(state != Qt.Checked)
+        value = state == Qt.Checked
+        self.workoutTime.setEnabled(not value)
+        self.settings.setValue(self.file_date_key, value)
 
     def showAbout(self):
-        print ("about")
         about = About(self.version)
         about.exec_()
 
@@ -132,8 +142,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """ Let the user select a TCX file to save to. Store the data. """
         tcx_dir_key = "file/tcx_dir"
         tcx_dir = self.settings.value(tcx_dir_key, ".")
-
-        if self.useFileDate.isChecked():
+        use_file_date = self.useFileDate.isChecked()
+        
+        if use_file_date:
             start_time = self.in_file_info.created().toPython()
         else:
             start_time = self.workoutTime.dateTime().toPython()
@@ -171,9 +182,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         info = QFileInfo(filename)
         tcx_dir = info.absoluteDir().path()
         self.settings.setValue(tcx_dir_key, tcx_dir)
-        self.settings.setValue(self.include_speed_key, include_speed)
-        self.settings.setValue(self.power_adjust_key, power_adjust)
-
+        
 
 # Main logic
 if len(sys.argv) == 3:
