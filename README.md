@@ -47,7 +47,7 @@ If the USB logo fails to flash at the end of a ride, or the unit shuts off (cras
 ## Problems with Files
 I only have one model of indoor bike. It's possible that your bike produces a different file format.
 
-If you file doesn't work, feel free to send it my way.
+If your file doesn't work, feel free to send it my way.
 
 ## Converting your workout file to TCX
 
