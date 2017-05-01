@@ -25,6 +25,7 @@ from PySide.QtCore import *
 from about import Ui_Dialog
 from mainwindow import Ui_MainWindow
 from mpower import MPower
+from dateutil import tz
 import traceback
 
 class About(QDialog, Ui_Dialog):
@@ -145,10 +146,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         use_file_date = self.useFileDate.isChecked()
         
         if use_file_date:
-            start_time = self.in_file_info.created().toPython()
+            local_time = self.in_file_info.created().toPython()
         else:
-            start_time = self.workoutTime.dateTime().toPython()
+            local_time = self.workoutTime.dateTime().toPython()
+        
+        utc_zone = tz.tzutc()
+        local_zone = tz.tzlocal()
+        local_time = local_time.replace(tzinfo=local_zone)
+        start_time = local_time.astimezone(utc_zone)
 
+        print ("local %r" % local_time)
+        print ("utc %r" % start_time)
+        
         dialog = QFileDialog(self)
         dialog.selectFile(self.in_file_info.baseName() + ".tcx")
         dialog.setDirectory(tcx_dir)

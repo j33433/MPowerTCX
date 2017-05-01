@@ -347,7 +347,7 @@ class MPower(object):
 
     def _format_time(self, dt):
         """ Return a time string in TCX format """
-        return dt.isoformat() + "Z"
+        return dt.strftime("%Y-%m-%dT%H:%M:%S") + "Z"
 
     def _save_xml_cruft(self, root):
         """ The header stuff for the TCX XML """
