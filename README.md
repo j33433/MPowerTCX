@@ -1,7 +1,7 @@
 # MPowerTCX
 Share indoor cycle data with Strava, Golden Cheetah and other apps
 
-![Schwinn MPower Console](docs/components.png)
+![Schwinn MPower Console](docs/mpowertcx.png)
 
 ## Downloads
 
