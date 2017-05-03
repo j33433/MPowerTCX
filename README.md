@@ -1,5 +1,6 @@
 # MPowerTCX
-Share indoor cycle data with Strava, Golden Cheetah and other apps
+
+Share your indoor cycle workouts on Strava, Garmin Connect and Golden Cheetah.
 
 ![Schwinn MPower Console](docs/mpowertcx.png)
 
@@ -30,6 +31,8 @@ Contact j33433@gmail.com
 1. Strava
 1. Golden Cheetah
 1. Garmin Connect
+
+Other tools that support the TCX file format should work too.
 
 ## Getting the CSV Data
 1. Insert the USB thumb drive into the slot at the top of the console
