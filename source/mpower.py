@@ -108,7 +108,7 @@ class MPower(object):
         
         if line == []:
             pass
-        elif line == ['Stages_Data', '', '', '', '', '']:
+        elif line[0] == 'Stages_Data':
             self._load_stages(reader)
         elif line == ['RIDE SUMMARY', '']:
             self._load_v2_header(reader)
@@ -172,9 +172,11 @@ class MPower(object):
         distance = 0.0
         
         for row in reader:
-            if row == ['English', '', '', '', '', '']:
+            if row == []:
+                pass
+            elif row[0] == 'English':
                 self._stages_metric = False
-            elif row == ['Ride_Totals', '', '', '', '', '']:
+            elif row[0] == 'Ride_Totals':
                 self._load_stages_header(reader)
             elif len(row) == 6:
                 time = self._parse_stages_time(row[0])
