@@ -58,7 +58,13 @@ class Ride(object):
     def count(self):
         """ The number of samples in the time series """
         return len(self.power)
-
+        
+    def inferHeader(self, time=0):
+        average_power = sum(int(p) for p in self.power) / len(self.power)
+        max_power = max(int(p) for p in self.power)
+        print ("%d %d" % (average_power, max_power))
+        self.header.setSummary(time=time, distance=0, average_power=average_power, max_power=max_power)
+        
 class LineIterator(object):
     def __init__(self, stream):
         self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read())
@@ -170,6 +176,8 @@ class MPower(object):
     def _load_stages(self, reader):
         self._stages_metric = True
         distance = 0.0
+        header_found = False
+        last_time = 0
         
         for row in reader:
             if row == []:
@@ -178,8 +186,10 @@ class MPower(object):
                 self._stages_metric = False
             elif row[0] == 'Ride_Totals':
                 self._load_stages_header(reader)
+                header_found = True
             elif len(row) == 6:
                 time = self._parse_stages_time(row[0])
+                last_time = time
                 
                 if time >= 0:
                     # ['Time', 'Miles', 'MPH', 'Watts', 'HR', 'RPM']
@@ -198,6 +208,10 @@ class MPower(object):
                     print ("skip %r" % row)
             else:
                 print ("skip %r" % row)
+        
+        if not header_found:
+            print ("stages header missing")
+            self.ride.inferHeader(last_time)
         
     def _load_stages_header(self, reader):
         header = {}
