@@ -64,7 +64,7 @@ class Ride(object):
         max_power = max(int(p) for p in self.power)
         print ("%d %d" % (average_power, max_power))
         self.header.setSummary(time=time, distance=0, average_power=average_power, max_power=max_power)
-        
+    
 class LineIterator(object):
     def __init__(self, stream):
         self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read())
@@ -149,7 +149,7 @@ class MPower(object):
                     self._load_csv_chunk(reader)
             except StopIteration:
                 pass
-                
+
     def _parse_stages_time(self, time):
         # I've seen mm:ss or mm:ss:00 so far 
         parts = time.split(':')
@@ -313,8 +313,13 @@ class MPower(object):
 
     def _load_v1_data(self, reader):
         """ Read Echelon 1 time series """
+        last_time = 0
+        
         for row in reader:
-            if len(row):
+            if len(row) == 0:
+                break
+            elif len(row) == 6:
+                last_time = float(row[0]) * 60
                 self.ride.addSample(
                     power=row[3],
                     rpm=row[5],
@@ -322,7 +327,11 @@ class MPower(object):
                     distance=float(row[1]) * 1000.0
                 )
             else:
-                break
+                print ("skip %r" % row)
+
+        if self.ride.header.time == 0:
+            print ("v1 header missing")
+            self.ride.inferHeader(last_time)
 
     def _load_v3(self, reader):
         """ So called v3 is a messed up version of v1. I suspect it's an earlier firmware. """

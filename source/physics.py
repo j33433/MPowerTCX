@@ -31,12 +31,12 @@ class SimpleBike(object):
         return self.g * math.sin(math.atan(grade)) * self.mass
 
     def get_power(self, t):
-        if t > 20:
+        if t > 50:
             return 220
-        elif t > 10: 
+        elif t > 40: 
             return 60
         else:
-            return 500
+            return 300
 
     def next_velocity(self):
         t = self.x * self.dt
