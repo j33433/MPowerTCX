@@ -14,5 +14,6 @@ for f in files:
         csv_full = os.path.join(testdir, f)
         tcx_full = os.path.join(testdir, tcx)
 
-        print (csv_full, tcx_full)
-        subprocess.call(['./mpowertcx.py', csv_full, tcx_full])
+        # An arbitrary, fixed time for testing.
+        timestamp = '2010-10-19T20:56:35.450686'
+        subprocess.call(['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_full, '--time', timestamp])

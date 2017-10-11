@@ -2,8 +2,8 @@
 <TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2" xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
 	<Activities>
 		<Activity Sport="Biking">
-			<Id>2017-10-05T07:31:34Z</Id>
-			<Lap StartTime="2017-10-05T07:31:34Z">
+			<Id>2010-10-19T20:56:35Z</Id>
+			<Lap StartTime="2010-10-19T20:56:35Z">
 				<TotalTimeSeconds>0</TotalTimeSeconds>
 				<DistanceMeters>0.0</DistanceMeters>
 				<MaximumSpeed>0</MaximumSpeed>

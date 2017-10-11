@@ -19,7 +19,10 @@ license = """\
 
 import os
 import sys
+import argparse
+
 from datetime import datetime
+import dateutil.parser
 
 from PySide.QtGui import *
 from PySide.QtCore import *
@@ -194,17 +197,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.settings.setValue(tcx_dir_key, tcx_dir)
         
 
+
 # Main logic
-if len(sys.argv) == 3:
-    # Run from the command line
-    mpower = MPower(sys.argv[1])
-    mpower.load_csv()
-    stamp = datetime.fromtimestamp(os.path.getmtime(sys.argv[1]))
-    mpower.save_data(sys.argv[2], stamp)
-else:
+if len(sys.argv) == 1:
     # Run from the UI
     app = QApplication(sys.argv)
     mainWin = MainWindow()
     ret = app.exec_()
     sys.exit(ret)
-
+else:
+    # Run from the command line
+    parser = argparse.ArgumentParser(description='Share indoor cycle data with Strava, Golden Cheetah and other apps')
+    parser.add_argument("--csv", help="the spin bike file", required=True)
+    parser.add_argument("--tcx", help="the output file", required=True)
+    parser.add_argument("--time", help="the workout starting time")
+    args = parser.parse_args()
+    
+    mpower = MPower(args.csv)
+    mpower.load_csv()
+    
+    if args.time is not None:
+        stamp = dateutil.parser.parse(args.time)
+    else:
+        # Take input file time
+        stamp = datetime.fromtimestamp(os.path.getmtime(args.csv))
+        
+    mpower.save_data(args.tcx, stamp)
