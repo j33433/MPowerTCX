@@ -2,8 +2,8 @@
 <TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2" xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
 	<Activities>
 		<Activity Sport="Biking">
-			<Id>2017-10-05T18:22:56Z</Id>
-			<Lap StartTime="2017-10-05T18:22:56Z">
+			<Id>2017-10-05T12:53:17Z</Id>
+			<Lap StartTime="2017-10-05T12:53:17Z">
 				<TotalTimeSeconds>3246.0</TotalTimeSeconds>
 				<DistanceMeters>0.0</DistanceMeters>
 				<MaximumSpeed>0</MaximumSpeed>
@@ -19,7 +19,7 @@
 				<TriggerMethod>Manual</TriggerMethod>
 				<Track>
 					<Trackpoint>
-						<Time>2017-10-05T18:22:56Z</Time>
+						<Time>2017-10-05T12:53:17Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -32,7 +32,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:02Z</Time>
+						<Time>2017-10-05T12:53:23Z</Time>
 						<HeartRateBpm>
 							<Value>78</Value>
 						</HeartRateBpm>
@@ -45,7 +45,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:08Z</Time>
+						<Time>2017-10-05T12:53:29Z</Time>
 						<HeartRateBpm>
 							<Value>80</Value>
 						</HeartRateBpm>
@@ -58,7 +58,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:14Z</Time>
+						<Time>2017-10-05T12:53:35Z</Time>
 						<HeartRateBpm>
 							<Value>80</Value>
 						</HeartRateBpm>
@@ -71,7 +71,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:20Z</Time>
+						<Time>2017-10-05T12:53:41Z</Time>
 						<HeartRateBpm>
 							<Value>77</Value>
 						</HeartRateBpm>
@@ -84,7 +84,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:26Z</Time>
+						<Time>2017-10-05T12:53:47Z</Time>
 						<HeartRateBpm>
 							<Value>79</Value>
 						</HeartRateBpm>
@@ -97,7 +97,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:32Z</Time>
+						<Time>2017-10-05T12:53:53Z</Time>
 						<HeartRateBpm>
 							<Value>75</Value>
 						</HeartRateBpm>
@@ -110,7 +110,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:38Z</Time>
+						<Time>2017-10-05T12:53:59Z</Time>
 						<HeartRateBpm>
 							<Value>79</Value>
 						</HeartRateBpm>
@@ -123,7 +123,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:44Z</Time>
+						<Time>2017-10-05T12:54:05Z</Time>
 						<HeartRateBpm>
 							<Value>83</Value>
 						</HeartRateBpm>
@@ -136,7 +136,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:50Z</Time>
+						<Time>2017-10-05T12:54:11Z</Time>
 						<HeartRateBpm>
 							<Value>84</Value>
 						</HeartRateBpm>
@@ -149,7 +149,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:23:56Z</Time>
+						<Time>2017-10-05T12:54:17Z</Time>
 						<HeartRateBpm>
 							<Value>91</Value>
 						</HeartRateBpm>
@@ -162,7 +162,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:02Z</Time>
+						<Time>2017-10-05T12:54:23Z</Time>
 						<HeartRateBpm>
 							<Value>85</Value>
 						</HeartRateBpm>
@@ -175,7 +175,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:08Z</Time>
+						<Time>2017-10-05T12:54:29Z</Time>
 						<HeartRateBpm>
 							<Value>92</Value>
 						</HeartRateBpm>
@@ -188,7 +188,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:14Z</Time>
+						<Time>2017-10-05T12:54:35Z</Time>
 						<HeartRateBpm>
 							<Value>94</Value>
 						</HeartRateBpm>
@@ -201,7 +201,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:20Z</Time>
+						<Time>2017-10-05T12:54:41Z</Time>
 						<HeartRateBpm>
 							<Value>93</Value>
 						</HeartRateBpm>
@@ -214,7 +214,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:26Z</Time>
+						<Time>2017-10-05T12:54:47Z</Time>
 						<HeartRateBpm>
 							<Value>96</Value>
 						</HeartRateBpm>
@@ -227,7 +227,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:32Z</Time>
+						<Time>2017-10-05T12:54:53Z</Time>
 						<HeartRateBpm>
 							<Value>95</Value>
 						</HeartRateBpm>
@@ -240,7 +240,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:38Z</Time>
+						<Time>2017-10-05T12:54:59Z</Time>
 						<HeartRateBpm>
 							<Value>95</Value>
 						</HeartRateBpm>
@@ -253,7 +253,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:44Z</Time>
+						<Time>2017-10-05T12:55:05Z</Time>
 						<HeartRateBpm>
 							<Value>94</Value>
 						</HeartRateBpm>
@@ -266,7 +266,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:50Z</Time>
+						<Time>2017-10-05T12:55:11Z</Time>
 						<HeartRateBpm>
 							<Value>93</Value>
 						</HeartRateBpm>
@@ -279,7 +279,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:24:56Z</Time>
+						<Time>2017-10-05T12:55:17Z</Time>
 						<HeartRateBpm>
 							<Value>93</Value>
 						</HeartRateBpm>
@@ -292,7 +292,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:02Z</Time>
+						<Time>2017-10-05T12:55:23Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -305,7 +305,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:08Z</Time>
+						<Time>2017-10-05T12:55:29Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -318,7 +318,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:14Z</Time>
+						<Time>2017-10-05T12:55:35Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -331,7 +331,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:20Z</Time>
+						<Time>2017-10-05T12:55:41Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -344,7 +344,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:26Z</Time>
+						<Time>2017-10-05T12:55:47Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -357,7 +357,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:32Z</Time>
+						<Time>2017-10-05T12:55:53Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -370,7 +370,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:38Z</Time>
+						<Time>2017-10-05T12:55:59Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -383,7 +383,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:44Z</Time>
+						<Time>2017-10-05T12:56:05Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -396,7 +396,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:50Z</Time>
+						<Time>2017-10-05T12:56:11Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -409,7 +409,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:25:56Z</Time>
+						<Time>2017-10-05T12:56:17Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -422,7 +422,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:02Z</Time>
+						<Time>2017-10-05T12:56:23Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -435,7 +435,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:08Z</Time>
+						<Time>2017-10-05T12:56:29Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -448,7 +448,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:14Z</Time>
+						<Time>2017-10-05T12:56:35Z</Time>
 						<HeartRateBpm>
 							<Value>76</Value>
 						</HeartRateBpm>
@@ -461,7 +461,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:20Z</Time>
+						<Time>2017-10-05T12:56:41Z</Time>
 						<HeartRateBpm>
 							<Value>84</Value>
 						</HeartRateBpm>
@@ -474,7 +474,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:26Z</Time>
+						<Time>2017-10-05T12:56:47Z</Time>
 						<HeartRateBpm>
 							<Value>88</Value>
 						</HeartRateBpm>
@@ -487,7 +487,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:32Z</Time>
+						<Time>2017-10-05T12:56:53Z</Time>
 						<HeartRateBpm>
 							<Value>88</Value>
 						</HeartRateBpm>
@@ -500,7 +500,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:38Z</Time>
+						<Time>2017-10-05T12:56:59Z</Time>
 						<HeartRateBpm>
 							<Value>0</Value>
 						</HeartRateBpm>
@@ -513,7 +513,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:44Z</Time>
+						<Time>2017-10-05T12:57:05Z</Time>
 						<HeartRateBpm>
 							<Value>86</Value>
 						</HeartRateBpm>
@@ -526,7 +526,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:50Z</Time>
+						<Time>2017-10-05T12:57:11Z</Time>
 						<HeartRateBpm>
 							<Value>87</Value>
 						</HeartRateBpm>
@@ -539,7 +539,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:26:56Z</Time>
+						<Time>2017-10-05T12:57:17Z</Time>
 						<HeartRateBpm>
 							<Value>87</Value>
 						</HeartRateBpm>
@@ -552,7 +552,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:02Z</Time>
+						<Time>2017-10-05T12:57:23Z</Time>
 						<HeartRateBpm>
 							<Value>88</Value>
 						</HeartRateBpm>
@@ -565,7 +565,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:08Z</Time>
+						<Time>2017-10-05T12:57:29Z</Time>
 						<HeartRateBpm>
 							<Value>89</Value>
 						</HeartRateBpm>
@@ -578,7 +578,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:14Z</Time>
+						<Time>2017-10-05T12:57:35Z</Time>
 						<HeartRateBpm>
 							<Value>90</Value>
 						</HeartRateBpm>
@@ -591,7 +591,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:20Z</Time>
+						<Time>2017-10-05T12:57:41Z</Time>
 						<HeartRateBpm>
 							<Value>93</Value>
 						</HeartRateBpm>
@@ -604,7 +604,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:26Z</Time>
+						<Time>2017-10-05T12:57:47Z</Time>
 						<HeartRateBpm>
 							<Value>93</Value>
 						</HeartRateBpm>
@@ -617,7 +617,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:32Z</Time>
+						<Time>2017-10-05T12:57:53Z</Time>
 						<HeartRateBpm>
 							<Value>99</Value>
 						</HeartRateBpm>
@@ -630,7 +630,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:38Z</Time>
+						<Time>2017-10-05T12:57:59Z</Time>
 						<HeartRateBpm>
 							<Value>101</Value>
 						</HeartRateBpm>
@@ -643,7 +643,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:44Z</Time>
+						<Time>2017-10-05T12:58:05Z</Time>
 						<HeartRateBpm>
 							<Value>103</Value>
 						</HeartRateBpm>
@@ -656,7 +656,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:50Z</Time>
+						<Time>2017-10-05T12:58:11Z</Time>
 						<HeartRateBpm>
 							<Value>102</Value>
 						</HeartRateBpm>
@@ -669,7 +669,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:27:56Z</Time>
+						<Time>2017-10-05T12:58:17Z</Time>
 						<HeartRateBpm>
 							<Value>97</Value>
 						</HeartRateBpm>
@@ -682,7 +682,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:02Z</Time>
+						<Time>2017-10-05T12:58:23Z</Time>
 						<HeartRateBpm>
 							<Value>94</Value>
 						</HeartRateBpm>
@@ -695,7 +695,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:08Z</Time>
+						<Time>2017-10-05T12:58:29Z</Time>
 						<HeartRateBpm>
 							<Value>90</Value>
 						</HeartRateBpm>
@@ -708,7 +708,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:14Z</Time>
+						<Time>2017-10-05T12:58:35Z</Time>
 						<HeartRateBpm>
 							<Value>90</Value>
 						</HeartRateBpm>
@@ -721,7 +721,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:20Z</Time>
+						<Time>2017-10-05T12:58:41Z</Time>
 						<HeartRateBpm>
 							<Value>97</Value>
 						</HeartRateBpm>
@@ -734,7 +734,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:26Z</Time>
+						<Time>2017-10-05T12:58:47Z</Time>
 						<HeartRateBpm>
 							<Value>110</Value>
 						</HeartRateBpm>
@@ -747,7 +747,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:32Z</Time>
+						<Time>2017-10-05T12:58:53Z</Time>
 						<HeartRateBpm>
 							<Value>119</Value>
 						</HeartRateBpm>
@@ -760,7 +760,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:38Z</Time>
+						<Time>2017-10-05T12:58:59Z</Time>
 						<HeartRateBpm>
 							<Value>126</Value>
 						</HeartRateBpm>
@@ -773,7 +773,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:44Z</Time>
+						<Time>2017-10-05T12:59:05Z</Time>
 						<HeartRateBpm>
 							<Value>130</Value>
 						</HeartRateBpm>
@@ -786,7 +786,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:50Z</Time>
+						<Time>2017-10-05T12:59:11Z</Time>
 						<HeartRateBpm>
 							<Value>130</Value>
 						</HeartRateBpm>
@@ -799,7 +799,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:28:56Z</Time>
+						<Time>2017-10-05T12:59:17Z</Time>
 						<HeartRateBpm>
 							<Value>126</Value>
 						</HeartRateBpm>
@@ -812,7 +812,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:02Z</Time>
+						<Time>2017-10-05T12:59:23Z</Time>
 						<HeartRateBpm>
 							<Value>122</Value>
 						</HeartRateBpm>
@@ -825,7 +825,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:08Z</Time>
+						<Time>2017-10-05T12:59:29Z</Time>
 						<HeartRateBpm>
 							<Value>121</Value>
 						</HeartRateBpm>
@@ -838,7 +838,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:14Z</Time>
+						<Time>2017-10-05T12:59:35Z</Time>
 						<HeartRateBpm>
 							<Value>126</Value>
 						</HeartRateBpm>
@@ -851,7 +851,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:20Z</Time>
+						<Time>2017-10-05T12:59:41Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -864,7 +864,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:26Z</Time>
+						<Time>2017-10-05T12:59:47Z</Time>
 						<HeartRateBpm>
 							<Value>133</Value>
 						</HeartRateBpm>
@@ -877,7 +877,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:32Z</Time>
+						<Time>2017-10-05T12:59:53Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -890,7 +890,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:38Z</Time>
+						<Time>2017-10-05T12:59:59Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -903,7 +903,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:44Z</Time>
+						<Time>2017-10-05T13:00:05Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -916,7 +916,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:50Z</Time>
+						<Time>2017-10-05T13:00:11Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -929,7 +929,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:29:56Z</Time>
+						<Time>2017-10-05T13:00:17Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -942,7 +942,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:02Z</Time>
+						<Time>2017-10-05T13:00:23Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -955,7 +955,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:08Z</Time>
+						<Time>2017-10-05T13:00:29Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -968,7 +968,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:14Z</Time>
+						<Time>2017-10-05T13:00:35Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -981,7 +981,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:20Z</Time>
+						<Time>2017-10-05T13:00:41Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -994,7 +994,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:26Z</Time>
+						<Time>2017-10-05T13:00:47Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -1007,7 +1007,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:32Z</Time>
+						<Time>2017-10-05T13:00:53Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -1020,7 +1020,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:38Z</Time>
+						<Time>2017-10-05T13:00:59Z</Time>
 						<HeartRateBpm>
 							<Value>140</Value>
 						</HeartRateBpm>
@@ -1033,7 +1033,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:44Z</Time>
+						<Time>2017-10-05T13:01:05Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -1046,7 +1046,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:50Z</Time>
+						<Time>2017-10-05T13:01:11Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -1059,7 +1059,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:30:56Z</Time>
+						<Time>2017-10-05T13:01:17Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -1072,7 +1072,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:02Z</Time>
+						<Time>2017-10-05T13:01:23Z</Time>
 						<HeartRateBpm>
 							<Value>129</Value>
 						</HeartRateBpm>
@@ -1085,7 +1085,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:08Z</Time>
+						<Time>2017-10-05T13:01:29Z</Time>
 						<HeartRateBpm>
 							<Value>126</Value>
 						</HeartRateBpm>
@@ -1098,7 +1098,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:14Z</Time>
+						<Time>2017-10-05T13:01:35Z</Time>
 						<HeartRateBpm>
 							<Value>126</Value>
 						</HeartRateBpm>
@@ -1111,7 +1111,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:20Z</Time>
+						<Time>2017-10-05T13:01:41Z</Time>
 						<HeartRateBpm>
 							<Value>123</Value>
 						</HeartRateBpm>
@@ -1124,7 +1124,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:26Z</Time>
+						<Time>2017-10-05T13:01:47Z</Time>
 						<HeartRateBpm>
 							<Value>126</Value>
 						</HeartRateBpm>
@@ -1137,7 +1137,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:32Z</Time>
+						<Time>2017-10-05T13:01:53Z</Time>
 						<HeartRateBpm>
 							<Value>127</Value>
 						</HeartRateBpm>
@@ -1150,7 +1150,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:38Z</Time>
+						<Time>2017-10-05T13:01:59Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -1163,7 +1163,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:44Z</Time>
+						<Time>2017-10-05T13:02:05Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -1176,7 +1176,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:50Z</Time>
+						<Time>2017-10-05T13:02:11Z</Time>
 						<HeartRateBpm>
 							<Value>128</Value>
 						</HeartRateBpm>
@@ -1189,7 +1189,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:31:56Z</Time>
+						<Time>2017-10-05T13:02:17Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -1202,7 +1202,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:02Z</Time>
+						<Time>2017-10-05T13:02:23Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -1215,7 +1215,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:08Z</Time>
+						<Time>2017-10-05T13:02:29Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -1228,7 +1228,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:14Z</Time>
+						<Time>2017-10-05T13:02:35Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -1241,7 +1241,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:20Z</Time>
+						<Time>2017-10-05T13:02:41Z</Time>
 						<HeartRateBpm>
 							<Value>133</Value>
 						</HeartRateBpm>
@@ -1254,7 +1254,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:26Z</Time>
+						<Time>2017-10-05T13:02:47Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -1267,7 +1267,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:32Z</Time>
+						<Time>2017-10-05T13:02:53Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -1280,7 +1280,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:38Z</Time>
+						<Time>2017-10-05T13:02:59Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -1293,7 +1293,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:44Z</Time>
+						<Time>2017-10-05T13:03:05Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -1306,7 +1306,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:50Z</Time>
+						<Time>2017-10-05T13:03:11Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -1319,7 +1319,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:32:56Z</Time>
+						<Time>2017-10-05T13:03:17Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -1332,7 +1332,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:02Z</Time>
+						<Time>2017-10-05T13:03:23Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -1345,7 +1345,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:08Z</Time>
+						<Time>2017-10-05T13:03:29Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -1358,7 +1358,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:14Z</Time>
+						<Time>2017-10-05T13:03:35Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -1371,7 +1371,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:20Z</Time>
+						<Time>2017-10-05T13:03:41Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -1384,7 +1384,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:26Z</Time>
+						<Time>2017-10-05T13:03:47Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -1397,7 +1397,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:32Z</Time>
+						<Time>2017-10-05T13:03:53Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -1410,7 +1410,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:38Z</Time>
+						<Time>2017-10-05T13:03:59Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -1423,7 +1423,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:44Z</Time>
+						<Time>2017-10-05T13:04:05Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -1436,7 +1436,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:50Z</Time>
+						<Time>2017-10-05T13:04:11Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -1449,7 +1449,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:33:56Z</Time>
+						<Time>2017-10-05T13:04:17Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -1462,7 +1462,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:02Z</Time>
+						<Time>2017-10-05T13:04:23Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -1475,7 +1475,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:08Z</Time>
+						<Time>2017-10-05T13:04:29Z</Time>
 						<HeartRateBpm>
 							<Value>135</Value>
 						</HeartRateBpm>
@@ -1488,7 +1488,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:14Z</Time>
+						<Time>2017-10-05T13:04:35Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -1501,7 +1501,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:20Z</Time>
+						<Time>2017-10-05T13:04:41Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -1514,7 +1514,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:26Z</Time>
+						<Time>2017-10-05T13:04:47Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -1527,7 +1527,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:32Z</Time>
+						<Time>2017-10-05T13:04:53Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -1540,7 +1540,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:38Z</Time>
+						<Time>2017-10-05T13:04:59Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -1553,7 +1553,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:44Z</Time>
+						<Time>2017-10-05T13:05:05Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -1566,7 +1566,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:50Z</Time>
+						<Time>2017-10-05T13:05:11Z</Time>
 						<HeartRateBpm>
 							<Value>133</Value>
 						</HeartRateBpm>
@@ -1579,7 +1579,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:34:56Z</Time>
+						<Time>2017-10-05T13:05:17Z</Time>
 						<HeartRateBpm>
 							<Value>135</Value>
 						</HeartRateBpm>
@@ -1592,7 +1592,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:02Z</Time>
+						<Time>2017-10-05T13:05:23Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -1605,7 +1605,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:08Z</Time>
+						<Time>2017-10-05T13:05:29Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -1618,7 +1618,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:14Z</Time>
+						<Time>2017-10-05T13:05:35Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -1631,7 +1631,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:20Z</Time>
+						<Time>2017-10-05T13:05:41Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -1644,7 +1644,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:26Z</Time>
+						<Time>2017-10-05T13:05:47Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -1657,7 +1657,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:32Z</Time>
+						<Time>2017-10-05T13:05:53Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -1670,7 +1670,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:38Z</Time>
+						<Time>2017-10-05T13:05:59Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -1683,7 +1683,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:44Z</Time>
+						<Time>2017-10-05T13:06:05Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -1696,7 +1696,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:50Z</Time>
+						<Time>2017-10-05T13:06:11Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -1709,7 +1709,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:35:56Z</Time>
+						<Time>2017-10-05T13:06:17Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -1722,7 +1722,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:02Z</Time>
+						<Time>2017-10-05T13:06:23Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -1735,7 +1735,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:08Z</Time>
+						<Time>2017-10-05T13:06:29Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -1748,7 +1748,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:14Z</Time>
+						<Time>2017-10-05T13:06:35Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -1761,7 +1761,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:20Z</Time>
+						<Time>2017-10-05T13:06:41Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -1774,7 +1774,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:26Z</Time>
+						<Time>2017-10-05T13:06:47Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -1787,7 +1787,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:32Z</Time>
+						<Time>2017-10-05T13:06:53Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -1800,7 +1800,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:38Z</Time>
+						<Time>2017-10-05T13:06:59Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -1813,7 +1813,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:44Z</Time>
+						<Time>2017-10-05T13:07:05Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -1826,7 +1826,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:50Z</Time>
+						<Time>2017-10-05T13:07:11Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -1839,7 +1839,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:36:56Z</Time>
+						<Time>2017-10-05T13:07:17Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -1852,7 +1852,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:02Z</Time>
+						<Time>2017-10-05T13:07:23Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -1865,7 +1865,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:08Z</Time>
+						<Time>2017-10-05T13:07:29Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -1878,7 +1878,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:14Z</Time>
+						<Time>2017-10-05T13:07:35Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -1891,7 +1891,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:20Z</Time>
+						<Time>2017-10-05T13:07:41Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -1904,7 +1904,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:26Z</Time>
+						<Time>2017-10-05T13:07:47Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -1917,7 +1917,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:32Z</Time>
+						<Time>2017-10-05T13:07:53Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -1930,7 +1930,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:38Z</Time>
+						<Time>2017-10-05T13:07:59Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -1943,7 +1943,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:44Z</Time>
+						<Time>2017-10-05T13:08:05Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -1956,7 +1956,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:50Z</Time>
+						<Time>2017-10-05T13:08:11Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -1969,7 +1969,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:37:56Z</Time>
+						<Time>2017-10-05T13:08:17Z</Time>
 						<HeartRateBpm>
 							<Value>128</Value>
 						</HeartRateBpm>
@@ -1982,7 +1982,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:02Z</Time>
+						<Time>2017-10-05T13:08:23Z</Time>
 						<HeartRateBpm>
 							<Value>123</Value>
 						</HeartRateBpm>
@@ -1995,7 +1995,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:08Z</Time>
+						<Time>2017-10-05T13:08:29Z</Time>
 						<HeartRateBpm>
 							<Value>123</Value>
 						</HeartRateBpm>
@@ -2008,7 +2008,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:14Z</Time>
+						<Time>2017-10-05T13:08:35Z</Time>
 						<HeartRateBpm>
 							<Value>120</Value>
 						</HeartRateBpm>
@@ -2021,7 +2021,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:20Z</Time>
+						<Time>2017-10-05T13:08:41Z</Time>
 						<HeartRateBpm>
 							<Value>119</Value>
 						</HeartRateBpm>
@@ -2034,7 +2034,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:26Z</Time>
+						<Time>2017-10-05T13:08:47Z</Time>
 						<HeartRateBpm>
 							<Value>119</Value>
 						</HeartRateBpm>
@@ -2047,7 +2047,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:32Z</Time>
+						<Time>2017-10-05T13:08:53Z</Time>
 						<HeartRateBpm>
 							<Value>118</Value>
 						</HeartRateBpm>
@@ -2060,7 +2060,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:38Z</Time>
+						<Time>2017-10-05T13:08:59Z</Time>
 						<HeartRateBpm>
 							<Value>119</Value>
 						</HeartRateBpm>
@@ -2073,7 +2073,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:44Z</Time>
+						<Time>2017-10-05T13:09:05Z</Time>
 						<HeartRateBpm>
 							<Value>120</Value>
 						</HeartRateBpm>
@@ -2086,7 +2086,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:50Z</Time>
+						<Time>2017-10-05T13:09:11Z</Time>
 						<HeartRateBpm>
 							<Value>121</Value>
 						</HeartRateBpm>
@@ -2099,7 +2099,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:38:56Z</Time>
+						<Time>2017-10-05T13:09:17Z</Time>
 						<HeartRateBpm>
 							<Value>122</Value>
 						</HeartRateBpm>
@@ -2112,7 +2112,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:02Z</Time>
+						<Time>2017-10-05T13:09:23Z</Time>
 						<HeartRateBpm>
 							<Value>124</Value>
 						</HeartRateBpm>
@@ -2125,7 +2125,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:08Z</Time>
+						<Time>2017-10-05T13:09:29Z</Time>
 						<HeartRateBpm>
 							<Value>124</Value>
 						</HeartRateBpm>
@@ -2138,7 +2138,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:14Z</Time>
+						<Time>2017-10-05T13:09:35Z</Time>
 						<HeartRateBpm>
 							<Value>128</Value>
 						</HeartRateBpm>
@@ -2151,7 +2151,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:20Z</Time>
+						<Time>2017-10-05T13:09:41Z</Time>
 						<HeartRateBpm>
 							<Value>130</Value>
 						</HeartRateBpm>
@@ -2164,7 +2164,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:26Z</Time>
+						<Time>2017-10-05T13:09:47Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -2177,7 +2177,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:32Z</Time>
+						<Time>2017-10-05T13:09:53Z</Time>
 						<HeartRateBpm>
 							<Value>135</Value>
 						</HeartRateBpm>
@@ -2190,7 +2190,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:38Z</Time>
+						<Time>2017-10-05T13:09:59Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -2203,7 +2203,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:44Z</Time>
+						<Time>2017-10-05T13:10:05Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -2216,7 +2216,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:50Z</Time>
+						<Time>2017-10-05T13:10:11Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -2229,7 +2229,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:39:56Z</Time>
+						<Time>2017-10-05T13:10:17Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -2242,7 +2242,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:02Z</Time>
+						<Time>2017-10-05T13:10:23Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -2255,7 +2255,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:08Z</Time>
+						<Time>2017-10-05T13:10:29Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -2268,7 +2268,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:14Z</Time>
+						<Time>2017-10-05T13:10:35Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -2281,7 +2281,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:20Z</Time>
+						<Time>2017-10-05T13:10:41Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -2294,7 +2294,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:26Z</Time>
+						<Time>2017-10-05T13:10:47Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -2307,7 +2307,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:32Z</Time>
+						<Time>2017-10-05T13:10:53Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -2320,7 +2320,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:38Z</Time>
+						<Time>2017-10-05T13:10:59Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -2333,7 +2333,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:44Z</Time>
+						<Time>2017-10-05T13:11:05Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -2346,7 +2346,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:50Z</Time>
+						<Time>2017-10-05T13:11:11Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -2359,7 +2359,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:40:56Z</Time>
+						<Time>2017-10-05T13:11:17Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -2372,7 +2372,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:02Z</Time>
+						<Time>2017-10-05T13:11:23Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -2385,7 +2385,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:08Z</Time>
+						<Time>2017-10-05T13:11:29Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -2398,7 +2398,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:14Z</Time>
+						<Time>2017-10-05T13:11:35Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -2411,7 +2411,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:20Z</Time>
+						<Time>2017-10-05T13:11:41Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -2424,7 +2424,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:26Z</Time>
+						<Time>2017-10-05T13:11:47Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -2437,7 +2437,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:32Z</Time>
+						<Time>2017-10-05T13:11:53Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -2450,7 +2450,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:38Z</Time>
+						<Time>2017-10-05T13:11:59Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -2463,7 +2463,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:44Z</Time>
+						<Time>2017-10-05T13:12:05Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -2476,7 +2476,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:50Z</Time>
+						<Time>2017-10-05T13:12:11Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -2489,7 +2489,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:41:56Z</Time>
+						<Time>2017-10-05T13:12:17Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -2502,7 +2502,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:02Z</Time>
+						<Time>2017-10-05T13:12:23Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -2515,7 +2515,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:08Z</Time>
+						<Time>2017-10-05T13:12:29Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -2528,7 +2528,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:14Z</Time>
+						<Time>2017-10-05T13:12:35Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -2541,7 +2541,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:20Z</Time>
+						<Time>2017-10-05T13:12:41Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -2554,7 +2554,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:26Z</Time>
+						<Time>2017-10-05T13:12:47Z</Time>
 						<HeartRateBpm>
 							<Value>135</Value>
 						</HeartRateBpm>
@@ -2567,7 +2567,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:32Z</Time>
+						<Time>2017-10-05T13:12:53Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -2580,7 +2580,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:38Z</Time>
+						<Time>2017-10-05T13:12:59Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -2593,7 +2593,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:44Z</Time>
+						<Time>2017-10-05T13:13:05Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -2606,7 +2606,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:50Z</Time>
+						<Time>2017-10-05T13:13:11Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -2619,7 +2619,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:42:56Z</Time>
+						<Time>2017-10-05T13:13:17Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -2632,7 +2632,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:02Z</Time>
+						<Time>2017-10-05T13:13:23Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -2645,7 +2645,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:08Z</Time>
+						<Time>2017-10-05T13:13:29Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -2658,7 +2658,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:14Z</Time>
+						<Time>2017-10-05T13:13:35Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -2671,7 +2671,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:20Z</Time>
+						<Time>2017-10-05T13:13:41Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -2684,7 +2684,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:26Z</Time>
+						<Time>2017-10-05T13:13:47Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -2697,7 +2697,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:32Z</Time>
+						<Time>2017-10-05T13:13:53Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -2710,7 +2710,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:38Z</Time>
+						<Time>2017-10-05T13:13:59Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -2723,7 +2723,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:44Z</Time>
+						<Time>2017-10-05T13:14:05Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -2736,7 +2736,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:50Z</Time>
+						<Time>2017-10-05T13:14:11Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -2749,7 +2749,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:43:56Z</Time>
+						<Time>2017-10-05T13:14:17Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -2762,7 +2762,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:02Z</Time>
+						<Time>2017-10-05T13:14:23Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -2775,7 +2775,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:08Z</Time>
+						<Time>2017-10-05T13:14:29Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -2788,7 +2788,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:14Z</Time>
+						<Time>2017-10-05T13:14:35Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -2801,7 +2801,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:20Z</Time>
+						<Time>2017-10-05T13:14:41Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -2814,7 +2814,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:26Z</Time>
+						<Time>2017-10-05T13:14:47Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -2827,7 +2827,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:32Z</Time>
+						<Time>2017-10-05T13:14:53Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -2840,7 +2840,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:38Z</Time>
+						<Time>2017-10-05T13:14:59Z</Time>
 						<HeartRateBpm>
 							<Value>148</Value>
 						</HeartRateBpm>
@@ -2853,7 +2853,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:44Z</Time>
+						<Time>2017-10-05T13:15:05Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -2866,7 +2866,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:50Z</Time>
+						<Time>2017-10-05T13:15:11Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -2879,7 +2879,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:44:56Z</Time>
+						<Time>2017-10-05T13:15:17Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -2892,7 +2892,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:02Z</Time>
+						<Time>2017-10-05T13:15:23Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -2905,7 +2905,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:08Z</Time>
+						<Time>2017-10-05T13:15:29Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -2918,7 +2918,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:14Z</Time>
+						<Time>2017-10-05T13:15:35Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -2931,7 +2931,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:20Z</Time>
+						<Time>2017-10-05T13:15:41Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -2944,7 +2944,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:26Z</Time>
+						<Time>2017-10-05T13:15:47Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -2957,7 +2957,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:32Z</Time>
+						<Time>2017-10-05T13:15:53Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -2970,7 +2970,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:38Z</Time>
+						<Time>2017-10-05T13:15:59Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -2983,7 +2983,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:44Z</Time>
+						<Time>2017-10-05T13:16:05Z</Time>
 						<HeartRateBpm>
 							<Value>140</Value>
 						</HeartRateBpm>
@@ -2996,7 +2996,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:50Z</Time>
+						<Time>2017-10-05T13:16:11Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -3009,7 +3009,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:45:56Z</Time>
+						<Time>2017-10-05T13:16:17Z</Time>
 						<HeartRateBpm>
 							<Value>140</Value>
 						</HeartRateBpm>
@@ -3022,7 +3022,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:02Z</Time>
+						<Time>2017-10-05T13:16:23Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -3035,7 +3035,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:08Z</Time>
+						<Time>2017-10-05T13:16:29Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -3048,7 +3048,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:14Z</Time>
+						<Time>2017-10-05T13:16:35Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -3061,7 +3061,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:20Z</Time>
+						<Time>2017-10-05T13:16:41Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -3074,7 +3074,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:26Z</Time>
+						<Time>2017-10-05T13:16:47Z</Time>
 						<HeartRateBpm>
 							<Value>148</Value>
 						</HeartRateBpm>
@@ -3087,7 +3087,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:32Z</Time>
+						<Time>2017-10-05T13:16:53Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -3100,7 +3100,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:38Z</Time>
+						<Time>2017-10-05T13:16:59Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -3113,7 +3113,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:44Z</Time>
+						<Time>2017-10-05T13:17:05Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3126,7 +3126,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:50Z</Time>
+						<Time>2017-10-05T13:17:11Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -3139,7 +3139,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:46:56Z</Time>
+						<Time>2017-10-05T13:17:17Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -3152,7 +3152,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:02Z</Time>
+						<Time>2017-10-05T13:17:23Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -3165,7 +3165,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:08Z</Time>
+						<Time>2017-10-05T13:17:29Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -3178,7 +3178,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:14Z</Time>
+						<Time>2017-10-05T13:17:35Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -3191,7 +3191,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:20Z</Time>
+						<Time>2017-10-05T13:17:41Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -3204,7 +3204,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:26Z</Time>
+						<Time>2017-10-05T13:17:47Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -3217,7 +3217,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:32Z</Time>
+						<Time>2017-10-05T13:17:53Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -3230,7 +3230,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:38Z</Time>
+						<Time>2017-10-05T13:17:59Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -3243,7 +3243,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:44Z</Time>
+						<Time>2017-10-05T13:18:05Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -3256,7 +3256,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:50Z</Time>
+						<Time>2017-10-05T13:18:11Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3269,7 +3269,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:47:56Z</Time>
+						<Time>2017-10-05T13:18:17Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3282,7 +3282,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:02Z</Time>
+						<Time>2017-10-05T13:18:23Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -3295,7 +3295,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:08Z</Time>
+						<Time>2017-10-05T13:18:29Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3308,7 +3308,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:14Z</Time>
+						<Time>2017-10-05T13:18:35Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -3321,7 +3321,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:20Z</Time>
+						<Time>2017-10-05T13:18:41Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -3334,7 +3334,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:26Z</Time>
+						<Time>2017-10-05T13:18:47Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -3347,7 +3347,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:32Z</Time>
+						<Time>2017-10-05T13:18:53Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3360,7 +3360,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:38Z</Time>
+						<Time>2017-10-05T13:18:59Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -3373,7 +3373,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:44Z</Time>
+						<Time>2017-10-05T13:19:05Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -3386,7 +3386,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:50Z</Time>
+						<Time>2017-10-05T13:19:11Z</Time>
 						<HeartRateBpm>
 							<Value>148</Value>
 						</HeartRateBpm>
@@ -3399,7 +3399,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:48:56Z</Time>
+						<Time>2017-10-05T13:19:17Z</Time>
 						<HeartRateBpm>
 							<Value>148</Value>
 						</HeartRateBpm>
@@ -3412,7 +3412,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:02Z</Time>
+						<Time>2017-10-05T13:19:23Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -3425,7 +3425,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:08Z</Time>
+						<Time>2017-10-05T13:19:29Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -3438,7 +3438,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:14Z</Time>
+						<Time>2017-10-05T13:19:35Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -3451,7 +3451,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:20Z</Time>
+						<Time>2017-10-05T13:19:41Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -3464,7 +3464,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:26Z</Time>
+						<Time>2017-10-05T13:19:47Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -3477,7 +3477,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:32Z</Time>
+						<Time>2017-10-05T13:19:53Z</Time>
 						<HeartRateBpm>
 							<Value>133</Value>
 						</HeartRateBpm>
@@ -3490,7 +3490,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:38Z</Time>
+						<Time>2017-10-05T13:19:59Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -3503,7 +3503,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:44Z</Time>
+						<Time>2017-10-05T13:20:05Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -3516,7 +3516,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:50Z</Time>
+						<Time>2017-10-05T13:20:11Z</Time>
 						<HeartRateBpm>
 							<Value>135</Value>
 						</HeartRateBpm>
@@ -3529,7 +3529,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:49:56Z</Time>
+						<Time>2017-10-05T13:20:17Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -3542,7 +3542,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:02Z</Time>
+						<Time>2017-10-05T13:20:23Z</Time>
 						<HeartRateBpm>
 							<Value>133</Value>
 						</HeartRateBpm>
@@ -3555,7 +3555,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:08Z</Time>
+						<Time>2017-10-05T13:20:29Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -3568,7 +3568,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:14Z</Time>
+						<Time>2017-10-05T13:20:35Z</Time>
 						<HeartRateBpm>
 							<Value>133</Value>
 						</HeartRateBpm>
@@ -3581,7 +3581,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:20Z</Time>
+						<Time>2017-10-05T13:20:41Z</Time>
 						<HeartRateBpm>
 							<Value>136</Value>
 						</HeartRateBpm>
@@ -3594,7 +3594,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:26Z</Time>
+						<Time>2017-10-05T13:20:47Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -3607,7 +3607,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:32Z</Time>
+						<Time>2017-10-05T13:20:53Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -3620,7 +3620,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:38Z</Time>
+						<Time>2017-10-05T13:20:59Z</Time>
 						<HeartRateBpm>
 							<Value>135</Value>
 						</HeartRateBpm>
@@ -3633,7 +3633,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:44Z</Time>
+						<Time>2017-10-05T13:21:05Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -3646,7 +3646,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:50Z</Time>
+						<Time>2017-10-05T13:21:11Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -3659,7 +3659,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:50:56Z</Time>
+						<Time>2017-10-05T13:21:17Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -3672,7 +3672,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:02Z</Time>
+						<Time>2017-10-05T13:21:23Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -3685,7 +3685,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:08Z</Time>
+						<Time>2017-10-05T13:21:29Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -3698,7 +3698,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:14Z</Time>
+						<Time>2017-10-05T13:21:35Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -3711,7 +3711,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:20Z</Time>
+						<Time>2017-10-05T13:21:41Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -3724,7 +3724,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:26Z</Time>
+						<Time>2017-10-05T13:21:47Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -3737,7 +3737,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:32Z</Time>
+						<Time>2017-10-05T13:21:53Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3750,7 +3750,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:38Z</Time>
+						<Time>2017-10-05T13:21:59Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3763,7 +3763,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:44Z</Time>
+						<Time>2017-10-05T13:22:05Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3776,7 +3776,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:50Z</Time>
+						<Time>2017-10-05T13:22:11Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3789,7 +3789,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:51:56Z</Time>
+						<Time>2017-10-05T13:22:17Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -3802,7 +3802,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:02Z</Time>
+						<Time>2017-10-05T13:22:23Z</Time>
 						<HeartRateBpm>
 							<Value>161</Value>
 						</HeartRateBpm>
@@ -3815,7 +3815,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:08Z</Time>
+						<Time>2017-10-05T13:22:29Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -3828,7 +3828,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:14Z</Time>
+						<Time>2017-10-05T13:22:35Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -3841,7 +3841,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:20Z</Time>
+						<Time>2017-10-05T13:22:41Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -3854,7 +3854,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:26Z</Time>
+						<Time>2017-10-05T13:22:47Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -3867,7 +3867,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:32Z</Time>
+						<Time>2017-10-05T13:22:53Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -3880,7 +3880,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:38Z</Time>
+						<Time>2017-10-05T13:22:59Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -3893,7 +3893,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:44Z</Time>
+						<Time>2017-10-05T13:23:05Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -3906,7 +3906,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:50Z</Time>
+						<Time>2017-10-05T13:23:11Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -3919,7 +3919,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:52:56Z</Time>
+						<Time>2017-10-05T13:23:17Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3932,7 +3932,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:02Z</Time>
+						<Time>2017-10-05T13:23:23Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -3945,7 +3945,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:08Z</Time>
+						<Time>2017-10-05T13:23:29Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -3958,7 +3958,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:14Z</Time>
+						<Time>2017-10-05T13:23:35Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -3971,7 +3971,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:20Z</Time>
+						<Time>2017-10-05T13:23:41Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -3984,7 +3984,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:26Z</Time>
+						<Time>2017-10-05T13:23:47Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -3997,7 +3997,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:32Z</Time>
+						<Time>2017-10-05T13:23:53Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -4010,7 +4010,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:38Z</Time>
+						<Time>2017-10-05T13:23:59Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -4023,7 +4023,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:44Z</Time>
+						<Time>2017-10-05T13:24:05Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -4036,7 +4036,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:50Z</Time>
+						<Time>2017-10-05T13:24:11Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -4049,7 +4049,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:53:56Z</Time>
+						<Time>2017-10-05T13:24:17Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -4062,7 +4062,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:02Z</Time>
+						<Time>2017-10-05T13:24:23Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -4075,7 +4075,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:08Z</Time>
+						<Time>2017-10-05T13:24:29Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -4088,7 +4088,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:14Z</Time>
+						<Time>2017-10-05T13:24:35Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -4101,7 +4101,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:20Z</Time>
+						<Time>2017-10-05T13:24:41Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -4114,7 +4114,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:26Z</Time>
+						<Time>2017-10-05T13:24:47Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -4127,7 +4127,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:32Z</Time>
+						<Time>2017-10-05T13:24:53Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -4140,7 +4140,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:38Z</Time>
+						<Time>2017-10-05T13:24:59Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -4153,7 +4153,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:44Z</Time>
+						<Time>2017-10-05T13:25:05Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -4166,7 +4166,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:50Z</Time>
+						<Time>2017-10-05T13:25:11Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -4179,7 +4179,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:54:56Z</Time>
+						<Time>2017-10-05T13:25:17Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -4192,7 +4192,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:02Z</Time>
+						<Time>2017-10-05T13:25:23Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -4205,7 +4205,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:08Z</Time>
+						<Time>2017-10-05T13:25:29Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -4218,7 +4218,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:14Z</Time>
+						<Time>2017-10-05T13:25:35Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -4231,7 +4231,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:20Z</Time>
+						<Time>2017-10-05T13:25:41Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -4244,7 +4244,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:26Z</Time>
+						<Time>2017-10-05T13:25:47Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4257,7 +4257,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:32Z</Time>
+						<Time>2017-10-05T13:25:53Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -4270,7 +4270,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:38Z</Time>
+						<Time>2017-10-05T13:25:59Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -4283,7 +4283,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:44Z</Time>
+						<Time>2017-10-05T13:26:05Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -4296,7 +4296,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:50Z</Time>
+						<Time>2017-10-05T13:26:11Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4309,7 +4309,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:55:56Z</Time>
+						<Time>2017-10-05T13:26:17Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4322,7 +4322,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:02Z</Time>
+						<Time>2017-10-05T13:26:23Z</Time>
 						<HeartRateBpm>
 							<Value>161</Value>
 						</HeartRateBpm>
@@ -4335,7 +4335,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:08Z</Time>
+						<Time>2017-10-05T13:26:29Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -4348,7 +4348,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:14Z</Time>
+						<Time>2017-10-05T13:26:35Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -4361,7 +4361,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:20Z</Time>
+						<Time>2017-10-05T13:26:41Z</Time>
 						<HeartRateBpm>
 							<Value>168</Value>
 						</HeartRateBpm>
@@ -4374,7 +4374,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:26Z</Time>
+						<Time>2017-10-05T13:26:47Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -4387,7 +4387,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:32Z</Time>
+						<Time>2017-10-05T13:26:53Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -4400,7 +4400,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:38Z</Time>
+						<Time>2017-10-05T13:26:59Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -4413,7 +4413,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:44Z</Time>
+						<Time>2017-10-05T13:27:05Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4426,7 +4426,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:50Z</Time>
+						<Time>2017-10-05T13:27:11Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -4439,7 +4439,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:56:56Z</Time>
+						<Time>2017-10-05T13:27:17Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -4452,7 +4452,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:02Z</Time>
+						<Time>2017-10-05T13:27:23Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -4465,7 +4465,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:08Z</Time>
+						<Time>2017-10-05T13:27:29Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -4478,7 +4478,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:14Z</Time>
+						<Time>2017-10-05T13:27:35Z</Time>
 						<HeartRateBpm>
 							<Value>135</Value>
 						</HeartRateBpm>
@@ -4491,7 +4491,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:20Z</Time>
+						<Time>2017-10-05T13:27:41Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -4504,7 +4504,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:26Z</Time>
+						<Time>2017-10-05T13:27:47Z</Time>
 						<HeartRateBpm>
 							<Value>127</Value>
 						</HeartRateBpm>
@@ -4517,7 +4517,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:32Z</Time>
+						<Time>2017-10-05T13:27:53Z</Time>
 						<HeartRateBpm>
 							<Value>130</Value>
 						</HeartRateBpm>
@@ -4530,7 +4530,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:38Z</Time>
+						<Time>2017-10-05T13:27:59Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -4543,7 +4543,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:44Z</Time>
+						<Time>2017-10-05T13:28:05Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -4556,7 +4556,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:50Z</Time>
+						<Time>2017-10-05T13:28:11Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -4569,7 +4569,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:57:56Z</Time>
+						<Time>2017-10-05T13:28:17Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -4582,7 +4582,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:02Z</Time>
+						<Time>2017-10-05T13:28:23Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -4595,7 +4595,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:08Z</Time>
+						<Time>2017-10-05T13:28:29Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -4608,7 +4608,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:14Z</Time>
+						<Time>2017-10-05T13:28:35Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -4621,7 +4621,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:20Z</Time>
+						<Time>2017-10-05T13:28:41Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -4634,7 +4634,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:26Z</Time>
+						<Time>2017-10-05T13:28:47Z</Time>
 						<HeartRateBpm>
 							<Value>161</Value>
 						</HeartRateBpm>
@@ -4647,7 +4647,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:32Z</Time>
+						<Time>2017-10-05T13:28:53Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -4660,7 +4660,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:38Z</Time>
+						<Time>2017-10-05T13:28:59Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -4673,7 +4673,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:44Z</Time>
+						<Time>2017-10-05T13:29:05Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -4686,7 +4686,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:50Z</Time>
+						<Time>2017-10-05T13:29:11Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -4699,7 +4699,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:58:56Z</Time>
+						<Time>2017-10-05T13:29:17Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -4712,7 +4712,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:02Z</Time>
+						<Time>2017-10-05T13:29:23Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4725,7 +4725,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:08Z</Time>
+						<Time>2017-10-05T13:29:29Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -4738,7 +4738,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:14Z</Time>
+						<Time>2017-10-05T13:29:35Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4751,7 +4751,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:20Z</Time>
+						<Time>2017-10-05T13:29:41Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -4764,7 +4764,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:26Z</Time>
+						<Time>2017-10-05T13:29:47Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -4777,7 +4777,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:32Z</Time>
+						<Time>2017-10-05T13:29:53Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -4790,7 +4790,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:38Z</Time>
+						<Time>2017-10-05T13:29:59Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -4803,7 +4803,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:44Z</Time>
+						<Time>2017-10-05T13:30:05Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -4816,7 +4816,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:50Z</Time>
+						<Time>2017-10-05T13:30:11Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4829,7 +4829,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T18:59:56Z</Time>
+						<Time>2017-10-05T13:30:17Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -4842,7 +4842,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:02Z</Time>
+						<Time>2017-10-05T13:30:23Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -4855,7 +4855,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:08Z</Time>
+						<Time>2017-10-05T13:30:29Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -4868,7 +4868,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:14Z</Time>
+						<Time>2017-10-05T13:30:35Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -4881,7 +4881,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:20Z</Time>
+						<Time>2017-10-05T13:30:41Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -4894,7 +4894,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:26Z</Time>
+						<Time>2017-10-05T13:30:47Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -4907,7 +4907,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:32Z</Time>
+						<Time>2017-10-05T13:30:53Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -4920,7 +4920,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:38Z</Time>
+						<Time>2017-10-05T13:30:59Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -4933,7 +4933,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:44Z</Time>
+						<Time>2017-10-05T13:31:05Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -4946,7 +4946,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:50Z</Time>
+						<Time>2017-10-05T13:31:11Z</Time>
 						<HeartRateBpm>
 							<Value>138</Value>
 						</HeartRateBpm>
@@ -4959,7 +4959,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:00:56Z</Time>
+						<Time>2017-10-05T13:31:17Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -4972,7 +4972,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:02Z</Time>
+						<Time>2017-10-05T13:31:23Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -4985,7 +4985,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:08Z</Time>
+						<Time>2017-10-05T13:31:29Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -4998,7 +4998,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:14Z</Time>
+						<Time>2017-10-05T13:31:35Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -5011,7 +5011,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:20Z</Time>
+						<Time>2017-10-05T13:31:41Z</Time>
 						<HeartRateBpm>
 							<Value>148</Value>
 						</HeartRateBpm>
@@ -5024,7 +5024,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:26Z</Time>
+						<Time>2017-10-05T13:31:47Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -5037,7 +5037,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:32Z</Time>
+						<Time>2017-10-05T13:31:53Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -5050,7 +5050,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:38Z</Time>
+						<Time>2017-10-05T13:31:59Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -5063,7 +5063,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:44Z</Time>
+						<Time>2017-10-05T13:32:05Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -5076,7 +5076,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:50Z</Time>
+						<Time>2017-10-05T13:32:11Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -5089,7 +5089,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:01:56Z</Time>
+						<Time>2017-10-05T13:32:17Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -5102,7 +5102,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:02Z</Time>
+						<Time>2017-10-05T13:32:23Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -5115,7 +5115,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:08Z</Time>
+						<Time>2017-10-05T13:32:29Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -5128,7 +5128,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:14Z</Time>
+						<Time>2017-10-05T13:32:35Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -5141,7 +5141,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:20Z</Time>
+						<Time>2017-10-05T13:32:41Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -5154,7 +5154,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:26Z</Time>
+						<Time>2017-10-05T13:32:47Z</Time>
 						<HeartRateBpm>
 							<Value>168</Value>
 						</HeartRateBpm>
@@ -5167,7 +5167,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:32Z</Time>
+						<Time>2017-10-05T13:32:53Z</Time>
 						<HeartRateBpm>
 							<Value>168</Value>
 						</HeartRateBpm>
@@ -5180,7 +5180,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:38Z</Time>
+						<Time>2017-10-05T13:32:59Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -5193,7 +5193,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:44Z</Time>
+						<Time>2017-10-05T13:33:05Z</Time>
 						<HeartRateBpm>
 							<Value>170</Value>
 						</HeartRateBpm>
@@ -5206,7 +5206,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:50Z</Time>
+						<Time>2017-10-05T13:33:11Z</Time>
 						<HeartRateBpm>
 							<Value>170</Value>
 						</HeartRateBpm>
@@ -5219,7 +5219,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:02:56Z</Time>
+						<Time>2017-10-05T13:33:17Z</Time>
 						<HeartRateBpm>
 							<Value>170</Value>
 						</HeartRateBpm>
@@ -5232,7 +5232,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:02Z</Time>
+						<Time>2017-10-05T13:33:23Z</Time>
 						<HeartRateBpm>
 							<Value>171</Value>
 						</HeartRateBpm>
@@ -5245,7 +5245,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:08Z</Time>
+						<Time>2017-10-05T13:33:29Z</Time>
 						<HeartRateBpm>
 							<Value>173</Value>
 						</HeartRateBpm>
@@ -5258,7 +5258,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:14Z</Time>
+						<Time>2017-10-05T13:33:35Z</Time>
 						<HeartRateBpm>
 							<Value>172</Value>
 						</HeartRateBpm>
@@ -5271,7 +5271,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:20Z</Time>
+						<Time>2017-10-05T13:33:41Z</Time>
 						<HeartRateBpm>
 							<Value>171</Value>
 						</HeartRateBpm>
@@ -5284,7 +5284,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:26Z</Time>
+						<Time>2017-10-05T13:33:47Z</Time>
 						<HeartRateBpm>
 							<Value>171</Value>
 						</HeartRateBpm>
@@ -5297,7 +5297,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:32Z</Time>
+						<Time>2017-10-05T13:33:53Z</Time>
 						<HeartRateBpm>
 							<Value>172</Value>
 						</HeartRateBpm>
@@ -5310,7 +5310,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:38Z</Time>
+						<Time>2017-10-05T13:33:59Z</Time>
 						<HeartRateBpm>
 							<Value>172</Value>
 						</HeartRateBpm>
@@ -5323,7 +5323,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:44Z</Time>
+						<Time>2017-10-05T13:34:05Z</Time>
 						<HeartRateBpm>
 							<Value>172</Value>
 						</HeartRateBpm>
@@ -5336,7 +5336,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:50Z</Time>
+						<Time>2017-10-05T13:34:11Z</Time>
 						<HeartRateBpm>
 							<Value>172</Value>
 						</HeartRateBpm>
@@ -5349,7 +5349,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:03:56Z</Time>
+						<Time>2017-10-05T13:34:17Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -5362,7 +5362,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:02Z</Time>
+						<Time>2017-10-05T13:34:23Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -5375,7 +5375,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:08Z</Time>
+						<Time>2017-10-05T13:34:29Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -5388,7 +5388,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:14Z</Time>
+						<Time>2017-10-05T13:34:35Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -5401,7 +5401,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:20Z</Time>
+						<Time>2017-10-05T13:34:41Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -5414,7 +5414,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:26Z</Time>
+						<Time>2017-10-05T13:34:47Z</Time>
 						<HeartRateBpm>
 							<Value>141</Value>
 						</HeartRateBpm>
@@ -5427,7 +5427,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:32Z</Time>
+						<Time>2017-10-05T13:34:53Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -5440,7 +5440,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:38Z</Time>
+						<Time>2017-10-05T13:34:59Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -5453,7 +5453,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:44Z</Time>
+						<Time>2017-10-05T13:35:05Z</Time>
 						<HeartRateBpm>
 							<Value>129</Value>
 						</HeartRateBpm>
@@ -5466,7 +5466,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:50Z</Time>
+						<Time>2017-10-05T13:35:11Z</Time>
 						<HeartRateBpm>
 							<Value>128</Value>
 						</HeartRateBpm>
@@ -5479,7 +5479,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:04:56Z</Time>
+						<Time>2017-10-05T13:35:17Z</Time>
 						<HeartRateBpm>
 							<Value>127</Value>
 						</HeartRateBpm>
@@ -5492,7 +5492,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:02Z</Time>
+						<Time>2017-10-05T13:35:23Z</Time>
 						<HeartRateBpm>
 							<Value>128</Value>
 						</HeartRateBpm>
@@ -5505,7 +5505,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:08Z</Time>
+						<Time>2017-10-05T13:35:29Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -5518,7 +5518,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:14Z</Time>
+						<Time>2017-10-05T13:35:35Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -5531,7 +5531,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:20Z</Time>
+						<Time>2017-10-05T13:35:41Z</Time>
 						<HeartRateBpm>
 							<Value>151</Value>
 						</HeartRateBpm>
@@ -5544,7 +5544,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:26Z</Time>
+						<Time>2017-10-05T13:35:47Z</Time>
 						<HeartRateBpm>
 							<Value>155</Value>
 						</HeartRateBpm>
@@ -5557,7 +5557,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:32Z</Time>
+						<Time>2017-10-05T13:35:53Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -5570,7 +5570,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:38Z</Time>
+						<Time>2017-10-05T13:35:59Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -5583,7 +5583,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:44Z</Time>
+						<Time>2017-10-05T13:36:05Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -5596,7 +5596,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:50Z</Time>
+						<Time>2017-10-05T13:36:11Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -5609,7 +5609,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:05:56Z</Time>
+						<Time>2017-10-05T13:36:17Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -5622,7 +5622,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:02Z</Time>
+						<Time>2017-10-05T13:36:23Z</Time>
 						<HeartRateBpm>
 							<Value>152</Value>
 						</HeartRateBpm>
@@ -5635,7 +5635,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:08Z</Time>
+						<Time>2017-10-05T13:36:29Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -5648,7 +5648,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:14Z</Time>
+						<Time>2017-10-05T13:36:35Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -5661,7 +5661,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:20Z</Time>
+						<Time>2017-10-05T13:36:41Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -5674,7 +5674,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:26Z</Time>
+						<Time>2017-10-05T13:36:47Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -5687,7 +5687,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:32Z</Time>
+						<Time>2017-10-05T13:36:53Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -5700,7 +5700,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:38Z</Time>
+						<Time>2017-10-05T13:36:59Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -5713,7 +5713,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:44Z</Time>
+						<Time>2017-10-05T13:37:05Z</Time>
 						<HeartRateBpm>
 							<Value>161</Value>
 						</HeartRateBpm>
@@ -5726,7 +5726,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:50Z</Time>
+						<Time>2017-10-05T13:37:11Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -5739,7 +5739,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:06:56Z</Time>
+						<Time>2017-10-05T13:37:17Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -5752,7 +5752,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:02Z</Time>
+						<Time>2017-10-05T13:37:23Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -5765,7 +5765,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:08Z</Time>
+						<Time>2017-10-05T13:37:29Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -5778,7 +5778,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:14Z</Time>
+						<Time>2017-10-05T13:37:35Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -5791,7 +5791,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:20Z</Time>
+						<Time>2017-10-05T13:37:41Z</Time>
 						<HeartRateBpm>
 							<Value>168</Value>
 						</HeartRateBpm>
@@ -5804,7 +5804,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:26Z</Time>
+						<Time>2017-10-05T13:37:47Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -5817,7 +5817,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:32Z</Time>
+						<Time>2017-10-05T13:37:53Z</Time>
 						<HeartRateBpm>
 							<Value>170</Value>
 						</HeartRateBpm>
@@ -5830,7 +5830,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:38Z</Time>
+						<Time>2017-10-05T13:37:59Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -5843,7 +5843,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:44Z</Time>
+						<Time>2017-10-05T13:38:05Z</Time>
 						<HeartRateBpm>
 							<Value>160</Value>
 						</HeartRateBpm>
@@ -5856,7 +5856,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:50Z</Time>
+						<Time>2017-10-05T13:38:11Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -5869,7 +5869,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:07:56Z</Time>
+						<Time>2017-10-05T13:38:17Z</Time>
 						<HeartRateBpm>
 							<Value>161</Value>
 						</HeartRateBpm>
@@ -5882,7 +5882,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:02Z</Time>
+						<Time>2017-10-05T13:38:23Z</Time>
 						<HeartRateBpm>
 							<Value>156</Value>
 						</HeartRateBpm>
@@ -5895,7 +5895,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:08Z</Time>
+						<Time>2017-10-05T13:38:29Z</Time>
 						<HeartRateBpm>
 							<Value>150</Value>
 						</HeartRateBpm>
@@ -5908,7 +5908,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:14Z</Time>
+						<Time>2017-10-05T13:38:35Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -5921,7 +5921,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:20Z</Time>
+						<Time>2017-10-05T13:38:41Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -5934,7 +5934,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:26Z</Time>
+						<Time>2017-10-05T13:38:47Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -5947,7 +5947,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:32Z</Time>
+						<Time>2017-10-05T13:38:53Z</Time>
 						<HeartRateBpm>
 							<Value>142</Value>
 						</HeartRateBpm>
@@ -5960,7 +5960,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:38Z</Time>
+						<Time>2017-10-05T13:38:59Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -5973,7 +5973,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:44Z</Time>
+						<Time>2017-10-05T13:39:05Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -5986,7 +5986,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:50Z</Time>
+						<Time>2017-10-05T13:39:11Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -5999,7 +5999,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:08:56Z</Time>
+						<Time>2017-10-05T13:39:17Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -6012,7 +6012,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:02Z</Time>
+						<Time>2017-10-05T13:39:23Z</Time>
 						<HeartRateBpm>
 							<Value>140</Value>
 						</HeartRateBpm>
@@ -6025,7 +6025,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:08Z</Time>
+						<Time>2017-10-05T13:39:29Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -6038,7 +6038,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:14Z</Time>
+						<Time>2017-10-05T13:39:35Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -6051,7 +6051,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:20Z</Time>
+						<Time>2017-10-05T13:39:41Z</Time>
 						<HeartRateBpm>
 							<Value>145</Value>
 						</HeartRateBpm>
@@ -6064,7 +6064,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:26Z</Time>
+						<Time>2017-10-05T13:39:47Z</Time>
 						<HeartRateBpm>
 							<Value>148</Value>
 						</HeartRateBpm>
@@ -6077,7 +6077,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:32Z</Time>
+						<Time>2017-10-05T13:39:53Z</Time>
 						<HeartRateBpm>
 							<Value>157</Value>
 						</HeartRateBpm>
@@ -6090,7 +6090,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:38Z</Time>
+						<Time>2017-10-05T13:39:59Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -6103,7 +6103,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:44Z</Time>
+						<Time>2017-10-05T13:40:05Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -6116,7 +6116,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:50Z</Time>
+						<Time>2017-10-05T13:40:11Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -6129,7 +6129,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:09:56Z</Time>
+						<Time>2017-10-05T13:40:17Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -6142,7 +6142,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:02Z</Time>
+						<Time>2017-10-05T13:40:23Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -6155,7 +6155,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:08Z</Time>
+						<Time>2017-10-05T13:40:29Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -6168,7 +6168,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:14Z</Time>
+						<Time>2017-10-05T13:40:35Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -6181,7 +6181,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:20Z</Time>
+						<Time>2017-10-05T13:40:41Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -6194,7 +6194,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:26Z</Time>
+						<Time>2017-10-05T13:40:47Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -6207,7 +6207,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:32Z</Time>
+						<Time>2017-10-05T13:40:53Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -6220,7 +6220,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:38Z</Time>
+						<Time>2017-10-05T13:40:59Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -6233,7 +6233,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:44Z</Time>
+						<Time>2017-10-05T13:41:05Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -6246,7 +6246,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:50Z</Time>
+						<Time>2017-10-05T13:41:11Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -6259,7 +6259,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:10:56Z</Time>
+						<Time>2017-10-05T13:41:17Z</Time>
 						<HeartRateBpm>
 							<Value>139</Value>
 						</HeartRateBpm>
@@ -6272,7 +6272,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:02Z</Time>
+						<Time>2017-10-05T13:41:23Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -6285,7 +6285,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:08Z</Time>
+						<Time>2017-10-05T13:41:29Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -6298,7 +6298,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:14Z</Time>
+						<Time>2017-10-05T13:41:35Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -6311,7 +6311,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:20Z</Time>
+						<Time>2017-10-05T13:41:41Z</Time>
 						<HeartRateBpm>
 							<Value>129</Value>
 						</HeartRateBpm>
@@ -6324,7 +6324,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:26Z</Time>
+						<Time>2017-10-05T13:41:47Z</Time>
 						<HeartRateBpm>
 							<Value>127</Value>
 						</HeartRateBpm>
@@ -6337,7 +6337,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:32Z</Time>
+						<Time>2017-10-05T13:41:53Z</Time>
 						<HeartRateBpm>
 							<Value>126</Value>
 						</HeartRateBpm>
@@ -6350,7 +6350,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:38Z</Time>
+						<Time>2017-10-05T13:41:59Z</Time>
 						<HeartRateBpm>
 							<Value>127</Value>
 						</HeartRateBpm>
@@ -6363,7 +6363,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:44Z</Time>
+						<Time>2017-10-05T13:42:05Z</Time>
 						<HeartRateBpm>
 							<Value>128</Value>
 						</HeartRateBpm>
@@ -6376,7 +6376,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:50Z</Time>
+						<Time>2017-10-05T13:42:11Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -6389,7 +6389,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:11:56Z</Time>
+						<Time>2017-10-05T13:42:17Z</Time>
 						<HeartRateBpm>
 							<Value>131</Value>
 						</HeartRateBpm>
@@ -6402,7 +6402,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:02Z</Time>
+						<Time>2017-10-05T13:42:23Z</Time>
 						<HeartRateBpm>
 							<Value>132</Value>
 						</HeartRateBpm>
@@ -6415,7 +6415,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:08Z</Time>
+						<Time>2017-10-05T13:42:29Z</Time>
 						<HeartRateBpm>
 							<Value>134</Value>
 						</HeartRateBpm>
@@ -6428,7 +6428,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:14Z</Time>
+						<Time>2017-10-05T13:42:35Z</Time>
 						<HeartRateBpm>
 							<Value>133</Value>
 						</HeartRateBpm>
@@ -6441,7 +6441,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:20Z</Time>
+						<Time>2017-10-05T13:42:41Z</Time>
 						<HeartRateBpm>
 							<Value>137</Value>
 						</HeartRateBpm>
@@ -6454,7 +6454,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:26Z</Time>
+						<Time>2017-10-05T13:42:47Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -6467,7 +6467,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:32Z</Time>
+						<Time>2017-10-05T13:42:53Z</Time>
 						<HeartRateBpm>
 							<Value>158</Value>
 						</HeartRateBpm>
@@ -6480,7 +6480,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:38Z</Time>
+						<Time>2017-10-05T13:42:59Z</Time>
 						<HeartRateBpm>
 							<Value>164</Value>
 						</HeartRateBpm>
@@ -6493,7 +6493,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:44Z</Time>
+						<Time>2017-10-05T13:43:05Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -6506,7 +6506,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:50Z</Time>
+						<Time>2017-10-05T13:43:11Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -6519,7 +6519,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:12:56Z</Time>
+						<Time>2017-10-05T13:43:17Z</Time>
 						<HeartRateBpm>
 							<Value>162</Value>
 						</HeartRateBpm>
@@ -6532,7 +6532,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:02Z</Time>
+						<Time>2017-10-05T13:43:23Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -6545,7 +6545,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:08Z</Time>
+						<Time>2017-10-05T13:43:29Z</Time>
 						<HeartRateBpm>
 							<Value>166</Value>
 						</HeartRateBpm>
@@ -6558,7 +6558,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:14Z</Time>
+						<Time>2017-10-05T13:43:35Z</Time>
 						<HeartRateBpm>
 							<Value>170</Value>
 						</HeartRateBpm>
@@ -6571,7 +6571,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:20Z</Time>
+						<Time>2017-10-05T13:43:41Z</Time>
 						<HeartRateBpm>
 							<Value>174</Value>
 						</HeartRateBpm>
@@ -6584,7 +6584,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:26Z</Time>
+						<Time>2017-10-05T13:43:47Z</Time>
 						<HeartRateBpm>
 							<Value>177</Value>
 						</HeartRateBpm>
@@ -6597,7 +6597,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:32Z</Time>
+						<Time>2017-10-05T13:43:53Z</Time>
 						<HeartRateBpm>
 							<Value>180</Value>
 						</HeartRateBpm>
@@ -6610,7 +6610,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:38Z</Time>
+						<Time>2017-10-05T13:43:59Z</Time>
 						<HeartRateBpm>
 							<Value>180</Value>
 						</HeartRateBpm>
@@ -6623,7 +6623,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:44Z</Time>
+						<Time>2017-10-05T13:44:05Z</Time>
 						<HeartRateBpm>
 							<Value>177</Value>
 						</HeartRateBpm>
@@ -6636,7 +6636,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:50Z</Time>
+						<Time>2017-10-05T13:44:11Z</Time>
 						<HeartRateBpm>
 							<Value>175</Value>
 						</HeartRateBpm>
@@ -6649,7 +6649,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:13:56Z</Time>
+						<Time>2017-10-05T13:44:17Z</Time>
 						<HeartRateBpm>
 							<Value>174</Value>
 						</HeartRateBpm>
@@ -6662,7 +6662,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:02Z</Time>
+						<Time>2017-10-05T13:44:23Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -6675,7 +6675,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:08Z</Time>
+						<Time>2017-10-05T13:44:29Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -6688,7 +6688,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:14Z</Time>
+						<Time>2017-10-05T13:44:35Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -6701,7 +6701,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:20Z</Time>
+						<Time>2017-10-05T13:44:41Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -6714,7 +6714,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:26Z</Time>
+						<Time>2017-10-05T13:44:47Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -6727,7 +6727,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:32Z</Time>
+						<Time>2017-10-05T13:44:53Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -6740,7 +6740,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:38Z</Time>
+						<Time>2017-10-05T13:44:59Z</Time>
 						<HeartRateBpm>
 							<Value>167</Value>
 						</HeartRateBpm>
@@ -6753,7 +6753,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:44Z</Time>
+						<Time>2017-10-05T13:45:05Z</Time>
 						<HeartRateBpm>
 							<Value>161</Value>
 						</HeartRateBpm>
@@ -6766,7 +6766,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:50Z</Time>
+						<Time>2017-10-05T13:45:11Z</Time>
 						<HeartRateBpm>
 							<Value>154</Value>
 						</HeartRateBpm>
@@ -6779,7 +6779,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:14:56Z</Time>
+						<Time>2017-10-05T13:45:17Z</Time>
 						<HeartRateBpm>
 							<Value>149</Value>
 						</HeartRateBpm>
@@ -6792,7 +6792,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:02Z</Time>
+						<Time>2017-10-05T13:45:23Z</Time>
 						<HeartRateBpm>
 							<Value>146</Value>
 						</HeartRateBpm>
@@ -6805,7 +6805,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:08Z</Time>
+						<Time>2017-10-05T13:45:29Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -6818,7 +6818,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:14Z</Time>
+						<Time>2017-10-05T13:45:35Z</Time>
 						<HeartRateBpm>
 							<Value>140</Value>
 						</HeartRateBpm>
@@ -6831,7 +6831,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:20Z</Time>
+						<Time>2017-10-05T13:45:41Z</Time>
 						<HeartRateBpm>
 							<Value>140</Value>
 						</HeartRateBpm>
@@ -6844,7 +6844,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:26Z</Time>
+						<Time>2017-10-05T13:45:47Z</Time>
 						<HeartRateBpm>
 							<Value>143</Value>
 						</HeartRateBpm>
@@ -6857,7 +6857,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:32Z</Time>
+						<Time>2017-10-05T13:45:53Z</Time>
 						<HeartRateBpm>
 							<Value>144</Value>
 						</HeartRateBpm>
@@ -6870,7 +6870,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:38Z</Time>
+						<Time>2017-10-05T13:45:59Z</Time>
 						<HeartRateBpm>
 							<Value>147</Value>
 						</HeartRateBpm>
@@ -6883,7 +6883,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:44Z</Time>
+						<Time>2017-10-05T13:46:05Z</Time>
 						<HeartRateBpm>
 							<Value>153</Value>
 						</HeartRateBpm>
@@ -6896,7 +6896,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:50Z</Time>
+						<Time>2017-10-05T13:46:11Z</Time>
 						<HeartRateBpm>
 							<Value>159</Value>
 						</HeartRateBpm>
@@ -6909,7 +6909,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:15:56Z</Time>
+						<Time>2017-10-05T13:46:17Z</Time>
 						<HeartRateBpm>
 							<Value>163</Value>
 						</HeartRateBpm>
@@ -6922,7 +6922,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:02Z</Time>
+						<Time>2017-10-05T13:46:23Z</Time>
 						<HeartRateBpm>
 							<Value>165</Value>
 						</HeartRateBpm>
@@ -6935,7 +6935,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:08Z</Time>
+						<Time>2017-10-05T13:46:29Z</Time>
 						<HeartRateBpm>
 							<Value>168</Value>
 						</HeartRateBpm>
@@ -6948,7 +6948,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:14Z</Time>
+						<Time>2017-10-05T13:46:35Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -6961,7 +6961,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:20Z</Time>
+						<Time>2017-10-05T13:46:41Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -6974,7 +6974,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:26Z</Time>
+						<Time>2017-10-05T13:46:47Z</Time>
 						<HeartRateBpm>
 							<Value>169</Value>
 						</HeartRateBpm>
@@ -6987,7 +6987,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:32Z</Time>
+						<Time>2017-10-05T13:46:53Z</Time>
 						<HeartRateBpm>
 							<Value>170</Value>
 						</HeartRateBpm>
@@ -7000,7 +7000,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:38Z</Time>
+						<Time>2017-10-05T13:46:59Z</Time>
 						<HeartRateBpm>
 							<Value>171</Value>
 						</HeartRateBpm>
@@ -7013,7 +7013,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:44Z</Time>
+						<Time>2017-10-05T13:47:05Z</Time>
 						<HeartRateBpm>
 							<Value>171</Value>
 						</HeartRateBpm>
@@ -7026,7 +7026,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:50Z</Time>
+						<Time>2017-10-05T13:47:11Z</Time>
 						<HeartRateBpm>
 							<Value>171</Value>
 						</HeartRateBpm>
@@ -7039,7 +7039,7 @@
 						</Extensions>
 					</Trackpoint>
 					<Trackpoint>
-						<Time>2017-10-05T19:16:56Z</Time>
+						<Time>2017-10-05T13:47:17Z</Time>
 						<HeartRateBpm>
 							<Value>170</Value>
 						</HeartRateBpm>

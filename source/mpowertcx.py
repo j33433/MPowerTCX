@@ -17,6 +17,7 @@ license = """\
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import os
 import sys
 from datetime import datetime
 
@@ -198,7 +199,8 @@ if len(sys.argv) == 3:
     # Run from the command line
     mpower = MPower(sys.argv[1])
     mpower.load_csv()
-    mpower.save_data(sys.argv[2], datetime.now())
+    stamp = datetime.fromtimestamp(os.path.getmtime(sys.argv[1]))
+    mpower.save_data(sys.argv[2], stamp)
 else:
     # Run from the UI
     app = QApplication(sys.argv)
