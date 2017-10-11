@@ -39,11 +39,11 @@ class SimpleBike(object):
         else:
             return 10
 
-    def next_sample(self):
+    def next_sample(self, power):
         t = self.x * self.time_delta
         total_force = self.drag(self.velocity) + self.rolling(self.grade, self.velocity) + self.gravity(self.grade)
         power_needed = total_force * self.velocity / self.eta
-        power = self.get_power(t)
+        #power = self.get_power(t)
         net_power = power - power_needed
         r = self.velocity * self.velocity + 2 * net_power * self.time_delta * self.eta / self.mass
         
@@ -94,4 +94,4 @@ def main():
 
     plt.show()
 
-main()
+#main()

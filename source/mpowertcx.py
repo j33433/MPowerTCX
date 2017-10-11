@@ -43,7 +43,8 @@ class About(QDialog, Ui_Dialog):
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.version = "v1.1.10"
+        self.version = "v1.1.11"
+        self.trues = [True, 'True', 'true'] # workaround for pyside
         self.settings = QSettings("j33433", "MPowerTCX")
         self.include_speed_key = "include_speed"
         self.power_adjust_key = "power_adjust"
@@ -57,15 +58,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def configure(self):
         """ Put UI elements into their initial states """
+        self.groupBoxPhysics.setHidden(True)
         self.statusBar().showMessage(self.version)
         self.saveButton.setEnabled(False)
         self.workoutTime.setDateTime(datetime.now())
 
         use_file_date = self.settings.value(self.file_date_key, 'True')
-        self.useFileDate.setChecked(use_file_date in [True, 'True', 'true'])
+        self.useFileDate.setChecked(use_file_date in self.trues)
 
         include_speed = self.settings.value(self.include_speed_key, 'True')
-        self.includeSpeedData.setChecked(include_speed in [True, 'True', 'true'])
+        self.includeSpeedData.setChecked(include_speed in self.trues)
         
         power_adjust = float(self.settings.value(self.power_adjust_key, 0.0))
         self.powerAdjustment.setValue(power_adjust)
@@ -75,6 +77,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
         self.includeSpeedData.stateChanged.connect(self.includeSpeedDataChanged)
         self.powerAdjustment.valueChanged.connect(self.powerAdjustmenChanged)
+        self.checkBoxPhysics.stateChanged.connect(self.checkBoxPhysicsChanged)
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
         self.actionAbout.triggered.connect(self.showAbout)
@@ -91,7 +94,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def includeSpeedDataChanged(self, state):
         value = state == Qt.Checked
         self.settings.setValue(self.include_speed_key, value)
-    
+
+    def checkBoxPhysicsChanged(self, state):
+        value = state == Qt.Checked
+        self.groupBoxPhysics.setHidden(not value)
+
     def useFileDateChanged(self, state):
         """ The checkbox was clicked """
         value = state == Qt.Checked

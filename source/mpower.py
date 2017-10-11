@@ -22,6 +22,7 @@ import sys
 import datetime
 import xml.etree.cElementTree as ET
 import xml.dom.minidom as minidom
+import physics
 
 class RideHeader(object):
     """ Summary statistics for a ride """
@@ -64,7 +65,21 @@ class Ride(object):
         max_power = max(int(p) for p in self.power)
         print ("%d %d" % (average_power, max_power))
         self.header.setSummary(time=time, distance=0, average_power=average_power, max_power=max_power)
-    
+
+    def modelDistance(self):
+        seconds = self.header.time
+        delta = seconds / self.count()
+        print ("delta %.2f" % delta)
+        bike = physics.SimpleBike()
+        bike.time_delta = delta
+        self.distance = []
+
+        for p in self.power:
+            power, v_mph, distance = bike.next_sample(float(p))
+            self.distance.append(distance)
+            print (power, v_mph, distance)
+
+
 class LineIterator(object):
     def __init__(self, stream):
         self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read())
@@ -390,6 +405,9 @@ class MPower(object):
         
     def save_data(self, filename, start_time):
         """ Save the parsed CSV to TCX """
+
+        self.ride.modelDistance()
+
         now = self._format_time(start_time)
 
         root = ET.Element("TrainingCenterDatabase")
