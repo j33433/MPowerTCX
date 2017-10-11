@@ -17,6 +17,7 @@ class SimpleBike(object):
         self.dt = 0.1
         self.x = 0
         self.v = 0.0
+        self.distance = 0.0
         
     def drag(self, velocity):
         return 0.5 * self.drag_coeff * self.frontal_area * self.rho * velocity * velocity
@@ -32,11 +33,11 @@ class SimpleBike(object):
 
     def get_power(self, t):
         if t > 50:
-            return 220
-        elif t > 40: 
+            return 0
+        elif t > 20: 
             return 60
         else:
-            return 300
+            return 10
 
     def next_velocity(self):
         t = self.x * self.dt
@@ -44,34 +45,46 @@ class SimpleBike(object):
         power_needed = total_force * self.v / self.eta
         power = self.get_power(t)
         net_power = power - power_needed
+        self.v = math.sqrt(self.v * self.v + 2 * net_power * self.dt * self.eta / self.mass)
+        self.distance += self.v * self.dt
+        self.x += 1
+
         # m/s to mph
         v_mph = self.v * 2.23694
-        self.v = math.sqrt(self.v * self.v + 2 * net_power * self.dt * self.eta / self.mass)
-        self.x += 1
         
-        return (power, v_mph)
+        return (power, v_mph, self.distance)
          
-va = [0] 
-ta = [0]
-pa = [0]
+velocity_a = [0] 
+time_a = [0]
+power_a = [0]
+distance_a = [0]
+
 bike = SimpleBike()
 
 # loop over time:
-for x in range(0, 600):
-    (p, v) = bike.next_velocity()
-    va.append(v)
-    pa.append(p)
-    ta.append(bike.dt * x)
+for x in range(0, 1000):
+    (power, velocity, distance) = bike.next_velocity()
+    velocity_a.append(velocity)
+    power_a.append(power)
+    distance_a.append(distance)
+    time_a.append(bike.dt * x)
 
 fig, vaxis = plt.subplots()
 vaxis.margins(0.05)
-vaxis.plot(ta, va)
+vaxis.plot(time_a, velocity_a, color='b')
 vaxis.set_xlabel('time (s)')
-vaxis.set_ylabel('velocity (mph)')
+vaxis.set_ylabel('velocity (mph)', color='b')
 
 paxis = vaxis.twinx()
 paxis.margins(0.05)
-paxis.plot(ta, pa, 'r')
+paxis.plot(time_a, power_a, 'r')
 paxis.set_ylabel('power (w)', color='r')
+
+daxis = vaxis.twinx()
+daxis.margins(0.05)
+daxis.plot(time_a, distance_a, 'g')
+daxis.set_ylabel('distance (m)', color='g')
+
+print (distance_a)
 plt.show()
 
