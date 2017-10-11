@@ -11,10 +11,10 @@ class SimpleBike(object):
         self.eta = 0.97  	
         self.rolling_coefficient = 5.0e-3
         # kg
-        self.mass = 73
+        self.mass = 73.0
         self.grade = 0.0
         self.g = 9.81
-        self.time_delta = 0.1
+        self.time_delta = 1
         self.x = 0
         self.velocity = 0.0
         self.distance = 0.0
@@ -32,10 +32,10 @@ class SimpleBike(object):
         return self.g * math.sin(math.atan(grade)) * self.mass
 
     def get_power(self, t):
-        if t > 50:
+        if t > 60:
             return 0
         elif t > 20: 
-            return 60
+            return t + 20
         else:
             return 10
 
@@ -45,7 +45,13 @@ class SimpleBike(object):
         power_needed = total_force * self.velocity / self.eta
         power = self.get_power(t)
         net_power = power - power_needed
-        self.velocity = math.sqrt(self.velocity * self.velocity + 2 * net_power * self.time_delta * self.eta / self.mass)
+        r = self.velocity * self.velocity + 2 * net_power * self.time_delta * self.eta / self.mass
+        
+        if r > 0.0:
+            self.velocity = math.sqrt(r)
+        else:
+            self.velocity = 0.0
+            
         self.distance += self.velocity * self.time_delta
         self.x += 1
 
@@ -63,7 +69,7 @@ def main():
     bike = SimpleBike()
 
     # loop over time:
-    for x in range(0, 1000):
+    for x in range(0, 150):
         (power, velocity, distance) = bike.next_sample()
         velocity_a.append(velocity)
         power_a.append(power)
