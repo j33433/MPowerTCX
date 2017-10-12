@@ -97,7 +97,6 @@ class Ride(object):
         self.distance = f(xb).astype("str")
         
     def modelDistance(self):
-        self.interpolate()
         delta = self.delta()
         print ("delta %.2f" % delta)
         bike = physics.SimpleBike()
@@ -436,6 +435,8 @@ class MPower(object):
     def save_data(self, filename, start_time, model=False):
         """ Save the parsed CSV to TCX """
 
+        self.ride.interpolate()
+        
         if model:
             self.ride.modelDistance()
 
@@ -477,7 +478,7 @@ class MPower(object):
 
         for i in xrange(0, self.ride.count()):
             point = ET.SubElement(track, "Trackpoint")
-            delta_time = start_time + datetime.timedelta(seconds=i * secs_per_sample)
+            delta_time = start_time + datetime.timedelta(seconds=i * int(secs_per_sample))
             ET.SubElement(point, "Time").text = self._format_time(delta_time)
 
             hr = ET.SubElement(point, "HeartRateBpm")
