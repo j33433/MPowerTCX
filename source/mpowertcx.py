@@ -218,6 +218,7 @@ else:
     parser.add_argument("--csv", help="the spin bike file", required=True)
     parser.add_argument("--tcx", help="the output file", required=True)
     parser.add_argument("--time", help="the workout starting time")
+    parser.add_argument("--model", help="use physics model for speed and distance", action='store_true')
     args = parser.parse_args()
     
     mpower = MPower(args.csv)
@@ -229,4 +230,4 @@ else:
         # Take input file time
         stamp = datetime.fromtimestamp(os.path.getmtime(args.csv))
         
-    mpower.save_data(args.tcx, stamp)
+    mpower.save_data(args.tcx, stamp, args.model)

@@ -15,7 +15,6 @@ class SimpleBike(object):
         self.grade = 0.0
         self.g = 9.81
         self.time_delta = 1
-        self.x = 0
         self.velocity = 0.0
         self.distance = 0.0
         
@@ -31,19 +30,12 @@ class SimpleBike(object):
     def gravity(self, grade):
         return self.g * math.sin(math.atan(grade)) * self.mass
 
-    def get_power(self, t):
-        if t > 60:
-            return 0
-        elif t > 20: 
-            return t + 20
-        else:
-            return 10
-
     def next_sample(self, power):
-        t = self.x * self.time_delta
-        total_force = self.drag(self.velocity) + self.rolling(self.grade, self.velocity) + self.gravity(self.grade)
-        power_needed = total_force * self.velocity / self.eta
-        #power = self.get_power(t)
+        drag = self.drag(self.velocity)
+        rolling = self.rolling(self.grade, self.velocity)
+        gravity = self.gravity(self.grade)
+        total_force = drag + rolling + gravity
+        power_needed = total_force * (self.velocity / self.eta)
         net_power = power - power_needed
         r = self.velocity * self.velocity + 2 * net_power * self.time_delta * self.eta / self.mass
         
@@ -52,8 +44,8 @@ class SimpleBike(object):
         else:
             self.velocity = 0.0
             
+#        print ("p %.2f, v %.2f, drag %.2f, rolling %.6f, gravity %.2f, total %.2f, r %.2f" % (power, self.velocity, drag, gravity, rolling, total_force, r))
         self.distance += self.velocity * self.time_delta
-        self.x += 1
 
         # m/s to mph
         v_mph = self.velocity * 2.23694

@@ -24,6 +24,9 @@ import xml.etree.cElementTree as ET
 import xml.dom.minidom as minidom
 import physics
 
+import numpy as np
+from scipy import interpolate   
+ 
 class RideHeader(object):
     """ Summary statistics for a ride """
     def __init__(self):
@@ -66,9 +69,36 @@ class Ride(object):
         print ("%d %d" % (average_power, max_power))
         self.header.setSummary(time=time, distance=0, average_power=average_power, max_power=max_power)
 
-    def modelDistance(self):
+    def delta(self):
+        if self.count():
+            return self.header.time / self.count()
+        else:
+            return 0
+        
+    def interpolate(self):
         seconds = self.header.time
-        delta = seconds / self.count()
+        delta = self.delta()
+        print ("%.2f seconds per sample before interpolation" % (delta))
+        
+        limit = int(seconds) - 1
+        xa = np.arange(0, limit, delta)
+        xb = np.arange(0, limit - 2, 1)
+        
+        f = interpolate.interp1d(xa, self.power)
+        self.power = f(xb).astype("str")
+        
+        f = interpolate.interp1d(xa, self.rpm)
+        self.rpm = f(xb).astype("str")
+        
+        f = interpolate.interp1d(xa, self.hr)
+        self.hr = f(xb).astype("str")
+        
+        f = interpolate.interp1d(xa, self.distance)
+        self.distance = f(xb).astype("str")
+        
+    def modelDistance(self):
+        self.interpolate()
+        delta = self.delta()
         print ("delta %.2f" % delta)
         bike = physics.SimpleBike()
         bike.time_delta = delta
@@ -77,7 +107,7 @@ class Ride(object):
         for p in self.power:
             power, v_mph, distance = bike.next_sample(float(p))
             self.distance.append(distance)
-            print (power, v_mph, distance)
+            #print (power, v_mph, distance)
 
 
 class LineIterator(object):
@@ -403,13 +433,13 @@ class MPower(object):
         reparsed = minidom.parseString(rough_string)
         return reparsed.toprettyxml()
         
-    def save_data(self, filename, start_time):
+    def save_data(self, filename, start_time, model=False):
         """ Save the parsed CSV to TCX """
 
-        self.ride.modelDistance()
+        if model:
+            self.ride.modelDistance()
 
         now = self._format_time(start_time)
-
         root = ET.Element("TrainingCenterDatabase")
         self._save_xml_cruft(root)
 
@@ -440,13 +470,8 @@ class MPower(object):
         ET.SubElement(lap, "Cadence").text = "0"
         ET.SubElement(lap, "TriggerMethod").text = "Manual"
 
-        # Infer the time between samples
-        if self.ride.count():
-            secs_per_sample = seconds / self.ride.count()
-        else:
-            secs_per_sample = 0
-            
-        print ("%d seconds per sample" % secs_per_sample)
+        secs_per_sample = self.ride.delta()
+        print ("%.2f seconds per sample" % secs_per_sample)
 
         track = ET.SubElement(lap, "Track")
 
