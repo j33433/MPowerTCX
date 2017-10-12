@@ -80,18 +80,26 @@ class Ride(object):
         delta = self.delta()
         print ("%.2f seconds per sample before interpolation" % (delta))
         
-        limit = int(seconds) - 1
+        if delta == 0:
+            print ("nothing to interpolate")
+            return
+        
+        limit = int(seconds)
         xa = np.arange(0, limit, delta)
-        xb = np.arange(0, limit - 2, 1)
+        xb = np.arange(0, limit - delta, 1)
+        
+        #print (limit)
+        #print (xa)
+        #print (xb)
         
         f = interpolate.interp1d(xa, self.power)
-        self.power = f(xb).astype("str")
+        self.power = f(xb).astype("int").astype("str")
         
         f = interpolate.interp1d(xa, self.rpm)
-        self.rpm = f(xb).astype("str")
+        self.rpm = f(xb).astype("int").astype("str")
         
         f = interpolate.interp1d(xa, self.hr)
-        self.hr = f(xb).astype("str")
+        self.hr = f(xb).astype("int").astype("str")
         
         f = interpolate.interp1d(xa, self.distance)
         self.distance = f(xb).astype("str")
