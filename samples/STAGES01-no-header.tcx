@@ -36561,19 +36561,6 @@
 							</TPX>
 						</Extensions>
 					</Trackpoint>
-					<Trackpoint>
-						<Time>2010-10-19T21:43:26Z</Time>
-						<HeartRateBpm>
-							<Value>128</Value>
-						</HeartRateBpm>
-						<Cadence>0</Cadence>
-						<DistanceMeters>24258.225</DistanceMeters>
-						<Extensions>
-							<TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
-								<Watts>0</Watts>
-							</TPX>
-						</Extensions>
-					</Trackpoint>
 				</Track>
 			</Lap>
 		</Activity>

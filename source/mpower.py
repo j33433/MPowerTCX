@@ -179,6 +179,8 @@ class MPower(object):
         elif line == ['Stage_Workout (min)', 'Distance(mile)', 'Speed (mph)', 'Watts ', 'HR ', 'RPM ']:
             # The Cordis file
             self._load_v3(reader)
+        elif line == ['ticks', 'time', 'power', 'cadence', 'heartRate', 'speed', 'targetPower', 'targetHeartRateZone', 'targetCadence', 'targetRpe']:
+            self._load_sufferfest(reader)
         else:
            print ("skip start %r" % line)
 
@@ -224,6 +226,23 @@ class MPower(object):
             return d * 1000.0
         else:
             return d * 1609.34
+            
+    def _load_sufferfest(self, reader):
+        last_time = 0.0
+        
+        for row in reader:
+            if len(row):
+                time = float(row[1])
+                #print ("%.3f" % (time - last_time))
+                last_time = time
+                
+                self.ride.addSample(
+                    power=row[2],
+                    rpm=row[3],
+                    hr=row[4]
+                )
+                
+        self.ride.inferHeader(last_time)
             
     def _load_stages(self, reader):
         self._stages_metric = True
@@ -445,8 +464,8 @@ class MPower(object):
 
         self.ride.interpolate()
         
-        if model:
-            self.ride.modelDistance()
+        #if model:
+        self.ride.modelDistance()
 
         now = self._format_time(start_time)
         root = ET.Element("TrainingCenterDatabase")
