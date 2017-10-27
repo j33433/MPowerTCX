@@ -9,7 +9,7 @@ Share your indoor cycle workouts on Strava, Garmin Connect and Golden Cheetah.
 Find the latest release for Windows and OS X here: https://github.com/j33433/MPowerTCX/releases
 
 ## What it Does
-This software converts the CSV data produced by indoor cycling consoles to TCX format.
+This software converts the CSV data produced by stationary bike consoles to TCX format.
 
 The TCX file can be uploaded to most cycling data viewers.
 
