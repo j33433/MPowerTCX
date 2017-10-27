@@ -23,9 +23,10 @@ import datetime
 import xml.etree.cElementTree as ET
 import xml.dom.minidom as minidom
 import mpowertcx.physics
+
 from mpowertcx.ride import Ride, RideHeader
 from mpowertcx.stages import Stages 
-
+from mpowertcx.thesufferfest import TheSufferfest
 
 class LineIterator(object):
     """ 
@@ -60,7 +61,11 @@ class MPower(object):
         # Distance sometimes results in erratic speed values (84 mph)
         self.use_distance = True
         self.ride = Ride()
-        self.stages = Stages(self.ride)
+        
+        self.bikes = [
+            Stages(self.ride), 
+            TheSufferfest(self.ride)
+        ]
 
     def count(self):
         return self.ride.count()
@@ -80,6 +85,13 @@ class MPower(object):
         """
         self.power_fudge = 1.0 + value / 100.0
 
+    def _load_from_plugins(self, line, reader):
+        for b in self.bikes:
+            if b.load(line, reader):
+                return True
+                
+        return False
+        
     def _load_csv_chunk(self, reader):
         """ 
         Guess what the next block of CSV data is an process it 
@@ -88,7 +100,7 @@ class MPower(object):
         
         if line == []:
             pass
-        elif self.stages.load(line, reader):
+        elif self._load_from_plugins(line, reader):
             pass
         elif line == ['RIDE SUMMARY', '']:
             self._load_v2_header(reader)
@@ -125,23 +137,6 @@ class MPower(object):
                     self._load_csv_chunk(reader)
             except StopIteration:
                 pass
-            
-    def _load_sufferfest(self, reader):
-        last_time = 0.0
-        
-        for row in reader:
-            if len(row):
-                time = float(row[1])
-                #print ("%.3f" % (time - last_time))
-                last_time = time
-                
-                self.ride.addSample(
-                    power=row[2],
-                    rpm=row[3],
-                    hr=row[4]
-                )
-                
-        self.ride.inferHeader(last_time)
         
     def _load_v2_header(self, reader):
         """ Read Echelon2 header data """
