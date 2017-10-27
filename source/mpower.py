@@ -24,9 +24,13 @@ import xml.etree.cElementTree as ET
 import xml.dom.minidom as minidom
 import mpowertcx.physics
 from mpowertcx.ride import Ride, RideHeader
- 
+from mpowertcx.stages import Stages 
+
 
 class LineIterator(object):
+    """ 
+    Handle files with standard and unusual newline conventions 
+    """
     def __init__(self, stream):
         self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read())
         
@@ -41,7 +45,9 @@ class LineIterator(object):
         raise StopIteration()
 
 class MPower(object):
-    """ Process the CSV into TCX """
+    """ 
+    Process the CSV into TCX 
+    """
     def __init__(self, in_filename):
         self.in_filename = in_filename
         self.out_filename = None
@@ -54,6 +60,7 @@ class MPower(object):
         # Distance sometimes results in erratic speed values (84 mph)
         self.use_distance = True
         self.ride = Ride()
+        self.stages = Stages(self.ride)
 
     def count(self):
         return self.ride.count()
@@ -62,21 +69,27 @@ class MPower(object):
         return self.ride.header
 
     def set_include_speed_data(self, value):
-        """ Allow estimated speed data to be excluded. They aren't really worth much. """
+        """ 
+        Allow estimated speed data to be excluded. They aren't really worth much
+        """
         self.use_distance = value
 
     def set_power_adjust(self, value):
-        """ Power readings vary quite a bit from bike to bike. Allow adjustment """
+        """ 
+        Power readings vary quite a bit from bike to bike. Allow adjustment 
+        """
         self.power_fudge = 1.0 + value / 100.0
 
     def _load_csv_chunk(self, reader):
-        """ Guess what the next block of CSV data is an process it """
+        """ 
+        Guess what the next block of CSV data is an process it 
+        """
         line = reader.next()
         
         if line == []:
             pass
-        elif line[0] == 'Stages_Data':
-            self._load_stages(reader)
+        elif self.stages.load(line, reader):
+            pass
         elif line == ['RIDE SUMMARY', '']:
             self._load_v2_header(reader)
         elif line == ['RIDE DATA', '']:
@@ -112,29 +125,6 @@ class MPower(object):
                     self._load_csv_chunk(reader)
             except StopIteration:
                 pass
-
-    def _parse_stages_time(self, time):
-        # I've seen mm:ss or mm:ss:00 so far 
-        parts = time.split(':')
-        
-        if len(parts) == 2 or len(parts) == 3:
-            try:
-                minutes = int(parts[0])
-                seconds = int(parts[1])
-                result = minutes * 60 + seconds
-            except:
-                result = -1
-        else:
-            result = -1
-            
-        return result
-
-    # TODO: unify this        
-    def _stages_distance(self, d):
-        if self._stages_metric:
-            return d * 1000.0
-        else:
-            return d * 1609.34
             
     def _load_sufferfest(self, reader):
         last_time = 0.0
@@ -152,84 +142,6 @@ class MPower(object):
                 )
                 
         self.ride.inferHeader(last_time)
-            
-    def _load_stages(self, reader):
-        self._stages_metric = True
-        distance = 0.0
-        header_found = False
-        last_time = 0
-        
-        for row in reader:
-            if row == []:
-                pass
-            elif row[0] == 'English':
-                self._stages_metric = False
-            elif row[0] == 'Ride_Totals':
-                self._load_stages_header(reader)
-                header_found = True
-            elif len(row) == 6:
-                time = self._parse_stages_time(row[0])
-                last_time = time
-                
-                if time >= 0:
-                    # ['Time', 'Miles', 'MPH', 'Watts', 'HR', 'RPM']
-                    # TODO: maybe use this method on all file formats.
-                    #       Infer distance from MPH.
-                    distance += float(row[2]) / (60.0 * 60.0)
-                    
-                    self.ride.addSample(
-                        power=row[3],
-                        rpm=row[5],
-                        hr=row[4],
-                        distance=self._stages_distance(distance)
-                    )
-                    pass
-                else:
-                    print ("skip %r" % row)
-            else:
-                print ("skip %r" % row)
-        
-        if not header_found:
-            print ("stages header missing")
-            self.ride.inferHeader(last_time)
-        
-    def _load_stages_header(self, reader):
-        header = {}
-        
-        for row in reader:
-            if len(row):
-                header[row[0]] = row[1]
-            else:
-                break
-
-        parts = header['Time'].split(':')
-        h = 0
-        m = 0 
-        s = 0
-        
-        if len(parts) == 3:
-            h = int(parts[0])
-            m = int(parts[1])
-            s = int(parts[2])
-        elif len(parts) == 2:
-            m = int(parts[0])
-            s = int(parts[1])
-        elif len(parts) == 2:
-            s = int(parts[0])
-        
-        time = h * 60 * 60 + m * 60 + s    
-        
-        self.ride.header.setSummary(
-            time=time,
-            distance=self._stages_distance(float(header["Distance"])),
-            average_power=header["Watts_Avg"],
-            max_power=header["Watts_Max"],
-            average_rpm=header["RPM_Avg"],
-            max_rpm=header["RPM_Max"],
-            average_hr=header["HR_Avg"],
-            max_hr=header["HR_Max"],
-            calories=header["KCal"]
-        )
         
     def _load_v2_header(self, reader):
         """ Read Echelon2 header data """
