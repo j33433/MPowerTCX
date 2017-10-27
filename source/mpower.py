@@ -68,7 +68,8 @@ class MPower(object):
         self.bikes = [
             Stages(self.ride), 
             TheSufferfest(self.ride),
-            EchelonV1(self.ride)
+            EchelonV1(self.ride),
+            EchelonV2(self.ride)
         ]
 
     def count(self):
@@ -106,10 +107,6 @@ class MPower(object):
             pass
         elif self._load_from_plugins(line, reader):
             pass
-        elif line == ['RIDE SUMMARY', '']:
-            self._load_v2_header(reader)
-        elif line == ['RIDE DATA', '']:
-            self._load_v2_data(reader)
         elif line == ['Stage_Workout (min)', 'Distance(mile)', 'Speed (mph)', 'Watts ', 'HR ', 'RPM ']:
             # The Cordis file
             self._load_v3(reader)
@@ -137,44 +134,6 @@ class MPower(object):
                     self._load_csv_chunk(reader)
             except StopIteration:
                 pass
-        
-    def _load_v2_header(self, reader):
-        """ Read Echelon2 header data """
-        header = {}
-
-        for row in reader:
-            if len(row):
-                header[row[0]] = row[1]
-            else:
-                break
-
-        self.ride.header.setSummary(
-            time=float(header["Total Time"]) * 60.0,
-            distance=float(header["Total Distance"]) * 1609.34,
-            average_power=header["AVG Power"],
-            max_power=header["MAX Power"],
-            average_rpm=header["AVG RPM"],
-            max_rpm=header["MAX RPM"],
-            average_hr=header["AVG HR"],
-            max_hr=header["MAX HR"],
-            calories=header["CAL"]
-        )
-
-    def _load_v2_data(self, reader):
-        """ Read Echelon2 time series """
-        keys = reader.next()
-
-        for row in reader:
-            if len(row):
-                data = dict(zip(keys, row))
-                self.ride.addSample(
-                    power=data["Power"],
-                    rpm=data["RPM"],
-                    hr=data["HR"],
-                    distance=float(data["DISTANCE"]) * 1609.34
-                )
-            else:
-                break
 
     def _load_v3(self, reader):
         """ So called v3 is a messed up version of v1. I suspect it's an earlier firmware. """

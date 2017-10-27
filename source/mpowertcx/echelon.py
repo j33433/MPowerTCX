@@ -25,8 +25,10 @@ class EchelonV1(bikes.Bike):
     def load(self, peek, reader):
         if peek == ['Stage_Totals']:
             self._load_header(reader)
+            return True
         elif peek == ['Stage_Workout (min)', 'Distance(km)', 'Speed(km/h)', 'Watts ', 'HR ', 'RPM ']:
             self._load_data(reader)
+            return True
             
         return False
 
@@ -75,8 +77,52 @@ class EchelonV1(bikes.Bike):
     
 class EchelonV2(bikes.Bike):
     def load(self, peek, reader):
+        if peek == ['RIDE SUMMARY', '']:
+            self._load_header(reader)
+            return True
+        elif peek == ['RIDE DATA', '']:
+            self._load_data(reader)
+            return True
+            
         return False
-       
+
+    def _load_header(self, reader):
+        header = {}
+
+        for row in reader:
+            if len(row):
+                header[row[0]] = row[1]
+            else:
+                break
+
+        self.ride.header.setSummary(
+            time=float(header["Total Time"]) * 60.0,
+            distance=float(header["Total Distance"]) * 1609.34,
+            average_power=header["AVG Power"],
+            max_power=header["MAX Power"],
+            average_rpm=header["AVG RPM"],
+            max_rpm=header["MAX RPM"],
+            average_hr=header["AVG HR"],
+            max_hr=header["MAX HR"],
+            calories=header["CAL"]
+        )
+
+    def _load_data(self, reader):
+        keys = reader.next()
+
+        for row in reader:
+            if len(row):
+                data = dict(zip(keys, row))
+                self.ride.addSample(
+                    power=data["Power"],
+                    rpm=data["RPM"],
+                    hr=data["HR"],
+                    distance=float(data["DISTANCE"]) * 1609.34
+                )
+            else:
+                break
+
+                
 class EchelonV3(bikes.Bike):
     def load(self, peek, reader):
         return False
