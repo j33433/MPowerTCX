@@ -16,10 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import numpy as np
-from scipy import interpolate   
-
- 
 class RideHeader(object):
     """ Summary statistics for a ride """
     def __init__(self):
@@ -69,6 +65,9 @@ class Ride(object):
             return 0
         
     def interpolate(self):
+        import numpy as np
+        from scipy import interpolate   
+
         seconds = self.header.time
         delta = self.delta()
         print ("%.2f seconds per sample before interpolation" % (delta))
