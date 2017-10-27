@@ -21,7 +21,6 @@ import csv
 import sys
 import datetime
 import xml.etree.cElementTree as ET
-import xml.dom.minidom as minidom
 
 from mpowertcx.ride import Ride, RideHeader
 import mpowertcx.physics
@@ -145,9 +144,14 @@ class MPower(object):
         root.set("xsi:schemaLocation", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd")
 
     def prettify(self, elem):
-        rough_string = ET.tostring(elem, 'utf-8')
-        reparsed = minidom.parseString(rough_string)
-        return reparsed.toprettyxml()
+        """
+        Fast but low quality xml formatter
+        """
+        ugly = ET.tostring(elem, 'utf-8')
+        tmp = re.sub('<([^\/])', '\n<\\1', ugly)
+        tmp = re.sub('></', '>\n</', tmp)
+        
+        return '<?xml version="1.0" ?>\n' + tmp.strip()
         
     def save_data(self, filename, start_time, model=False):
         """ Save the parsed CSV to TCX """

@@ -19,7 +19,6 @@
 #
 
 import math
-import matplotlib.pyplot as plt
 
 class SimpleBike(object):
     def __init__(self):
@@ -71,6 +70,8 @@ class SimpleBike(object):
         return power, v_mph, self.distance
 
 def main():
+    import matplotlib.pyplot as plt
+    
     velocity_a = [0]
     time_a = [0]
     power_a = [0]
