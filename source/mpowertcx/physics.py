@@ -70,7 +70,7 @@ class SimpleBike(object):
         return power, v_mph, self.distance
 
 def main():
-    import matplotlib.pyplot as plt
+    #import matplotlib.pyplot as plt
     
     velocity_a = [0]
     time_a = [0]
