@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import bikes
+from . import bikes
 
 class Stages(bikes.Bike):
     def load(self, peek, reader):

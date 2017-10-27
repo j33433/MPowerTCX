@@ -1,1 +1,1 @@
-c:\Python27\Scripts\pyinstaller.exe --onefile --noconsole --noconfirm mpowertcx.py
+pyinstaller.exe --onefile --debug --noconfirm mpowertcx.py

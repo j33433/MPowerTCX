@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import bikes
+from . import bikes
 
 #
 # The version numbers represent the order in which I encountered them, not official firmware revisions
