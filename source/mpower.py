@@ -22,11 +22,14 @@ import sys
 import datetime
 import xml.etree.cElementTree as ET
 import xml.dom.minidom as minidom
-import mpowertcx.physics
 
 from mpowertcx.ride import Ride, RideHeader
+import mpowertcx.physics
+
+# Equipment plugins
 from mpowertcx.stages import Stages 
 from mpowertcx.thesufferfest import TheSufferfest
+from mpowertcx.echelon import EchelonV1, EchelonV2, EchelonV3
 
 class LineIterator(object):
     """ 
@@ -64,7 +67,8 @@ class MPower(object):
         
         self.bikes = [
             Stages(self.ride), 
-            TheSufferfest(self.ride)
+            TheSufferfest(self.ride),
+            EchelonV1(self.ride)
         ]
 
     def count(self):
@@ -106,10 +110,6 @@ class MPower(object):
             self._load_v2_header(reader)
         elif line == ['RIDE DATA', '']:
             self._load_v2_data(reader)
-        elif line == ['Stage_Totals']:
-            self._load_v1_header(reader)
-        elif line == ['Stage_Workout (min)', 'Distance(km)', 'Speed(km/h)', 'Watts ', 'HR ', 'RPM ']:
-            self._load_v1_data(reader)
         elif line == ['Stage_Workout (min)', 'Distance(mile)', 'Speed (mph)', 'Watts ', 'HR ', 'RPM ']:
             # The Cordis file
             self._load_v3(reader)
@@ -175,50 +175,6 @@ class MPower(object):
                 )
             else:
                 break
-
-    def _load_v1_header(self, reader):
-        """ Read Echelon 1 header data """
-        header = {}
-
-        for row in reader:
-            if len(row):
-                header[row[0]] = row[1]
-            else:
-                break
-
-        self.ride.header.setSummary(
-            time=float(header["Total Time"]) * 60.0,
-            distance=float(header["Total_distance:"]) * 1000.0,
-            average_power=header["Watts Avg"],
-            max_power=header["Watts Max"],
-            average_rpm=header["RPM Avg"],
-            max_rpm=header["RPM Max"],
-            average_hr=header["HR Avg"],
-            max_hr=header["HR Max"],
-            calories=header["KCal"]
-        )
-
-    def _load_v1_data(self, reader):
-        """ Read Echelon 1 time series """
-        last_time = 0
-        
-        for row in reader:
-            if len(row) == 0:
-                break
-            elif len(row) == 6:
-                last_time = float(row[0]) * 60
-                self.ride.addSample(
-                    power=row[3],
-                    rpm=row[5],
-                    hr=row[4],
-                    distance=float(row[1]) * 1000.0
-                )
-            else:
-                print ("skip %r" % row)
-
-        if self.ride.header.time == 0:
-            print ("v1 header missing")
-            self.ride.inferHeader(last_time)
 
     def _load_v3(self, reader):
         """ So called v3 is a messed up version of v1. I suspect it's an earlier firmware. """
