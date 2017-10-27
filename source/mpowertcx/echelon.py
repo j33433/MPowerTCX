@@ -124,5 +124,48 @@ class EchelonV2(bikes.Bike):
 
                 
 class EchelonV3(bikes.Bike):
+    """ 
+    So called v3 is a messed up version of v1. I suspect it's an earlier firmware. 
+    """
     def load(self, peek, reader):
+        if peek == ['Stage_Workout (min)', 'Distance(mile)', 'Speed (mph)', 'Watts ', 'HR ', 'RPM ']:
+            self._load(reader)
+            return True
+            
         return False
+
+    def _load(self, reader):
+        for row in reader:
+            if len(row) == 6:
+                self.ride.addSample(
+                    power=row[3],
+                    rpm=row[5],
+                    hr=row[4],
+                    distance=float(row[1]) * 1609.34
+                )
+            elif row == ['Stage_Totals']:
+                self._load_header(reader)
+            else:
+                print ("v3 drop %r" % row)
+        
+    def _load_header(self, reader):
+        header = {}
+
+        for row in reader:
+            if len(row):
+                header[row[0]] = row[1]
+            else:
+                break
+
+        self.ride.header.setSummary(
+            time=float(header["Total Time"]) * 60.0,
+            distance=float(header["Total_distance:"]) * 1609.34,
+            average_power=header["Watts Avg"],
+            max_power=header["Watts Max"],
+            average_rpm=header["RPM Avg"],
+            max_rpm=header["RPM Max"],
+            average_hr=header["HR Avg"],
+            max_hr=header["HR Max"],
+            calories=header["KCal"]
+        )
+     
