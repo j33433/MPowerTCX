@@ -20,7 +20,8 @@ import re
 import csv
 import sys
 import datetime
-import xml.etree.cElementTree as ET
+import lxml.etree as ET
+import lxml.builder
 
 from mpowertcx.ride import Ride, RideHeader
 import mpowertcx.physics
@@ -51,6 +52,8 @@ class MPower(object):
     """ 
     Process the CSV into TCX 
     """
+    debug = False
+    
     def __init__(self, in_filename):
         self.in_filename = in_filename
         self.out_filename = None
@@ -72,6 +75,10 @@ class MPower(object):
             EchelonV3(self.ride)
         ]
 
+    def skip(self, line):
+        if self.debug:
+            print(line)
+            
     def count(self):
         return self.ride.count()
 
@@ -108,7 +115,7 @@ class MPower(object):
         elif self._load_from_plugins(line, reader):
             pass
         else:
-           print ("skip start %r" % line)
+           self.skip (line)
 
            while True:
                line = reader.next()
@@ -116,7 +123,7 @@ class MPower(object):
                if line == []:
                    break
 
-               print ("skip %r" % line)
+               self.skip(line)
 
     def load_csv(self):
         """ 
@@ -138,50 +145,28 @@ class MPower(object):
         """
         return dt.strftime("%Y-%m-%dT%H:%M:%S") + "Z"
 
-    def _save_xml_cruft(self, root):
+    def _make_root_tag(self):
         """ 
         The header stuff for the TCX XML 
         """
-        root.set("xmlns:ns5", "http://www.garmin.com/xmlschemas/ActivityGoals/v1")
-        root.set("xmlns:ns3", "http://www.garmin.com/xmlschemas/ActivityExtension/v2")
-        root.set("xmlns:ns2", "http://www.garmin.com/xmlschemas/UserProfile/v2")
-        root.set("xmlns", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2")
-        root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
-        root.set("xsi:schemaLocation", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd")
+        
+        xsi = 'http://www.w3.org/2001/XMLSchema-instance'
+        schemaLocation = 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd'
 
-    @profile
-    def prettify(self, elem):
-        """
-        The official pretty prenters for xml are slow beyond usefulness
-        """
-        ugly = ET.tostring(elem, 'utf-8')
+        nsmap={
+             'ns5': 'http://www.garmin.com/xmlschemas/ActivityGoals/v1',
+             'ns3': 'http://www.garmin.com/xmlschemas/ActivityExtension/v2',
+             'ns2': 'http://www.garmin.com/xmlschemas/UserProfile/v2',
+             'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+             None: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2'
+        }
+
+        builder = lxml.builder.ElementMaker(nsmap=nsmap)
+        tag = builder.TrainingCenterDatabase()
+        tag.attrib["{" + xsi + "}schemaLocation"] = schemaLocation
         
-        # something<foo -> something\n<foo
-        tmp = re.sub('<([^\/])', '\n<\\1', ugly)
-        
-        # <anytag></anytag> -> <anytag>\n</antyag>
-        tmp = re.sub('></', '>\n</', tmp)
-        
-        indent = 0
-        spaces = '\t'
-        out = '<?xml version="1.0" ?>\n'
-        
-        for line in tmp.split('\n'):
-            if len(line):
-                # <foo>x</foo>
-                if line[1] != '/' and '</' in line:
-                    out += (spaces * indent) + line + '\n'
-                # </foo>
-                elif line[1] == '/':
-                    indent -= 1
-                    out += (spaces * indent) + line + '\n'
-                # <foo>...
-                else:
-                    out += (spaces * indent) + line + '\n'
-                    indent += 1
-        
-        return out
-        
+        return tag
+
     def save_data(self, filename, start_time, model=False):
         """ 
         Save the parsed CSV to TCX 
@@ -193,8 +178,7 @@ class MPower(object):
         #self.ride.modelDistance()
 
         now = self._format_time(start_time)
-        root = ET.Element("TrainingCenterDatabase")
-        self._save_xml_cruft(root)
+        root = self._make_root_tag()
 
         doc = ET.SubElement(root, "Activities")
         activity = ET.SubElement(doc, "Activity", Sport=self.sport)
@@ -214,10 +198,10 @@ class MPower(object):
         ET.SubElement(lap, "Calories").text = "0"
 
         avg_hr = ET.SubElement(lap, "AverageHeartRateBpm")
-        ET.SubElement(avg_hr, "Value").text = self.ride.header.average_hr
+        ET.SubElement(avg_hr, "Value").text = str(self.ride.header.average_hr)
 
         max_hr = ET.SubElement(lap, "MaximumHeartRateBpm")
-        ET.SubElement(max_hr, "Value").text = self.ride.header.max_hr
+        ET.SubElement(max_hr, "Value").text = str(self.ride.header.max_hr)
 
         ET.SubElement(lap, "Intensity").text = "Active"
         ET.SubElement(lap, "Cadence").text = "0"
@@ -250,7 +234,7 @@ class MPower(object):
             i += 1
 
         tree = ET.ElementTree(root)
-        nice = self.prettify(root)
+        nice = ET.tostring(tree, xml_declaration=True, encoding='utf-8', pretty_print=True)
         
         with open(filename, "w") as f:
             f.write(nice)

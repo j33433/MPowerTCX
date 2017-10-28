@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import mpower
+
 #
 # Base class for equipment
 # 
@@ -34,3 +36,8 @@ class Bike(object):
             return d * 1000.0
         else:
             return d * 1609.34
+            
+    def skip(self, s):
+        if mpower.MPower.debug:
+            print ("skip %r" % s)
+            

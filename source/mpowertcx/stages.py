@@ -58,9 +58,9 @@ class Stages(bikes.Bike):
                     )
                     pass
                 else:
-                    print ("skip %r" % row)
+                    self.skip(row)
             else:
-                print ("skip %r" % row)
+                self.skip(row)
         
         if not header_found:
             print ("stages header missing")

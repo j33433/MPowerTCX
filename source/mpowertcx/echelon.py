@@ -68,7 +68,7 @@ class EchelonV1(bikes.Bike):
                     distance=float(row[1]) * 1000.0
                 )
             else:
-                print ("skip %r" % row)
+                self.skip(row)
 
         if self.ride.header.time == 0:
             print ("v1 header missing")
@@ -146,7 +146,7 @@ class EchelonV3(bikes.Bike):
             elif row == ['Stage_Totals']:
                 self._load_header(reader)
             else:
-                print ("v3 drop %r" % row)
+                self.skip(row)
         
     def _load_header(self, reader):
         header = {}
