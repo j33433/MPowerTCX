@@ -32,6 +32,7 @@ from mpower import MPower
 from dateutil import tz
 import traceback
 
+
 class About(QDialog, Ui_Dialog):
     """ 
     Show license, version, etc 
@@ -161,6 +162,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.in_file_info = QFileInfo(filename)
             csv_dir = self.in_file_info.absoluteDir().path()
             self.settings.setValue(csv_dir_key, csv_dir)
+
+            self._plot()
+            
+    def _plot(self):
+        import pyqtgraph as pg
+        import numpy as np
+        
+        pg.setConfigOption('background', 'w')
+        pg.setConfigOption('foreground', 'k')
+        plot = pg.plot(title='Ride')
+
+        ride = self.mpower.ride
+
+        plot.plot(np.array(ride.power).astype("int"), pen=1) 
+        plot.plot(np.array(ride.hr).astype("int"), pen=2) 
+        plot.plot(np.array(ride.rpm).astype("int"), pen=3) 
+        #plot.plot(np.array(ride.distance).astype("float")) 
 
     def savePushed(self):
         """ 
