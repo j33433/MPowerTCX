@@ -33,7 +33,9 @@ from dateutil import tz
 import traceback
 
 class About(QDialog, Ui_Dialog):
-    """ Show license, version, etc """
+    """ 
+    Show license, version, etc 
+    """
     def __init__(self, version):
         super(About, self).__init__()
         self.setupUi(self)
@@ -57,7 +59,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.in_file_info = None
 
     def configure(self):
-        """ Put UI elements into their initial states """
+        """ 
+        Put UI elements into their initial states 
+        """
         self.groupBoxPhysics.setHidden(True)
         self.statusBar().showMessage(self.version)
         self.saveButton.setEnabled(False)
@@ -73,7 +77,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.powerAdjustment.setValue(power_adjust)
 
     def assignWidgets(self):
-        """ Connect signals to slots """
+        """ 
+        Connect signals to slots 
+        """
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
         self.includeSpeedData.stateChanged.connect(self.includeSpeedDataChanged)
         self.powerAdjustment.valueChanged.connect(self.powerAdjustmenChanged)
@@ -83,7 +89,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionAbout.triggered.connect(self.showAbout)
 
     def alert(self, message):
-        """ Simple alert box """
+        """ 
+        Simple alert box 
+        """
         box = QMessageBox()
         box.setText("MPowerTCX\n - %s" % message)
         box.exec_()
@@ -100,7 +108,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.groupBoxPhysics.setHidden(not value)
 
     def useFileDateChanged(self, state):
-        """ The checkbox was clicked """
+        """ 
+        The checkbox was clicked 
+        """
         value = state == Qt.Checked
         self.workoutTime.setEnabled(not value)
         self.settings.setValue(self.file_date_key, value)
@@ -110,7 +120,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         about.exec_()
 
     def loadPushed(self):
-        """ Let the user select a CSV file. Load if possible. """
+        """ 
+        Let the user select a CSV file. Load if possible. 
+        """
         csv_dir_key = "file/csv_dir"
         csv_dir = self.settings.value(csv_dir_key, ".")
         (filename, filter) = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
@@ -151,7 +163,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.settings.setValue(csv_dir_key, csv_dir)
 
     def savePushed(self):
-        """ Let the user select a TCX file to save to. Store the data. """
+        """ 
+        Let the user select a TCX file to save to. Store the data. 
+        """
         tcx_dir_key = "file/tcx_dir"
         tcx_dir = self.settings.value(tcx_dir_key, ".")
         use_file_date = self.useFileDate.isChecked()
@@ -202,10 +216,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         info = QFileInfo(filename)
         tcx_dir = info.absoluteDir().path()
         self.settings.setValue(tcx_dir_key, tcx_dir)
-        
 
 
-# Main logic
 if len(sys.argv) == 1:
     # Run from the UI
     app = QApplication(sys.argv)

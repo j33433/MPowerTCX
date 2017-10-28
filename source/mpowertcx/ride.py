@@ -17,7 +17,9 @@
 #
 
 class RideHeader(object):
-    """ Summary statistics for a ride """
+    """ 
+    Summary statistics for a ride 
+    """
     def __init__(self):
         self.setSummary()
 
@@ -34,7 +36,9 @@ class RideHeader(object):
 
 
 class Ride(object):
-    """ Hold the time series data for the ride and a header """
+    """ 
+    Hold the time series data for the ride and a header 
+    """
     def __init__(self):
         self.power = []
         self.rpm = []
@@ -49,7 +53,9 @@ class Ride(object):
         self.distance.append(str(distance))
 
     def count(self):
-        """ The number of samples in the time series """
+        """ 
+        The number of samples in the time series 
+        """
         return len(self.power)
         
     def inferHeader(self, time=0):

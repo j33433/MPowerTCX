@@ -119,7 +119,9 @@ class MPower(object):
                print ("skip %r" % line)
 
     def load_csv(self):
-        """ Read the CSV into a summary and time series """
+        """ 
+        Read the CSV into a summary and time series 
+        """
         with open(self.in_filename, 'rb') as infile:
             iterator = LineIterator(infile)
             reader = csv.reader(iterator, skipinitialspace=True)
@@ -131,11 +133,15 @@ class MPower(object):
                 pass
 
     def _format_time(self, dt):
-        """ Return a time string in TCX format """
+        """ 
+        Return a time string in TCX format 
+        """
         return dt.strftime("%Y-%m-%dT%H:%M:%S") + "Z"
 
     def _save_xml_cruft(self, root):
-        """ The header stuff for the TCX XML """
+        """ 
+        The header stuff for the TCX XML 
+        """
         root.set("xmlns:ns5", "http://www.garmin.com/xmlschemas/ActivityGoals/v1")
         root.set("xmlns:ns3", "http://www.garmin.com/xmlschemas/ActivityExtension/v2")
         root.set("xmlns:ns2", "http://www.garmin.com/xmlschemas/UserProfile/v2")
@@ -143,18 +149,43 @@ class MPower(object):
         root.set("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
         root.set("xsi:schemaLocation", "http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd")
 
+    @profile
     def prettify(self, elem):
         """
-        Fast but low quality xml formatter
+        The official pretty prenters for xml are slow beyond usefulness
         """
         ugly = ET.tostring(elem, 'utf-8')
+        
+        # something<foo -> something\n<foo
         tmp = re.sub('<([^\/])', '\n<\\1', ugly)
+        
+        # <anytag></anytag> -> <anytag>\n</antyag>
         tmp = re.sub('></', '>\n</', tmp)
         
-        return '<?xml version="1.0" ?>\n' + tmp.strip()
+        indent = 0
+        spaces = '\t'
+        out = '<?xml version="1.0" ?>\n'
+        
+        for line in tmp.split('\n'):
+            if len(line):
+                # <foo>x</foo>
+                if line[1] != '/' and '</' in line:
+                    out += (spaces * indent) + line + '\n'
+                # </foo>
+                elif line[1] == '/':
+                    indent -= 1
+                    out += (spaces * indent) + line + '\n'
+                # <foo>...
+                else:
+                    out += (spaces * indent) + line + '\n'
+                    indent += 1
+        
+        return out
         
     def save_data(self, filename, start_time, model=False):
-        """ Save the parsed CSV to TCX """
+        """ 
+        Save the parsed CSV to TCX 
+        """
 
         #self.ride.interpolate()
         
