@@ -23,13 +23,13 @@ import datetime
 import lxml.etree as ET
 import lxml.builder
 
-from mpowertcx.ride import Ride, RideHeader
-import mpowertcx.physics
+from equipment.ride import Ride, RideHeader
+import physics
 
 # Equipment plugins
-from mpowertcx.stages import Stages 
-from mpowertcx.thesufferfest import TheSufferfest
-from mpowertcx.echelon import EchelonV1, EchelonV2, EchelonV3
+from equipment.stages import Stages 
+from equipment.thesufferfest import TheSufferfest
+from equipment.echelon import EchelonV1, EchelonV2, EchelonV3
 
 class LineIterator(object):
     """ 
