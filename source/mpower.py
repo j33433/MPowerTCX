@@ -53,6 +53,8 @@ class MPower(object):
     Process the CSV into TCX 
     """
     debug = False
+    do_interpolate = False
+    do_physics = False
     
     def __init__(self, in_filename):
         self.in_filename = in_filename
@@ -82,6 +84,13 @@ class MPower(object):
     def header(self):
         return self.ride.header
 
+    def set_interpolation(self, use):
+        self.do_interpolate = use
+        
+    def set_physics(self, use, mass_kg):
+        self.do_physics = True
+        self.physics_mass = mass_kg
+        
     def set_power_adjust(self, value):
         """ 
         Power readings vary quite a bit from bike to bike. Allow adjustment 
@@ -158,15 +167,16 @@ class MPower(object):
         
         return tag
 
-    def save_data(self, filename, start_time, model=False):
+    def save_data(self, filename, start_time):
         """ 
         Save the parsed CSV to TCX 
         """
 
-        #self.ride.interpolate()
+        if self.do_interpolate:
+            self.ride.interpolate()
         
-        #if model:
-        #self.ride.modelDistance()
+        if self.do_physics:
+            self.ride.modelDistance()
 
         now = self._format_time(start_time)
         root = self._make_root_tag()

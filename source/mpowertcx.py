@@ -31,6 +31,8 @@ from ui.about import Ui_Dialog
 from ui.mainwindow import Ui_MainWindow
 from mpower import MPower
 from dateutil import tz
+from widgetsettings import WidgetSettings
+
 import traceback
 
 class About(QDialog, Ui_Dialog):
@@ -43,18 +45,17 @@ class About(QDialog, Ui_Dialog):
         self.licenseEdit.appendPlainText(license)
         self.labelVersion.setText("Version: " + version)
 
-class MainWindow(QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
+    lbs_to_kg = 0.453592
+    
     def __init__(self):
         super(MainWindow, self).__init__()
+        WidgetSettings.__init__(self, self, 'settings.json')
         self.version = "v1.1.11"
         self.trues = [True, 'True', 'true'] # workaround for pyside
         self.settings = QSettings("j33433", "MPowerTCX")
-        self.power_adjust_key = "power_adjust"
-        self.show_extra_key = "show_extra"
-        self.interpolate_key = "interpolate"
-        self.use_physics_key = "use_physics"
-        self.file_date_key = "use_file_date"
         self.setupUi(self)
+        self.unstash()
         self.assignWidgets()
         self.configure()
         self.show()
@@ -69,34 +70,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.saveButton.setEnabled(False)
         self.workoutTime.setDateTime(datetime.now())
 
-        use_file_date = self.settings.value(self.file_date_key, 'True')
-        self.useFileDate.setChecked(use_file_date in self.trues)
-
-        power_adjust = float(self.settings.value(self.power_adjust_key, 0.0))
-        self.powerAdjustment.setValue(power_adjust)
-        
-        show_extra = self.settings.value(self.show_extra_key, 'False')
-        self.checkBoxExtra.setChecked(show_extra in self.trues)
-
-        if not show_extra in self.trues:
-            self.groupBoxPhysics.setHidden(True)
-            self.groupBoxCompatibility.setHidden(True)
-        
-        phyiscs = self.settings.value(self.use_physics_key, 'False')
-        self.checkBoxPhysics.setChecked(phyiscs in self.trues)
-
-        interpolate = self.settings.value(self.interpolate_key, 'True')
-        self.checkBoxInterpolate.setChecked(interpolate in self.trues)
+        hide = not self.checkBoxExtra.isChecked()
+        self.groupBoxPhysics.setHidden(hide)
+        self.groupBoxCompatibility.setHidden(hide)
         
     def assignWidgets(self):
         """ 
         Connect signals to slots 
         """
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
-        self.powerAdjustment.valueChanged.connect(self.powerAdjustmenChanged)
         self.checkBoxExtra.stateChanged.connect(self.checkBoxExtraChanged)
-        self.checkBoxPhysics.stateChanged.connect(self.checkBoxPhysicsChanged)
-        self.checkBoxInterpolate.stateChanged.connect(self.checkBoxInterpolateChanged)
+        
+        self.powerAdjustment.valueChanged.connect(self.somethingChanged)
+        self.comboBoxUnits.currentIndexChanged.connect(self.somethingChanged)
+        self.checkBoxPhysics.stateChanged.connect(self.somethingChanged)
+        self.checkBoxInterpolate.stateChanged.connect(self.somethingChanged)
+        self.doubleSpinBoxRiderWeight.valueChanged.connect(self.somethingChanged)
+        self.doubleSpinBoxBikeWeight.valueChanged.connect(self.somethingChanged)
+        
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
         self.actionAbout.triggered.connect(self.showAbout)
@@ -109,30 +100,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         box.setText("MPowerTCX\n - %s" % message)
         box.exec_()
 
-    def powerAdjustmenChanged(self, value):
-        self.settings.setValue(self.power_adjust_key, value)
-    
-    def checkBoxInterpolateChanged(self, state):
-        value = state == Qt.Checked
-        self.settings.setValue(self.interpolate_key, value)
-    
-    def checkBoxPhysicsChanged(self, state):
-        value = state == Qt.Checked
-        self.settings.setValue(self.use_physics_key, value)
+    def somethingChanged(self, value):
+        self.stash()
 
     def checkBoxExtraChanged(self, state):
         value = state == Qt.Checked
         self.groupBoxPhysics.setHidden(not value)
         self.groupBoxCompatibility.setHidden(not value)
-        self.settings.setValue(self.show_extra_key, value)
+        self.stash()
         
     def useFileDateChanged(self, state):
-        """ 
-        The checkbox was clicked 
-        """
         value = state == Qt.Checked
         self.workoutTime.setEnabled(not value)
-        self.settings.setValue(self.file_date_key, value)
+        self.stash()
 
     def showAbout(self):
         about = About(self.version)
@@ -222,7 +202,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         power_adjust = self.powerAdjustment.value()
         self.mpower.set_power_adjust(power_adjust)
-
+        self.mpower.set_interpolation(self.checkBoxInterpolate.isChecked())
+        
+        mass = self.doubleSpinBoxRiderWeight.value() + self.doubleSpinBoxBikeWeight.value()
+        
+        if self.comboBoxUnits.currentText() == "lbs":
+            mass *= self.lbs_to_kg
+        
+        self.mpower.set_physics(self.checkBoxPhysics.isChecked(), mass)
+ 
         try:
             self.mpower.save_data(filename, start_time)
         except Exception as error:
@@ -250,7 +238,7 @@ else:
     parser.add_argument("--csv", help="the spin bike file", required=True)
     parser.add_argument("--tcx", help="the output file", required=True)
     parser.add_argument("--time", help="the workout starting time")
-    parser.add_argument("--model", help="use physics model for speed and distance", action='store_true')
+    #parser.add_argument("--model", help="use physics model for speed and distance", action='store_true')
     args = parser.parse_args()
     
     mpower = MPower(args.csv)
@@ -262,4 +250,4 @@ else:
         # Take input file time
         stamp = datetime.fromtimestamp(os.path.getmtime(args.csv))
         
-    mpower.save_data(args.tcx, stamp, args.model)
+    mpower.save_data(args.tcx, stamp)
