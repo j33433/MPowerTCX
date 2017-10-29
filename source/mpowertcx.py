@@ -50,6 +50,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trues = [True, 'True', 'true'] # workaround for pyside
         self.settings = QSettings("j33433", "MPowerTCX")
         self.power_adjust_key = "power_adjust"
+        self.show_extra_key = "show_extra"
+        self.interpolate_key = "interpolate"
+        self.use_physics_key = "use_physics"
         self.file_date_key = "use_file_date"
         self.setupUi(self)
         self.assignWidgets()
@@ -62,7 +65,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """ 
         Put UI elements into their initial states 
         """
-        self.groupBoxPhysics.setHidden(True)
         self.statusBar().showMessage(self.version)
         self.saveButton.setEnabled(False)
         self.workoutTime.setDateTime(datetime.now())
@@ -72,14 +74,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         power_adjust = float(self.settings.value(self.power_adjust_key, 0.0))
         self.powerAdjustment.setValue(power_adjust)
+        
+        show_extra = self.settings.value(self.show_extra_key, 'False')
+        self.checkBoxExtra.setChecked(show_extra in self.trues)
 
+        if not show_extra in self.trues:
+            self.groupBoxPhysics.setHidden(True)
+            self.groupBoxCompatibility.setHidden(True)
+        
+        phyiscs = self.settings.value(self.use_physics_key, 'False')
+        self.checkBoxPhysics.setChecked(phyiscs in self.trues)
+
+        interpolate = self.settings.value(self.interpolate_key, 'True')
+        self.checkBoxInterpolate.setChecked(interpolate in self.trues)
+        
     def assignWidgets(self):
         """ 
         Connect signals to slots 
         """
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
         self.powerAdjustment.valueChanged.connect(self.powerAdjustmenChanged)
+        self.checkBoxExtra.stateChanged.connect(self.checkBoxExtraChanged)
         self.checkBoxPhysics.stateChanged.connect(self.checkBoxPhysicsChanged)
+        self.checkBoxInterpolate.stateChanged.connect(self.checkBoxInterpolateChanged)
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
         self.actionAbout.triggered.connect(self.showAbout)
@@ -95,10 +112,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def powerAdjustmenChanged(self, value):
         self.settings.setValue(self.power_adjust_key, value)
     
+    def checkBoxInterpolateChanged(self, state):
+        value = state == Qt.Checked
+        self.settings.setValue(self.interpolate_key, value)
+    
     def checkBoxPhysicsChanged(self, state):
         value = state == Qt.Checked
-        self.groupBoxPhysics.setHidden(not value)
+        self.settings.setValue(self.use_physics_key, value)
 
+    def checkBoxExtraChanged(self, state):
+        value = state == Qt.Checked
+        self.groupBoxPhysics.setHidden(not value)
+        self.groupBoxCompatibility.setHidden(not value)
+        self.settings.setValue(self.show_extra_key, value)
+        
     def useFileDateChanged(self, state):
         """ 
         The checkbox was clicked 

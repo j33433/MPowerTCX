@@ -62,9 +62,6 @@ class MPower(object):
         # In that case, this value could be set to 0.95.
         self.power_fudge = 1.0
         self.sport = "Biking"
-
-        # Distance sometimes results in erratic speed values (84 mph)
-        self.use_distance = True
         self.ride = Ride()
         
         self.bikes = [
@@ -84,12 +81,6 @@ class MPower(object):
 
     def header(self):
         return self.ride.header
-
-    def set_include_speed_data(self, value):
-        """ 
-        Allow estimated speed data to be excluded. They aren't really worth much
-        """
-        self.use_distance = value
 
     def set_power_adjust(self, value):
         """ 
@@ -188,11 +179,7 @@ class MPower(object):
         seconds = self.ride.header.time
         ET.SubElement(lap, "TotalTimeSeconds").text = str(seconds)
 
-        if self.use_distance:
-            meters = float(self.ride.header.distance)
-        else:
-            meters = 0
-
+        meters = float(self.ride.header.distance)
         ET.SubElement(lap, "DistanceMeters").text = str(meters)
         ET.SubElement(lap, "MaximumSpeed").text = "0"
         ET.SubElement(lap, "Calories").text = "0"
@@ -221,11 +208,7 @@ class MPower(object):
             ET.SubElement(hr, "Value").text = self.ride.hr[i]
             hr = ET.SubElement(point, "Cadence").text = self.ride.rpm[i]
 
-            if self.use_distance:
-                distance = self.ride.distance[i]
-            else:
-                distance = 0
-
+            distance = self.ride.distance[i]
             hr = ET.SubElement(point, "DistanceMeters").text = str(distance)
             ext = ET.SubElement(point, "Extensions")
             tpx = ET.SubElement(ext, "TPX", xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2")
