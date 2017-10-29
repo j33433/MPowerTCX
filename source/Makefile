@@ -1,8 +1,8 @@
 all: mainwindow.py about.py
 
-mainwindow.py: mainwindow.ui Makefile
-	( cat .disclaimer; pyside-uic mainwindow.ui ) > mainwindow.py
+ui/mainwindow.py: ui/mainwindow.ui Makefile
+	( cat .disclaimer; pyside-uic ui/mainwindow.ui ) > ui/mainwindow.py
 
-about.py: about.ui Makefile
-	( cat .disclaimer; pyside-uic about.ui ) > about.py
+ui/about.py: ui/about.ui Makefile
+	( cat .disclaimer; pyside-uic ui/about.ui ) > ui/about.py
 	

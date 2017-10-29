@@ -20,14 +20,15 @@ license = """\
 import os
 import sys
 import argparse
+import platform
 
 from datetime import datetime
 import dateutil.parser
 
 from PySide.QtGui import *
 from PySide.QtCore import *
-from about import Ui_Dialog
-from mainwindow import Ui_MainWindow
+from ui.about import Ui_Dialog
+from ui.mainwindow import Ui_MainWindow
 from mpower import MPower
 from dateutil import tz
 import traceback
@@ -48,7 +49,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.version = "v1.1.11"
         self.trues = [True, 'True', 'true'] # workaround for pyside
         self.settings = QSettings("j33433", "MPowerTCX")
-        self.include_speed_key = "include_speed"
         self.power_adjust_key = "power_adjust"
         self.file_date_key = "use_file_date"
         self.setupUi(self)
@@ -70,9 +70,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         use_file_date = self.settings.value(self.file_date_key, 'True')
         self.useFileDate.setChecked(use_file_date in self.trues)
 
-        include_speed = self.settings.value(self.include_speed_key, 'True')
-        self.includeSpeedData.setChecked(include_speed in self.trues)
-        
         power_adjust = float(self.settings.value(self.power_adjust_key, 0.0))
         self.powerAdjustment.setValue(power_adjust)
 
@@ -81,7 +78,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         Connect signals to slots 
         """
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
-        self.includeSpeedData.stateChanged.connect(self.includeSpeedDataChanged)
         self.powerAdjustment.valueChanged.connect(self.powerAdjustmenChanged)
         self.checkBoxPhysics.stateChanged.connect(self.checkBoxPhysicsChanged)
         self.loadButton.clicked.connect(self.loadPushed)
@@ -99,10 +95,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def powerAdjustmenChanged(self, value):
         self.settings.setValue(self.power_adjust_key, value)
     
-    def includeSpeedDataChanged(self, state):
-        value = state == Qt.Checked
-        self.settings.setValue(self.include_speed_key, value)
-
     def checkBoxPhysicsChanged(self, state):
         value = state == Qt.Checked
         self.groupBoxPhysics.setHidden(not value)
@@ -201,9 +193,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # User cancel
             return
 
-        include_speed = self.includeSpeedData.isChecked()
         power_adjust = self.powerAdjustment.value()
-        self.mpower.set_include_speed_data(include_speed)
         self.mpower.set_power_adjust(power_adjust)
 
         try:
@@ -220,7 +210,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 if len(sys.argv) == 1:
     # Run from the UI
-    QApplication.setStyle('Cleanlooks')
+    if platform.system() == 'Linux':
+        QApplication.setStyle('Cleanlooks')
+        
     app = QApplication(sys.argv)
     mainWin = MainWindow()
     ret = app.exec_()
