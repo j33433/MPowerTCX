@@ -220,6 +220,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 if len(sys.argv) == 1:
     # Run from the UI
+    QApplication.setStyle('Cleanlooks')
     app = QApplication(sys.argv)
     mainWin = MainWindow()
     ret = app.exec_()
