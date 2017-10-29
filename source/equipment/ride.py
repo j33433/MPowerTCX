@@ -78,7 +78,7 @@ class Ride(object):
 
         seconds = self.header.time
         delta = self.delta()
-        print ("%.2f seconds per sample before interpolation" % (delta))
+        print ("interpolate: %.2f seconds per sample before interpolation" % (delta))
         
         if delta == 0:
             print ("nothing to interpolate")
@@ -100,10 +100,10 @@ class Ride(object):
         f = interpolate.interp1d(xa, self.distance)
         self.distance = f(xb).astype("str")
         
-    def modelDistance(self):
+    def modelDistance(self, mass):
         delta = self.delta()
-        print ("delta %.2f" % delta)
-        bike = physics.SimpleBike()
+        print ("modelDistance: delta %.2f, mass %.2f" % (delta, mass))
+        bike = physics.SimpleBike(mass)
         bike.time_delta = delta
         self.distance = []
 

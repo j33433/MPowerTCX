@@ -88,7 +88,7 @@ class MPower(object):
         self.do_interpolate = use
         
     def set_physics(self, use, mass_kg):
-        self.do_physics = True
+        self.do_physics = use
         self.physics_mass = mass_kg
         
     def set_power_adjust(self, value):
@@ -176,7 +176,7 @@ class MPower(object):
             self.ride.interpolate()
         
         if self.do_physics:
-            self.ride.modelDistance()
+            self.ride.modelDistance(self.physics_mass)
 
         now = self._format_time(start_time)
         root = self._make_root_tag()

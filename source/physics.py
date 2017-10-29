@@ -21,14 +21,14 @@
 import math
 
 class SimpleBike(object):
-    def __init__(self):
+    def __init__(self, mass):
         self.drag_coefficient = 0.88
         self.frontal_area = 0.32
         self.rho = 1.2
         self.eta = 0.97  	
         self.rolling_coefficient = 5.0e-3
         # kg
-        self.mass = 73.0
+        self.mass = mass
         self.grade = 0.0
         self.g = 9.81
         self.time_delta = 1

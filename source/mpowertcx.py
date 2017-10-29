@@ -179,9 +179,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         local_time = local_time.replace(tzinfo=local_zone)
         start_time = local_time.astimezone(utc_zone)
 
-        print ("local %r" % local_time)
-        print ("utc %r" % start_time)
-        
         dialog = QFileDialog(self)
         dialog.selectFile(self.in_file_info.baseName() + ".tcx")
         dialog.setDirectory(tcx_dir)
@@ -214,7 +211,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         try:
             self.mpower.save_data(filename, start_time)
         except Exception as error:
-            self.alert("There was an error: %s" % error)
+            oops = traceback.format_exc().splitlines()
+            self.alert("There was an error: %s\n\n%s\n%s\n%s\n" % (error, oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
         else:
             self.alert("The TCX file was saved successfully.")
 
