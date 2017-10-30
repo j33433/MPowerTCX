@@ -8,6 +8,9 @@ class WidgetSettings(object):
         self.__parent = parent
         self.__filename = filename
     
+    def _key_name(self, w):
+        return '%s/%s' % (self.__parent.objectName(), w.objectName())
+        
     def stash(self):
         print ("stash")
         
@@ -15,20 +18,17 @@ class WidgetSettings(object):
         lineEdits = self.__parent.findChildren(QAbstractSpinBox)
 
         for w in lineEdits:
-            #print ("%s %r" % (w.objectName(), w.text()))
-            saved[w.objectName()] = w.text()
+            saved[self._key_name(w)] = w.text()
     
         checkBoxes = self.__parent.findChildren(QCheckBox)
         
         for w in checkBoxes:
-            #print ("%s %r" % (w.objectName(), w.checkState()))
-            saved[w.objectName()] = w.isChecked()
+            saved[self._key_name(w)] = w.isChecked()
 
         comboBoxes = self.__parent.findChildren(QComboBox)
 
         for w in comboBoxes:
-            #print ("%s %r" % (w.objectName(), w.currentText()))
-            saved[w.objectName()] = w.currentText()
+            saved[self._key_name(w)] = w.currentText()
 
         json_data = json.dumps(saved, indent=4, sort_keys=True)
         
@@ -48,7 +48,7 @@ class WidgetSettings(object):
 
         for w in lineEdits:
             if hasattr(w, 'value'):
-                v = saved.get(w.objectName(), w.value())
+                v = saved.get(self._key_name(w), w.value())
                 w.setValue(w.valueFromText(str(v)))
             else:
                 # Probably a date time thing
@@ -57,15 +57,13 @@ class WidgetSettings(object):
         checkBoxes = self.__parent.findChildren(QCheckBox)
         
         for w in checkBoxes:
-            v = saved.get(w.objectName(), w.isChecked())
-            #print ("%s %r" % (w.objectName(), v))
+            v = saved.get(self._key_name(w), w.isChecked())
             w.setCheckState(Qt.Checked if v else Qt.Unchecked)
 
         comboBoxes = self.__parent.findChildren(QComboBox)
 
         for w in comboBoxes:
-            v = saved.get(w.objectName(), w.currentText())
-            #print ("%s %r" % (w.objectName(), v))
+            v = saved.get(self._key_name(w), w.currentText())
             index = w.findText(v, Qt.MatchFixedString)
             
             if index >= 0:

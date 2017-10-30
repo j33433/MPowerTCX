@@ -21,6 +21,7 @@ import os
 import sys
 import argparse
 import platform
+import threading
 
 from datetime import datetime
 import dateutil.parser
@@ -161,6 +162,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
             csv_dir = self.in_file_info.absoluteDir().path()
             self.settings.setValue(csv_dir_key, csv_dir)
 
+    def saveThread(self, filename, start_time, result):
+        try:
+            self.mpower.save_data(filename, start_time)
+        except Exception as error:
+            oops = traceback.format_exc().splitlines()
+            result['message'] = 'There was an error: %s\n\n%s\n%s\n%s\n' % (error, oops[-3].strip(), oops[-2].strip(), oops[-1].strip())
+            result['status'] = False
+        else:
+            result['message'] = 'The TCX file was saved successfully.'
+            result['status'] = True
+        
     def savePushed(self):
         """ 
         Let the user select a TCX file to save to. Store the data. 
@@ -208,13 +220,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         
         self.mpower.set_physics(self.checkBoxPhysics.isChecked(), mass)
  
-        try:
-            self.mpower.save_data(filename, start_time)
-        except Exception as error:
-            oops = traceback.format_exc().splitlines()
-            self.alert("There was an error: %s\n\n%s\n%s\n%s\n" % (error, oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
-        else:
-            self.alert("The TCX file was saved successfully.")
+        thread_result = {'message': None, 'status': False}
+        t = threading.Thread(target=self.saveThread, args=(filename, start_time, thread_result))
+        t.start()
+        t.join()
+        print (thread_result)
+        self.alert(thread_result['message'])
 
         info = QFileInfo(filename)
         tcx_dir = info.absoluteDir().path()

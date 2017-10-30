@@ -224,7 +224,6 @@ class MPower(object):
             tpx = ET.SubElement(ext, "TPX", xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2")
             power = float(self.ride.power[i]) * self.power_fudge
             ET.SubElement(tpx, "Watts").text = str(int(power))
-            i += 1
 
         tree = ET.ElementTree(root)
         nice = ET.tostring(tree, xml_declaration=True, encoding='utf-8', pretty_print=True)
