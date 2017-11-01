@@ -78,7 +78,7 @@ class Ride(object):
 
         seconds = self.header.time
         delta = self.delta()
-        print ("interpolate: %.2f seconds per sample before interpolation" % (delta))
+        print ("interpolate: %d seconds, %.2f seconds per sample before interpolation" % (seconds, delta))
         
         if delta == 0:
             print ("nothing to interpolate")
@@ -88,18 +88,21 @@ class Ride(object):
         xa = np.arange(0, limit, delta)
         xb = np.arange(0, limit - delta, 1)
        
-        f = interpolate.interp1d(xa, self.power)
-        self.power = f(xb).astype("int").astype("str")
+        self.power = self._interpolate(xa, xb, self.power).astype("int").astype("str")
+        self.rpm = self._interpolate(xa, xb, self.rpm).astype("int").astype("str")
+        self.hr = self._interpolate(xa, xb, self.hr).astype("int").astype("str")
+        self.distance = self._interpolate(xa, xb, self.distance).astype("str")
         
-        f = interpolate.interp1d(xa, self.rpm)
-        self.rpm = f(xb).astype("int").astype("str")
+    def _interpolate(self, xa, xb, data):
+        from scipy import interpolate   
         
-        f = interpolate.interp1d(xa, self.hr)
-        self.hr = f(xb).astype("int").astype("str")
-        
-        f = interpolate.interp1d(xa, self.distance)
-        self.distance = f(xb).astype("str")
-        
+        if False:
+            f = interpolate.interp1d(xa, data, kind='linear')
+            return f(xb)
+        else:
+            f = interpolate.splrep(xa, data)
+            return interpolate.splev(xb, f)
+    
     def modelDistance(self, mass):
         delta = self.delta()
         print ("modelDistance: delta %.2f, mass %.2f" % (delta, mass))

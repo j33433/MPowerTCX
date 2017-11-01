@@ -244,12 +244,13 @@ if len(sys.argv) == 1:
 else:
     # Run from the command line
     parser = argparse.ArgumentParser(description='Share indoor cycle data with Strava, Golden Cheetah and other apps')
-    parser.add_argument("--csv", help="the spin bike file", required=True)
-    parser.add_argument("--tcx", help="the output file", required=True)
-    parser.add_argument("--time", help="the workout starting time")
-    #parser.add_argument("--model", help="use physics model for speed and distance", action='store_true')
+    parser.add_argument('--csv', help='the spin bike file', required=True)
+    parser.add_argument('--tcx', help='the output file', required=True)
+    parser.add_argument('--time', help='the workout starting time')
+    parser.add_argument('--interpolate', help='produce samples at one second intervals', action='store_true')
+    parser.add_argument('--model', help='use physics model for speed and distance', metavar='MASS_KG')
     args = parser.parse_args()
-    
+    print(args)
     mpower = MPower(args.csv)
     mpower.load_csv()
     
@@ -258,5 +259,9 @@ else:
     else:
         # Take input file time
         stamp = datetime.fromtimestamp(os.path.getmtime(args.csv))
-        
+    
+    if args.model is not None:
+        mpower.set_physics(True, float(args.model))
+    
+    mpower.set_interpolation(args.interpolate)   
     mpower.save_data(args.tcx, stamp)
