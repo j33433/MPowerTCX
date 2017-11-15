@@ -15,7 +15,8 @@ The TCX file can be uploaded to most cycling data viewers.
 
 ### Support
 
-Contact j33433@gmail.com
+* Email: j33433@gmail.com
+* On Strava: https://www.strava.com/clubs/MPowerTCX
 
 ### Supported Workout Types
 1. MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
