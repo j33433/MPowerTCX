@@ -12,7 +12,7 @@
 
   ;Name and file
   Name "MPowerTCX"
-  OutFile "WelcomeFinish.exe"
+  OutFile "Install MPowerTCX.exe"
 
   ;Default installation folder
   InstallDir "$LOCALAPPDATA\MPowerTCX"
@@ -27,6 +27,7 @@
 ;Interface Settings
 
   !define MUI_ABORTWARNING
+  !define MUI_ICON "..\..\images\mpowertcx-simpler-bike.ico"
 
 ;--------------------------------
 ;Pages

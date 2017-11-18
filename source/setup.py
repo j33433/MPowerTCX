@@ -16,7 +16,7 @@ import sys
 base = 'Win32GUI' if sys.platform=='win32' else None
 
 executables = [
-    Executable('mpowertcx.py', base=base)
+    Executable('mpowertcx.py', base=base, icon='..\images\mpowertcx-simpler-bike.ico')
 ]
 
 setup(name='MPowerTCX',
