@@ -63,7 +63,10 @@ Section "MPowerTCX" SecDummy
 
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
-
+  
+  CreateDirectory "$SMPROGRAMS\MPowerTCX"
+  CreateShortCut "$SMPROGRAMS\MPowerTCX\MPowerTCX.lnk" "$INSTDIR\exe.win-amd64-2.7\mpowertcx.exe" ""
+  CreateShortCut "$DESKTOP\MPowerTCX.lnk" "$INSTDIR\exe.win-amd64-2.7\mpowertcx.exe" ""
 SectionEnd
 
 ;--------------------------------
