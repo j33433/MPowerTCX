@@ -56,7 +56,6 @@ class Stages(bikes.Bike):
                         hr=row[4],
                         distance=self.distance(distance)
                     )
-                    pass
                 else:
                     self.skip(row)
             else:

@@ -61,18 +61,26 @@ class Ride(object):
         return len(self.power)
         
     def inferHeader(self, time=0):
+        """
+        Calculate missing header values
+        """
         average_power = sum(int(p) for p in self.power) / len(self.power)
         max_power = max(int(p) for p in self.power)
-        print ("%d %d" % (average_power, max_power))
         self.header.setSummary(time=time, distance=0, average_power=average_power, max_power=max_power)
 
     def delta(self):
+        """
+        Return the average time between samples
+        """
         if self.count():
             return self.header.time / self.count()
         else:
             return 0
         
     def interpolate(self):
+        """
+        Resample the data to one second intervals
+        """
         import numpy as np
         from scipy import interpolate   
 
@@ -96,16 +104,11 @@ class Ride(object):
     def _interpolate(self, xa, xb, data):
         from scipy import interpolate   
         
-        if False:
-            f = interpolate.interp1d(xa, data, kind='linear')
-            return f(xb)
-        else:
-            f = interpolate.splrep(xa, data)
-            return interpolate.splev(xb, f)
+        f = interpolate.splrep(xa, data)
+        return interpolate.splev(xb, f)
     
     def modelDistance(self, mass):
         delta = self.delta()
-        print ("modelDistance: delta %.2f, mass %.2f" % (delta, mass))
         bike = physics.SimpleBike(mass)
         bike.time_delta = delta
         self.distance = []
@@ -113,5 +116,4 @@ class Ride(object):
         for p in self.power:
             power, v_mph, distance = bike.next_sample(float(p))
             self.distance.append(distance)
-            #print (power, v_mph, distance)
 

@@ -28,16 +28,22 @@ class TheSufferfest(bikes.Bike):
         
     def _load(self, reader):
         last_time = 0.0
+        distance = 0.0
         
         for row in reader:
             if len(row):
                 time = float(row[1])
+                time_delta = time - last_time
                 last_time = time
+                speed = float(row[5])
+                # 1 m/s = 2.236936 mph, hence this odd looking factor:
+                distance += speed * time_delta / 22.36936
                 
                 self.ride.addSample(
                     power=row[2],
                     rpm=row[3],
-                    hr=row[4]
+                    hr=row[4],
+                    distance=distance
                 )
                 
         self.ride.inferHeader(last_time)
