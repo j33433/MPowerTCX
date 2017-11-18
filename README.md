@@ -2,7 +2,7 @@
 
 Share your indoor cycle workouts on Strava, Garmin Connect and Golden Cheetah.
 
-![Schwinn MPower Console](images/mpowertcx.png)
+![Schwinn MPower Console](images/mpowertcx%20simpler.png)
 
 ## Downloads
 
