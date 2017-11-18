@@ -1,7 +1,3 @@
-;NSIS Modern User Interface
-;Welcome/Finish Page Example Script
-;Written by Joost Verburg
-
 ;--------------------------------
 ;Include Modern UI
 
@@ -27,7 +23,7 @@
 ;Interface Settings
 
   !define MUI_ABORTWARNING
-  !define MUI_ICON "..\..\images\mpowertcx-simpler-bike.ico"
+  !define MUI_ICON "..\..\images\mpowertcx-icon.ico"
 
 ;--------------------------------
 ;Pages
@@ -53,20 +49,16 @@
 ;Installer Sections
 
 Section "MPowerTCX" SecDummy
-
   SetOutPath "$INSTDIR"
-
-  ;ADD YOUR OWN FILES HERE...
   File /r "..\build\exe.win-amd64-2.7"
 	
-  ;Store installation folder
   WriteRegStr HKCU "Software\MPowerTCX" "" $INSTDIR
 
-  ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
   CreateDirectory "$SMPROGRAMS\MPowerTCX"
   CreateShortCut "$SMPROGRAMS\MPowerTCX\MPowerTCX.lnk" "$INSTDIR\exe.win-amd64-2.7\mpowertcx.exe" ""
+  CreateShortCut "$SMPROGRAMS\MPowerTCX\Uninstall MPowerTCX.lnk" "$INSTDIR\Uninstall.exe" ""
   CreateShortCut "$DESKTOP\MPowerTCX.lnk" "$INSTDIR\exe.win-amd64-2.7\mpowertcx.exe" ""
 SectionEnd
 
@@ -85,13 +77,14 @@ SectionEnd
 ;Uninstaller Section
 
 Section "Uninstall"
-
-  ;ADD YOUR OWN FILES HERE...
-
   Delete "$INSTDIR\Uninstall.exe"
-
+  Delete "$SMPROGRAMS\MPowerTCX\MPowerTCX.lnk"
+  Delete "$SMPROGRAMS\MPowerTCX\Uninstall MPowerTCX.lnk"
+  RMDir "$SMPROGRAMS\MPowerTCX"
+  Delete "$DESKTOP\MPowerTCX.lnk"
+  
+  RMDir /r "$INSTDIR\exe.win-amd64-2.7"
   RMDir "$INSTDIR"
 
   DeleteRegKey /ifempty HKCU "Software\Modern UI Test"
-
 SectionEnd
