@@ -30,10 +30,10 @@ class WidgetSettings(object):
             saved[self._key_name(w)] = w.currentText()
 
         json_data = json.dumps(saved, indent=4, sort_keys=True)
-        self.__settings.setValue("WidgetSettings", json_data)
+        self.__settings.setValue("WidgetSettings/json", json_data)
 
     def unstash(self):
-        json_data = self.__settings.value("WidgetSettings")
+        json_data = self.__settings.value("WidgetSettings/json")
         
         if json_data != None:
             saved = json.loads(json_data)
