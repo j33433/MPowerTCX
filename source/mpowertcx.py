@@ -51,10 +51,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
     
     def __init__(self):
         super(MainWindow, self).__init__()
-        WidgetSettings.__init__(self, self, 'settings.json')
+        self.settings = QSettings("j33433", "MPowerTCX")
+        WidgetSettings.__init__(self, self, 'settings.json', self.settings)
         self.version = "v1.1.11"
         self.trues = [True, 'True', 'true'] # workaround for pyside
-        self.settings = QSettings("j33433", "MPowerTCX")
         self.setupUi(self)
         self.unstash()
         self.assignWidgets()

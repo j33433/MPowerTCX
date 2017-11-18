@@ -4,16 +4,15 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 
 class WidgetSettings(object):
-    def __init__(self, parent, filename):
+    def __init__(self, parent, filename, settings):
         self.__parent = parent
         self.__filename = filename
-    
+        self.__settings = settings
+
     def _key_name(self, w):
         return '%s/%s' % (self.__parent.objectName(), w.objectName())
         
     def stash(self):
-        print ("stash")
-        
         saved = dict()
         lineEdits = self.__parent.findChildren(QAbstractSpinBox)
 
@@ -31,17 +30,14 @@ class WidgetSettings(object):
             saved[self._key_name(w)] = w.currentText()
 
         json_data = json.dumps(saved, indent=4, sort_keys=True)
-        
-        with open(self.__filename, 'w') as json_file:
-            json_file.write(json_data + '\n')
+        self.__settings.setValue("WidgetSettings", json_data)
 
     def unstash(self):
-        print ("unstash")
+        json_data = self.__settings.value("WidgetSettings")
         
-        try:
-            with open(self.__filename, 'r') as json_file:
-                saved = json.load(json_file)
-        except IOError as e:
+        if json_data != None:
+            saved = json.loads(json_data)
+        else:
             saved = dict()
         
         lineEdits = self.__parent.findChildren(QAbstractSpinBox)
