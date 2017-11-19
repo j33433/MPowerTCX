@@ -19,11 +19,14 @@
   ;Request application privileges for Windows Vista
   RequestExecutionLevel user
 
+  ; Tried them all and this was best
+  SetCompressor /SOLID lzma
+  
 ;--------------------------------
 ;Interface Settings
 
   !define MUI_ABORTWARNING
-  !define MUI_ICON "..\..\images\mpowertcx-icon.ico"
+  !define MUI_ICON "..\..\images\mpowertcx icon.ico"
 
 ;--------------------------------
 ;Pages
