@@ -21,7 +21,7 @@ The TCX file can be uploaded to most cycling data viewers.
 ### Supported Workout Types
 1. MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
 1. Stages Indoor Cycles
-1. The Sufferfest CSV files (Coming Soon)
+1. The Sufferfest CSV files
 
 ### Supported Fields
 1. Power
