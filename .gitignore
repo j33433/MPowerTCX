@@ -4,4 +4,5 @@
 build-mpowertcx-*
 mpowertcx/mpowertcx.pro.user
 source/mpowertcx.py.lprof
+images/tmp
 
