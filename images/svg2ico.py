@@ -4,7 +4,7 @@ import os
 import sys
 import subprocess
 
-sizes = (16, 32, 48, 64, 96, 128, 256)
+sizes = (16, 24, 32, 48, 64, 96, 128, 256)
 
 svg = sys.argv[1]
 basename, extension = os.path.splitext(svg)
