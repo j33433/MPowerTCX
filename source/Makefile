@@ -1,4 +1,4 @@
-all: mainwindow.py about.py
+all: ui/mainwindow.py ui/about.py
 
 ui/mainwindow.py: ui/mainwindow.ui Makefile
 	( cat .disclaimer; pyside-uic ui/mainwindow.ui ) > ui/mainwindow.py

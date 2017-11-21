@@ -17,9 +17,9 @@
 #
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'about.ui'
+# Form implementation generated from reading ui file 'ui/about.ui'
 #
-# Created: Wed Oct 11 17:05:02 2017
+# Created: Tue Nov 21 08:52:40 2017
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!

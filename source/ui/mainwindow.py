@@ -1,6 +1,8 @@
 #
-# MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, GoldenCheetah and other apps
-# Copyright (C) 2016 James Roth
+# MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, GoldenCheetah 
+# and other apps.
+#
+# Copyright (C) 2016-2017 James Roth
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,9 +19,9 @@
 #
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow.ui'
+# Form implementation generated from reading ui file 'ui/mainwindow.ui'
 #
-# Created: Sun Oct 29 13:16:11 2017
+# Created: Tue Nov 21 09:06:22 2017
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -29,14 +31,21 @@ from PySide import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(448, 355)
+        MainWindow.resize(647, 415)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_3 = QtGui.QGridLayout(self.centralwidget)
+        self.gridLayout_3.setContentsMargins(12, 12, 12, 12)
+        self.gridLayout_3.setHorizontalSpacing(16)
+        self.gridLayout_3.setVerticalSpacing(0)
         self.gridLayout_3.setObjectName("gridLayout_3")
         self.groupBox = QtGui.QGroupBox(self.centralwidget)
+        self.groupBox.setFlat(True)
         self.groupBox.setObjectName("groupBox")
         self.gridLayout = QtGui.QGridLayout(self.groupBox)
+        self.gridLayout.setContentsMargins(16, 16, 16, 16)
+        self.gridLayout.setHorizontalSpacing(12)
+        self.gridLayout.setVerticalSpacing(8)
         self.gridLayout.setObjectName("gridLayout")
         self.labelWorkoutTime = QtGui.QLabel(self.groupBox)
         self.labelWorkoutTime.setObjectName("labelWorkoutTime")
@@ -61,8 +70,12 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.checkBoxExtra, 3, 0, 1, 2)
         self.gridLayout_3.addWidget(self.groupBox, 0, 0, 1, 1)
         self.groupBox_2 = QtGui.QGroupBox(self.centralwidget)
+        self.groupBox_2.setFlat(True)
         self.groupBox_2.setObjectName("groupBox_2")
         self.gridLayout_2 = QtGui.QGridLayout(self.groupBox_2)
+        self.gridLayout_2.setContentsMargins(16, 16, 16, 16)
+        self.gridLayout_2.setHorizontalSpacing(12)
+        self.gridLayout_2.setVerticalSpacing(8)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.labelDurationName = QtGui.QLabel(self.groupBox_2)
         self.labelDurationName.setObjectName("labelDurationName")
@@ -84,8 +97,12 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.labelMaxPower, 2, 1, 1, 1)
         self.gridLayout_3.addWidget(self.groupBox_2, 0, 1, 1, 1)
         self.groupBoxPhysics = QtGui.QGroupBox(self.centralwidget)
+        self.groupBoxPhysics.setFlat(True)
         self.groupBoxPhysics.setObjectName("groupBoxPhysics")
         self.gridLayout_5 = QtGui.QGridLayout(self.groupBoxPhysics)
+        self.gridLayout_5.setContentsMargins(16, 16, 16, 16)
+        self.gridLayout_5.setHorizontalSpacing(12)
+        self.gridLayout_5.setVerticalSpacing(8)
         self.gridLayout_5.setObjectName("gridLayout_5")
         self.label = QtGui.QLabel(self.groupBoxPhysics)
         self.label.setObjectName("label")
@@ -119,29 +136,36 @@ class Ui_MainWindow(object):
         self.widget = QtGui.QWidget(self.centralwidget)
         self.widget.setObjectName("widget")
         self.gridLayout_4 = QtGui.QGridLayout(self.widget)
-        self.gridLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_4.setContentsMargins(16, 20, 16, 16)
+        self.gridLayout_4.setHorizontalSpacing(16)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.saveButton = QtGui.QPushButton(self.widget)
         self.saveButton.setObjectName("saveButton")
-        self.gridLayout_4.addWidget(self.saveButton, 0, 1, 1, 1)
+        self.gridLayout_4.addWidget(self.saveButton, 1, 1, 1, 1)
         self.loadButton = QtGui.QPushButton(self.widget)
         self.loadButton.setObjectName("loadButton")
-        self.gridLayout_4.addWidget(self.loadButton, 0, 0, 1, 1)
+        self.gridLayout_4.addWidget(self.loadButton, 1, 0, 1, 1)
+        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_4.addItem(spacerItem1, 0, 0, 1, 1)
         self.gridLayout_3.addWidget(self.widget, 2, 0, 1, 2)
         self.groupBoxCompatibility = QtGui.QGroupBox(self.centralwidget)
+        self.groupBoxCompatibility.setFlat(True)
         self.groupBoxCompatibility.setObjectName("groupBoxCompatibility")
         self.gridLayout_6 = QtGui.QGridLayout(self.groupBoxCompatibility)
+        self.gridLayout_6.setContentsMargins(16, 16, 16, 16)
+        self.gridLayout_6.setHorizontalSpacing(12)
+        self.gridLayout_6.setVerticalSpacing(8)
         self.gridLayout_6.setObjectName("gridLayout_6")
         self.checkBoxInterpolate = QtGui.QCheckBox(self.groupBoxCompatibility)
         self.checkBoxInterpolate.setChecked(True)
         self.checkBoxInterpolate.setObjectName("checkBoxInterpolate")
         self.gridLayout_6.addWidget(self.checkBoxInterpolate, 0, 0, 1, 1)
-        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem1, 1, 0, 1, 1)
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem2, 1, 0, 1, 1)
         self.gridLayout_3.addWidget(self.groupBoxCompatibility, 1, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 448, 19))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 647, 19))
         self.menubar.setObjectName("menubar")
         self.menuHelp = QtGui.QMenu(self.menubar)
         self.menuHelp.setObjectName("menuHelp")

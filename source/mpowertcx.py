@@ -53,7 +53,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         super(MainWindow, self).__init__()
         self.settings = QSettings("j33433", "MPowerTCX")
         WidgetSettings.__init__(self, self, 'settings.json', self.settings)
-        self.version = "v2.0.0"
+        self.version = "v2.0.1"
         self.trues = [True, 'True', 'true'] # workaround for pyside
         self.setupUi(self)
         self.unstash()
@@ -62,6 +62,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         self.show()
         self.mpower = None
         self.in_file_info = None
+        self.resize(self.width(), self.minimumSizeHint().height())
 
     def configure(self):
         """ 
@@ -108,6 +109,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         value = state == Qt.Checked
         self.groupBoxPhysics.setHidden(not value)
         self.groupBoxCompatibility.setHidden(not value)
+        self.resize(self.width(), self.minimumSizeHint().height())
         self.stash()
         
     def useFileDateChanged(self, state):
