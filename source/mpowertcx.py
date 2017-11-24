@@ -147,20 +147,19 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
                 header = self.mpower.header()
 
                 if self.mpower.count():
+                    # Time to h:m:s
+                    m, s = divmod(int(header.time), 60)
+                    h, m = divmod(m, 60)
+
+                    self.saveButton.setEnabled(True)
+                    self.labelDuration.setText("%d:%02d:%02d" % (h, m, s))
+                    self.labelAveragePower.setText(str(header.average_power))
+                    self.labelMaxPower.setText(str(header.max_power))
+                    self.labelEquipment.setText(header.equipment)
                     self.alert("The CSV file was loaded successfully.")
                 else:
                     self.alert("This file does not appear to contain ride data.")
                     return
-
-                # Time to h:m:s
-                m, s = divmod(int(header.time), 60)
-                h, m = divmod(m, 60)
-
-                self.saveButton.setEnabled(True)
-                self.labelDuration.setText("%d:%02d:%02d" % (h, m, s))
-                self.labelAveragePower.setText(str(header.average_power))
-                self.labelMaxPower.setText(str(header.max_power))
-                self.labelEquipment.setText(header.equipment)
 
             self.in_file_info = QFileInfo(filename)
             csv_dir = self.in_file_info.absoluteDir().path()
