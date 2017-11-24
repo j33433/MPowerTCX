@@ -32,6 +32,9 @@ class EchelonV1(bikes.Bike):
             
         return False
 
+    def name(self):
+        return "Echelon Variant 1"
+        
     def _load_header(self, reader):
         header = {}
 
@@ -86,6 +89,9 @@ class EchelonV2(bikes.Bike):
             
         return False
 
+    def name(self):
+        return "Echelon Variant 2"
+        
     def _load_header(self, reader):
         header = {}
 
@@ -134,6 +140,9 @@ class EchelonV3(bikes.Bike):
             
         return False
 
+    def name(self):
+        return "Echelon Variant 3"
+        
     def _load(self, reader):
         for row in reader:
             if len(row) == 6:

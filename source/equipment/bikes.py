@@ -31,6 +31,9 @@ class Bike(object):
     def load(self, reader):
         raise NotImplementedError(self.__class__.__name__)
 
+    def name(self):
+        return "---"
+        
     def distance(self, d):
         if self.metric:
             return d * 1000.0

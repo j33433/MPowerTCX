@@ -133,6 +133,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         self.labelDuration.setText("---")
         self.labelAveragePower.setText("---")
         self.labelMaxPower.setText("---")
+        self.labelEquipment.setText("---")
 
         if filename:
             try:
@@ -159,6 +160,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
                 self.labelDuration.setText("%d:%02d:%02d" % (h, m, s))
                 self.labelAveragePower.setText(str(header.average_power))
                 self.labelMaxPower.setText(str(header.max_power))
+                self.labelEquipment.setText(header.equipment)
 
             self.in_file_info = QFileInfo(filename)
             csv_dir = self.in_file_info.absoluteDir().path()
@@ -226,7 +228,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         t = threading.Thread(target=self.saveThread, args=(filename, start_time, thread_result))
         t.start()
         t.join()
-        print (thread_result)
         self.alert(thread_result['message'])
 
         info = QFileInfo(filename)
@@ -252,7 +253,6 @@ else:
     parser.add_argument('--interpolate', help='produce samples at one second intervals', action='store_true')
     parser.add_argument('--model', help='use physics model for speed and distance', metavar='MASS_KG')
     args = parser.parse_args()
-    print(args)
     mpower = MPower(args.csv)
     mpower.load_csv()
     

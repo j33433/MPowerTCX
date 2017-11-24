@@ -25,7 +25,10 @@ class TheSufferfest(bikes.Bike):
             return True
             
         return False
-        
+
+    def name(self):
+        return "The Sufferfest"
+                
     def _load(self, reader):
         last_time = 0.0
         distance = 0.0

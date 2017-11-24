@@ -25,6 +25,9 @@ class Stages(bikes.Bike):
             return True
             
         return False
+
+    def name(self):
+        return "Stages"
         
     def _load(self, reader):
         self.metric = True

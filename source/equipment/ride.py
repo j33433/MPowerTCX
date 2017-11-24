@@ -24,6 +24,7 @@ class RideHeader(object):
     """
     def __init__(self):
         self.setSummary()
+        self.equipment = ''
 
     def setSummary(self, time=0, distance=0, average_power=0, max_power=0, average_rpm=0, max_rpm=0, average_hr=0, max_hr=0, calories=0):
         self.time = time

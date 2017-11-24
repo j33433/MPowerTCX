@@ -100,6 +100,7 @@ class MPower(object):
     def _load_from_plugins(self, line, reader):
         for b in self.bikes:
             if b.load(line, reader):
+                self.ride.header.equipment = b.name()
                 return True
                 
         return False
@@ -171,7 +172,6 @@ class MPower(object):
         """ 
         Save the parsed CSV to TCX 
         """
-
         if self.do_interpolate:
             self.ride.interpolate()
         
@@ -205,7 +205,7 @@ class MPower(object):
         ET.SubElement(lap, "TriggerMethod").text = "Manual"
 
         secs_per_sample = self.ride.delta()
-        print ("%.2f seconds per sample" % secs_per_sample)
+        print ("%r %.2f seconds per sample" % (self.ride.header.equipment, secs_per_sample))
 
         track = ET.SubElement(lap, "Track")
 

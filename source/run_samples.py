@@ -16,5 +16,5 @@ for f in files:
 
         # An arbitrary, fixed time for testing.
         timestamp = '2010-10-19T20:56:35.450686'
-        print (csv_full)
+        print ('run_samples.py: %r' % (csv_full))
         subprocess.call(['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_full, '--time', timestamp])
