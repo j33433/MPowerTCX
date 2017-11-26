@@ -1,3 +1,8 @@
+#
+# This file builds the windows executable usig cx_freeze
+#
+# Example: pyhton setup.py build
+
 import os
 from cx_Freeze import setup, Executable
 

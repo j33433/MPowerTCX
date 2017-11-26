@@ -17,6 +17,10 @@ license = """\
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+#
+# This file contains the GUI logic
+#
+
 import os
 import sys
 import argparse

@@ -1,3 +1,7 @@
+#
+# Load and save most widget states automatically
+# 
+
 import json
 
 from PySide.QtGui import *

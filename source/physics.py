@@ -18,6 +18,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+#
+# This file contains a model to estimate bike speed based on power
+#
+
 import math
 
 class SimpleBike(object):
