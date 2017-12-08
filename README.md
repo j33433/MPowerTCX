@@ -19,18 +19,17 @@ The TCX file can be uploaded to most cycling data viewers.
 * Our Strava Club - https://www.strava.com/clubs/MPowerTCX
 
 ### Supported Workout Types
-1. MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
-1. Stages Indoor Cycles
-1. The Sufferfest CSV files
+* MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
+* Stages Indoor Cycles
+* The Sufferfest CSV files
 
 ### Supported Fields
-1. Power
-1. Cadence
-1. Heart Rate
-1. Speed
+* Power
+* Cadence
+* Heart Rate
+* Speed
 
 ### Tested With
-1. Strava
-1. Golden Cheetah
-1. Garmin Connect
-
+* Strava
+* Golden Cheetah
+* Garmin Connect
