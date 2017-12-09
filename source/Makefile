@@ -1,11 +1,23 @@
-all: ui/mainwindow.py ui/about.py ui/images_rc.py
+OS=$(shell uname -s)
+
+ifeq ($(OS),Darwin)
+    UIC=pyside-uic-2.7
+    PLATFORM=_Darwin
+else
+    UIC=pyside-uic
+    PLATFROM=
+endif
+
+all: ui/mainwindow$(PLATFROM).py ui/about$(PLATFORM).py ui/images_rc.py
 
 ui/images_rc.py: ui/images.qrc
 	pyside-rcc -o ui/images_rc.py ui/images.qrc
 	
-ui/mainwindow.py: ui/mainwindow.ui Makefile
-	( cat .disclaimer; pyside-uic ui/mainwindow.ui ) > ui/mainwindow.py
+ui/mainwindow$(PLATFORM).py: ui/mainwindow.ui Makefile
+	( cat .disclaimer; $(UIC) ui/mainwindow.ui ) > ui/mainwindow.py.tmp
+	mv ui/mainwindow.py.tmp ui/mainwindow$(PLATFORM).py
 
-ui/about.py: ui/about.ui Makefile
-	( cat .disclaimer; pyside-uic ui/about.ui ) > ui/about.py
+ui/about$(PLATFORM).py: ui/about.ui Makefile
+	( cat .disclaimer; $(UIC) ui/about.ui ) > ui/about.py.tmp
+	mv ui/about.py.tmp ui/about$(PLATFORM).py
 	
