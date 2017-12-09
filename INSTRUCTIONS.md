@@ -8,6 +8,8 @@
 1. The USB logo will flash a few times. Wait for the flashing to stop and remove the drive
 1. The removable drive should now contain a file named something like MPower1.csv
 
+This Youtube video may be helpful - [Exporting Rider Data Onto A USB Drive](https://www.youtube.com/watch?v=ENkHdcV_E70)
+
 ## Problems with USB Thumb Drives
 Some consoles reject or even crash when a newer model USB drive is used. A 1GB drive is your best bet.
 
