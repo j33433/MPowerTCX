@@ -21,8 +21,8 @@
 
 # Form implementation generated from reading ui file 'ui/about.ui'
 #
-# Created: Sat Dec  9 16:15:56 2017
-#      by: pyside-uic 0.2.15 running on PySide 1.2.4
+# Created: Sat Dec  9 16:50:22 2017
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -31,7 +31,7 @@ from PySide import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(680, 403)
+        Dialog.resize(756, 395)
         self.gridLayout = QtGui.QGridLayout(Dialog)
         self.gridLayout.setObjectName("gridLayout")
         self.labelVersion = QtGui.QLabel(Dialog)
@@ -55,7 +55,7 @@ class Ui_Dialog(object):
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout.addItem(spacerItem, 4, 1, 1, 1)
         self.licenseEdit = QtGui.QPlainTextEdit(Dialog)
-        self.licenseEdit.setFrameShape(QtGui.QFrame.Box)
+        self.licenseEdit.setFrameShape(QtGui.QFrame.NoFrame)
         self.licenseEdit.setReadOnly(True)
         self.licenseEdit.setObjectName("licenseEdit")
         self.gridLayout.addWidget(self.licenseEdit, 3, 0, 2, 1)

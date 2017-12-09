@@ -21,8 +21,8 @@
 
 # Form implementation generated from reading ui file 'ui/mainwindow.ui'
 #
-# Created: Sat Dec  9 16:15:56 2017
-#      by: pyside-uic 0.2.15 running on PySide 1.2.4
+# Created: Sat Dec  9 16:48:36 2017
+#      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -186,7 +186,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addItem(spacerItem4, 1, 0, 1, 1)
         self.gridLayout_3.addWidget(self.groupBoxCompatibility, 1, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtGui.QMenuBar()
+        self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 680, 20))
         self.menubar.setObjectName("menubar")
         self.menuHelp = QtGui.QMenu(self.menubar)
