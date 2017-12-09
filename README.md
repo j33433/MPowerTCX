@@ -29,7 +29,13 @@ The TCX file can be uploaded to most cycling data viewers.
 * Heart Rate
 * Speed
 
+<img src="images/mpowertcx advanced.png" align="right"/>
+
 ### Tested With
 * Strava
 * Golden Cheetah
 * Garmin Connect
+
+### Advanced Features
+* An Optional Physics Model to Correct Poorly Estimated Speed and Distance Values
+* Upsampling to Enhance Low Resolution Data
