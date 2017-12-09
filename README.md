@@ -2,16 +2,14 @@
 
 Share your indoor cycle workouts on Strava, Garmin Connect and Golden Cheetah.
 
-![Schwinn MPower Console](images/mpowertcx%20simpler.png)
+<img align="right" src="images/mpowertcx%20simpler.png"/>
 
 ## Downloads
 
-Find the latest release for Windows and OS X here: https://github.com/j33433/MPowerTCX/releases
+[Click Here for Windows and OS X Releases](https://github.com/j33433/MPowerTCX/releases)
 
 ## What it Does
-This software converts the CSV data produced by stationary bike consoles to TCX format.
-
-The TCX file can be uploaded to most cycling data viewers.
+This app converts the proprietary CSV files produced by stationary bikes to the popular TCX file format. The results can be uploaded to your favorite sports tracking site.
 
 ### Support
 * [Click Here for Instructions](INSTRUCTIONS.md)
