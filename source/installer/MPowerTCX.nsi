@@ -26,7 +26,7 @@
 ;Interface Settings
 
   !define MUI_ABORTWARNING
-  !define MUI_ICON "..\..\images\mpowertcx icon.ico"
+  !define MUI_ICON "..\..\images\mpowertcx icon white.ico"
 
 ;--------------------------------
 ;Pages

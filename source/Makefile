@@ -1,5 +1,8 @@
-all: ui/mainwindow.py ui/about.py
+all: ui/mainwindow.py ui/about.py ui/images_rc.py
 
+ui/images_rc.py: ui/images.qrc
+	pyside-rcc -o ui/images_rc.py ui/images.qrc
+	
 ui/mainwindow.py: ui/mainwindow.ui Makefile
 	( cat .disclaimer; pyside-uic ui/mainwindow.ui ) > ui/mainwindow.py
 

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 license = """\
- MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, GoldenCheetah and other apps
+ MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, 
+ GoldenCheetah and other apps.
+ 
  Copyright (C) 2016 James Roth
 
  This program is free software: you can redistribute it and/or modify
@@ -38,6 +40,7 @@ from mpower import MPower
 from dateutil import tz
 from widgetsettings import WidgetSettings
 
+import ui.images_rc
 import traceback
 
 class About(QDialog, Ui_Dialog):
@@ -239,11 +242,10 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
 
 
 if len(sys.argv) == 1:
-    # Run from the UI
-    if platform.system() == 'Linux':
-        QApplication.setStyle('Cleanlooks')
-        
+    QApplication.setStyle('Cleanlooks')
     app = QApplication(sys.argv)
+    icon = QIcon(':/icon/mpowertcx icon flat.png')
+    app.setWindowIcon(icon)
     mainWin = MainWindow()
     ret = app.exec_()
     sys.exit(ret)

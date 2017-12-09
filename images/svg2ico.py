@@ -16,7 +16,5 @@ for size in sizes:
     tmp_names.append(png)
     subprocess.call(['inkscape', '-z', '-e', png, '-w', str(size), '-h', str(size), svg])
 
-#subprocess.call(['convert'] + tmp_names + ['-colors', '512', ico])
 subprocess.call(['convert'] + tmp_names + [ico])
-#	 	 '-dither', 'None', '-colors', '256', ico])
 
