@@ -21,7 +21,7 @@
 
 # Form implementation generated from reading ui file 'ui/mainwindow.ui'
 #
-# Created: Fri Nov 24 11:20:45 2017
+# Created: Sat Dec  9 10:44:43 2017
 #      by: pyside-uic 0.2.15 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -157,9 +157,13 @@ class Ui_MainWindow(object):
         self.gridLayout_4.setHorizontalSpacing(16)
         self.gridLayout_4.setObjectName("gridLayout_4")
         self.saveButton = QtGui.QPushButton(self.widget)
+        self.saveButton.setMinimumSize(QtCore.QSize(0, 32))
+        self.saveButton.setStyleSheet("")
         self.saveButton.setObjectName("saveButton")
         self.gridLayout_4.addWidget(self.saveButton, 1, 1, 1, 1)
         self.loadButton = QtGui.QPushButton(self.widget)
+        self.loadButton.setMinimumSize(QtCore.QSize(0, 32))
+        self.loadButton.setStyleSheet("")
         self.loadButton.setObjectName("loadButton")
         self.gridLayout_4.addWidget(self.loadButton, 1, 0, 1, 1)
         spacerItem3 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
