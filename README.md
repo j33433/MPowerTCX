@@ -1,11 +1,10 @@
 <img align="right" src="images/mpowertcx%20simpler.png"/>
 
+## What MPowerTCX Does
+This software converts the CSV files produced by stationary bikes to the popular TCX file format. The results can then be uploaded to your favorite sports tracking site.
+
 ## Downloads
-
 [Click Here for Windows and OS X Releases](https://github.com/j33433/MPowerTCX/releases)
-
-## What it Does
-This app converts the proprietary CSV files produced by stationary bikes to the popular TCX file format. The results can be uploaded to your favorite sports tracking site.
 
 ### Support
 * [Click Here for Instructions](INSTRUCTIONS.md)
