@@ -1,6 +1,6 @@
 <img align="right" src="images/mpowertcx%20simpler.png"/>
 
-## What MPowerTCX Does
+## About MPowerTCX
 This software converts the CSV files produced by stationary bikes to the popular TCX file format. The results can then be uploaded to your favorite sports tracking site. It has been tested with Strava, Garmin Connect and Golden Cheetah
 
 ## Downloads
@@ -29,5 +29,5 @@ Laps | ⌛ Coming Soon
 <img src="images/mpowertcx advanced.png" align="right"/>
 
 ### Advanced Features
-* An Optional Physics Model to Correct Poorly Estimated Speed and Distance Values
-* Upsampling to Enhance Low Resolution Data
+* An Optional Physics Model to Fix Poorly Estimated Speed
+* Upsampling for Improved Compatibility
