@@ -2,78 +2,38 @@
 
 Share your indoor cycle workouts on Strava, Garmin Connect and Golden Cheetah.
 
-![Schwinn MPower Console](images/mpowertcx%20simpler.png)
+<img align="right" src="images/mpowertcx%20simpler.png"/>
 
 ## Downloads
 
-Find the latest release for Windows and OS X here: https://github.com/j33433/MPowerTCX/releases
+[Click Here for Windows and OS X Releases](https://github.com/j33433/MPowerTCX/releases)
 
 ## What it Does
-This software converts the CSV data produced by stationary bike consoles to TCX format.
-
-The TCX file can be uploaded to most cycling data viewers.
+This app converts the proprietary CSV files produced by stationary bikes to the popular TCX file format. The results can be uploaded to your favorite sports tracking site.
 
 ### Support
-
-* Email: j33433@gmail.com
-* On Strava: https://www.strava.com/clubs/MPowerTCX
+* [Click Here for Instructions](INSTRUCTIONS.md)
+* Technical Support - j33433@gmail.com
+* Our Strava Club - https://www.strava.com/clubs/MPowerTCX
 
 ### Supported Workout Types
-1. MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
-1. Stages Indoor Cycles
-1. The Sufferfest CSV files
+* MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
+* Stages Indoor Cycles
+* The Sufferfest CSV files
 
 ### Supported Fields
-1. Power
-1. Cadence
-1. Heart Rate
-1. Speed
+* Power
+* Cadence
+* Heart Rate
+* Speed
+
+<img src="images/mpowertcx advanced.png" align="right"/>
 
 ### Tested With
-1. Strava
-1. Golden Cheetah
-1. Garmin Connect
+* Strava
+* Golden Cheetah
+* Garmin Connect
 
-Other tools that support the TCX file format should work too.
-
-## Getting the CSV Data
-1. Insert the USB thumb drive into the slot at the top of the console
-1. Work out
-1. Stop pedalling
-1. Press "AVG/MAX" for 5 seconds
-1. The USB logo will flash a few times. Wait for the flashing to stop and remove the drive
-1. The removable drive should now contain a file named something like MPower1.csv
-
-## Problems with USB Thumb Drives
-Some consoles reject or even crash when a newer model USB drive is used. A 1GB drive is your best bet.
-
-If the USB logo fails to flash at the end of a ride, or the unit shuts off (crashes), you probably have an incompatible drive.
-
-## Problems with Files
-I only have one model of indoor bike. It's possible that your bike produces a different file format.
-
-If your file doesn't work, feel free to send it my way.
-
-## Converting your workout file to TCX
-
-### Step 1 - Click "Load CSV..." to select your workout file
-
-![Step 1](images/mp1.png)
-
-### Step 2 - If the file loads correctly, you will see this
-
-![Step 2](images/mp2.png)
-
-### Step 3 - Adjust and click "Save TCX..." 
-
-In this example the power meter on the bike reads too high by about 4%. The power values are adjusted down by using a negative value. 
-
-By default, the workout time will be set to the timestamp on the CSV file. If you want to set a custom time, uncheck "Use File Time as Workout Time" and adjust the time.
-
-![Step 3](images/mp3.png)
-
-### Step 4 - Done. Now you have a TCX file.
-
-![Step 4](images/mp4.png)
-
-
+### Advanced Features
+* An Optional Physics Model to Correct Poorly Estimated Speed and Distance Values
+* Upsampling to Enhance Low Resolution Data
