@@ -16,6 +16,8 @@ This software converts the CSV files produced by stationary bikes to the popular
 * Stages Indoor Cycles
 * The Sufferfest CSV files
 
+### Supported Data
+
 Field  | Status
 -----|----- 
 Power | ✔️ Supported
@@ -24,8 +26,8 @@ Heart Rate | ✔️ Supported
 Speed | ✔️ Supported
 Laps | ⌛ Coming Soon
 
+<img src="images/mpowertcx advanced.png" align="right"/>
+
 ### Advanced Features
 * An Optional Physics Model to Correct Poorly Estimated Speed and Distance Values
 * Upsampling to Enhance Low Resolution Data
-
-<img src="images/mpowertcx advanced.png" align="right"/>
