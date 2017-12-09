@@ -8,8 +8,8 @@ This software converts the CSV files produced by stationary bikes to the popular
 
 ### Support
 * [Click Here for Instructions](INSTRUCTIONS.md)
-* Technical Support - j33433@gmail.com
-* Our Strava Club - https://www.strava.com/clubs/MPowerTCX
+* Email j33433@gmail.com
+* [Strava Club](https://www.strava.com/clubs/MPowerTCX)
 
 ### Supported Workout Types
 * MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
