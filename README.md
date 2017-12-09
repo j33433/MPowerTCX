@@ -1,7 +1,3 @@
-# MPowerTCX
-
-Share your indoor cycle workouts on Strava, Garmin Connect and Golden Cheetah.
-
 <img align="right" src="images/mpowertcx%20simpler.png"/>
 
 ## Downloads
