@@ -1,7 +1,7 @@
 <img align="right" src="images/mpowertcx%20simpler.png"/>
 
 ## About MPowerTCX
-This software converts the CSV files produced by stationary bikes to the popular TCX file format. The results can then be uploaded to your favorite sports tracking site. It has been tested with Strava, Garmin Connect and Golden Cheetah
+This application converts CSV files produced by stationary bikes to TCX file format. The results can imported into fitness tracking tools such as Strava, Garmin Connect, Golden Cheetah and others.
 
 ## Downloads
 [Click Here for Windows and OS X Releases](https://github.com/j33433/MPowerTCX/releases)
@@ -11,12 +11,12 @@ This software converts the CSV files produced by stationary bikes to the popular
 * Email j33433@gmail.com
 * [Strava Club](https://www.strava.com/clubs/MPowerTCX)
 
-### Supported Workout Types
+### Works With
 * MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
 * Stages Indoor Cycles
 * The Sufferfest CSV files
 
-### Supported Data
+### Supported Fields
 
 Field  | Status
 -----|----- 
@@ -26,7 +26,7 @@ Heart Rate | ✔️ Supported
 Speed | ✔️ Supported
 Laps | ⌛ Coming Soon
 
-<img src="images/mpowertcx advanced.png" align="right"/>
+<img src="images/mpowertcx%20advanced.png" align="right"/>
 
 ### Advanced Features
 * An Optional Physics Model to Fix Poorly Estimated Speed
