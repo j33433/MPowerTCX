@@ -11,7 +11,7 @@ This application converts CSV files produced by stationary bikes to TCX format. 
 * Email j33433@gmail.com
 * [Strava Club](https://www.strava.com/clubs/MPowerTCX)
 
-<image src="images/mpowertcx%20console.png" align="right"/>
+<image src="images/mpowertcx%20console%20sm.png" align="right"/>
 
 ### Works With
 * MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
