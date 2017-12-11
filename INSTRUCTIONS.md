@@ -40,11 +40,11 @@ By default, the workout time will be set to the timestamp on the CSV file. If yo
 
 ![Step 3](images/mp3.PNG)
 
-### Step 4 - Done. Now you have a TCX file.
+### Step 4 - Now you have a TCX file
 
 ![Step 4](images/mp4.PNG)
 
-### Step 5 - Upload
+### Step 5 - Upload your TCX file
 
 * [Upload to Strava Here](https://www.strava.com/upload/select)
 * [Garmin Connect's Import Page](https://connect.garmin.com/modern/import-data)
