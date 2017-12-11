@@ -2,11 +2,11 @@
 
 ## Getting the CSV Data
 1. Insert the USB thumb drive into the slot at the top of the console
-1. Work out
+1. Do your workout
 1. Stop pedalling
 1. Press "AVG/MAX" for 5 seconds
-1. The USB logo will flash a few times. Wait for the flashing to stop and remove the drive
-1. The removable drive should now contain a file named something like MPower1.csv
+1. Wait for the flashing USB logo to stop and remove the drive
+1. The removable drive should now contain a file named something like MPower12.csv
 
 ### Extra Help for Schwinn Products
 * Youtube Tutorial - [Exporting Rider Data Onto A USB Drive](https://www.youtube.com/watch?v=ENkHdcV_E70)
@@ -43,5 +43,10 @@ By default, the workout time will be set to the timestamp on the CSV file. If yo
 ### Step 4 - Done. Now you have a TCX file.
 
 ![Step 4](images/mp4.PNG)
+
+### Step 5 - Upload
+
+* [Upload to Strava Here](https://www.strava.com/upload/select)
+* [Garmin Connect's Import Page](https://connect.garmin.com/modern/import-data)
 
 #### [(Back to the Main Page)](README.md)
