@@ -26,11 +26,11 @@ If your file doesn't work, feel free to send it my way.
 
 ### Step 1 - Click "Load CSV..." to select your workout file
 
-![Step 1](images/mp1.png)
+![Step 1](images/mp1.PNG)
 
 ### Step 2 - If the file loads correctly, you will see this
 
-![Step 2](images/mp2.png)
+![Step 2](images/mp2.PNG)
 
 ### Step 3 - Adjust and click "Save TCX..." 
 
@@ -38,10 +38,10 @@ In this example the power meter on the bike reads too high by about 4%. The powe
 
 By default, the workout time will be set to the timestamp on the CSV file. If you want to set a custom time, uncheck "Use File Time as Workout Time" and adjust the time.
 
-![Step 3](images/mp3.png)
+![Step 3](images/mp3.PNG)
 
 ### Step 4 - Done. Now you have a TCX file.
 
-![Step 4](images/mp4.png)
+![Step 4](images/mp4.PNG)
 
 #### [(Back to the Main Page)](README.md)
