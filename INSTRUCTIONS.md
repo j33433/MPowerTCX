@@ -34,13 +34,11 @@ If your file doesn't work, feel free to send it my way.
 
 ### Step 3 - Adjust and click "Save TCX..." 
 
-In this example the power meter on the bike reads too high by about 4%. The power values are adjusted down by using a negative value. 
-
 By default, the workout time will be set to the timestamp on the CSV file. If you want to set a custom time, uncheck "Use File Time as Workout Time" and adjust the time.
 
 ![Step 3](images/mp3.PNG)
 
-### Step 4 - Now you have a TCX file
+### Step 4 - The TCX file has been saved
 
 ![Step 4](images/mp4.PNG)
 
