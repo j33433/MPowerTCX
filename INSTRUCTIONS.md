@@ -13,7 +13,7 @@
   * [Exporting Rider Data Onto A USB Drive](https://www.youtube.com/watch?v=ENkHdcV_E70)
   * [Official Manuals and Updates](https://support.corehandf.com/Product/?brand=1)
 * Stages 
-  * [Stages Indoor Cycling console quick start tutorial](https://www.youtube.com/watch?v=W8JjfGShEcY)
+  * [Stages Indoor Cycling Console Quick Start Tutorial](https://www.youtube.com/watch?v=W8JjfGShEcY)
 
 ## Problems with USB Thumb Drives
 Some consoles reject or even crash when a newer model USB drive is used. A 1GB drive is your best bet.
