@@ -17,7 +17,7 @@ This application converts CSV files produced by stationary bikes to TCX format. 
 * MPower Echelon and Echelon 2 for Schwinn A.C. Cycles
 * Stages Indoor Cycles
 * The Sufferfest CSV files
-* Email Unsupported Files to Support
+* Email Us Your Unsupported Files
 
 ### Supported Fields
 
