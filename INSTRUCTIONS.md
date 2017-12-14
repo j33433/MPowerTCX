@@ -8,9 +8,12 @@
 1. Wait for the flashing USB logo to stop and remove the drive
 1. The removable drive should now contain a file named something like MPower12.csv
 
-### Extra Help for Schwinn Products
-* Youtube Tutorial - [Exporting Rider Data Onto A USB Drive](https://www.youtube.com/watch?v=ENkHdcV_E70)
-* [Official Manuals and Updates](https://support.corehandf.com/Product/?brand=1)
+### Extra Help for Indoor Bikes
+* Schwinn
+  * [Exporting Rider Data Onto A USB Drive](https://www.youtube.com/watch?v=ENkHdcV_E70)
+  * [Official Manuals and Updates](https://support.corehandf.com/Product/?brand=1)
+* Stages 
+  * [Stages Indoor Cycling console quick start tutorial](https://www.youtube.com/watch?v=W8JjfGShEcY)
 
 ## Problems with USB Thumb Drives
 Some consoles reject or even crash when a newer model USB drive is used. A 1GB drive is your best bet.
