@@ -21,8 +21,8 @@
 
 # Form implementation generated from reading ui file 'ui/mainwindow.ui'
 #
-# Created: Sat Dec  9 16:48:36 2017
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+# Created: Sat Dec 16 16:52:26 2017
+#      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -221,7 +221,7 @@ class Ui_MainWindow(object):
         self.comboBoxUnits.setItemText(0, QtGui.QApplication.translate("MainWindow", "kg", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBoxUnits.setItemText(1, QtGui.QApplication.translate("MainWindow", "lbs", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("MainWindow", "Bike Weight:", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkBoxPhysics.setText(QtGui.QApplication.translate("MainWindow", "Recalcuate Speed and Distance", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkBoxPhysics.setText(QtGui.QApplication.translate("MainWindow", "Recalculate Speed and Distance", None, QtGui.QApplication.UnicodeUTF8))
         self.saveButton.setText(QtGui.QApplication.translate("MainWindow", "Save TCX...", None, QtGui.QApplication.UnicodeUTF8))
         self.loadButton.setText(QtGui.QApplication.translate("MainWindow", "Load CSV...", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBoxCompatibility.setTitle(QtGui.QApplication.translate("MainWindow", "Compatibility", None, QtGui.QApplication.UnicodeUTF8))

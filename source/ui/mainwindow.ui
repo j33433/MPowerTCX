@@ -301,7 +301,7 @@
        <item row="0" column="0" colspan="3">
         <widget class="QCheckBox" name="checkBoxPhysics">
          <property name="text">
-          <string>Recalcuate Speed and Distance</string>
+          <string>Recalculate Speed and Distance</string>
          </property>
         </widget>
        </item>
