@@ -32,5 +32,5 @@ Laps | ⌛ Coming Soon
 <img src="images/mpowertcx%20advanced.png" align="right"/>
 
 ### Advanced Features
-* An Optional Physics Model to Fix Poorly Estimated Speed
+* An Optional Physics Model to Fix Missing or Poorly Estimated Speed
 * Upsampling for Improved Compatibility
