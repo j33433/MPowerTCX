@@ -14,6 +14,7 @@
   * [Official Manuals and Updates](https://support.corehandf.com/Product/?brand=1)
 * Stages 
   * [Stages Indoor Cycling Console Quick Start Tutorial](https://www.youtube.com/watch?v=W8JjfGShEcY)
+  * [Firmware and Manuals for the Stages SIC1 Console](https://stagesindoorcycling.freshdesk.com/support/solutions/folders/5000255512)
 
 ## Problems with USB Thumb Drives
 Some consoles reject or even crash when a newer model USB drive is used. A 1GB drive is your best bet.
