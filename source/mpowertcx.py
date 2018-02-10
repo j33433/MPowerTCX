@@ -197,6 +197,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         """ 
         Let the user select a TCX file to save to. Store the data. 
         """
+        self.saveButton.setEnabled(False)
         tcx_dir_key = "file/tcx_dir"
         tcx_dir = self.settings.value(tcx_dir_key, ".")
         use_file_date = self.useFileDate.isChecked()
