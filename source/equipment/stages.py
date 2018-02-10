@@ -43,8 +43,12 @@ class Stages(bikes.Bike):
             elif row[0] == 'Ride_Totals':
                 self._load_header(reader)
                 header_found = True
-            elif len(row) == 6:
+            elif len(row) >= 6:
                 time = self._parse_time(row[0])
+                
+                if last_time > 0 and time - last_time > 1:
+                    print ("time warp %f %f %r" % (time, last_time, row[0]))
+                
                 last_time = time
                 
                 if time >= 0:

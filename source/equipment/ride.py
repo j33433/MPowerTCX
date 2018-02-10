@@ -18,6 +18,7 @@
 
 import physics
 
+
 class RideHeader(object):
     """ 
     Summary statistics for a ride 

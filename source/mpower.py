@@ -40,7 +40,7 @@ class LineIterator(object):
     Handle files with standard and unusual newline conventions 
     """
     def __init__(self, stream):
-        self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read())
+        self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read().replace('\0', ''))
         
     def __iter__(self):
         return self
