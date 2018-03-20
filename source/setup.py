@@ -1,7 +1,7 @@
 #
 # This file builds the windows executable usig cx_freeze
 #
-# Example: pyhton setup.py build
+# Example: python setup.py build
 
 import os
 from cx_Freeze import setup, Executable
@@ -25,7 +25,7 @@ executables = [
 ]
 
 setup(name='MPowerTCX',
-      version = '1.0',
+      version = '2.0.2',
       description = '',
       options = options,
       executables = executables)

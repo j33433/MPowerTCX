@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import re
+
 from . import bikes
 
 class Stages(bikes.Bike):
@@ -28,6 +30,10 @@ class Stages(bikes.Bike):
 
     def name(self):
         return "Stages"
+        
+    def _distance_to_float(self, dist):
+        clean = re.sub('^:', '10', dist)
+        return float(clean)
         
     def _load(self, reader):
         self.metric = True
@@ -55,7 +61,7 @@ class Stages(bikes.Bike):
                     # ['Time', 'Miles', 'MPH', 'Watts', 'HR', 'RPM']
                     # TODO: maybe use this method on all file formats.
                     #       Infer distance from MPH.
-                    distance += float(row[2]) / (60.0 * 60.0)
+                    distance += self._distance_to_float(row[2]) / (60.0 * 60.0)
                     
                     self.ride.addSample(
                         power=row[3],
@@ -100,7 +106,7 @@ class Stages(bikes.Bike):
         
         self.ride.header.setSummary(
             time=time,
-            distance=self.distance(float(header["Distance"])),
+            distance=self.distance(self._distance_to_float(header["Distance"])),
             average_power=header["Watts_Avg"],
             max_power=header["Watts_Max"],
             average_rpm=header["RPM_Avg"],
