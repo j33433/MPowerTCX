@@ -1,6 +1,7 @@
-training_center_database = u"""<TrainingCenterDatabase xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2" xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
+training_center_database = u"""<?xml version='1.0' encoding='utf-8'?>
+<TrainingCenterDatabase xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2" xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
   <Activities>
-    <Activity Sport="${header['sport']}">
+    <Activity Sport="${header['sport'] | x}">
       <Id>${header['id']}</Id>
       <Lap StartTime="${header['start_time']}">
         <TotalTimeSeconds>${header['total_time']}</TotalTimeSeconds>
@@ -17,7 +18,8 @@ training_center_database = u"""<TrainingCenterDatabase xmlns:ns2="http://www.gar
         <Cadence>0</Cadence>
         <TriggerMethod>Manual</TriggerMethod>
         <Track>
-          <Trackpoint py:for="point in points">
+          %for point in points:
+          <Trackpoint>
             <Time>${point['time']}</Time>
             <HeartRateBpm>
               <Value>${point['bpm']}</Value>
@@ -30,6 +32,7 @@ training_center_database = u"""<TrainingCenterDatabase xmlns:ns2="http://www.gar
               </TPX>
             </Extensions>
           </Trackpoint>
+          %endfor
         </Track>
       </Lap>
     </Activity>

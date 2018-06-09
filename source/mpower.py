@@ -24,8 +24,9 @@ import re
 import csv
 import sys
 import datetime
-import kajiki
 import xml_templates
+import mako.template 
+import mako.runtime
 
 from equipment.ride import Ride, RideHeader
 import physics
@@ -160,7 +161,7 @@ class MPower(object):
         if self.do_physics:
             self.ride.modelDistance(self.physics_mass)
 
-        template = kajiki.XMLTemplate(xml_templates.training_center_database,  mode='xml')
+        template = mako.template.Template(xml_templates.training_center_database)
         now = self._format_time(start_time)
         
         header = dict(
@@ -190,8 +191,7 @@ class MPower(object):
             
             points.append(point)
       
-        xml = template(dict(points=points, header=header)).render()
-        
         with open(filename, 'w') as out:
-            out.write("<?xml version='1.0' encoding='utf-8'?>\n" + xml)
-   
+            context = mako.runtime.Context(out, points=points, header=header)
+            template.render_context(context)
+
