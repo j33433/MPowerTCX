@@ -24,8 +24,8 @@ import re
 import csv
 import sys
 import datetime
-import lxml.etree as ET
-import lxml.builder
+import kajiki
+import xml_templates
 
 from equipment.ride import Ride, RideHeader
 import physics
@@ -150,28 +150,6 @@ class MPower(object):
         """
         return dt.strftime("%Y-%m-%dT%H:%M:%S") + "Z"
 
-    def _make_root_tag(self):
-        """ 
-        The header stuff for the TCX XML 
-        """
-        
-        xsi = 'http://www.w3.org/2001/XMLSchema-instance'
-        schemaLocation = 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd'
-
-        nsmap={
-             'ns5': 'http://www.garmin.com/xmlschemas/ActivityGoals/v1',
-             'ns3': 'http://www.garmin.com/xmlschemas/ActivityExtension/v2',
-             'ns2': 'http://www.garmin.com/xmlschemas/UserProfile/v2',
-             'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-             None: 'http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2'
-        }
-
-        builder = lxml.builder.ElementMaker(nsmap=nsmap)
-        tag = builder.TrainingCenterDatabase()
-        tag.attrib["{" + xsi + "}schemaLocation"] = schemaLocation
-        
-        return tag
-
     def save_data(self, filename, start_time):
         """ 
         Save the parsed CSV to TCX 
@@ -182,56 +160,38 @@ class MPower(object):
         if self.do_physics:
             self.ride.modelDistance(self.physics_mass)
 
+        template = kajiki.XMLTemplate(xml_templates.training_center_database,  mode='xml')
         now = self._format_time(start_time)
-        root = self._make_root_tag()
-
-        doc = ET.SubElement(root, "Activities")
-        activity = ET.SubElement(doc, "Activity", Sport=self.sport)
-        ET.SubElement(activity, "Id").text = now
-
-        lap = ET.SubElement(activity, "Lap", StartTime=now)
-        seconds = self.ride.header.time
-        ET.SubElement(lap, "TotalTimeSeconds").text = str(seconds)
-
-        meters = float(self.ride.header.distance)
-        ET.SubElement(lap, "DistanceMeters").text = str(meters)
-        ET.SubElement(lap, "MaximumSpeed").text = "0"
-        ET.SubElement(lap, "Calories").text = "0"
-
-        avg_hr = ET.SubElement(lap, "AverageHeartRateBpm")
-        ET.SubElement(avg_hr, "Value").text = str(self.ride.header.average_hr)
-
-        max_hr = ET.SubElement(lap, "MaximumHeartRateBpm")
-        ET.SubElement(max_hr, "Value").text = str(self.ride.header.max_hr)
-
-        ET.SubElement(lap, "Intensity").text = "Active"
-        ET.SubElement(lap, "Cadence").text = "0"
-        ET.SubElement(lap, "TriggerMethod").text = "Manual"
-
-        secs_per_sample = self.ride.delta()
-        print ("%r %.2f seconds per sample" % (self.ride.header.equipment, secs_per_sample))
-
-        track = ET.SubElement(lap, "Track")
-
-        for i in xrange(0, self.ride.count()):
-            point = ET.SubElement(track, "Trackpoint")
-            delta_time = start_time + datetime.timedelta(seconds=i * int(secs_per_sample))
-            ET.SubElement(point, "Time").text = self._format_time(delta_time)
-
-            hr = ET.SubElement(point, "HeartRateBpm")
-            ET.SubElement(hr, "Value").text = self.ride.hr[i]
-            hr = ET.SubElement(point, "Cadence").text = self.ride.rpm[i]
-
-            distance = self.ride.distance[i]
-            hr = ET.SubElement(point, "DistanceMeters").text = str(distance)
-            ext = ET.SubElement(point, "Extensions")
-            tpx = ET.SubElement(ext, "TPX", xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2")
-            power = float(self.ride.power[i]) * self.power_fudge
-            ET.SubElement(tpx, "Watts").text = str(int(power))
-
-        tree = ET.ElementTree(root)
-        nice = ET.tostring(tree, xml_declaration=True, encoding='utf-8', pretty_print=True)
         
-        with open(filename, "w") as f:
-            f.write(nice)
-
+        header = dict(
+            id=now, 
+            start_time=now, 
+            total_time=str(self.ride.header.time),
+            distance_meters=str(float(self.ride.header.distance)),
+            average_heart_rate=str(self.ride.header.average_hr),
+            maximum_heart_rate=str(self.ride.header.max_hr), 
+            sport=self.sport
+        )
+        
+        secs_per_sample = self.ride.delta()
+        points = []
+        
+        for i in xrange(0, self.ride.count()):
+            delta_time = start_time + datetime.timedelta(seconds=i * int(secs_per_sample))
+            power = float(self.ride.power[i]) * self.power_fudge
+            
+            point = dict(
+                time=self._format_time(delta_time), 
+                bpm=self.ride.hr[i], 
+                cadence=self.ride.rpm[i], 
+                distance_meters=str(self.ride.distance[i]),
+                watts=str(int(power))
+            )
+            
+            points.append(point)
+      
+        xml = template(dict(points=points, header=header)).render()
+        
+        with open(filename, 'w') as out:
+            out.write("<?xml version='1.0' encoding='utf-8'?>\n" + xml)
+   
