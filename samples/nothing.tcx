@@ -17,7 +17,8 @@
         <Intensity>Active</Intensity>
         <Cadence>0</Cadence>
         <TriggerMethod>Manual</TriggerMethod>
-        <Track/>
+        <Track>
+        </Track>
       </Lap>
     </Activity>
   </Activities>
