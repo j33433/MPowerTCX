@@ -38,7 +38,10 @@ class SimpleBike(object):
         self.time_delta = 1
         self.velocity = 0.0
         self.distance = 0.0
-        
+
+    def set_time_delta(self, delta):
+        self.time_delta = delta
+         
     def drag(self, velocity):
         return 0.5 * self.drag_coefficient * self.frontal_area * self.rho * velocity * velocity
 

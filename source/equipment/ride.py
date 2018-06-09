@@ -16,7 +16,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import physics
+import physics.physics as model
 
 
 class RideHeader(object):
@@ -110,9 +110,10 @@ class Ride(object):
         return interpolate.splev(xb, f)
     
     def modelDistance(self, mass):
+        print ('modeling distance with %r kg' % mass)
         delta = self.delta()
-        bike = physics.SimpleBike(mass)
-        bike.time_delta = delta
+        bike = model.SimpleBike(mass)
+        bike.set_time_delta(delta)
         self.distance = []
 
         for p in self.power:
