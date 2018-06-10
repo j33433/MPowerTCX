@@ -16,8 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-import re
-
 from . import bikes
 
 class Stages(bikes.Bike):
@@ -32,8 +30,11 @@ class Stages(bikes.Bike):
         return "Stages"
         
     def _distance_to_float(self, dist):
-        clean = re.sub('^:', '10', dist)
-        return float(clean)
+        # Some strange quirk in Stages firmware?
+        if dist.startswith(':'):
+            dist = '10' + dist[1:]
+        
+        return float(dist)
         
     def _load(self, reader):
         self.metric = True

@@ -161,7 +161,8 @@ class MPower(object):
         if self.do_physics:
             self.ride.modelDistance(self.physics_mass)
 
-        template = mako.template.Template(xml_templates.training_center_database, default_filters=['unicode', 'x'])
+#        template = mako.template.Template(xml_templates.training_center_database, default_filters=['unicode', 'x'])
+        template = mako.template.Template(xml_templates.training_center_database, default_filters=[])
         now = self._format_time(start_time)
         
         header = dict(
