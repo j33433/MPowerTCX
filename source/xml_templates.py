@@ -1,7 +1,7 @@
 training_center_database = u"""<?xml version='1.0' encoding='utf-8'?>
 <TrainingCenterDatabase xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2" xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2" xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
   <Activities>
-    <Activity Sport="${header['sport'] | x}">
+    <Activity Sport="${header['sport']}">
       <Id>${header['id']}</Id>
       <Lap StartTime="${header['start_time']}">
         <TotalTimeSeconds>${header['total_time']}</TotalTimeSeconds>
