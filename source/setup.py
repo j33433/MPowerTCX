@@ -12,7 +12,7 @@ scipy_path = os.path.dirname(scipy.__file__)
 options = {
     'build_exe': {
         'packages': ['numpy'],
-        'includes': ['numpy.core._methods', 'numpy.lib.format'],
+        'includes': ['numpy.core._methods', 'numpy.lib.format', 'scipy.sparse.csgraph._validation'],
         'include_files': scipy_path
     }
 }
