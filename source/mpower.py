@@ -107,7 +107,8 @@ class MPower(object):
             if b.load(line, reader):
                 self.ride.header.equipment = b.name()
                 return True
-                
+        
+        print ('no plugin found for this file')
         return False
         
     def _load_csv_chunk(self, reader):

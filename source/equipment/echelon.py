@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+import re
+
 from . import bikes
 
 #
@@ -80,11 +82,14 @@ class EchelonV1(bikes.Bike):
     
 class EchelonV2(bikes.Bike):
     def load(self, peek, reader):
-        if peek == ['RIDE SUMMARY', '']:
+        if peek[0:2] == ['RIDE SUMMARY', '']:
             self._load_header(reader)
             return True
-        elif peek == ['RIDE DATA', '']:
+        elif peek[0:2] == ['RIDE DATA', '']:
             self._load_data(reader)
+            return True
+        elif re.match('^STAGE_[0-9]+_SUMMARY$', peek[0]):
+            self._skip_section(reader)
             return True
             
         return False
@@ -92,11 +97,18 @@ class EchelonV2(bikes.Bike):
     def name(self):
         return "Echelon Variant 2"
         
+    def _skip_section(self, reader):
+        for row in reader:
+            # Return on "" or ",,,"
+            if len(row) == 0 or ''.join(row) == '':
+                break
+    
     def _load_header(self, reader):
         header = {}
 
         for row in reader:
-            if len(row):
+            # Return on "" or ",,,"
+            if len(row) and ''.join(row) != '':
                 header[row[0]] = row[1]
             else:
                 break
