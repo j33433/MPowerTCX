@@ -99,6 +99,11 @@ class Ride(object):
         xa = np.arange(0, limit, delta)
         xb = np.arange(0, limit - delta, 1)
        
+        if len(xa) != len(self.power):
+            print ('resizing for interpolation %r vs %r' % (len(xa), len(self.power)))
+            xa.resize((len(self.power)))
+
+#        print ('%r %r' % (limit, seconds))
         self.power = self._interpolate(xa, xb, self.power).astype("int").astype("str")
         self.rpm = self._interpolate(xa, xb, self.rpm).astype("int").astype("str")
         self.hr = self._interpolate(xa, xb, self.hr).astype("int").astype("str")
@@ -107,6 +112,7 @@ class Ride(object):
     def _interpolate(self, xa, xb, data):
         from scipy import interpolate   
         
+#        print ('%r %r %r' % (len(xa), len(xb), len(data)))
         f = interpolate.splrep(xa, data)
         return interpolate.splev(xb, f)
     
