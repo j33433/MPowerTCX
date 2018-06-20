@@ -5,6 +5,7 @@
 
 import os
 from cx_Freeze import setup, Executable
+import version
 
 import scipy
 scipy_path = os.path.dirname(scipy.__file__)
@@ -25,7 +26,7 @@ executables = [
 ]
 
 setup(name='MPowerTCX',
-      version = '2.0.4',
+      version = version.version,
       description = '',
       options = options,
       executables = executables)

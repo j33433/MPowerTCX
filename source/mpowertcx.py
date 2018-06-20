@@ -34,6 +34,7 @@ import dateutil.parser
 
 from PySide.QtGui import *
 from PySide.QtCore import *
+import version 
 
 if platform.system() == 'Darwin':
     # The UIC generates things differently for the OS X context menu
@@ -68,7 +69,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         super(MainWindow, self).__init__()
         self.settings = QSettings("j33433", "MPowerTCX")
         WidgetSettings.__init__(self, self, 'settings.json', self.settings)
-        self.version = "v2.0.4"
+        self.version = version.version
         self.trues = [True, 'True', 'true'] # workaround for pyside
         self.setupUi(self)
 #        self.menuHelp.menuAction().setMenuRole(QAction.AboutRole)
