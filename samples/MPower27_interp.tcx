@@ -24,7 +24,7 @@
               <Value>0</Value>
             </HeartRateBpm>
             <Cadence>77</Cadence>
-            <DistanceMeters>1.85903394562e-16</DistanceMeters>
+            <DistanceMeters>0.0</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
                 <Watts>41</Watts>
