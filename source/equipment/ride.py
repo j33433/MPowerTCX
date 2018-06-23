@@ -18,8 +18,7 @@
 
 #import physics.physics as model
 import physics.physics_cython as model
-import splinter
-import math
+
 
 class RideHeader(object):
     """ 
@@ -80,14 +79,14 @@ class Ride(object):
             return self.header.time / self.count()
         else:
             return 0
-
-    def _arange(self, start, max, delta):
-        return list(x * delta for x in range(start, int(math.ceil(max / delta))))
-    
+        
     def interpolate(self):
         """
         Resample the data to one second intervals
         """
+        import numpy as np
+        from scipy import interpolate   
+
         seconds = self.header.time
         delta = self.delta()
         print ("interpolate: %d seconds, %.2f seconds per sample before interpolation" % (seconds, delta))
@@ -97,39 +96,26 @@ class Ride(object):
             return
         
         limit = int(seconds)
-        xa = self._arange(0, limit, delta)
-        xb = self._arange(0, limit - delta, 1)
+        xa = np.arange(0, limit, delta)
+        xb = np.arange(0, limit - delta, 1)
        
         if len(xa) != len(self.power):
             print ('resizing for interpolation %r vs %r' % (len(xa), len(self.power)))
-            xa = xa[0:len(self.power)]
-            print ('%r' % len(xa))
-            
+            xa.resize((len(self.power)))
+
 #        print ('%r %r' % (limit, seconds))
-        self.power = self._interpolate_splinter(xa, xb, self.power)
-        self.rpm = self._interpolate_splinter(xa, xb, self.rpm)
-        self.hr = self._interpolate_splinter(xa, xb, self.hr)
-        self.distance = self._interpolate_splinter(xa, xb, self.distance, return_float=True)
+        self.power = self._interpolate(xa, xb, self.power).astype("int").astype("str")
+        self.rpm = self._interpolate(xa, xb, self.rpm).astype("int").astype("str")
+        self.hr = self._interpolate(xa, xb, self.hr).astype("int").astype("str")
+        self.distance = self._interpolate(xa, xb, self.distance).astype("str")
         
     def _interpolate(self, xa, xb, data):
-        #from scipy import interpolate   
+        from scipy import interpolate   
         
 #        print ('%r %r %r' % (len(xa), len(xb), len(data)))
         f = interpolate.splrep(xa, data)
         return interpolate.splev(xb, f)
- 
-    def _interpolate_splinter(self, xa, xb, data, return_float=False):
-        data2 = list(float(d) for d in data)
-        spline = splinter.BSplineBuilder(xa, data2, degree=3).build()
-        y = spline.eval(xb)
-        
-        if return_float:
-            result = tuple(str(d) for d in y)
-        else:
-            result = tuple(str(int(d)) for d in y)
-            
-        return result
- 
+    
     def modelDistance(self, mass):
         print ('modeling distance with %r kg' % mass)
         delta = self.delta()

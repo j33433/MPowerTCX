@@ -24,7 +24,7 @@
               <Value>0</Value>
             </HeartRateBpm>
             <Cadence>28</Cadence>
-            <DistanceMeters>0.0</DistanceMeters>
+            <DistanceMeters>1.37706218194e-16</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
                 <Watts>37</Watts>
@@ -13710,13 +13710,13 @@
           <Trackpoint>
             <Time>2010-10-19T21:14:08Z</Time>
             <HeartRateBpm>
-              <Value>131</Value>
+              <Value>130</Value>
             </HeartRateBpm>
             <Cadence>76</Cadence>
             <DistanceMeters>9994.0014</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
-                <Watts>260</Watts>
+                <Watts>259</Watts>
               </TPX>
             </Extensions>
           </Trackpoint>
