@@ -41,7 +41,10 @@ class LineIterator(object):
     Handle files with standard and unusual newline conventions 
     """
     def __init__(self, stream):
-        self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read().replace('\0', ''))
+        raw = stream.read().replace(b'\0', b'')
+        self._parts = re.split(r'\r\r\n|\r\n|\n|\r', raw.decode("utf-8"))
+#        print ('RAW %r' % raw)
+#        print ('PARTS %r' % self._parts)
         
     def __iter__(self):
         return self
@@ -108,7 +111,7 @@ class MPower(object):
                 self.ride.header.equipment = b.name()
                 return True
         
-        print ('no plugin found for this file')
+        raise Exception('no plugin found for this file')
         return False
         
     def _load_csv_chunk(self, reader):
@@ -136,7 +139,7 @@ class MPower(object):
         """ 
         Read the CSV into a summary and time series 
         """
-        with open(self.in_filename, 'r') as infile:
+        with open(self.in_filename, 'rb') as infile:
             iterator = LineIterator(infile)
             reader = csv.reader(iterator, skipinitialspace=True)
 
@@ -187,7 +190,7 @@ class MPower(object):
                 time=self._format_time(delta_time), 
                 bpm=self.ride.hr[i], 
                 cadence=self.ride.rpm[i], 
-                distance_meters=str(self.ride.distance[i]),
+                distance_meters=("%.5f" % float(self.ride.distance[i])),
                 watts=str(int(power))
             )
             
