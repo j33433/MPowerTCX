@@ -143,7 +143,6 @@ class MPower(object):
         """
         with open(self.in_filename, 'rb') as infile:
             iterator = LineIterator(infile)
-            print ('%r %r' % (infile, iterator))
             reader = csv.reader(iterator, skipinitialspace=True)
 
             try:

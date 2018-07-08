@@ -5,6 +5,7 @@
 #
 
 import os
+import sys
 import subprocess
 
 testdir = '../samples'
@@ -20,6 +21,7 @@ def tcx_name(filename, testdir, tag, ext):
     return full
 
 def run(args):
+    args.insert(0, sys.executable)
     print ('run_samples.py: %r' % ' '.join(args))
     rc = subprocess.call(args)
     assert(rc == 0)
