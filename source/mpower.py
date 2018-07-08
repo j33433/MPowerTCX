@@ -46,7 +46,7 @@ class LineIterator(object):
     def __iter__(self):
         return self
         
-    def next(self):
+    def __next__(self):
         if len(self._parts):
             n = self._parts.pop(0)
             return n
@@ -115,7 +115,7 @@ class MPower(object):
         """ 
         Guess what the next block of CSV data is an process it 
         """
-        line = reader.next()
+        line = next(reader)
         
         if line == []:
             pass
@@ -125,7 +125,7 @@ class MPower(object):
            self.skip (line)
 
            while True:
-               line = reader.next()
+               line = next(reader)
 
                if line == []:
                    break
@@ -136,7 +136,7 @@ class MPower(object):
         """ 
         Read the CSV into a summary and time series 
         """
-        with open(self.in_filename, 'rb') as infile:
+        with open(self.in_filename, 'r') as infile:
             iterator = LineIterator(infile)
             reader = csv.reader(iterator, skipinitialspace=True)
 
@@ -179,7 +179,7 @@ class MPower(object):
         secs_per_sample = self.ride.delta()
         points = []
         
-        for i in xrange(0, self.ride.count()):
+        for i in range(0, self.ride.count()):
             delta_time = start_time + datetime.timedelta(seconds=i * int(secs_per_sample))
             power = float(self.ride.power[i]) * self.power_fudge
             

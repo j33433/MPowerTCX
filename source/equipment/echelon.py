@@ -126,7 +126,7 @@ class EchelonV2(bikes.Bike):
         )
 
     def _load_data(self, reader):
-        keys = reader.next()
+        keys = next(reader)
 
         for row in reader:
             if len(row):

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.5
 
 #
 # Convert the examples
@@ -30,14 +30,17 @@ for f in files:
         tcx_full = tcx_name(f, testdir, '', '.tcx')
         args = ['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_full, '--time', timestamp]
         print ('run_samples.py: %r' % args)
-        subprocess.call(args)
+        rc = subprocess.call(args)
+        assert(rc == 0)
 
         tcx_model = tcx_name(f, testdir, '_model', '.tcx')
         args = ['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_model, '--time', timestamp, '--model', '70']
         print ('run_samples.py: %r' % args)
-        subprocess.call(args)
+        rc = subprocess.call(args)
+        assert(rc == 0)
 
         tcx_interp = tcx_name(f, testdir, '_interp', '.tcx')
         args = ['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_interp, '--time', timestamp, '--interpolate']
         print ('run_samples.py: %r' % args)
-        subprocess.call(args)
+        rc = subprocess.call(args)
+        assert(rc == 0)

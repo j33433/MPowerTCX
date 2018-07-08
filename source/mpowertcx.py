@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3.5
 license = """\
  MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, 
  GoldenCheetah and other apps.
@@ -145,7 +145,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         """
         csv_dir_key = "file/csv_dir"
         csv_dir = self.settings.value(csv_dir_key, ".")
-        (filename, filter) = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
+        filename = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
 
         self.saveButton.setEnabled(False)
         self.labelDuration.setText("---")
@@ -204,9 +204,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         use_file_date = self.useFileDate.isChecked()
         
         if use_file_date:
-            local_time = self.in_file_info.created().toPython()
+            local_time = self.in_file_info.created().toPyDateTime()
         else:
-            local_time = self.workoutTime.dateTime().toPython()
+            local_time = self.workoutTime.dateTime().toPyDateTime()
         
         utc_zone = tz.tzutc()
         local_zone = tz.tzlocal()
