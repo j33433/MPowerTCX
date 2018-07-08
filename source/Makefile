@@ -8,9 +8,11 @@ else
     PLATFROM=
 endif
 
+UIC=pyuic4
+
 all: ui/mainwindow$(PLATFROM).py ui/about$(PLATFORM).py ui/images_rc.py
 
-ui/images_rc.py: ui/images.qrc
+ui/images_rc.py: ui/images.qrc Makefile
 	pyside-rcc -o ui/images_rc.py ui/images.qrc
 	
 ui/mainwindow$(PLATFORM).py: ui/mainwindow.ui Makefile

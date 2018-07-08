@@ -16,8 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#import physics.physics as model
-import physics.physics_cython as model
+import physics.physics as model
+#import physics.physics_cython as model
 
 
 class RideHeader(object):

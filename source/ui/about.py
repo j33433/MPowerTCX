@@ -21,60 +21,73 @@
 
 # Form implementation generated from reading ui file 'ui/about.ui'
 #
-# Created: Sat Dec  9 16:50:22 2017
-#      by: pyside-uic 0.2.15 running on PySide 1.2.2
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
-from PySide import QtCore, QtGui
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
+        Dialog.setObjectName(_fromUtf8("Dialog"))
         Dialog.resize(756, 395)
         self.gridLayout = QtGui.QGridLayout(Dialog)
-        self.gridLayout.setObjectName("gridLayout")
+        self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.labelVersion = QtGui.QLabel(Dialog)
-        self.labelVersion.setObjectName("labelVersion")
+        self.labelVersion.setObjectName(_fromUtf8("labelVersion"))
         self.gridLayout.addWidget(self.labelVersion, 0, 0, 1, 1)
         self.labelSupport = QtGui.QLabel(Dialog)
-        self.labelSupport.setObjectName("labelSupport")
+        self.labelSupport.setObjectName(_fromUtf8("labelSupport"))
         self.gridLayout.addWidget(self.labelSupport, 1, 0, 1, 1)
         self.labelLicense = QtGui.QLabel(Dialog)
-        self.labelLicense.setObjectName("labelLicense")
+        self.labelLicense.setObjectName(_fromUtf8("labelLicense"))
         self.gridLayout.addWidget(self.labelLicense, 2, 0, 1, 1)
         self.pushButton = QtGui.QPushButton(Dialog)
-        self.pushButton.setText("")
+        self.pushButton.setText(_fromUtf8(""))
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icon/mpowertcx icon flat.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/icon/mpowertcx icon flat.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton.setIcon(icon)
         self.pushButton.setIconSize(QtCore.QSize(256, 256))
         self.pushButton.setFlat(True)
-        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.gridLayout.addWidget(self.pushButton, 3, 1, 1, 1)
         spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout.addItem(spacerItem, 4, 1, 1, 1)
         self.licenseEdit = QtGui.QPlainTextEdit(Dialog)
         self.licenseEdit.setFrameShape(QtGui.QFrame.NoFrame)
         self.licenseEdit.setReadOnly(True)
-        self.licenseEdit.setObjectName("licenseEdit")
+        self.licenseEdit.setObjectName(_fromUtf8("licenseEdit"))
         self.gridLayout.addWidget(self.licenseEdit, 3, 0, 2, 1)
         self.buttonBox = QtGui.QDialogButtonBox(Dialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Ok)
         self.buttonBox.setCenterButtons(True)
-        self.buttonBox.setObjectName("buttonBox")
+        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.gridLayout.addWidget(self.buttonBox, 5, 0, 1, 2)
 
         self.retranslateUi(Dialog)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), Dialog.accept)
+        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "MPowerTCX: About", None, QtGui.QApplication.UnicodeUTF8))
-        self.labelVersion.setText(QtGui.QApplication.translate("Dialog", "Version:", None, QtGui.QApplication.UnicodeUTF8))
-        self.labelSupport.setText(QtGui.QApplication.translate("Dialog", "Support: j33433@gmail.com", None, QtGui.QApplication.UnicodeUTF8))
-        self.labelLicense.setText(QtGui.QApplication.translate("Dialog", "License:", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(_translate("Dialog", "MPowerTCX: About", None))
+        self.labelVersion.setText(_translate("Dialog", "Version:", None))
+        self.labelSupport.setText(_translate("Dialog", "Support: j33433@gmail.com", None))
+        self.labelLicense.setText(_translate("Dialog", "License:", None))
 
-import images_rc
+from . import images_rc

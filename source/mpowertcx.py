@@ -32,8 +32,8 @@ import threading
 from datetime import datetime
 import dateutil.parser
 
-from PySide.QtGui import *
-from PySide.QtCore import *
+from PyQt4.QtGui import *
+from PyQt4.QtCore import *
 import version 
 
 if platform.system() == 'Darwin':
