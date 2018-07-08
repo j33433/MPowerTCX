@@ -22,7 +22,6 @@ license = """\
 #
 # This file contains the GUI logic
 #
-
 import os
 import sys
 import argparse
@@ -144,7 +143,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         Let the user select a CSV file. Load if possible. 
         """
         csv_dir_key = "file/csv_dir"
-        csv_dir = self.settings.value(csv_dir_key, ".").toString()
+        csv_dir = self.settings.value(csv_dir_key, ".")
         filename = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
 
         self.saveButton.setEnabled(False)
@@ -200,7 +199,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         """
         self.saveButton.setEnabled(False)
         tcx_dir_key = "file/tcx_dir"
-        tcx_dir = self.settings.value(tcx_dir_key, ".").toString()
+        tcx_dir = self.settings.value(tcx_dir_key, ".")
         use_file_date = self.useFileDate.isChecked()
         
         if use_file_date:

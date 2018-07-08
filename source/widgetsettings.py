@@ -40,7 +40,7 @@ class WidgetSettings(object):
         json_data = self.__settings.value("WidgetSettings/json")
 
         if json_data != None:
-            saved = json.loads(str(json_data.toString()))
+            saved = json.loads(json_data)
         else:
             saved = dict()
 
