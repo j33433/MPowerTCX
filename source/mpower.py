@@ -43,8 +43,6 @@ class LineIterator(object):
     def __init__(self, stream):
         raw = stream.read().replace(b'\0', b'')
         self._parts = re.split(r'\r\r\n|\r\n|\n|\r', raw.decode("utf-8"))
-#        print ('RAW %r' % raw)
-#        print ('PARTS %r' % self._parts)
         
     def __iter__(self):
         return self
@@ -56,6 +54,10 @@ class LineIterator(object):
             
         raise StopIteration()
 
+    # for csvreader:
+    next = __next__
+
+    
 class MPower(object):
     """ 
     Process the CSV into TCX 
@@ -141,6 +143,7 @@ class MPower(object):
         """
         with open(self.in_filename, 'rb') as infile:
             iterator = LineIterator(infile)
+            print ('%r %r' % (infile, iterator))
             reader = csv.reader(iterator, skipinitialspace=True)
 
             try:
