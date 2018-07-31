@@ -28,6 +28,9 @@ import argparse
 import platform
 import threading
 
+if sys.version_info[0] < 3:
+    raise Exception("python 3 is required")
+    
 from datetime import datetime
 import dateutil.parser
 
