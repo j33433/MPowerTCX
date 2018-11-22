@@ -1,9 +1,11 @@
 *~
 *.pyc
 .DS_Store
+.vscode
 build-mpowertcx-*
 mpowertcx/mpowertcx.pro.user
 source/mpowertcx.py.lprof
 images/tmp
 source/installer/Install MPowerTCX.exe
 source/mpowertcx.spec
+source/build

@@ -20,21 +20,22 @@
 # This file contains the conversion engine
 #
 
-import re
 import csv
-import sys
 import datetime
-import xml_templates
-import mako.template 
+import re
+import sys
+
 import mako.runtime
+import mako.template
 
-from equipment.ride import Ride, RideHeader
 import physics
-
-# Equipment plugins
-from equipment.stages import Stages 
-from equipment.thesufferfest import TheSufferfest
+import xml_templates
 from equipment.echelon import EchelonV1, EchelonV2, EchelonV3
+from equipment.ride import Ride, RideHeader
+# Equipment plugins
+from equipment.stages import Stages
+from equipment.thesufferfest import TheSufferfest
+
 
 class LineIterator(object):
     """ 
@@ -201,4 +202,3 @@ class MPower(object):
         with open(filename, 'w') as out:
             context = mako.runtime.Context(out, points=points, header=header)
             template.render_context(context)
-

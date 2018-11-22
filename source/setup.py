@@ -13,14 +13,16 @@ scipy_path = os.path.dirname(scipy.__file__)
 options = {
     'build_exe': {
         'packages': ['numpy'],
-        'includes': ['numpy.core._methods', 'numpy.lib.format', 'scipy.sparse.csgraph._validation', 'scipy.special._ufuncs_cxx'],
-        'include_files': [scipy_path, scipy_path + '/special/specfun.pyd']
+        'excludes': ['scipy.spatial.cKDTree'],
+        'includes': ['numpy.core._methods', 'numpy.lib.format', 
+                     'scipy.sparse.csgraph._validation', 'scipy.special._ufuncs_cxx']
+#        'include_files': [scipy_path, scipy_path + '/special/specfun.pyd']
     }
 }
 
 import sys
-#base = 'Win32GUI' if sys.platform=='win32' else None
-base = None
+base = 'Win32GUI' if sys.platform=='win32' else None
+#base = None
 
 executables = [
     Executable('mpowertcx.py', base=base, icon='..\images\mpowertcx icon flat.ico')
