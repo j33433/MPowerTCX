@@ -9,3 +9,5 @@ images/tmp
 source/installer/Install MPowerTCX.exe
 source/mpowertcx.spec
 source/build
+source/dist
+

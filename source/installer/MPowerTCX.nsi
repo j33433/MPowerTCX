@@ -53,16 +53,18 @@
 
 Section "MPowerTCX" SecDummy
   SetOutPath "$INSTDIR"
-  File /r "..\dist\mpowertcx"
+  File /r "..\dist\mpowertcx\*"
+  ;File /r "..\build\exe.win-amd64-3.7\*"
+
 	
   WriteRegStr HKCU "Software\MPowerTCX" "" $INSTDIR
 
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
   CreateDirectory "$SMPROGRAMS\MPowerTCX"
-  CreateShortCut "$SMPROGRAMS\MPowerTCX\MPowerTCX.lnk" "$INSTDIR\mpowertcx\mpowertcx.exe" ""
+  CreateShortCut "$SMPROGRAMS\MPowerTCX\MPowerTCX.lnk" "$INSTDIR\mpowertcx.exe" ""
   CreateShortCut "$SMPROGRAMS\MPowerTCX\Uninstall MPowerTCX.lnk" "$INSTDIR\Uninstall.exe" ""
-  CreateShortCut "$DESKTOP\MPowerTCX.lnk" "$INSTDIR\mpowertcx\mpowertcx.exe" ""
+  CreateShortCut "$DESKTOP\MPowerTCX.lnk" "$INSTDIR\mpowertcx.exe" ""
 SectionEnd
 
 ;--------------------------------
