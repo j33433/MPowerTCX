@@ -20,39 +20,45 @@
 # This file contains the conversion engine
 #
 
-import re
 import csv
-import sys
 import datetime
-import xml_templates
-import mako.template 
+import re
+import sys
+
 import mako.runtime
+import mako.template
 
-from equipment.ride import Ride, RideHeader
 import physics
-
-# Equipment plugins
-from equipment.stages import Stages 
-from equipment.thesufferfest import TheSufferfest
+import xml_templates
 from equipment.echelon import EchelonV1, EchelonV2, EchelonV3
+from equipment.ride import Ride, RideHeader
+# Equipment plugins
+from equipment.stages import Stages
+from equipment.thesufferfest import TheSufferfest
+
 
 class LineIterator(object):
     """ 
     Handle files with standard and unusual newline conventions 
     """
     def __init__(self, stream):
-        self._parts = re.split("\r\r\n|\r\n|\n|\r", stream.read().replace('\0', ''))
+        raw = stream.read().replace(b'\0', b'')
+        self._parts = re.split(r'\r\r\n|\r\n|\n|\r', raw.decode("utf-8"))
         
     def __iter__(self):
         return self
         
-    def next(self):
+    def __next__(self):
         if len(self._parts):
             n = self._parts.pop(0)
             return n
             
         raise StopIteration()
 
+    # for csvreader:
+    next = __next__
+
+    
 class MPower(object):
     """ 
     Process the CSV into TCX 
@@ -108,14 +114,14 @@ class MPower(object):
                 self.ride.header.equipment = b.name()
                 return True
         
-        print ('no plugin found for this file')
+        raise Exception('no plugin found for this file')
         return False
         
     def _load_csv_chunk(self, reader):
         """ 
         Guess what the next block of CSV data is an process it 
         """
-        line = reader.next()
+        line = next(reader)
         
         if line == []:
             pass
@@ -125,7 +131,7 @@ class MPower(object):
            self.skip (line)
 
            while True:
-               line = reader.next()
+               line = next(reader)
 
                if line == []:
                    break
@@ -179,7 +185,7 @@ class MPower(object):
         secs_per_sample = self.ride.delta()
         points = []
         
-        for i in xrange(0, self.ride.count()):
+        for i in range(0, self.ride.count()):
             delta_time = start_time + datetime.timedelta(seconds=i * int(secs_per_sample))
             power = float(self.ride.power[i]) * self.power_fudge
             
@@ -187,7 +193,7 @@ class MPower(object):
                 time=self._format_time(delta_time), 
                 bpm=self.ride.hr[i], 
                 cadence=self.ride.rpm[i], 
-                distance_meters=str(self.ride.distance[i]),
+                distance_meters=("%.5f" % float(self.ride.distance[i])),
                 watts=str(int(power))
             )
             
@@ -196,4 +202,3 @@ class MPower(object):
         with open(filename, 'w') as out:
             context = mako.runtime.Context(out, points=points, header=header)
             template.render_context(context)
-

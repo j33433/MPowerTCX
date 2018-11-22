@@ -16,8 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-#import physics.physics as model
-import physics.physics_cython as model
+import physics.physics as model
+#import physics.physics_cython as model
 
 
 class RideHeader(object):
@@ -122,8 +122,11 @@ class Ride(object):
         bike = model.SimpleBike(mass)
         bike.set_time_delta(delta)
         self.distance = []
+        distance = 0.0
 
         for p in self.power:
             power, v_mph, distance = bike.next_sample(float(p))
             self.distance.append(distance)
+
+        self.header.distance = int(distance)
 

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3.5
 license = """\
  MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, 
  GoldenCheetah and other apps.
@@ -19,22 +19,30 @@ license = """\
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import argparse
 #
 # This file contains the GUI logic
 #
-
 import os
-import sys
-import argparse
 import platform
+import sys
 import threading
-
+import traceback
 from datetime import datetime
-import dateutil.parser
 
-from PySide.QtGui import *
-from PySide.QtCore import *
-import version 
+import dateutil.parser
+from dateutil import tz
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
+import ui.images_rc
+import version
+from mpower import MPower
+from widgetsettings import WidgetSettings
+
+if sys.version_info[0] < 3:
+    raise Exception("python 3 is required")
 
 if platform.system() == 'Darwin':
     # The UIC generates things differently for the OS X context menu
@@ -44,13 +52,6 @@ else:
     from ui.about import Ui_Dialog
     from ui.mainwindow import Ui_MainWindow
 
-
-from mpower import MPower
-from dateutil import tz
-from widgetsettings import WidgetSettings
-
-import ui.images_rc
-import traceback
 
 class About(QDialog, Ui_Dialog):
     """ 

@@ -1,10 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3.5
 
 #
 # Convert the examples
 #
 
 import os
+import sys
 import subprocess
 
 testdir = '../samples'
@@ -19,6 +20,12 @@ def tcx_name(filename, testdir, tag, ext):
     
     return full
 
+def run(args):
+    args.insert(0, sys.executable)
+    print ('run_samples.py: %r' % ' '.join(args))
+    rc = subprocess.call(args)
+    assert(rc == 0)
+
 for f in files:
     if f.lower().endswith('.csv'):
         csv_full = os.path.join(testdir, f)
@@ -29,15 +36,12 @@ for f in files:
 
         tcx_full = tcx_name(f, testdir, '', '.tcx')
         args = ['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_full, '--time', timestamp]
-        print ('run_samples.py: %r' % args)
-        subprocess.call(args)
+        run(args)
 
         tcx_model = tcx_name(f, testdir, '_model', '.tcx')
         args = ['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_model, '--time', timestamp, '--model', '70']
-        print ('run_samples.py: %r' % args)
-        subprocess.call(args)
+        run(args)
 
         tcx_interp = tcx_name(f, testdir, '_interp', '.tcx')
         args = ['./mpowertcx.py', '--csv', csv_full, '--tcx', tcx_interp, '--time', timestamp, '--interpolate']
-        print ('run_samples.py: %r' % args)
-        subprocess.call(args)
+        run(args)

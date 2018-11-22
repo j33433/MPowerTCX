@@ -4,8 +4,9 @@
 
 import json
 
-from PySide.QtGui import *
-from PySide.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtCore import *
+from PySide2.QtWidgets import *
 
 class WidgetSettings(object):
     def __init__(self, parent, filename, settings):
@@ -21,7 +22,7 @@ class WidgetSettings(object):
         lineEdits = self.__parent.findChildren(QAbstractSpinBox)
 
         for w in lineEdits:
-            saved[self._key_name(w)] = w.text()
+            saved[self._key_name(w)] = str(w.text())
     
         checkBoxes = self.__parent.findChildren(QCheckBox)
         
@@ -31,19 +32,19 @@ class WidgetSettings(object):
         comboBoxes = self.__parent.findChildren(QComboBox)
 
         for w in comboBoxes:
-            saved[self._key_name(w)] = w.currentText()
+            saved[self._key_name(w)] = str(w.currentText())
 
         json_data = json.dumps(saved, indent=4, sort_keys=True)
         self.__settings.setValue("WidgetSettings/json", json_data)
 
     def unstash(self):
         json_data = self.__settings.value("WidgetSettings/json")
-        
+
         if json_data != None:
             saved = json.loads(json_data)
         else:
             saved = dict()
-        
+
         lineEdits = self.__parent.findChildren(QAbstractSpinBox)
 
         for w in lineEdits:

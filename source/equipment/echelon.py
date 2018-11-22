@@ -107,12 +107,16 @@ class EchelonV2(bikes.Bike):
         header = {}
 
         for row in reader:
+#            print ('ROW %r' % row)
+            
             # Return on "" or ",,,"
             if len(row) and ''.join(row) != '':
                 header[row[0]] = row[1]
             else:
                 break
 
+#        print ('HEADER %r' % header)
+        
         self.ride.header.setSummary(
             time=float(header["Total Time"]) * 60.0,
             distance=float(header["Total Distance"]) * 1609.34,
@@ -126,7 +130,7 @@ class EchelonV2(bikes.Bike):
         )
 
     def _load_data(self, reader):
-        keys = reader.next()
+        keys = next(reader)
 
         for row in reader:
             if len(row):
