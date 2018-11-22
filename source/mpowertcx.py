@@ -34,8 +34,10 @@ if sys.version_info[0] < 3:
 from datetime import datetime
 import dateutil.parser
 
-from PyQt4.QtGui import *
-from PyQt4.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtCore import *
+from PySide2.QtWidgets import *
+
 import version 
 
 if platform.system() == 'Darwin':
@@ -147,7 +149,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         """
         csv_dir_key = "file/csv_dir"
         csv_dir = self.settings.value(csv_dir_key, ".")
-        filename = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
+        (filename, filter) = QFileDialog.getOpenFileName(self, "Open CSV", csv_dir, "CSV Files (*.csv);;All Files (*)")
 
         self.saveButton.setEnabled(False)
         self.labelDuration.setText("---")
@@ -206,9 +208,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         use_file_date = self.useFileDate.isChecked()
         
         if use_file_date:
-            local_time = self.in_file_info.created().toPyDateTime()
+            local_time = self.in_file_info.created().toPython()
         else:
-            local_time = self.workoutTime.dateTime().toPyDateTime()
+            local_time = self.workoutTime.dateTime().toPython()
         
         utc_zone = tz.tzutc()
         local_zone = tz.tzlocal()
