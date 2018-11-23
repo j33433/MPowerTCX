@@ -24,12 +24,13 @@
 
 import math
 
+
 class SimpleBike(object):
     def __init__(self, mass):
         self.drag_coefficient = 0.88
         self.frontal_area = 0.32
         self.rho = 1.2
-        self.eta = 0.97  	
+        self.eta = 0.97
         self.rolling_coefficient = 5.0e-3
         # kg
         self.mass = mass
@@ -41,7 +42,7 @@ class SimpleBike(object):
 
     def set_time_delta(self, delta):
         self.time_delta = delta
-         
+
     def drag(self, velocity):
         return 0.5 * self.drag_coefficient * self.frontal_area * self.rho * velocity * velocity
 
@@ -62,23 +63,24 @@ class SimpleBike(object):
         power_needed = total_force * (self.velocity / self.eta)
         net_power = power - power_needed
         r = self.velocity * self.velocity + 2 * net_power * self.time_delta * self.eta / self.mass
-        
+
         if r > 0.0:
             self.velocity = math.sqrt(r)
         else:
             self.velocity = 0.0
-            
+
 #        print ("p %.2f, v %.2f, drag %.2f, rolling %.6f, gravity %.2f, total %.2f, r %.2f" % (power, self.velocity, drag, gravity, rolling, total_force, r))
         self.distance += self.velocity * self.time_delta
 
         # m/s to mph
         v_mph = self.velocity * 2.23694
-        
+
         return power, v_mph, self.distance
+
 
 def main():
     #import matplotlib.pyplot as plt
-    
+
     velocity_a = [0]
     time_a = [0]
     power_a = [0]
@@ -112,4 +114,4 @@ def main():
 
     plt.show()
 
-#main()
+# main()

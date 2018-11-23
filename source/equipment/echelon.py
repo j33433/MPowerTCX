@@ -23,6 +23,8 @@ from . import bikes
 #
 # The version numbers represent the order in which I encountered them, not official firmware revisions
 #
+
+
 class EchelonV1(bikes.Bike):
     def load(self, peek, reader):
         if peek == ['Stage_Totals']:
@@ -31,12 +33,12 @@ class EchelonV1(bikes.Bike):
         elif peek == ['Stage_Workout (min)', 'Distance(km)', 'Speed(km/h)', 'Watts ', 'HR ', 'RPM ']:
             self._load_data(reader)
             return True
-            
+
         return False
 
     def name(self):
         return "Echelon Variant 1"
-        
+
     def _load_header(self, reader):
         header = {}
 
@@ -60,7 +62,7 @@ class EchelonV1(bikes.Bike):
 
     def _load_data(self, reader):
         last_time = 0
-        
+
         for row in reader:
             if len(row) == 0:
                 break
@@ -76,10 +78,10 @@ class EchelonV1(bikes.Bike):
                 self.skip(row)
 
         if self.ride.header.time == 0:
-            print ("v1 header missing")
+            print("v1 header missing")
             self.ride.inferHeader(last_time)
-    
-    
+
+
 class EchelonV2(bikes.Bike):
     def load(self, peek, reader):
         if peek[0:2] == ['RIDE SUMMARY', '']:
@@ -91,24 +93,24 @@ class EchelonV2(bikes.Bike):
         elif re.match('^STAGE_[0-9]+_SUMMARY$', peek[0]):
             self._skip_section(reader)
             return True
-            
+
         return False
 
     def name(self):
         return "Echelon Variant 2"
-        
+
     def _skip_section(self, reader):
         for row in reader:
             # Return on "" or ",,,"
             if len(row) == 0 or ''.join(row) == '':
                 break
-    
+
     def _load_header(self, reader):
         header = {}
 
         for row in reader:
-#            print ('ROW %r' % row)
-            
+            #            print ('ROW %r' % row)
+
             # Return on "" or ",,,"
             if len(row) and ''.join(row) != '':
                 header[row[0]] = row[1]
@@ -116,7 +118,7 @@ class EchelonV2(bikes.Bike):
                 break
 
 #        print ('HEADER %r' % header)
-        
+
         self.ride.header.setSummary(
             time=float(header["Total Time"]) * 60.0,
             distance=float(header["Total Distance"]) * 1609.34,
@@ -144,21 +146,22 @@ class EchelonV2(bikes.Bike):
             else:
                 break
 
-                
+
 class EchelonV3(bikes.Bike):
     """ 
     So called v3 is a messed up version of v1. I suspect it's an earlier firmware. 
     """
+
     def load(self, peek, reader):
         if peek == ['Stage_Workout (min)', 'Distance(mile)', 'Speed (mph)', 'Watts ', 'HR ', 'RPM ']:
             self._load(reader)
             return True
-            
+
         return False
 
     def name(self):
         return "Echelon Variant 3"
-        
+
     def _load(self, reader):
         for row in reader:
             if len(row) == 6:
@@ -172,7 +175,7 @@ class EchelonV3(bikes.Bike):
                 self._load_header(reader)
             else:
                 self.skip(row)
-        
+
     def _load_header(self, reader):
         header = {}
 
@@ -193,4 +196,3 @@ class EchelonV3(bikes.Bike):
             max_hr=header["HR Max"],
             calories=header["KCal"]
         )
-     

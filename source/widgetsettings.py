@@ -1,12 +1,13 @@
 #
 # Load and save most widget states automatically
-# 
+#
 
 import json
 
-from PySide2.QtGui import *
 from PySide2.QtCore import *
+from PySide2.QtGui import *
 from PySide2.QtWidgets import *
+
 
 class WidgetSettings(object):
     def __init__(self, parent, filename, settings):
@@ -16,16 +17,16 @@ class WidgetSettings(object):
 
     def _key_name(self, w):
         return '%s/%s' % (self.__parent.objectName(), w.objectName())
-        
+
     def stash(self):
         saved = dict()
         lineEdits = self.__parent.findChildren(QAbstractSpinBox)
 
         for w in lineEdits:
             saved[self._key_name(w)] = str(w.text())
-    
+
         checkBoxes = self.__parent.findChildren(QCheckBox)
-        
+
         for w in checkBoxes:
             saved[self._key_name(w)] = w.isChecked()
 
@@ -53,10 +54,10 @@ class WidgetSettings(object):
                 w.setValue(w.valueFromText(str(v)))
             else:
                 # Probably a date time thing
-                print ("can't stash %r" % w)
-                
+                print("can't stash %r" % w)
+
         checkBoxes = self.__parent.findChildren(QCheckBox)
-        
+
         for w in checkBoxes:
             v = saved.get(self._key_name(w), w.isChecked())
             w.setCheckState(Qt.Checked if v else Qt.Unchecked)
@@ -66,7 +67,6 @@ class WidgetSettings(object):
         for w in comboBoxes:
             v = saved.get(self._key_name(w), w.currentText())
             index = w.findText(v, Qt.MatchFixedString)
-            
+
             if index >= 0:
                 w.setCurrentIndex(index)
-    

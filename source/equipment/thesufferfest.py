@@ -18,21 +18,22 @@
 
 from . import bikes
 
+
 class TheSufferfest(bikes.Bike):
     def load(self, peek, reader):
         if peek == ['ticks', 'time', 'power', 'cadence', 'heartRate', 'speed', 'targetPower', 'targetHeartRateZone', 'targetCadence', 'targetRpe']:
             self._load(reader)
             return True
-            
+
         return False
 
     def name(self):
         return "The Sufferfest"
-                
+
     def _load(self, reader):
         last_time = 0.0
         distance = 0.0
-        
+
         for row in reader:
             if len(row):
                 time = float(row[1])
@@ -41,14 +42,12 @@ class TheSufferfest(bikes.Bike):
                 speed = float(row[5])
                 # 1 m/s = 2.236936 mph, hence this odd looking factor:
                 distance += speed * time_delta / 22.36936
-                
+
                 self.ride.addSample(
                     power=row[2],
                     rpm=row[3],
                     hr=row[4],
                     distance=distance
                 )
-                
+
         self.ride.inferHeader(last_time)
-    
-    

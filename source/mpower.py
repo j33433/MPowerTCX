@@ -41,24 +41,25 @@ class LineIterator(object):
     """ 
     Handle files with standard and unusual newline conventions 
     """
+
     def __init__(self, stream):
         raw = stream.read().replace(b'\0', b'')
         self._parts = re.split(r'\r\r\n|\r\n|\n|\r', raw.decode("utf-8"))
-        
+
     def __iter__(self):
         return self
-        
+
     def __next__(self):
         if len(self._parts):
             n = self._parts.pop(0)
             return n
-            
+
         raise StopIteration()
 
     # for csvreader:
     next = __next__
 
-    
+
 class MPower(object):
     """ 
     Process the CSV into TCX 
@@ -66,7 +67,7 @@ class MPower(object):
     debug = False
     do_interpolate = False
     do_physics = False
-    
+
     def __init__(self, in_filename):
         self.in_filename = in_filename
         self.out_filename = None
@@ -76,9 +77,9 @@ class MPower(object):
         self.power_fudge = 1.0
         self.sport = "Biking"
         self.ride = Ride()
-        
+
         self.bikes = [
-            Stages(self.ride), 
+            Stages(self.ride),
             TheSufferfest(self.ride),
             EchelonV1(self.ride),
             EchelonV2(self.ride),
@@ -88,7 +89,7 @@ class MPower(object):
     def skip(self, line):
         if self.debug:
             print(line)
-            
+
     def count(self):
         return self.ride.count()
 
@@ -97,11 +98,11 @@ class MPower(object):
 
     def set_interpolation(self, use):
         self.do_interpolate = use
-        
+
     def set_physics(self, use, mass_kg):
         self.do_physics = use
         self.physics_mass = mass_kg
-        
+
     def set_power_adjust(self, value):
         """ 
         Power readings vary quite a bit from bike to bike. Allow adjustment 
@@ -113,30 +114,30 @@ class MPower(object):
             if b.load(line, reader):
                 self.ride.header.equipment = b.name()
                 return True
-        
+
         raise Exception('no plugin found for this file')
         return False
-        
+
     def _load_csv_chunk(self, reader):
         """ 
         Guess what the next block of CSV data is an process it 
         """
         line = next(reader)
-        
+
         if line == []:
             pass
         elif self._load_from_plugins(line, reader):
             pass
         else:
-           self.skip (line)
+            self.skip(line)
 
-           while True:
-               line = next(reader)
+            while True:
+                line = next(reader)
 
-               if line == []:
-                   break
+                if line == []:
+                    break
 
-               self.skip(line)
+                self.skip(line)
 
     def load_csv(self):
         """ 
@@ -164,41 +165,41 @@ class MPower(object):
         """
         if self.do_interpolate:
             self.ride.interpolate()
-        
+
         if self.do_physics:
             self.ride.modelDistance(self.physics_mass)
 
 #        template = mako.template.Template(xml_templates.training_center_database, default_filters=['unicode', 'x'])
         template = mako.template.Template(xml_templates.training_center_database, default_filters=[])
         now = self._format_time(start_time)
-        
+
         header = dict(
-            id=now, 
-            start_time=now, 
+            id=now,
+            start_time=now,
             total_time=str(self.ride.header.time),
             distance_meters=str(float(self.ride.header.distance)),
             average_heart_rate=str(self.ride.header.average_hr),
-            maximum_heart_rate=str(self.ride.header.max_hr), 
+            maximum_heart_rate=str(self.ride.header.max_hr),
             sport=self.sport
         )
-        
+
         secs_per_sample = self.ride.delta()
         points = []
-        
+
         for i in range(0, self.ride.count()):
             delta_time = start_time + datetime.timedelta(seconds=i * int(secs_per_sample))
             power = float(self.ride.power[i]) * self.power_fudge
-            
+
             point = dict(
-                time=self._format_time(delta_time), 
-                bpm=self.ride.hr[i], 
-                cadence=self.ride.rpm[i], 
+                time=self._format_time(delta_time),
+                bpm=self.ride.hr[i],
+                cadence=self.ride.rpm[i],
                 distance_meters=("%.5f" % float(self.ride.distance[i])),
                 watts=str(int(power))
             )
-            
+
             points.append(point)
-      
+
         with open(filename, 'w') as out:
             context = mako.runtime.Context(out, points=points, header=header)
             template.render_context(context)

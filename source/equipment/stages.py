@@ -18,30 +18,31 @@
 
 from . import bikes
 
+
 class Stages(bikes.Bike):
     def load(self, peek, reader):
         if peek[0] == 'Stages_Data':
             self._load(reader)
             return True
-            
+
         return False
 
     def name(self):
         return "Stages"
-        
+
     def _distance_to_float(self, dist):
         # Some strange quirk in Stages firmware?
         if dist.startswith(':'):
             dist = '10' + dist[1:]
-        
+
         return float(dist)
-        
+
     def _load(self, reader):
         self.metric = True
         distance = 0.0
         header_found = False
         last_time = 0
-        
+
         for row in reader:
             if row == []:
                 pass
@@ -52,18 +53,18 @@ class Stages(bikes.Bike):
                 header_found = True
             elif len(row) >= 6:
                 time = self._parse_time(row[0])
-                
+
                 if last_time > 0 and time - last_time > 1:
-                    print ("time warp %f %f %r" % (time, last_time, row[0]))
-                
+                    print("time warp %f %f %r" % (time, last_time, row[0]))
+
                 last_time = time
-                
+
                 if time >= 0:
                     # ['Time', 'Miles', 'MPH', 'Watts', 'HR', 'RPM']
                     # TODO: maybe use this method on all file formats.
                     #       Infer distance from MPH.
                     distance += self._distance_to_float(row[2]) / (60.0 * 60.0)
-                    
+
                     self.ride.addSample(
                         power=row[3],
                         rpm=row[5],
@@ -74,14 +75,14 @@ class Stages(bikes.Bike):
                     self.skip(row)
             else:
                 self.skip(row)
-        
+
         if not header_found:
-            print ("stages header missing")
+            print("stages header missing")
             self.ride.inferHeader(last_time)
-        
+
     def _load_header(self, reader):
         header = {}
-        
+
         for row in reader:
             if len(row):
                 header[row[0]] = row[1]
@@ -90,9 +91,9 @@ class Stages(bikes.Bike):
 
         parts = header['Time'].split(':')
         h = 0
-        m = 0 
+        m = 0
         s = 0
-        
+
         if len(parts) == 3:
             h = int(parts[0])
             m = int(parts[1])
@@ -102,9 +103,9 @@ class Stages(bikes.Bike):
             s = int(parts[1])
         elif len(parts) == 2:
             s = int(parts[0])
-        
-        time = h * 60 * 60 + m * 60 + s    
-        
+
+        time = h * 60 * 60 + m * 60 + s
+
         self.ride.header.setSummary(
             time=time,
             distance=self.distance(self._distance_to_float(header["Distance"])),
@@ -118,9 +119,9 @@ class Stages(bikes.Bike):
         )
 
     def _parse_time(self, time):
-        # I've seen mm:ss or mm:ss:00 so far 
+        # I've seen mm:ss or mm:ss:00 so far
         parts = time.split(':')
-        
+
         if len(parts) == 2 or len(parts) == 3:
             try:
                 minutes = int(parts[0])
@@ -130,7 +131,5 @@ class Stages(bikes.Bike):
                 result = -1
         else:
             result = -1
-            
-        return result
 
-        
+        return result

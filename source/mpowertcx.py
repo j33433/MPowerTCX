@@ -1,4 +1,23 @@
 #!/usr/bin/env python3.5
+import argparse
+import os
+import platform
+import sys
+import threading
+import traceback
+from datetime import datetime
+
+import dateutil.parser
+from dateutil import tz
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
+import ui.images_rc
+import version
+from mpower import MPower
+from widgetsettings import WidgetSettings
+
 license = """\
  MPowerTCX: Share Schwinn A.C. indoor cycle data with Strava, 
  GoldenCheetah and other apps.
@@ -19,27 +38,10 @@ license = """\
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import argparse
 #
 # This file contains the GUI logic
 #
-import os
-import platform
-import sys
-import threading
-import traceback
-from datetime import datetime
 
-import dateutil.parser
-from dateutil import tz
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
-
-import ui.images_rc
-import version
-from mpower import MPower
-from widgetsettings import WidgetSettings
 
 if sys.version_info[0] < 3:
     raise Exception("python 3 is required")
@@ -57,21 +59,23 @@ class About(QDialog, Ui_Dialog):
     """ 
     Show license, version, etc 
     """
+
     def __init__(self, version):
         super(About, self).__init__()
         self.setupUi(self)
         self.licenseEdit.appendPlainText(license)
         self.labelVersion.setText("Version: " + version)
 
+
 class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
     lbs_to_kg = 0.453592
-    
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.settings = QSettings("j33433", "MPowerTCX")
         WidgetSettings.__init__(self, self, 'settings.json', self.settings)
         self.version = version.version
-        self.trues = [True, 'True', 'true'] # workaround for pyside
+        self.trues = [True, 'True', 'true']  # workaround for pyside
         self.setupUi(self)
 #        self.menuHelp.menuAction().setMenuRole(QAction.AboutRole)
 #        self.menuBar().setMenuRole(QAction.AboutRole)
@@ -94,21 +98,21 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         hide = not self.checkBoxExtra.isChecked()
         self.groupBoxPhysics.setHidden(hide)
         self.groupBoxCompatibility.setHidden(hide)
-        
+
     def assignWidgets(self):
         """ 
         Connect signals to slots 
         """
         self.useFileDate.stateChanged.connect(self.useFileDateChanged)
         self.checkBoxExtra.stateChanged.connect(self.checkBoxExtraChanged)
-        
+
         self.powerAdjustment.valueChanged.connect(self.somethingChanged)
         self.comboBoxUnits.currentIndexChanged.connect(self.somethingChanged)
         self.checkBoxPhysics.stateChanged.connect(self.somethingChanged)
         self.checkBoxInterpolate.stateChanged.connect(self.somethingChanged)
         self.doubleSpinBoxRiderWeight.valueChanged.connect(self.somethingChanged)
         self.doubleSpinBoxBikeWeight.valueChanged.connect(self.somethingChanged)
-        
+
         self.loadButton.clicked.connect(self.loadPushed)
         self.saveButton.clicked.connect(self.savePushed)
         self.actionAbout.triggered.connect(self.showAbout)
@@ -130,7 +134,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         self.groupBoxCompatibility.setHidden(not value)
         self.resize(self.width(), self.minimumSizeHint().height())
         self.stash()
-        
+
     def useFileDateChanged(self, state):
         value = state == Qt.Checked
         self.workoutTime.setEnabled(not value)
@@ -160,8 +164,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
                 self.mpower.load_csv()
             except Exception as error:
                 oops = traceback.format_exc().splitlines()
-                self.alert("\nThere was an error.\nPlease report this to j33433@gmail.com.\nInclude your file in the email.\n\n%s\n%s\n%s\n" % 
-                    (oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
+                self.alert("\nThere was an error.\nPlease report this to j33433@gmail.com.\nInclude your file in the email.\n\n%s\n%s\n%s\n" %
+                           (oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
             else:
                 header = self.mpower.header()
 
@@ -194,7 +198,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         else:
             result['message'] = 'The TCX file was saved successfully.'
             result['status'] = True
-        
+
     def savePushed(self):
         """ 
         Let the user select a TCX file to save to. Store the data. 
@@ -203,12 +207,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         tcx_dir_key = "file/tcx_dir"
         tcx_dir = self.settings.value(tcx_dir_key, ".")
         use_file_date = self.useFileDate.isChecked()
-        
+
         if use_file_date:
             local_time = self.in_file_info.created().toPython()
         else:
             local_time = self.workoutTime.dateTime().toPython()
-        
+
         utc_zone = tz.tzutc()
         local_zone = tz.tzlocal()
         local_time = local_time.replace(tzinfo=local_zone)
@@ -235,14 +239,14 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
         power_adjust = self.powerAdjustment.value()
         self.mpower.set_power_adjust(power_adjust)
         self.mpower.set_interpolation(self.checkBoxInterpolate.isChecked())
-        
+
         mass = self.doubleSpinBoxRiderWeight.value() + self.doubleSpinBoxBikeWeight.value()
-        
+
         if self.comboBoxUnits.currentText() == "lbs":
             mass *= self.lbs_to_kg
-        
+
         self.mpower.set_physics(self.checkBoxPhysics.isChecked(), mass)
- 
+
         thread_result = {'message': None, 'status': False}
         t = threading.Thread(target=self.saveThread, args=(filename, start_time, thread_result))
         t.start()
@@ -273,15 +277,15 @@ else:
     args = parser.parse_args()
     mpower = MPower(args.csv)
     mpower.load_csv()
-    
+
     if args.time is not None:
         stamp = dateutil.parser.parse(args.time)
     else:
         # Take input file time
         stamp = datetime.fromtimestamp(os.path.getmtime(args.csv))
-    
+
     if args.model is not None:
         mpower.set_physics(True, float(args.model))
-    
-    mpower.set_interpolation(args.interpolate)   
+
+    mpower.set_interpolation(args.interpolate)
     mpower.save_data(args.tcx, stamp)

@@ -17,6 +17,7 @@
 #
 
 import physics.physics as model
+
 #import physics.physics_cython as model
 
 
@@ -24,6 +25,7 @@ class RideHeader(object):
     """ 
     Summary statistics for a ride 
     """
+
     def __init__(self):
         self.setSummary()
         self.equipment = ''
@@ -44,6 +46,7 @@ class Ride(object):
     """ 
     Hold the time series data for the ride and a header 
     """
+
     def __init__(self):
         self.power = []
         self.rpm = []
@@ -62,7 +65,7 @@ class Ride(object):
         The number of samples in the time series 
         """
         return len(self.power)
-        
+
     def inferHeader(self, time=0):
         """
         Calculate missing header values
@@ -79,28 +82,28 @@ class Ride(object):
             return self.header.time / self.count()
         else:
             return 0
-        
+
     def interpolate(self):
         """
         Resample the data to one second intervals
         """
         import numpy as np
-        from scipy import interpolate   
+        from scipy import interpolate
 
         seconds = self.header.time
         delta = self.delta()
-        print ("interpolate: %d seconds, %.2f seconds per sample before interpolation" % (seconds, delta))
-        
+        print("interpolate: %d seconds, %.2f seconds per sample before interpolation" % (seconds, delta))
+
         if delta == 0:
-            print ("nothing to interpolate")
+            print("nothing to interpolate")
             return
-        
+
         limit = int(seconds)
         xa = np.arange(0, limit, delta)
         xb = np.arange(0, limit - delta, 1)
-       
+
         if len(xa) != len(self.power):
-            print ('resizing for interpolation %r vs %r' % (len(xa), len(self.power)))
+            print('resizing for interpolation %r vs %r' % (len(xa), len(self.power)))
             xa.resize((len(self.power)))
 
 #        print ('%r %r' % (limit, seconds))
@@ -108,16 +111,16 @@ class Ride(object):
         self.rpm = self._interpolate(xa, xb, self.rpm).astype("int").astype("str")
         self.hr = self._interpolate(xa, xb, self.hr).astype("int").astype("str")
         self.distance = self._interpolate(xa, xb, self.distance).astype("str")
-        
+
     def _interpolate(self, xa, xb, data):
-        from scipy import interpolate   
-        
+        from scipy import interpolate
+
 #        print ('%r %r %r' % (len(xa), len(xb), len(data)))
         f = interpolate.splrep(xa, data)
         return interpolate.splev(xb, f)
-    
+
     def modelDistance(self, mass):
-        print ('modeling distance with %r kg' % mass)
+        print('modeling distance with %r kg' % mass)
         delta = self.delta()
         bike = model.SimpleBike(mass)
         bike.set_time_delta(delta)
@@ -129,4 +132,3 @@ class Ride(object):
             self.distance.append(distance)
 
         self.header.distance = int(distance)
-
