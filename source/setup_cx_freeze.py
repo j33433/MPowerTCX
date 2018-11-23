@@ -1,6 +1,8 @@
 #
-# This file builds the windows executable usig cx_freeze
+# Please note: runpyinstaller.bat produces a 10x smaller result. You probably
+# want to run that instead.
 #
+
 # Example: python setup.py build
 
 import os
