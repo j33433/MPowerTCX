@@ -164,8 +164,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, WidgetSettings):
                 self.mpower.load_csv()
             except Exception as error:
                 oops = traceback.format_exc().splitlines()
-                self.alert("\nThere was an error.\nPlease report this to j33433@gmail.com.\nInclude your file in the email.\n\n%s\n%s\n%s\n" %
-                           (oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
+                self.alert("\nThere was an error."
+                           "\nPlease report this to j33433@gmail.com."
+                           "\nInclude your file in the email."
+                           "\n\nVersion %s"
+                           "\n\n%s\n%s\n%s\n" %
+                           (version.version, oops[-3].strip(), oops[-2].strip(), oops[-1].strip()))
             else:
                 header = self.mpower.header()
 

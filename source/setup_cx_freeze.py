@@ -1,9 +1,9 @@
 #
-# Please note: runpyinstaller.bat produces a 10x smaller result. You probably
+# Please note: setup_pyinstaller.bat produces a 10x smaller result. You probably
 # want to run that instead.
 #
 
-# Example: python setup.py build
+# Example: python setup_cx_freeze.py build
 
 import os
 from cx_Freeze import setup, Executable

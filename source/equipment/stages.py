@@ -25,6 +25,22 @@ class Stages(bikes.Bike):
             self._load(reader)
             return True
 
+        # Headerless file
+        # 0:01,0,18.18,121,0,95
+        all_floats = True
+
+        if len(peek) == 6 and ':' in peek[0]:
+            for f in peek[1:]:
+                try:
+                    float(f)
+                except ValueError:
+                    all_floats = False
+                    break
+
+        if all_floats:
+            self._load(reader)
+            return True
+
         return False
 
     def name(self):

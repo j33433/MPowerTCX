@@ -79,11 +79,11 @@ class MPower(object):
         self.ride = Ride()
 
         self.bikes = [
-            Stages(self.ride),
             TheSufferfest(self.ride),
             EchelonV1(self.ride),
             EchelonV2(self.ride),
-            EchelonV3(self.ride)
+            EchelonV3(self.ride),
+            Stages(self.ride),
         ]
 
     def skip(self, line):
@@ -116,7 +116,6 @@ class MPower(object):
                 return True
 
         raise Exception('no plugin found for this file')
-        return False
 
     def _load_csv_chunk(self, reader):
         """ 
