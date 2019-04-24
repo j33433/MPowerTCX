@@ -4,7 +4,7 @@
 This application converts CSV files produced by stationary bikes to TCX format. The results can imported into fitness tracking tools such as Strava, TrainingPeaks, Garmin Connect and Golden Cheetah.
 
 ## Downloads
-[Click Here for Windows and OS X Releases](https://github.com/j33433/MPowerTCX/releases/latest)
+[Click Here for Windows and macOS Releases](https://github.com/j33433/MPowerTCX/releases/latest)
 
 ### Support
 * [Click Here for Instructions](INSTRUCTIONS.md)
