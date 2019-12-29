@@ -23,23 +23,20 @@
 import csv
 import datetime
 import re
-import sys
 
 import mako.runtime
 import mako.template
 
-import physics
 import xml_templates
 from equipment.echelon import EchelonV1, EchelonV2, EchelonV3
-from equipment.ride import Ride, RideHeader
-# Equipment plugins
+from equipment.ride import Ride
 from equipment.stages import Stages
 from equipment.thesufferfest import TheSufferfest
 
 
 class LineIterator(object):
-    """ 
-    Handle files with standard and unusual newline conventions 
+    """
+    Handle files with standard and unusual newline conventions
     """
 
     def __init__(self, stream):
@@ -61,14 +58,14 @@ class LineIterator(object):
 
 
 class MPower(object):
-    """ 
-    Process the CSV into TCX 
+    """
+    Process the CSV into TCX
     """
     debug = False
     do_interpolate = False
     do_physics = False
 
-    def __init__(self, in_filename):
+    def __init__(self, in_filename=None):
         self.in_filename = in_filename
         self.out_filename = None
 
@@ -104,8 +101,8 @@ class MPower(object):
         self.physics_mass = mass_kg
 
     def set_power_adjust(self, value):
-        """ 
-        Power readings vary quite a bit from bike to bike. Allow adjustment 
+        """
+        Power readings vary quite a bit from bike to bike. Allow adjustment
         """
         self.power_fudge = 1.0 + value / 100.0
 
@@ -118,8 +115,8 @@ class MPower(object):
         raise Exception('no plugin found for this file')
 
     def _load_csv_chunk(self, reader):
-        """ 
-        Guess what the next block of CSV data is an process it 
+        """
+        Guess what the next block of CSV data is an process it
         """
         line = next(reader)
 
@@ -138,29 +135,36 @@ class MPower(object):
 
                 self.skip(line)
 
+    def load_csv_file(self, infile):
+        iterator = LineIterator(infile)
+        reader = csv.reader(iterator, skipinitialspace=True)
+
+        try:
+            while True:
+                self._load_csv_chunk(reader)
+        except StopIteration:
+            pass
+
     def load_csv(self):
-        """ 
-        Read the CSV into a summary and time series 
+        """
+        Read the CSV into a summary and time series
         """
         with open(self.in_filename, 'rb') as infile:
-            iterator = LineIterator(infile)
-            reader = csv.reader(iterator, skipinitialspace=True)
-
-            try:
-                while True:
-                    self._load_csv_chunk(reader)
-            except StopIteration:
-                pass
+            self.load_csv_file(infile)
 
     def _format_time(self, dt):
-        """ 
-        Return a time string in TCX format 
+        """
+        Return a time string in TCX format
         """
         return dt.strftime("%Y-%m-%dT%H:%M:%S") + "Z"
 
     def save_data(self, filename, start_time):
-        """ 
-        Save the parsed CSV to TCX 
+        with open(filename, 'w') as out:
+            self.save_data_file(out, start_time)
+
+    def save_data_file(self, out, start_time):
+        """
+        Save the parsed CSV to TCX
         """
         if self.do_interpolate:
             self.ride.interpolate()
@@ -168,7 +172,6 @@ class MPower(object):
         if self.do_physics:
             self.ride.modelDistance(self.physics_mass)
 
-#        template = mako.template.Template(xml_templates.training_center_database, default_filters=['unicode', 'x'])
         template = mako.template.Template(xml_templates.training_center_database, default_filters=[])
         now = self._format_time(start_time)
 
@@ -199,6 +202,5 @@ class MPower(object):
 
             points.append(point)
 
-        with open(filename, 'w') as out:
-            context = mako.runtime.Context(out, points=points, header=header)
-            template.render_context(context)
+        context = mako.runtime.Context(out, points=points, header=header)
+        template.render_context(context)

@@ -18,12 +18,10 @@
 
 import physics.physics as model
 
-#import physics.physics_cython as model
-
 
 class RideHeader(object):
-    """ 
-    Summary statistics for a ride 
+    """
+    Summary statistics for a ride
     """
 
     def __init__(self):
@@ -43,8 +41,8 @@ class RideHeader(object):
 
 
 class Ride(object):
-    """ 
-    Hold the time series data for the ride and a header 
+    """
+    Hold the time series data for the ride and a header
     """
 
     def __init__(self):
@@ -61,8 +59,8 @@ class Ride(object):
         self.distance.append(str(distance))
 
     def count(self):
-        """ 
-        The number of samples in the time series 
+        """
+        The number of samples in the time series
         """
         return len(self.power)
 
@@ -88,7 +86,6 @@ class Ride(object):
         Resample the data to one second intervals
         """
         import numpy as np
-        from scipy import interpolate
 
         seconds = self.header.time
         delta = self.delta()
