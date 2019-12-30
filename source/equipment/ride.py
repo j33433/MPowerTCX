@@ -68,8 +68,13 @@ class Ride(object):
         """
         Calculate missing header values
         """
-        average_power = sum(int(p) for p in self.power) / len(self.power)
-        max_power = max(int(p) for p in self.power)
+        if len(self.power):
+            average_power = sum(int(p) for p in self.power) / len(self.power)
+            max_power = max(int(p) for p in self.power)
+        else:
+            average_power = 0
+            max_power = 0
+
         self.header.setSummary(time=time, distance=0, average_power=average_power, max_power=max_power)
 
     def delta(self):
