@@ -1,6 +1,6 @@
+| **:cloud: The cloud version is now available at http://upload.bike/ :cloud:** |
+|---|
 
-| *Coming in 2020: a serverless web interface. No download & install required!* |
-|----|
 
 <img align="right" src="images/mpowertcx%20simpler.png"/>
 
