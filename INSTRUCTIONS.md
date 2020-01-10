@@ -1,3 +1,6 @@
+| **:cloud: The cloud version is now available at http://upload.bike/ :cloud:** <br/> Instructions below are for the legacy desktop version |
+|---|
+
 # How to use MPowerTCX
 
 ## Getting the CSV Data
