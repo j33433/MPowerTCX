@@ -12,7 +12,7 @@ This application converts CSV files produced by stationary bikes to TCX format. 
 
 ### Support
 * [Click Here for Instructions](INSTRUCTIONS.md)
-* Email j33433@gmail.com
+* Email upload.bike@gmail.com
 * [Strava Club](https://www.strava.com/clubs/MPowerTCX)
 
 <image src="images/mpowertcx%20console%20reflect.png" align="right"/>
