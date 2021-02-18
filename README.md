@@ -1,4 +1,4 @@
-| **:cloud: The cloud version is now available at http://upload.bike/ :cloud:** |
+| **:cloud: The cloud version is now available at https://upload.bike/ :cloud:** |
 |---|
 
 
