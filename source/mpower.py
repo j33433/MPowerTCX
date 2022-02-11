@@ -32,6 +32,7 @@ from equipment.echelon import EchelonV1, EchelonV2, EchelonV3
 from equipment.ride import Ride
 from equipment.stages import Stages
 from equipment.thesufferfest import TheSufferfest
+from equipment.systm import Systm
 
 
 class LineIterator(object):
@@ -80,6 +81,7 @@ class MPower(object):
             EchelonV1(self.ride),
             EchelonV2(self.ride),
             EchelonV3(self.ride),
+            Systm(self.ride),
             Stages(self.ride),
         ]
 
