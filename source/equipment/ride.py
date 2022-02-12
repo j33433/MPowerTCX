@@ -27,6 +27,7 @@ class RideHeader(object):
     def __init__(self):
         self.setSummary()
         self.equipment = ''
+        self.start_datetime = None
 
     def setSummary(self, time=0, distance=0, average_power=0, max_power=0, average_rpm=0, max_rpm=0, average_hr=0, max_hr=0, calories=0):
         self.time = time
@@ -38,6 +39,9 @@ class RideHeader(object):
         self.average_hr = average_hr
         self.max_hr = max_hr
         self.calories = calories
+
+    def set_date_hint(self, hint):
+        self.start_datetime = hint
 
 
 class Ride(object):
@@ -51,6 +55,12 @@ class Ride(object):
         self.hr = []
         self.distance = []
         self.header = RideHeader()
+
+    def set_date_hint(self, hint):
+        self.header.set_date_hint(hint)
+
+    def get_date_hint(self):
+        return self.header.start_datetime
 
     def addSample(self, power=0, rpm=0, hr=0, distance=0):
         self.power.append(str(power))
@@ -108,7 +118,6 @@ class Ride(object):
             print('resizing for interpolation %r vs %r' % (len(xa), len(self.power)))
             xa.resize((len(self.power)))
 
-#        print ('%r %r' % (limit, seconds))
         self.power = self._interpolate(xa, xb, self.power).astype("int").astype("str")
         self.rpm = self._interpolate(xa, xb, self.rpm).astype("int").astype("str")
         self.hr = self._interpolate(xa, xb, self.hr).astype("int").astype("str")
@@ -117,7 +126,6 @@ class Ride(object):
     def _interpolate(self, xa, xb, data):
         from scipy import interpolate
 
-#        print ('%r %r %r' % (len(xa), len(xb), len(data)))
         f = interpolate.splrep(xa, data)
         return interpolate.splev(xb, f)
 

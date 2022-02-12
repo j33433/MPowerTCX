@@ -23,8 +23,12 @@ if __name__ == '__main__':
         mpower = MPower(args.csv)
         mpower.load_csv()
 
+        date_hint = mpower.get_date_hint()
+        
         if args.time is not None:
             stamp = dateutil.parser.parse(args.time)
+        elif date_hint is not None:
+            stamp = date_hint
         else:
             # Take input file time
             stamp = datetime.fromtimestamp(os.path.getmtime(args.csv))

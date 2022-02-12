@@ -63,7 +63,7 @@ class Systm(bikes.Bike):
     def name(self):
         return "Wahoo SYSTM"
 
-    def get(self, row, field):
+    def _get(self, row, field):
         idx = self.keys[field]
         value = row[idx]
 
@@ -79,17 +79,19 @@ class Systm(bikes.Bike):
         for row in reader:
             if len(row):
                 if start_stamp is None:
-                    start_stamp = int(self.get(row, 'timeOfDayTimestamp') / 1000)
+                    start_stamp = int(self._get(row, 'timeOfDayTimestamp') / 1000)
 
-                last_time = self.get(row, 'videoTimestamp')
+                last_time = self._get(row, 'videoTimestamp')
 
                 self.ride.addSample(
-                    power=int(self.get(row, 'trainerPower')),
-                    rpm=self.get(row, 'cadence'),
-                    hr=self.get(row, 'heartRate'),
-                    distance=self.get(row, 'distanceVirtualMeters')
+                    power=int(self._get(row, 'trainerPower')),
+                    rpm=self._get(row, 'cadence'),
+                    hr=self._get(row, 'heartRate'),
+                    distance=self._get(row, 'distanceVirtualMeters')
                 )
 
-        when = datetime.datetime.fromtimestamp(start_stamp)
-        print("start %r" % when)
+        if start_stamp is not None:
+            when = datetime.datetime.fromtimestamp(start_stamp)
+            self.ride.set_date_hint(when)
+
         self.ride.inferHeader(last_time)

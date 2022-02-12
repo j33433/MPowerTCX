@@ -164,6 +164,9 @@ class MPower(object):
         with open(filename, 'w') as out:
             self.save_data_file(out, start_time)
 
+    def get_date_hint(self):
+        return self.ride.get_date_hint()
+
     def save_data_file(self, out, start_time):
         """
         Save the parsed CSV to TCX
@@ -187,7 +190,7 @@ class MPower(object):
             sport=self.sport
         )
 
-        secs_per_sample = self.ride.delta()
+        secs_per_sample = max(self.ride.delta(), 1)
         points = []
 
         for i in range(0, self.ride.count()):
