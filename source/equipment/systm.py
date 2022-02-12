@@ -83,7 +83,7 @@ class Systm(bikes.Bike):
 
                 last_time = self._get(row, 'videoTimestamp')
 
-                self.ride.addSample(
+                self.ride.add_sample(
                     power=int(self._get(row, 'trainerPower')),
                     rpm=self._get(row, 'cadence'),
                     hr=self._get(row, 'heartRate'),
@@ -94,4 +94,4 @@ class Systm(bikes.Bike):
             when = datetime.datetime.fromtimestamp(start_stamp)
             self.ride.set_date_hint(when)
 
-        self.ride.inferHeader(last_time)
+        self.ride.infer_header(last_time)

@@ -68,7 +68,7 @@ class EchelonV1(bikes.Bike):
                 break
             elif len(row) == 6:
                 last_time = float(row[0]) * 60
-                self.ride.addSample(
+                self.ride.add_sample(
                     power=row[3],
                     rpm=row[5],
                     hr=row[4],
@@ -79,7 +79,7 @@ class EchelonV1(bikes.Bike):
 
         if self.ride.header.time == 0:
             print("v1 header missing")
-            self.ride.inferHeader(last_time)
+            self.ride.infer_header(last_time)
 
 
 class EchelonV2(bikes.Bike):
@@ -137,7 +137,7 @@ class EchelonV2(bikes.Bike):
         for row in reader:
             if len(row):
                 data = dict(zip(keys, row))
-                self.ride.addSample(
+                self.ride.add_sample(
                     power=data["Power"],
                     rpm=data["RPM"],
                     hr=data["HR"],
@@ -165,7 +165,7 @@ class EchelonV3(bikes.Bike):
     def _load(self, reader):
         for row in reader:
             if len(row) == 6:
-                self.ride.addSample(
+                self.ride.add_sample(
                     power=row[3],
                     rpm=row[5],
                     hr=row[4],

@@ -43,11 +43,11 @@ class TheSufferfest(bikes.Bike):
                 # 1 m/s = 2.236936 mph, hence this odd looking factor:
                 distance += speed * time_delta / 22.36936
 
-                self.ride.addSample(
+                self.ride.add_sample(
                     power=row[2],
                     rpm=row[3],
                     hr=row[4],
                     distance=distance
                 )
 
-        self.ride.inferHeader(last_time)
+        self.ride.infer_header(last_time)

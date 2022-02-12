@@ -81,7 +81,7 @@ class Stages(bikes.Bike):
                     #       Infer distance from MPH.
                     distance += self._distance_to_float(row[2]) / (60.0 * 60.0)
 
-                    self.ride.addSample(
+                    self.ride.add_sample(
                         power=row[3],
                         rpm=row[5],
                         hr=row[4],
@@ -94,7 +94,7 @@ class Stages(bikes.Bike):
 
         if not header_found:
             print("stages header missing")
-            self.ride.inferHeader(last_time)
+            self.ride.infer_header(last_time)
 
     def _load_header(self, reader):
         header = {}

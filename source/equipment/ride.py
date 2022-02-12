@@ -62,7 +62,7 @@ class Ride(object):
     def get_date_hint(self):
         return self.header.start_datetime
 
-    def addSample(self, power=0, rpm=0, hr=0, distance=0):
+    def add_sample(self, power=0, rpm=0, hr=0, distance=0):
         self.power.append(str(power))
         self.rpm.append(str(rpm))
         self.hr.append(str(hr))
@@ -74,7 +74,7 @@ class Ride(object):
         """
         return len(self.power)
 
-    def inferHeader(self, time=0):
+    def infer_header(self, time=0):
         """
         Calculate missing header values
         """
@@ -129,7 +129,7 @@ class Ride(object):
         f = interpolate.splrep(xa, data)
         return interpolate.splev(xb, f)
 
-    def modelDistance(self, mass):
+    def model_distance(self, mass):
         print('modeling distance with %r kg' % mass)
         delta = self.delta()
         bike = model.SimpleBike(mass)

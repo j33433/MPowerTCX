@@ -175,7 +175,7 @@ class MPower(object):
             self.ride.interpolate()
 
         if self.do_physics:
-            self.ride.modelDistance(self.physics_mass)
+            self.ride.model_distance(self.physics_mass)
 
         template = mako.template.Template(xml_templates.training_center_database, default_filters=[])
         now = self._format_time(start_time)
