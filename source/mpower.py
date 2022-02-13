@@ -33,7 +33,7 @@ from equipment.ride import Ride
 from equipment.stages import Stages
 from equipment.thesufferfest import TheSufferfest
 from equipment.systm import Systm
-
+import version
 
 class LineIterator(object):
     """
@@ -187,7 +187,8 @@ class MPower(object):
             distance_meters=str(float(self.ride.header.distance)),
             average_heart_rate=str(self.ride.header.average_hr),
             maximum_heart_rate=str(self.ride.header.max_hr),
-            sport=self.sport
+            sport=self.sport,
+            version=version.version
         )
 
         secs_per_sample = max(self.ride.delta(), 1)
