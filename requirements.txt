@@ -1,4 +1,4 @@
-Mako==1.1.6
+Mako==1.2.2
 MarkupSafe==2.0.1
 numpy==1.22.1
 PySide2==5.15.2.1
