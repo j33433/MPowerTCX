@@ -3,6 +3,6 @@ MarkupSafe==2.0.1
 numpy==1.22.1
 PySide2==5.15.2.1
 python-dateutil==2.8.2
-scipy==1.7.3
+scipy==1.10.0
 shiboken2==5.15.2.1
 six==1.16.0
