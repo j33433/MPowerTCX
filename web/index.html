@@ -214,12 +214,11 @@
       const checkInterpolate = document.getElementById('checkInterpolate');
       const checkPhysics = document.getElementById('checkPhysics');
 
-      if (unstash('checkInterpolate', 'true').toLowerCase() === 'true') {
-        checkInterpolate.click();
-      }
-      if (unstash('checkPhysics', 'false').toLowerCase() === 'true') {
-        checkPhysics.click();
-      }
+      const interpolateVal = unstash('checkInterpolate', 'true').toLowerCase();
+      checkInterpolate.checked = interpolateVal === 'true';
+
+      const physicsVal = unstash('checkPhysics', 'false').toLowerCase();
+      checkPhysics.checked = physicsVal === 'true';
 
       document.getElementById('mass').value = unstash('mass', '55');
       document.getElementById('massUnits').value = unstash('massUnits', 'kg');
