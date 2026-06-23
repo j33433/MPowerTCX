@@ -1,0 +1,13 @@
+[package]
+name = "mpowertcx-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+mpowertcx-core = { path = "../mpowertcx-core" }
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+
+[[bin]]
+name = "mpowertcx"
+path = "src/main.rs"

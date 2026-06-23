@@ -1,0 +1,80 @@
+use crate::ride::Ride;
+use chrono::{Datelike, NaiveDateTime, Timelike};
+
+fn format_time(dt: NaiveDateTime) -> String {
+    format!(
+        "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z",
+        dt.year(),
+        dt.month(),
+        dt.day(),
+        dt.hour(),
+        dt.minute(),
+        dt.second(),
+    )
+}
+
+fn float_str(v: f64) -> String {
+    if v == v.trunc() {
+        format!("{:.1}", v)
+    } else {
+        format!("{}", v)
+    }
+}
+
+pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> String {
+    let now = format_time(start_time);
+
+    let secs_per_sample = ride.delta().max(1.0) as i64;
+
+    let mut out = String::new();
+    out.push_str("<?xml version='1.0' encoding='utf-8'?>\n");
+    out.push_str("<TrainingCenterDatabase xmlns:ns2=\"http://www.garmin.com/xmlschemas/UserProfile/v2\" xmlns:ns3=\"http://www.garmin.com/xmlschemas/ActivityExtension/v2\" xmlns:ns5=\"http://www.garmin.com/xmlschemas/ActivityGoals/v1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2\" xsi:schemaLocation=\"http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd\">\n");
+    out.push_str("  <Activities>\n");
+    out.push_str("    <Activity Sport=\"Biking\">\n");
+    out.push_str(&format!("      <Id>{}</Id>\n", now));
+    out.push_str(&format!("      <Lap StartTime=\"{}\">\n", now));
+    out.push_str(&format!("        <TotalTimeSeconds>{}</TotalTimeSeconds>\n", ride.header.time_str));
+    out.push_str(&format!("        <DistanceMeters>{}</DistanceMeters>\n", float_str(ride.header.distance)));
+    out.push_str("        <MaximumSpeed>0</MaximumSpeed>\n");
+    out.push_str("        <Calories>0</Calories>\n");
+    out.push_str("        <AverageHeartRateBpm>\n");
+    out.push_str(&format!("          <Value>{}</Value>\n", ride.header.average_hr));
+    out.push_str("        </AverageHeartRateBpm>\n");
+    out.push_str("        <MaximumHeartRateBpm>\n");
+    out.push_str(&format!("          <Value>{}</Value>\n", ride.header.max_hr));
+    out.push_str("        </MaximumHeartRateBpm>\n");
+    out.push_str("        <Intensity>Active</Intensity>\n");
+    out.push_str("        <Cadence>0</Cadence>\n");
+    out.push_str("        <TriggerMethod>Manual</TriggerMethod>\n");
+    out.push_str("        <Track>\n");
+
+    for i in 0..ride.count() {
+        let delta_time = start_time + chrono::Duration::seconds(i as i64 * secs_per_sample);
+        let time_str = format_time(delta_time);
+        let power = ride.power[i].parse::<f64>().unwrap_or(0.0) * power_fudge;
+        let watts = power as i64;
+        let distance = ride.distance[i].parse::<f64>().unwrap_or(0.0);
+
+        out.push_str("          <Trackpoint>\n");
+        out.push_str(&format!("            <Time>{}</Time>\n", time_str));
+        out.push_str("            <HeartRateBpm>\n");
+        out.push_str(&format!("              <Value>{}</Value>\n", ride.hr[i]));
+        out.push_str("            </HeartRateBpm>\n");
+        out.push_str(&format!("            <Cadence>{}</Cadence>\n", ride.rpm[i]));
+        out.push_str(&format!("            <DistanceMeters>{:.5}</DistanceMeters>\n", distance));
+        out.push_str("            <Extensions>\n");
+        out.push_str("              <TPX xmlns=\"http://www.garmin.com/xmlschemas/ActivityExtension/v2\">\n");
+        out.push_str(&format!("                <Watts>{}</Watts>\n", watts));
+        out.push_str("              </TPX>\n");
+        out.push_str("            </Extensions>\n");
+        out.push_str("          </Trackpoint>\n");
+    }
+
+    out.push_str("        </Track>\n");
+    out.push_str("      </Lap>\n");
+    out.push_str("    </Activity>\n");
+    out.push_str("  </Activities>\n");
+    out.push_str("</TrainingCenterDatabase>\n");
+
+    out
+}

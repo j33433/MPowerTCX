@@ -12,3 +12,7 @@ source/build
 source/dist
 venv
 
+# Rust
+target/
+web/pkg/
+

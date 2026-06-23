@@ -1,0 +1,15 @@
+[package]
+name = "mpowertcx-wasm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+mpowertcx-core = { path = "../mpowertcx-core" }
+wasm-bindgen = "0.2"
+chrono = { version = "0.4", default-features = false, features = ["clock", "wasmbind"] }
+serde = { version = "1", features = ["derive"] }
+serde-wasm-bindgen = "0.6"

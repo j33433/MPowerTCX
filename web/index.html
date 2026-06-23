@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Convert indoor bike CSV files to TCX for Strava, TrainingPeaks, Garmin Connect and Golden Cheetah. Runs entirely in your browser - no server needed.">
+  <title>upload.bike - CSV to TCX converter for indoor bikes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="canonical" href="https://upload.bike/" />
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; align-items: center; }
+    .result-area { display: none; }
+    .progress-bar { transition: none; }
+  </style>
+</head>
+<body>
+  <div class="container h-100">
+    <div class="row align-items-center h-100">
+      <div class="jumbotron col-md-8 mx-auto">
+        <div class="text-center pb-3 mb-1">
+          <h2 class="display-4 mb-0">upload.bike</h2>
+          <div class="text-muted pt-0">CSV &rarr; TCX (in your browser)</div>
+        </div>
+        <div class="p-3 mb-3">
+          Convert spin bike workouts from CSV to TCX format. Results can be imported into Strava, TrainingPeaks, Garmin Connect, Golden Cheetah and other fitness trackers.
+          <br><small class="text-muted">All processing happens locally in your browser. Your data never leaves your device.</small>
+        </div>
+
+        <div class="form-row col-md-12">
+          <div class="form-group col-md-6">
+            <div class="custom-control custom-checkbox">
+              <input name="physics" type="checkbox" class="custom-control-input" id="checkPhysics" onchange="formCheckChanged(this)">
+              <label class="custom-control-label" for="checkPhysics">Fix speed and distance</label>
+            </div>
+            <small class="form-text text-muted">Use physics model (requires mass)</small>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Mass</label>
+            <input class="form-control" name="mass" id="mass" type="number" value="55" onchange="formInputChanged(this)">
+            <small class="form-text text-muted">Rider &amp; bike</small>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Units</label>
+            <select class="custom-select" name="massUnits" id="massUnits" onchange="formInputChanged(this)">
+              <option>kg</option>
+              <option>lbs</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row col-md-12">
+          <div class="form-group col-md-6">
+            <div class="custom-control custom-checkbox">
+              <input name="interpolate" type="checkbox" class="custom-control-input" id="checkInterpolate" onchange="formCheckChanged(this)" checked>
+              <label class="custom-control-label" for="checkInterpolate">Fix timing</label>
+            </div>
+            <small class="form-text text-muted">Recommended for maximum compatibility</small>
+          </div>
+        </div>
+
+        <div class="form-row col-md-12">
+          <div class="form-group col-md-12">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile" accept=".csv,text/csv" onchange="return changeFile(this);">
+              <label class="custom-file-label" id="customFileLabel" for="customFile">Choose CSV file&hellip;</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row col-md-12 mb-0 result-area" id="resultArea">
+          <div class="form-group col-md-12">
+            <div class="alert alert-info" id="resultAlert">
+              <span id="resultText"></span>
+              <button class="btn btn-sm btn-success ml-3" id="downloadButton" onclick="downloadTcx()">Download TCX</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row col-md-12 mb-0" id="errorArea" style="display:none;">
+          <div class="form-group col-md-12">
+            <div class="alert alert-danger" id="errorText"></div>
+          </div>
+        </div>
+
+        <div class="p-3">
+          <div>
+            Schwinn MPower Echelon, Stages Indoor Cycles, NordicTrack
+            Studio Cycles, PRO-FORM iFit, The Sufferfest, Wahoo SYSTM and a few other formats supported.
+          </div>
+          <div class="my-4">
+            Contact upload.bike@gmail.com for feedback &amp; troubleshooting.
+          </div>
+          <div class="text-center my-1">
+            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="clanken" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import init, { convert_csv_to_tcx } from './pkg/mpowertcx_wasm.js';
+
+    let wasmReady = false;
+    let lastTcx = '';
+    let lastFilename = 'output.tcx';
+
+    async function loadWasm() {
+      try {
+        await init('./pkg/mpowertcx_wasm_bg.wasm');
+        wasmReady = true;
+        window.convert_csv_to_tcx = convert_csv_to_tcx;
+      } catch (e) {
+        console.error('Failed to load WASM:', e);
+        showError('Failed to load the conversion engine. Please refresh the page.');
+      }
+    }
+
+    loadWasm();
+
+    window.changeFile = function(elem) {
+      const input = document.getElementById("customFileLabel");
+      input.innerHTML = elem.files[0].name;
+      lastFilename = elem.files[0].name.replace(/\.csv$/i, '') + '.tcx';
+
+      if (!wasmReady) {
+        showError('The conversion engine is still loading. Please try again in a moment.');
+        return;
+      }
+
+      const file = elem.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const bytes = new Uint8Array(e.target.result);
+
+        const interpolate = document.getElementById('checkInterpolate').checked;
+        const physics = document.getElementById('checkPhysics').checked;
+        let mass = parseFloat(document.getElementById('mass').value) || 0;
+        const units = document.getElementById('massUnits').value;
+        if (units === 'lbs') {
+          mass *= 0.453592;
+        }
+
+        try {
+          const result = convert_csv_to_tcx(bytes, null, interpolate, physics, mass, 0);
+          lastTcx = result.tcx;
+
+          const msg = `Converted ${result.sample_count} samples (${result.equipment}). Click Download TCX to save.`;
+          showResult(msg);
+        } catch (err) {
+          showError('Conversion failed: ' + err);
+        }
+      };
+
+      reader.onerror = function() {
+        showError('Failed to read the file.');
+      };
+
+      reader.readAsArrayBuffer(file);
+      return true;
+    };
+
+    window.downloadTcx = function() {
+      const blob = new Blob([lastTcx], { type: 'application/vnd.garmin.tcx+xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = lastFilename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
+    window.showResult = function(msg) {
+      document.getElementById('errorArea').style.display = 'none';
+      document.getElementById('resultArea').style.display = 'flex';
+      document.getElementById('resultText').textContent = msg;
+    };
+
+    window.showError = function(msg) {
+      document.getElementById('resultArea').style.display = 'none';
+      document.getElementById('errorArea').style.display = 'flex';
+      document.getElementById('errorText').textContent = msg;
+    };
+
+    function unstash(name, defaultVal) {
+      const value = window.localStorage.getItem(name);
+      return value === null ? defaultVal : value;
+    }
+
+    function stash(name, value) {
+      window.localStorage.setItem(name, value);
+    }
+
+    window.formCheckChanged = function(elem) {
+      stash(elem.id, elem.checked);
+    };
+
+    window.formInputChanged = function(elem) {
+      stash(elem.id, elem.value);
+    };
+
+    (function formInit() {
+      const checkInterpolate = document.getElementById('checkInterpolate');
+      const checkPhysics = document.getElementById('checkPhysics');
+
+      if (unstash('checkInterpolate', 'true').toLowerCase() === 'true') {
+        checkInterpolate.click();
+      }
+      if (unstash('checkPhysics', 'false').toLowerCase() === 'true') {
+        checkPhysics.click();
+      }
+
+      document.getElementById('mass').value = unstash('mass', '55');
+      document.getElementById('massUnits').value = unstash('massUnits', 'kg');
+    })();
+  </script>
+</body>
+</html>
