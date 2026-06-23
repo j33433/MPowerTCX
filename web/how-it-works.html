@@ -129,25 +129,25 @@
       <header class="mb-4">
         <h1>How It Works</h1>
         <p class="lead text-muted">
-          upload.bike converts CSV files from indoor cycling bikes into TCX format
-          for Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah. Here's
-          what's going on, and why your bike's numbers might not match Strava.
+          upload.bike converts CSV files from indoor bikes into TCX format for
+          Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah. Here's why
+          your bike's numbers might not match what shows up in Strava.
         </p>
       </header>
 
       <section class="jumbotron p-4 mb-4" id="what-is-tcx">
         <h2>What is a TCX file?</h2>
         <p>
-          TCX (Training Center XML) is a Garmin file format for workout data. It's
-          an XML file with a time series of power, heart rate, cadence, speed, and
-          distance, typically one data point per second.
+          TCX (Training Center XML) is a Garmin file format for workout data. It
+          contains a time series of power, heart rate, cadence, speed, and
+          distance, usually one point per second.
         </p>
         <p>
           Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah all accept TCX
-          uploads. But indoor bikes don't produce TCX. They produce <strong>CSV
-          files</strong>: plain text with columns for power, cadence, heart rate,
-          and distance. These platforms won't take CSV. upload.bike reads the CSV
-          and writes a TCX file they'll accept.
+          uploads. Indoor bikes don't produce TCX though. They produce CSV files:
+          plain text with columns for power, cadence, heart rate, and distance.
+          These platforms won't take CSV. upload.bike reads the CSV and writes a
+          TCX file they'll accept.
         </p>
       </section>
 
@@ -182,21 +182,20 @@
       <section class="jumbotron p-4 mb-4" id="physics">
         <h2>The Physics Model: Fixing Bad Speed and Distance</h2>
         <p>
-          Many indoor bikes <strong>estimate</strong> speed and distance from wheel
-          RPM or resistance level instead of measuring it. The result can be
-          noticeably wrong. When you upload that to Strava, your ride shows the
-          wrong distance, wrong speed, wrong calories.
+          Many indoor bikes estimate speed and distance from wheel RPM or
+          resistance level instead of measuring it. The result can be noticeably
+          wrong. When you upload that to Strava, your ride shows the wrong
+          distance, speed, and calories.
         </p>
         <p>
           The physics model ignores the bike's speed and distance. Instead it takes
-          your <strong>actual power output</strong> (watts) and your
-          <strong>combined mass</strong> (rider + bike), then calculates speed using
-          the same forces that govern outdoor cycling:
+          your actual power output (watts) and your combined mass (rider + bike),
+          then calculates speed using the same forces that govern outdoor cycling:
         </p>
         <ul>
-          <li><strong>Aerodynamic drag</strong>: 0.5 x Cd x frontal area x air density x v^2</li>
-          <li><strong>Rolling resistance</strong>: mg x Crr x cos(theta)</li>
-          <li><strong>Drivetrain efficiency</strong>: 97% power transfer</li>
+          <li>Aerodynamic drag: 0.5 x Cd x frontal area x air density x v^2</li>
+          <li>Rolling resistance: mg x Crr x cos(theta)</li>
+          <li>Drivetrain efficiency: 97% power transfer</li>
         </ul>
         <p>
           At each time step, the model solves: given the power you produced and the
@@ -207,11 +206,11 @@
         <h3 class="mt-4">See it in action</h3>
         <p>
           The chart below uses a real 73-minute workout from a Schwinn MPower
-          Echelon 2. The bike reported <strong>21.5 miles</strong>; the physics
-          model says the same power output should produce <strong>23.8 miles</strong>.
-          That 11% gap comes from the bike's distance estimation drifting, with
-          flat sections where the console stops updating. Drag the mass slider to
-          see how rider weight affects the modeled speed.
+          Echelon 2. The bike reported 21.5 miles; the physics model says the same
+          power should produce 23.8 miles. That 11% gap comes from the bike's
+          distance estimation drifting, with flat sections where the console stops
+          updating. Drag the mass slider to see how rider weight affects the
+          modeled speed.
         </p>
 
         <div class="card card-body bg-light">
@@ -269,21 +268,16 @@
         <p>
           Some indoor bikes record data every 3, 5, or 10 seconds instead of every
           second. That's fine for the bike's display, but fitness platforms like
-          Strava and Garmin Connect expect <strong>1-second intervals</strong> in
-          TCX files. Gaps can cause:
+          Strava and Garmin Connect expect 1-second intervals in TCX files. Gaps
+          can cause wrong duration, missing data in analysis charts, segment
+          matching problems, or import errors.
         </p>
-        <ul>
-          <li>Wrong total duration in Strava</li>
-          <li>Missing data in analysis charts</li>
-          <li>Segment matching and relative effort problems</li>
-          <li>Import errors on some platforms</li>
-        </ul>
         <p>
-          The <strong>Fix Timing</strong> option (on by default) resamples your data
-          to 1-second intervals using <strong>cubic spline interpolation</strong>.
-          If you were doing 200W at second 0 and 210W at second 5, it fills in
-          reasonable values for seconds 1 through 4. The result is a TCX file with
-          clean, continuous data that imports without issues.
+          The Fix Timing option (on by default) resamples your data to 1-second
+          intervals using cubic spline interpolation. If you were doing 200W at
+          second 0 and 210W at second 5, it fills in reasonable values for seconds
+          1 through 4. The result is a TCX file with clean, continuous data that
+          imports without issues.
         </p>
       </section>
 
@@ -294,7 +288,7 @@
           <li>Insert a USB thumb drive into the slot at the top of the console</li>
           <li>Do your workout</li>
           <li>Stop pedalling</li>
-          <li>Press and hold <strong>AVG/MAX</strong> for 5 seconds</li>
+          <li>Press and hold AVG/MAX for 5 seconds</li>
           <li>Wait for the flashing USB logo to stop, then remove the drive</li>
           <li>The drive contains a file named something like <code>MPower12.csv</code></li>
         </ol>
@@ -315,15 +309,13 @@
         <h3>The Sufferfest &amp; Wahoo SYSTM</h3>
         <p>
           These apps can export workout data as CSV. Look for the export option in
-          the app's workout history or activity settings. The exported file has
-          columns for power, cadence, heart rate, and speed.
+          the app's workout history or activity settings.
         </p>
 
         <div class="alert alert-warning small">
-          <strong>USB drive problems?</strong> Some Schwinn consoles crash with
-          newer USB thumb drives. A 1GB drive is your best bet. If the USB logo
-          fails to flash at the end of a ride or the unit shuts off, the drive is
-          probably incompatible.
+          USB drive problems? Some Schwinn consoles crash with newer USB thumb
+          drives. A 1GB drive is your best bet. If the USB logo fails to flash or
+          the unit shuts off, the drive is probably incompatible.
         </div>
       </section>
 
@@ -331,10 +323,10 @@
         <h2>Converting and Uploading</h2>
         <ol>
           <li>Go to <a href="./index.html">upload.bike</a></li>
-          <li>Click <strong>Choose CSV file</strong> and select your exported file</li>
-          <li>Enable <strong>Fix Timing</strong> (recommended) for 1-second interpolation</li>
-          <li>Enable <strong>Fix speed and distance</strong> if your bike's distance seems off, and enter your combined rider + bike weight</li>
-          <li>Click <strong>Download TCX</strong></li>
+          <li>Click Choose CSV file and select your exported file</li>
+          <li>Enable Fix Timing (recommended) for 1-second interpolation</li>
+          <li>Enable Fix speed and distance if your bike's distance seems off, and enter your combined rider + bike weight</li>
+          <li>Click Download TCX</li>
           <li>Upload the TCX file to your platform:</li>
         </ol>
         <ul>
@@ -361,10 +353,8 @@
         <details>
           <summary>What if my bike isn't in the supported list?</summary>
           <p class="mt-2">
-            Email your CSV to upload.bike@gmail.com. The tool supports Schwinn
-            MPower Echelon (3 firmware variants), Stages, The Sufferfest, Wahoo
-            SYSTM, and others. New formats can usually be added if you provide a
-            sample file.
+            Email your CSV to upload.bike@gmail.com. New formats can usually be
+            added if you provide a sample file.
           </p>
         </details>
 
@@ -380,19 +370,18 @@
           <summary>Why does the physics model need my weight?</summary>
           <p class="mt-2">
             Mass affects speed for a given power output. A heavier rider goes
-            slower at the same wattage on flat ground (more rolling resistance).
-            The model uses combined rider + bike mass to solve the equations of
-            motion.
+            slower at the same wattage on flat ground. The model uses combined
+            rider + bike mass to solve the equations of motion.
           </p>
         </details>
 
         <details>
           <summary>What CSV formats are supported?</summary>
           <p class="mt-2">
-            Schwinn MPower Echelon (3 variants), Stages Indoor Cycles (metric and
-            English, with or without headers), The Sufferfest, Wahoo SYSTM, and
-            several NordicTrack and PRO-FORM iFit variants. If your file has power,
-            cadence, heart rate, and distance columns, it can probably be supported.
+            Schwinn MPower Echelon (3 variants), Stages (metric and English, with
+            or without headers), The Sufferfest, Wahoo SYSTM, and several
+            NordicTrack and PRO-FORM iFit variants. If your file has power,
+            cadence, heart rate, and distance columns, it can probably be added.
           </p>
         </details>
 
@@ -400,17 +389,17 @@
           <summary>Why does Strava show a different time than my bike console?</summary>
           <p class="mt-2">
             Some bikes record every 3 or 5 seconds instead of every second. Fix
-            Timing resamples to 1-second intervals using cubic spline
-            interpolation, so the duration matches what fitness platforms expect.
+            Timing resamples to 1-second intervals so the duration matches what
+            fitness platforms expect.
           </p>
         </details>
 
         <details>
           <summary>The USB export didn't work on my Schwinn bike. What do I do?</summary>
           <p class="mt-2">
-            Some consoles crash with newer USB thumb drives. A 1GB drive works best.
-            If the USB logo fails to flash or the unit shuts off during export, try
-            an older, smaller drive.
+            Some consoles crash with newer USB thumb drives. A 1GB drive works
+            best. If the USB logo fails to flash or the unit shuts off during
+            export, try an older, smaller drive.
           </p>
         </details>
 
@@ -435,10 +424,9 @@
         </p>
         <h3>Distance looks wrong in Strava</h3>
         <p>
-          Enable <strong>Fix speed and distance</strong> and enter your weight.
-          This replaces the bike's distance estimate with a physics-based
-          calculation from your power output. See the <a href="#physics">physics
-          model section</a> above.
+          Enable Fix speed and distance and enter your weight. This replaces the
+          bike's distance estimate with a physics-based calculation from your power
+          output. See the <a href="#physics">physics model section</a> above.
         </p>
       </section>
 
