@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="How upload.bike converts indoor bike CSV files to TCX. Physics model for fixing bad speed and distance, interpolation for compatibility, step-by-step guides for Schwinn, Stages, and Wahoo SYSTM.">
+  <title>How It Works: Convert Indoor Bike CSV to TCX | upload.bike</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="canonical" href="https://upload.bike/how-it-works" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Why is my distance different after conversion?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Many indoor bikes estimate distance from wheel RPM or resistance level rather than measuring it. The estimate can be off by 10% or more. The physics model recalculates distance from your actual power output, rider mass, and physical constants like aerodynamic drag and rolling resistance, producing a more realistic distance."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if my bike isn't in the supported list?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Email your CSV file to upload.bike@gmail.com. The tool supports Schwinn MPower Echelon (3 firmware variants), Stages Indoor Cycles, The Sufferfest, Wahoo SYSTM, and several other formats. New formats can usually be added quickly if you provide a sample file."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data sent to a server?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. All conversion happens in your browser using WebAssembly. Your workout data never leaves your device."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does the physics model need my weight?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Mass affects how fast you go for a given power output. A heavier rider goes slower at the same wattage on flat ground due to higher rolling resistance. The physics model uses your combined rider plus bike mass to solve the equations of motion."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What CSV formats are supported?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Schwinn MPower Echelon (variants 1, 2, and 3), Stages Indoor Cycles (metric and English, with or without headers), The Sufferfest, Wahoo SYSTM, and several NordicTrack and PRO-FORM iFit variants. If your file has power, cadence, heart rate, and distance columns, it can likely be supported."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does Strava show a different time than my bike console?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Some bikes record data every 3 or 5 seconds instead of every second. The Fix Timing option resamples to 1-second intervals using cubic spline interpolation, so the duration matches what fitness platforms expect."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "The USB export didn't work on my Schwinn bike. What do I do?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Some consoles crash with newer USB thumb drives. A 1GB drive works best. If the USB logo fails to flash or the unit shuts off during export, the drive is probably incompatible."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I adjust the power readings?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Power meters on indoor bikes can vary by 5-10% between units. The power adjustment setting lets you apply a percentage correction. Set it to -5 if your bike reads 5% high, or +5 if it reads low."
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Convert Indoor Bike CSV to TCX",
+    "description": "Convert CSV files from stationary bikes to TCX format for import into Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah.",
+    "step": [
+      {"@type": "HowToStep", "position": 1, "name": "Export your ride", "text": "Export your workout from the bike console to a USB thumb drive. On Schwinn MPower, press AVG/MAX for 5 seconds after stopping. On Stages, use the console export menu."},
+      {"@type": "HowToStep", "position": 2, "name": "Load the CSV", "text": "Go to upload.bike and click Choose CSV file. Select the file from your USB drive. The tool detects your bike model and parses the data automatically."},
+      {"@type": "HowToStep", "position": 3, "name": "Choose options", "text": "Enable Fix Timing for 1-second interpolation (recommended). Enable Fix speed and distance if your bike reports inaccurate distance, and enter your combined rider and bike weight."},
+      {"@type": "HowToStep", "position": 4, "name": "Download TCX", "text": "Click Download TCX to save the converted file."},
+      {"@type": "HowToStep", "position": 5, "name": "Upload to your platform", "text": "Upload the TCX file to Strava, Garmin Connect, TrainingPeaks, or Golden Cheetah using their import feature."}
+    ]
+  }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background-color: #f8f9fa; }
+    .jumbotron { background-color: #fff; }
+    .chart-container { position: relative; height: 400px; margin: 1rem 0; }
+    details { margin-bottom: 0.5rem; }
+    summary { cursor: pointer; font-weight: 500; padding: 0.5rem 0; }
+    summary:hover { color: #0056b3; }
+    .loading-spinner {
+      display: inline-block; width: 1.5rem; height: 1.5rem;
+      border: 3px solid #e9ecef; border-top-color: #007bff;
+      border-radius: 50%; animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom sticky-top">
+    <div class="container">
+      <a class="navbar-brand font-weight-bold" href="./index.html">upload.bike</a>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"><a class="nav-link" href="./index.html">Converter</a></li>
+        <li class="nav-item active"><a class="nav-link" href="./how-it-works.html">How It Works</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <div class="col-md-10 mx-auto">
+
+      <article>
+      <header class="mb-4">
+        <h1>How It Works</h1>
+        <p class="lead text-muted">
+          upload.bike converts CSV files from indoor cycling bikes into TCX format
+          for Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah. Here's
+          what's going on, and why your bike's numbers might not match Strava.
+        </p>
+      </header>
+
+      <section class="jumbotron p-4 mb-4" id="what-is-tcx">
+        <h2>What is a TCX file?</h2>
+        <p>
+          TCX (Training Center XML) is a Garmin file format for workout data. It's
+          an XML file with a time series of power, heart rate, cadence, speed, and
+          distance, typically one data point per second.
+        </p>
+        <p>
+          Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah all accept TCX
+          uploads. But indoor bikes don't produce TCX. They produce <strong>CSV
+          files</strong>: plain text with columns for power, cadence, heart rate,
+          and distance. These platforms won't take CSV. upload.bike reads the CSV
+          and writes a TCX file they'll accept.
+        </p>
+      </section>
+
+      <section class="jumbotron p-4 mb-4" id="supported">
+        <h2>Supported Equipment</h2>
+        <p>If your bike exports a CSV with power, cadence, heart rate, and distance, it can probably be supported. Currently built in:</p>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead class="thead-light">
+              <tr>
+                <th>Equipment</th>
+                <th>Power</th>
+                <th>Cadence</th>
+                <th>Heart Rate</th>
+                <th>Speed / Distance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Schwinn MPower Echelon</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>Schwinn MPower Echelon 2</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>Stages Indoor Cycles</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>The Sufferfest</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>Wahoo SYSTM</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>NordicTrack Studio Cycles</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+              <tr><td>PRO-FORM iFit</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-muted small">Don't see your bike? Email your CSV to upload.bike@gmail.com and I'll take a look.</p>
+      </section>
+
+      <section class="jumbotron p-4 mb-4" id="physics">
+        <h2>The Physics Model: Fixing Bad Speed and Distance</h2>
+        <p>
+          Many indoor bikes <strong>estimate</strong> speed and distance from wheel
+          RPM or resistance level instead of measuring it. The result can be
+          noticeably wrong. When you upload that to Strava, your ride shows the
+          wrong distance, wrong speed, wrong calories.
+        </p>
+        <p>
+          The physics model ignores the bike's speed and distance. Instead it takes
+          your <strong>actual power output</strong> (watts) and your
+          <strong>combined mass</strong> (rider + bike), then calculates speed using
+          the same forces that govern outdoor cycling:
+        </p>
+        <ul>
+          <li><strong>Aerodynamic drag</strong>: 0.5 x Cd x frontal area x air density x v^2</li>
+          <li><strong>Rolling resistance</strong>: mg x Crr x cos(theta)</li>
+          <li><strong>Drivetrain efficiency</strong>: 97% power transfer</li>
+        </ul>
+        <p>
+          At each time step, the model solves: given the power you produced and the
+          resistive forces at your current speed, what's your new speed? Distance
+          accumulates from speed over time.
+        </p>
+
+        <h3 class="mt-4">See it in action</h3>
+        <p>
+          The chart below uses a real 73-minute workout from a Schwinn MPower
+          Echelon 2. The bike reported <strong>21.5 miles</strong>; the physics
+          model says the same power output should produce <strong>23.8 miles</strong>.
+          That 11% gap comes from the bike's distance estimation drifting, with
+          flat sections where the console stops updating. Drag the mass slider to
+          see how rider weight affects the modeled speed.
+        </p>
+
+        <div class="card card-body bg-light">
+          <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-primary active" id="btnSpeed" onclick="switchChart('speed')">Speed</button>
+              <button type="button" class="btn btn-outline-primary" id="btnDistance" onclick="switchChart('distance')">Distance</button>
+              <button type="button" class="btn btn-outline-primary" id="btnPower" onclick="switchChart('power')">Power</button>
+            </div>
+            <div class="d-flex align-items-center mt-2 mt-sm-0">
+              <label class="mb-0 mr-2 small text-muted">Rider + bike mass:</label>
+              <input type="range" min="40" max="120" value="70" step="1" class="custom-range mx-2" id="massSlider" style="width: 150px;" oninput="updateMass(this.value)">
+              <span class="font-weight-bold" id="massDisplay" style="min-width: 3rem;">70 kg</span>
+            </div>
+          </div>
+
+          <div class="chart-container" id="chartContainer" style="display:none;">
+            <canvas id="physicsChart"></canvas>
+          </div>
+
+          <div id="chartLoading" class="text-center py-5">
+            <div class="loading-spinner mb-2"></div>
+            <p class="text-muted small">Loading sample data...</p>
+          </div>
+
+          <div class="row text-center mt-2" id="statsRow" style="display: none;">
+            <div class="col-4">
+              <small class="text-muted d-block">Bike reported</small>
+              <span class="font-weight-bold" id="bikeDist">--</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Physics model</small>
+              <span class="font-weight-bold" id="modelDist">--</span>
+            </div>
+            <div class="col-4">
+              <small class="text-muted d-block">Difference</small>
+              <span class="font-weight-bold text-danger" id="diffPct">--</span>
+            </div>
+          </div>
+        </div>
+
+        <noscript>
+          <p class="text-muted mt-3">
+            <em>The interactive chart needs JavaScript. It compares speed and
+            distance from bike-reported values versus physics-modeled values for a
+            real workout. The bike reported 21.5 miles; the physics model computed
+            23.8 miles for the same power. Try the <a href="./index.html">converter</a>
+            with your own data.</em>
+          </p>
+        </noscript>
+      </section>
+
+      <section class="jumbotron p-4 mb-4" id="interpolation">
+        <h2>Fix Timing: Interpolation for Compatibility</h2>
+        <p>
+          Some indoor bikes record data every 3, 5, or 10 seconds instead of every
+          second. That's fine for the bike's display, but fitness platforms like
+          Strava and Garmin Connect expect <strong>1-second intervals</strong> in
+          TCX files. Gaps can cause:
+        </p>
+        <ul>
+          <li>Wrong total duration in Strava</li>
+          <li>Missing data in analysis charts</li>
+          <li>Segment matching and relative effort problems</li>
+          <li>Import errors on some platforms</li>
+        </ul>
+        <p>
+          The <strong>Fix Timing</strong> option (on by default) resamples your data
+          to 1-second intervals using <strong>cubic spline interpolation</strong>.
+          If you were doing 200W at second 0 and 210W at second 5, it fills in
+          reasonable values for seconds 1 through 4. The result is a TCX file with
+          clean, continuous data that imports without issues.
+        </p>
+        <p class="text-muted small">
+          The interpolation uses not-a-knot cubic spline boundary conditions, same
+          as SciPy's splrep/splev. The conversion engine is written in Rust and
+          compiled to WebAssembly, so it all runs in your browser.
+        </p>
+      </section>
+
+      <section class="jumbotron p-4 mb-4" id="getting-csv">
+        <h2>Getting Your CSV File</h2>
+        <h3>Schwinn MPower Echelon</h3>
+        <ol>
+          <li>Insert a USB thumb drive into the slot at the top of the console</li>
+          <li>Do your workout</li>
+          <li>Stop pedalling</li>
+          <li>Press and hold <strong>AVG/MAX</strong> for 5 seconds</li>
+          <li>Wait for the flashing USB logo to stop, then remove the drive</li>
+          <li>The drive contains a file named something like <code>MPower12.csv</code></li>
+        </ol>
+        <p class="small text-muted">
+          <a href="https://www.youtube.com/watch?v=ENkHdcV_E70" target="_blank" rel="noopener">Exporting Rider Data Onto A USB Drive (video)</a>
+          | <a href="https://support.corehandf.com/Product/?brand=1" target="_blank" rel="noopener">Official Schwinn Manuals</a>
+        </p>
+
+        <h3>Stages Indoor Cycles</h3>
+        <ol>
+          <li>From the console, go to the ride summary or history</li>
+          <li>Insert a USB drive and select the export option</li>
+          <li>The file saves with a name like <code>STAGES01.csv</code></li>
+        </ol>
+        <p class="small text-muted">
+          <a href="https://www.youtube.com/watch?v=W8JjfGShEcY" target="_blank" rel="noopener">Stages SIC1 Console Quick Start Tutorial (video)</a>
+          | <a href="https://stagesindoorcycling.freshdesk.com/support/solutions/folders/5000255512" target="_blank" rel="noopener">Stages Firmware and Manuals</a>
+        </p>
+
+        <h3>The Sufferfest &amp; Wahoo SYSTM</h3>
+        <p>
+          These apps can export workout data as CSV. Look for the export option in
+          the app's workout history or activity settings. The exported file has
+          columns for power, cadence, heart rate, and speed.
+        </p>
+
+        <div class="alert alert-warning small">
+          <strong>USB drive problems?</strong> Some Schwinn consoles crash with
+          newer USB thumb drives. A 1GB drive is your best bet. If the USB logo
+          fails to flash at the end of a ride or the unit shuts off, the drive is
+          probably incompatible.
+        </div>
+      </section>
+
+      <section class="jumbotron p-4 mb-4" id="convert-upload">
+        <h2>Converting and Uploading</h2>
+        <ol>
+          <li>Go to <a href="./index.html">upload.bike</a></li>
+          <li>Click <strong>Choose CSV file</strong> and select your exported file</li>
+          <li>Enable <strong>Fix Timing</strong> (recommended) for 1-second interpolation</li>
+          <li>Enable <strong>Fix speed and distance</strong> if your bike's distance seems off, and enter your combined rider + bike weight</li>
+          <li>Click <strong>Download TCX</strong></li>
+          <li>Upload the TCX file to your platform:</li>
+        </ol>
+        <ul>
+          <li><a href="https://www.strava.com/upload/select" target="_blank" rel="noopener">Strava upload</a></li>
+          <li><a href="https://connect.garmin.com/modern/import-data" target="_blank" rel="noopener">Garmin Connect import</a></li>
+          <li>TrainingPeaks: "Upload Activity" button</li>
+          <li>Golden Cheetah: File > Import Activity</li>
+        </ul>
+      </section>
+
+      <section class="jumbotron p-4 mb-4" id="faq">
+        <h2>FAQ</h2>
+
+        <details open>
+          <summary>Why is my distance different after conversion?</summary>
+          <p class="mt-2">
+            Many indoor bikes estimate distance from wheel RPM or resistance, which
+            can be off by 10% or more. The physics model recalculates distance from
+            your actual power output, rider mass, and physical constants, giving a
+            more realistic number.
+          </p>
+        </details>
+
+        <details>
+          <summary>What if my bike isn't in the supported list?</summary>
+          <p class="mt-2">
+            Email your CSV to upload.bike@gmail.com. The tool supports Schwinn
+            MPower Echelon (3 firmware variants), Stages, The Sufferfest, Wahoo
+            SYSTM, and others. New formats can usually be added if you provide a
+            sample file.
+          </p>
+        </details>
+
+        <details>
+          <summary>Is my data sent to a server?</summary>
+          <p class="mt-2">
+            No. All conversion runs in your browser via WebAssembly. Your data
+            never leaves your device.
+          </p>
+        </details>
+
+        <details>
+          <summary>Why does the physics model need my weight?</summary>
+          <p class="mt-2">
+            Mass affects speed for a given power output. A heavier rider goes
+            slower at the same wattage on flat ground (more rolling resistance).
+            The model uses combined rider + bike mass to solve the equations of
+            motion.
+          </p>
+        </details>
+
+        <details>
+          <summary>What CSV formats are supported?</summary>
+          <p class="mt-2">
+            Schwinn MPower Echelon (3 variants), Stages Indoor Cycles (metric and
+            English, with or without headers), The Sufferfest, Wahoo SYSTM, and
+            several NordicTrack and PRO-FORM iFit variants. If your file has power,
+            cadence, heart rate, and distance columns, it can probably be supported.
+          </p>
+        </details>
+
+        <details>
+          <summary>Why does Strava show a different time than my bike console?</summary>
+          <p class="mt-2">
+            Some bikes record every 3 or 5 seconds instead of every second. Fix
+            Timing resamples to 1-second intervals using cubic spline
+            interpolation, so the duration matches what fitness platforms expect.
+          </p>
+        </details>
+
+        <details>
+          <summary>The USB export didn't work on my Schwinn bike. What do I do?</summary>
+          <p class="mt-2">
+            Some consoles crash with newer USB thumb drives. A 1GB drive works best.
+            If the USB logo fails to flash or the unit shuts off during export, try
+            an older, smaller drive.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can I adjust the power readings?</summary>
+          <p class="mt-2">
+            Yes. Power meters on indoor bikes can vary 5-10% between units. The
+            power adjustment setting (in the CLI) applies a percentage correction.
+            Set it to -5 if your bike reads 5% high, +5 if it reads low.
+          </p>
+        </details>
+      </section>
+
+      <section class="jumbotron p-4 mb-4" id="troubleshooting">
+        <h2>Troubleshooting</h2>
+        <h3>USB drive not working</h3>
+        <p>
+          Schwinn MPower consoles can be picky about USB drives. Newer
+          high-capacity drives may crash the console or fail to export. Try a
+          small, older drive. 1GB is ideal. If the USB logo fails to flash or the
+          console shuts off during export, the drive is incompatible.
+        </p>
+        <h3>File won't load</h3>
+        <p>
+          Different bike models and firmware versions produce different CSV
+          formats. If your file doesn't load, email it to
+          <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a> and I'll
+          add support for it.
+        </p>
+        <h3>Distance looks wrong in Strava</h3>
+        <p>
+          Enable <strong>Fix speed and distance</strong> and enter your weight.
+          This replaces the bike's distance estimate with a physics-based
+          calculation from your power output. See the <a href="#physics">physics
+          model section</a> above.
+        </p>
+      </section>
+
+      </article>
+
+      <div class="text-center py-4">
+        <a href="./index.html" class="btn btn-primary btn-lg">Convert Your File</a>
+        <div class="mt-3">
+          <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="clanken" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+        </div>
+        <p class="text-muted small mt-3">
+          upload.bike - CSV to TCX conversion in your browser.
+          Contact <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a>
+          for feedback and troubleshooting.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import init, { convert_csv_to_tcx } from './pkg/mpowertcx_wasm.js';
+
+    let chart = null;
+    let wasmReady = false;
+    let csvBytes = null;
+    let currentView = 'speed';
+    let currentMass = 70;
+    let bikeData = null;
+    let modelData = null;
+    let secsPerSample = 3.0;
+
+    async function loadAll() {
+      try {
+        await init('./pkg/mpowertcx_wasm_bg.wasm');
+        wasmReady = true;
+
+        const resp = await fetch('./samples/1122.csv');
+        csvBytes = new Uint8Array(await resp.arrayBuffer());
+
+        computeData();
+        document.getElementById('chartLoading').style.display = 'none';
+        document.getElementById('chartContainer').style.display = 'block';
+        document.getElementById('statsRow').style.display = 'flex';
+        renderChart();
+      } catch (e) {
+        console.error('Load error:', e);
+        document.getElementById('chartLoading').innerHTML =
+          '<p class="text-muted">Could not load the demo. <a href="./index.html">Try the converter</a> with your own file.</p>';
+      }
+    }
+
+    function parseTcx(tcxXml) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(tcxXml, 'text/xml');
+      const points = doc.getElementsByTagName('Trackpoint');
+      const data = { distance: [], watts: [], time: [] };
+      for (let i = 0; i < points.length; i++) {
+        const tp = points[i];
+        const distEls = tp.getElementsByTagName('DistanceMeters');
+        const wattEls = tp.getElementsByTagName('Watts');
+        data.distance.push(distEls.length > 0 ? parseFloat(distEls[0].textContent) : 0);
+        data.watts.push(wattEls.length > 0 ? parseFloat(wattEls[0].textContent) : 0);
+        data.time.push(i * secsPerSample);
+      }
+      return data;
+    }
+
+    function computeSpeed(distances) {
+      const speeds = [];
+      for (let i = 0; i < distances.length; i++) {
+        if (i === 0) {
+          speeds.push(0);
+        } else {
+          const delta = distances[i] - distances[i - 1];
+          speeds.push((delta / secsPerSample) * 2.23694);
+        }
+      }
+      return speeds;
+    }
+
+    function computeData() {
+      const bikeResult = convert_csv_to_tcx(csvBytes, null, false, false, 0, 0);
+      bikeData = parseTcx(bikeResult.tcx);
+
+      const totalTimeMatch = bikeResult.tcx.match(/<TotalTimeSeconds>([\d.]+)<\/TotalTimeSeconds>/);
+      const totalTime = totalTimeMatch ? parseFloat(totalTimeMatch[1]) : 0;
+      secsPerSample = bikeData.distance.length > 0 ? totalTime / bikeData.distance.length : 3.0;
+
+      const modelResult = convert_csv_to_tcx(csvBytes, null, false, true, currentMass, 0);
+      modelData = parseTcx(modelResult.tcx);
+
+      const bikeDist = bikeData.distance[bikeData.distance.length - 1];
+      const modelDist = modelData.distance[modelData.distance.length - 1];
+      const diffPct = Math.abs(bikeDist - modelDist) / bikeDist * 100;
+
+      document.getElementById('bikeDist').textContent = (bikeDist / 1609.34).toFixed(1) + ' mi';
+      document.getElementById('modelDist').textContent = (modelDist / 1609.34).toFixed(1) + ' mi';
+      document.getElementById('diffPct').textContent = diffPct.toFixed(0) + '%';
+    }
+
+    function getChartData() {
+      let values1, values2, label1, label2, yLabel;
+
+      if (currentView === 'speed') {
+        values1 = computeSpeed(bikeData.distance);
+        values2 = computeSpeed(modelData.distance);
+        label1 = 'Bike reported';
+        label2 = 'Physics model';
+        yLabel = 'Speed (mph)';
+      } else if (currentView === 'distance') {
+        values1 = bikeData.distance.map(d => d / 1609.34);
+        values2 = modelData.distance.map(d => d / 1609.34);
+        label1 = 'Bike reported';
+        label2 = 'Physics model';
+        yLabel = 'Distance (miles)';
+      } else {
+        values1 = bikeData.watts;
+        values2 = null;
+        label1 = 'Power';
+        label2 = null;
+        yLabel = 'Power (watts)';
+      }
+
+      const labels = bikeData.time.map(t => {
+        const m = Math.floor(t / 60);
+        const s = Math.floor(t % 60);
+        return m + ':' + (s < 10 ? '0' : '') + s;
+      });
+
+      const datasets = [{
+        label: label1,
+        data: values1,
+        borderColor: values2 ? 'rgb(54, 162, 235)' : 'rgb(214, 40, 158)',
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        pointRadius: 0,
+        order: 2,
+      }];
+
+      if (values2) {
+        datasets.push({
+          label: label2,
+          data: values2,
+          borderColor: 'rgb(214, 40, 158)',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          pointRadius: 0,
+          order: 1,
+        });
+      }
+
+      return { labels, datasets, yLabel };
+    }
+
+    function renderChart() {
+      if (typeof Chart === 'undefined') return;
+
+      const { labels, datasets, yLabel } = getChartData();
+
+      if (chart) {
+        chart.data.labels = labels;
+        chart.data.datasets = datasets;
+        chart.options.scales.y.title.text = yLabel;
+        chart.update('none');
+        return;
+      }
+
+      const ctx = document.getElementById('physicsChart').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { position: 'top' },
+            tooltip: {
+              callbacks: {
+                title: function(items) {
+                  return 'Time: ' + items[0].label;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              title: { display: true, text: 'Time' },
+              ticks: { maxTicksLimit: 12 }
+            },
+            y: {
+              title: { display: true, text: yLabel },
+              beginAtZero: true,
+            }
+          },
+          elements: { line: { tension: 0.3 } }
+        }
+      });
+    }
+
+    window.switchChart = function(view) {
+      currentView = view;
+      document.querySelectorAll('.btn-group .btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn' + view.charAt(0).toUpperCase() + view.slice(1)).classList.add('active');
+      renderChart();
+    };
+
+    let massTimer = null;
+    window.updateMass = function(val) {
+      currentMass = parseFloat(val);
+      document.getElementById('massDisplay').textContent = val + ' kg';
+      if (massTimer) clearTimeout(massTimer);
+      massTimer = setTimeout(function() {
+        if (wasmReady && csvBytes) {
+          computeData();
+          renderChart();
+        }
+      }, 150);
+    };
+
+    const chartScript = document.createElement('script');
+    chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
+    chartScript.onload = loadAll;
+    document.head.appendChild(chartScript);
+  </script>
+</body>
+</html>
