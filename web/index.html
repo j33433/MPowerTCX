@@ -37,19 +37,19 @@
         <div class="form-row col-md-12">
           <div class="form-group col-md-6">
             <div class="custom-control custom-checkbox">
-              <input name="physics" type="checkbox" class="custom-control-input" id="checkPhysics" onchange="formCheckChanged(this)">
+              <input name="physics" type="checkbox" class="custom-control-input" id="checkPhysics" onchange="formCheckChanged(this); runConversion();">
               <label class="custom-control-label" for="checkPhysics">Fix speed and distance [<a href="./how-it-works.html#physics">?</a>]</label>
             </div>
             <small class="form-text text-muted">Use physics model (requires mass)</small>
           </div>
           <div class="form-group col-md-3">
             <label>Mass</label>
-            <input class="form-control" name="mass" id="mass" type="number" value="55" onchange="formInputChanged(this)">
+              <input class="form-control" name="mass" id="mass" type="number" value="55" onchange="formInputChanged(this); runConversion();">
             <small class="form-text text-muted">Rider &amp; bike</small>
           </div>
           <div class="form-group col-md-3">
             <label>Units</label>
-            <select class="custom-select" name="massUnits" id="massUnits" onchange="formInputChanged(this)">
+              <select class="custom-select" name="massUnits" id="massUnits" onchange="formInputChanged(this); runConversion();">
               <option>kg</option>
               <option>lbs</option>
             </select>
@@ -59,7 +59,7 @@
         <div class="form-row col-md-12">
           <div class="form-group col-md-6">
             <div class="custom-control custom-checkbox">
-              <input name="interpolate" type="checkbox" class="custom-control-input" id="checkInterpolate" onchange="formCheckChanged(this)" checked>
+              <input name="interpolate" type="checkbox" class="custom-control-input" id="checkInterpolate" onchange="formCheckChanged(this); runConversion();" checked>
               <label class="custom-control-label" for="checkInterpolate">Fix timing [<a href="./how-it-works.html#interpolation">?</a>]</label>
             </div>
             <small class="form-text text-muted">Recommended for maximum compatibility</small>
@@ -112,6 +112,7 @@
     let wasmReady = false;
     let lastTcx = '';
     let lastFilename = 'output.tcx';
+    let lastFileBytes = null;
 
     async function loadWasm() {
       try {
@@ -125,6 +126,27 @@
     }
 
     loadWasm();
+
+    window.runConversion = function() {
+      if (!wasmReady || !lastFileBytes) return;
+
+      const interpolate = document.getElementById('checkInterpolate').checked;
+      const physics = document.getElementById('checkPhysics').checked;
+      let mass = parseFloat(document.getElementById('mass').value) || 0;
+      const units = document.getElementById('massUnits').value;
+      if (units === 'lbs') {
+        mass *= 0.453592;
+      }
+
+      try {
+        const result = convert_csv_to_tcx(lastFileBytes, null, interpolate, physics, mass, 0);
+        lastTcx = result.tcx;
+        const msg = `Converted ${result.sample_count} samples (${result.equipment}). Click Download TCX to save.`;
+        showResult(msg);
+      } catch (err) {
+        showError('Conversion failed: ' + err);
+      }
+    };
 
     window.changeFile = function(elem) {
       const input = document.getElementById("customFileLabel");
@@ -140,25 +162,8 @@
       const reader = new FileReader();
 
       reader.onload = function(e) {
-        const bytes = new Uint8Array(e.target.result);
-
-        const interpolate = document.getElementById('checkInterpolate').checked;
-        const physics = document.getElementById('checkPhysics').checked;
-        let mass = parseFloat(document.getElementById('mass').value) || 0;
-        const units = document.getElementById('massUnits').value;
-        if (units === 'lbs') {
-          mass *= 0.453592;
-        }
-
-        try {
-          const result = convert_csv_to_tcx(bytes, null, interpolate, physics, mass, 0);
-          lastTcx = result.tcx;
-
-          const msg = `Converted ${result.sample_count} samples (${result.equipment}). Click Download TCX to save.`;
-          showResult(msg);
-        } catch (err) {
-          showError('Conversion failed: ' + err);
-        }
+        lastFileBytes = new Uint8Array(e.target.result);
+        runConversion();
       };
 
       reader.onerror = function() {
