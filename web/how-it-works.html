@@ -285,11 +285,6 @@
           reasonable values for seconds 1 through 4. The result is a TCX file with
           clean, continuous data that imports without issues.
         </p>
-        <p class="text-muted small">
-          The interpolation uses not-a-knot cubic spline boundary conditions, same
-          as SciPy's splrep/splev. The conversion engine is written in Rust and
-          compiled to WebAssembly, so it all runs in your browser.
-        </p>
       </section>
 
       <section class="jumbotron p-4 mb-4" id="getting-csv">
@@ -305,7 +300,6 @@
         </ol>
         <p class="small text-muted">
           <a href="https://www.youtube.com/watch?v=ENkHdcV_E70" target="_blank" rel="noopener">Exporting Rider Data Onto A USB Drive (video)</a>
-          | <a href="https://support.corehandf.com/Product/?brand=1" target="_blank" rel="noopener">Official Schwinn Manuals</a>
         </p>
 
         <h3>Stages Indoor Cycles</h3>
@@ -316,7 +310,6 @@
         </ol>
         <p class="small text-muted">
           <a href="https://www.youtube.com/watch?v=W8JjfGShEcY" target="_blank" rel="noopener">Stages SIC1 Console Quick Start Tutorial (video)</a>
-          | <a href="https://stagesindoorcycling.freshdesk.com/support/solutions/folders/5000255512" target="_blank" rel="noopener">Stages Firmware and Manuals</a>
         </p>
 
         <h3>The Sufferfest &amp; Wahoo SYSTM</h3>
@@ -433,13 +426,6 @@
 
       <section class="jumbotron p-4 mb-4" id="troubleshooting">
         <h2>Troubleshooting</h2>
-        <h3>USB drive not working</h3>
-        <p>
-          Schwinn MPower consoles can be picky about USB drives. Newer
-          high-capacity drives may crash the console or fail to export. Try a
-          small, older drive. 1GB is ideal. If the USB logo fails to flash or the
-          console shuts off during export, the drive is incompatible.
-        </p>
         <h3>File won't load</h3>
         <p>
           Different bike models and firmware versions produce different CSV
