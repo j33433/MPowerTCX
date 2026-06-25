@@ -138,7 +138,8 @@ def main():
         "Everything runs in your browser. No internet, no install, no server.\n"
         "The file is self-contained — all code is inlined.\n\n"
         "For the full guide with interactive physics chart, visit:\n"
-        "https://upload.bike/how-it-works.html\n"
+        "https://upload.bike/how-it-works.html\n\n"
+        "Source code: https://github.com/j33433/MPowerTCX\n"
     )
 
     print("Creating zip...")
