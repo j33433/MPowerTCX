@@ -6,7 +6,6 @@
   <meta name="description" content="How upload.bike converts indoor bike CSV files to TCX. Physics model for fixing bad speed and distance, interpolation for compatibility, step-by-step guides for Schwinn, Stages, and Wahoo SYSTM.">
   <title>How It Works: Convert Indoor Bike CSV to TCX | upload.bike</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-  <link rel="canonical" href="https://upload.bike/how-it-works" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -101,6 +100,7 @@
       border-radius: 50%; animation: spin 1s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+    [x-cloak] { display: none !important; }
   </style>
 </head>
 <body>
@@ -207,41 +207,45 @@
           modeled speed.
         </p>
 
-        <div class="card card-body bg-light">
+        <div class="card card-body bg-light" x-data="physicsDemo()">
           <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
             <div class="btn-group btn-group-sm" role="group">
-              <button type="button" class="btn btn-outline-primary active" id="btnSpeed" onclick="switchChart('speed')">Speed</button>
-              <button type="button" class="btn btn-outline-primary" id="btnDistance" onclick="switchChart('distance')">Distance</button>
-              <button type="button" class="btn btn-outline-primary" id="btnPower" onclick="switchChart('power')">Power</button>
+              <button type="button" class="btn btn-outline-primary" :class="{ active: view === 'speed' }" @click="view = 'speed'">Speed</button>
+              <button type="button" class="btn btn-outline-primary" :class="{ active: view === 'distance' }" @click="view = 'distance'">Distance</button>
+              <button type="button" class="btn btn-outline-primary" :class="{ active: view === 'power' }" @click="view = 'power'">Power</button>
             </div>
             <div class="d-flex align-items-center mt-2 mt-sm-0">
               <label class="mb-0 mr-2 small text-muted">Rider + bike mass:</label>
-              <input type="range" min="40" max="120" value="70" step="1" class="custom-range mx-2" id="massSlider" style="width: 150px;" oninput="updateMass(this.value)">
-              <span class="font-weight-bold" id="massDisplay" style="min-width: 3rem;">70 kg</span>
+              <input type="range" min="40" max="120" step="1" class="custom-range mx-2" style="width: 150px;" x-model.number="mass" @input.debounce.150ms="updateChart()">
+              <span class="font-weight-bold" style="min-width: 3rem;" x-text="mass + ' kg'"></span>
             </div>
           </div>
 
-          <div class="chart-container" id="chartContainer" style="display:none;">
+          <div class="chart-container" x-show="!loading && !loadError" x-cloak>
             <canvas id="physicsChart"></canvas>
           </div>
 
-          <div id="chartLoading" class="text-center py-5">
+          <div x-show="loading" class="text-center py-5">
             <div class="loading-spinner mb-2"></div>
             <p class="text-muted small">Loading sample data...</p>
           </div>
 
-          <div class="row text-center mt-2" id="statsRow" style="display: none;">
+          <div x-show="loadError" class="text-center py-5" x-cloak>
+            <p class="text-muted" x-html="loadError"></p>
+          </div>
+
+          <div class="row text-center mt-2" x-show="!loading && !loadError" x-cloak>
             <div class="col-4">
               <small class="text-muted d-block">Bike reported</small>
-              <span class="font-weight-bold" id="bikeDist">--</span>
+              <span class="font-weight-bold" x-text="bikeDist"></span>
             </div>
             <div class="col-4">
               <small class="text-muted d-block">Physics model</small>
-              <span class="font-weight-bold" id="modelDist">--</span>
+              <span class="font-weight-bold" x-text="modelDist"></span>
             </div>
             <div class="col-4">
               <small class="text-muted d-block">Difference</small>
-              <span class="font-weight-bold text-danger" id="diffPct">--</span>
+              <span class="font-weight-bold text-danger" x-text="diffPct"></span>
             </div>
           </div>
         </div>
@@ -331,7 +335,15 @@
         </ul>
       </section>
 
-      <div id="faq-container"></div>
+      <section class="jumbotron p-4 mb-4" id="faq" x-data="faqSection()">
+        <h2>FAQ</h2>
+        <template x-for="(q, i) in items" :key="i">
+          <details :open="i === 0">
+            <summary x-text="q.name"></summary>
+            <p class="mt-2" x-text="q.text"></p>
+          </details>
+        </template>
+      </section>
 
       <section class="jumbotron p-4 mb-4" id="troubleshooting">
         <h2>Troubleshooting</h2>
@@ -368,252 +380,58 @@
   </div>
 
   <script>
-(function() {
-  var scripts = document.querySelectorAll('script[type="application/ld+json"]');
-  var faqData = null;
-  for (var i = 0; i < scripts.length; i++) {
-    try {
-      var parsed = JSON.parse(scripts[i].textContent);
-      if (parsed['@type'] === 'FAQPage') {
-        faqData = parsed.mainEntity;
-        break;
+    function faqSection() {
+      var scripts = document.querySelectorAll('script[type="application/ld+json"]');
+      for (var i = 0; i < scripts.length; i++) {
+        try {
+          var parsed = JSON.parse(scripts[i].textContent);
+          if (parsed['@type'] === 'FAQPage') {
+            return {
+              items: parsed.mainEntity.map(function(q) {
+                return { name: q.name, text: q.acceptedAnswer.text };
+              })
+            };
+          }
+        } catch (e) {}
       }
-    } catch(e) {}
-  }
-  if (!faqData) return;
-
-  var section = document.createElement('section');
-  section.className = 'jumbotron p-4 mb-4';
-  section.id = 'faq';
-
-  var h2 = document.createElement('h2');
-  h2.textContent = 'FAQ';
-  section.appendChild(h2);
-
-  for (var j = 0; j < faqData.length; j++) {
-    var details = document.createElement('details');
-    if (j === 0) details.open = true;
-
-    var summary = document.createElement('summary');
-    summary.textContent = faqData[j].name;
-    details.appendChild(summary);
-
-    var p = document.createElement('p');
-    p.className = 'mt-2';
-    p.textContent = faqData[j].acceptedAnswer.text;
-    details.appendChild(p);
-
-    section.appendChild(details);
-  }
-
-  document.getElementById('faq-container').appendChild(section);
-})();
-</script>
-<script type="module">
-    import init, { convert_csv_to_tcx } from './pkg/mpowertcx_wasm.js';
-
-    let chart = null;
-    let wasmReady = false;
-    let csvBytes = null;
-    let currentView = 'speed';
-    let currentMass = 70;
-    let bikeData = null;
-    let modelData = null;
-    let secsPerSample = 3.0;
-
-    async function loadAll() {
-      try {
-        await init('./pkg/mpowertcx_wasm_bg.wasm');
-        wasmReady = true;
-
-        const resp = await fetch('./samples/1122.csv');
-        csvBytes = new Uint8Array(await resp.arrayBuffer());
-
-        computeData();
-        document.getElementById('chartLoading').style.display = 'none';
-        document.getElementById('chartContainer').style.display = 'block';
-        document.getElementById('statsRow').style.display = 'flex';
-        renderChart();
-      } catch (e) {
-        console.error('Load error:', e);
-        document.getElementById('chartLoading').innerHTML =
-          '<p class="text-muted">Could not load the demo. <a href="./index.html">Try the converter</a> with your own file.</p>';
-      }
+      return { items: [] };
     }
 
-    function parseTcx(tcxXml) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(tcxXml, 'text/xml');
-      const points = doc.getElementsByTagName('Trackpoint');
-      const data = { distance: [], watts: [], time: [] };
-      for (let i = 0; i < points.length; i++) {
-        const tp = points[i];
-        const distEls = tp.getElementsByTagName('DistanceMeters');
-        const wattEls = tp.getElementsByTagName('Watts');
-        data.distance.push(distEls.length > 0 ? parseFloat(distEls[0].textContent) : 0);
-        data.watts.push(wattEls.length > 0 ? parseFloat(wattEls[0].textContent) : 0);
-        data.time.push(i * secsPerSample);
-      }
-      return data;
-    }
+    function physicsDemo() {
+      let demo = null;
+      return {
+        view: 'speed',
+        mass: 70,
+        loading: true,
+        loadError: null,
+        bikeDist: '--',
+        modelDist: '--',
+        diffPct: '--',
 
-    function computeSpeed(distances) {
-      const speeds = [];
-      for (let i = 0; i < distances.length; i++) {
-        if (i === 0) {
-          speeds.push(0);
-        } else {
-          const delta = distances[i] - distances[i - 1];
-          speeds.push((delta / secsPerSample) * 2.23694);
+        async init() {
+          this.$watch('view', v => demo && demo.setView(v));
+          const { createChartDemo } = await import('./chart-demo.js');
+          demo = createChartDemo('physicsChart');
+          try {
+            const stats = await demo.load('./pkg/mpowertcx_wasm_bg.wasm', './samples/1122.csv', this.mass);
+            Object.assign(this, stats);
+            this.loading = false;
+            this.$nextTick(() => demo.setView(this.view));
+          } catch (e) {
+            console.error('Load error:', e);
+            this.loading = false;
+            this.loadError = 'Could not load the demo. <a href="./index.html">Try the converter</a> with your own file.';
+          }
+        },
+
+        updateChart() {
+          if (!demo) return;
+          Object.assign(this, demo.setMass(this.mass));
+          demo.setView(this.view);
         }
-      }
-      return speeds;
+      };
     }
-
-    function computeData() {
-      const bikeResult = convert_csv_to_tcx(csvBytes, null, false, false, 0, 0);
-      bikeData = parseTcx(bikeResult.tcx);
-
-      const totalTimeMatch = bikeResult.tcx.match(/<TotalTimeSeconds>([\d.]+)<\/TotalTimeSeconds>/);
-      const totalTime = totalTimeMatch ? parseFloat(totalTimeMatch[1]) : 0;
-      secsPerSample = bikeData.distance.length > 0 ? totalTime / bikeData.distance.length : 3.0;
-
-      const modelResult = convert_csv_to_tcx(csvBytes, null, false, true, currentMass, 0);
-      modelData = parseTcx(modelResult.tcx);
-
-      const bikeDist = bikeData.distance[bikeData.distance.length - 1];
-      const modelDist = modelData.distance[modelData.distance.length - 1];
-      const diffPct = Math.abs(bikeDist - modelDist) / bikeDist * 100;
-
-      document.getElementById('bikeDist').textContent = (bikeDist / 1609.34).toFixed(1) + ' mi';
-      document.getElementById('modelDist').textContent = (modelDist / 1609.34).toFixed(1) + ' mi';
-      document.getElementById('diffPct').textContent = diffPct.toFixed(0) + '%';
-    }
-
-    function getChartData() {
-      let values1, values2, label1, label2, yLabel;
-
-      if (currentView === 'speed') {
-        values1 = computeSpeed(bikeData.distance);
-        values2 = computeSpeed(modelData.distance);
-        label1 = 'Bike reported';
-        label2 = 'Physics model';
-        yLabel = 'Speed (mph)';
-      } else if (currentView === 'distance') {
-        values1 = bikeData.distance.map(d => d / 1609.34);
-        values2 = modelData.distance.map(d => d / 1609.34);
-        label1 = 'Bike reported';
-        label2 = 'Physics model';
-        yLabel = 'Distance (miles)';
-      } else {
-        values1 = bikeData.watts;
-        values2 = null;
-        label1 = 'Power';
-        label2 = null;
-        yLabel = 'Power (watts)';
-      }
-
-      const labels = bikeData.time.map(t => {
-        const m = Math.floor(t / 60);
-        const s = Math.floor(t % 60);
-        return m + ':' + (s < 10 ? '0' : '') + s;
-      });
-
-      const datasets = [{
-        label: label1,
-        data: values1,
-        borderColor: values2 ? 'rgb(54, 162, 235)' : 'rgb(214, 40, 158)',
-        backgroundColor: 'transparent',
-        borderWidth: 2,
-        pointRadius: 0,
-        order: 2,
-      }];
-
-      if (values2) {
-        datasets.push({
-          label: label2,
-          data: values2,
-          borderColor: 'rgb(214, 40, 158)',
-          backgroundColor: 'transparent',
-          borderWidth: 2,
-          pointRadius: 0,
-          order: 1,
-        });
-      }
-
-      return { labels, datasets, yLabel };
-    }
-
-    function renderChart() {
-      if (typeof Chart === 'undefined') return;
-
-      const { labels, datasets, yLabel } = getChartData();
-
-      if (chart) {
-        chart.data.labels = labels;
-        chart.data.datasets = datasets;
-        chart.options.scales.y.title.text = yLabel;
-        chart.update('none');
-        return;
-      }
-
-      const ctx = document.getElementById('physicsChart').getContext('2d');
-      chart = new Chart(ctx, {
-        type: 'line',
-        data: { labels, datasets },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          interaction: { mode: 'index', intersect: false },
-          plugins: {
-            legend: { position: 'top' },
-            tooltip: {
-              callbacks: {
-                title: function(items) {
-                  return 'Time: ' + items[0].label;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              title: { display: true, text: 'Time' },
-              ticks: { maxTicksLimit: 12 }
-            },
-            y: {
-              title: { display: true, text: yLabel },
-              beginAtZero: true,
-            }
-          },
-          elements: { line: { tension: 0.3 } }
-        }
-      });
-    }
-
-    window.switchChart = function(view) {
-      currentView = view;
-      document.querySelectorAll('.btn-group .btn').forEach(b => b.classList.remove('active'));
-      document.getElementById('btn' + view.charAt(0).toUpperCase() + view.slice(1)).classList.add('active');
-      renderChart();
-    };
-
-    let massTimer = null;
-    window.updateMass = function(val) {
-      currentMass = parseFloat(val);
-      document.getElementById('massDisplay').textContent = val + ' kg';
-      if (massTimer) clearTimeout(massTimer);
-      massTimer = setTimeout(function() {
-        if (wasmReady && csvBytes) {
-          computeData();
-          renderChart();
-        }
-      }, 150);
-    };
-
-    const chartScript = document.createElement('script');
-    chartScript.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
-    chartScript.onload = loadAll;
-    document.head.appendChild(chartScript);
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </body>
 </html>
