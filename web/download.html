@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Download upload.bike as a desktop app for Windows, macOS, and Linux. Works offline.">
+  <title>Download | upload.bike</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="./custom.css">
+</head>
+<body>
+  <nav class="topnav">
+    <div class="container">
+      <a href="./index.html"><strong>upload.bike</strong></a>
+      <ul>
+        <li><a href="./index.html">Converter</a></li>
+        <li><a href="./how-it-works.html">How It Works</a></li>
+        <li class="active"><a href="./download.html">Download</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container" style="max-width: 720px;">
+    <header style="margin-bottom: 1.5rem;">
+      <h1>Download</h1>
+      <p class="lead muted">
+        Use upload.bike offline as a desktop app.
+        All conversion runs locally &mdash; no server, no internet required.
+      </p>
+    </header>
+
+    <article id="desktop-app">
+      <h2>Desktop App</h2>
+      <p>
+        A standalone app that works just like the website, but runs in its own
+        window and doesn't need an internet connection. Available for Windows,
+        macOS, and Linux.
+      </p>
+
+      <div class="downloads-grid" x-data="downloadLinks()">
+        <template x-for="p in platforms" :key="p.name">
+          <a :href="p.url" class="download-card" :class="{ unavailable: !p.available }">
+            <strong x-text="p.name"></strong>
+            <small class="muted" x-text="p.detail"></small>
+            <small class="muted" x-show="!p.available" x-cloak>Coming soon</small>
+          </a>
+        </template>
+      </div>
+
+      <p class="muted small" style="margin-top: 1rem;">
+        The desktop app uses the same conversion engine as the website.
+        It's open source and built with
+        <a href="https://tauri.app" target="_blank" rel="noopener">Tauri</a>.
+      </p>
+    </article>
+
+    <div class="center" style="margin-block: 2rem;">
+      <a href="./index.html" role="button">Use the Web Converter</a>
+      <p class="muted small" style="margin-top: 1rem;">
+        upload.bike - CSV to TCX conversion in your browser.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    function downloadLinks() {
+      return {
+        platforms: [
+          { name: 'Windows', detail: '.msi installer', url: './downloads/upload.bike-windows.msi', available: false },
+          { name: 'macOS', detail: '.dmg (Apple Silicon)', url: './downloads/upload.bike-macos-arm64.dmg', available: false },
+          { name: 'macOS (Intel)', detail: '.dmg (x86_64)', url: './downloads/upload.bike-macos-x64.dmg', available: false },
+          { name: 'Linux', detail: '.AppImage', url: './downloads/upload.bike-linux.AppImage', available: false },
+        ],
+        async init() {
+          for (const p of this.platforms) {
+            try {
+              const resp = await fetch(p.url, { method: 'HEAD' });
+              p.available = resp.ok;
+            } catch {
+              p.available = false;
+            }
+          }
+        }
+      };
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</body>
+</html>

@@ -49,3 +49,8 @@ article > article { margin-top: 1rem; margin-bottom: 0; }
 .danger { color: #dc3545; }
 .brand { font-size: 2.5rem; margin-bottom: 0; }
 .lead { font-size: 1.25rem; }
+
+.downloads-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.download-card { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; border: 1px solid var(--pico-muted-border-color); border-radius: var(--pico-border-radius); text-decoration: none; color: var(--pico-color); transition: border-color 0.15s, background 0.15s; }
+.download-card:hover { border-color: var(--pico-primary); background: rgba(1, 114, 173, 0.05); text-decoration: none; }
+.download-card.unavailable { opacity: 0.5; pointer-events: none; }

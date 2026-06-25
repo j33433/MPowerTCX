@@ -7,3 +7,13 @@ venv
 # Rust
 target/
 web/pkg/
+
+# Desktop app downloads (built artifacts)
+web/downloads/*
+!web/downloads/.gitkeep
+
+# Tauri
+src-tauri/target/
+
+web-install.sh
+beta-install.sh
