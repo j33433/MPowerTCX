@@ -2,6 +2,11 @@ use mpowertcx_core::{ConvertOptions, Converter};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
+pub fn get_sample_csv() -> Vec<u8> {
+    include_bytes!("../../../web/samples/1122.csv").to_vec()
+}
+
+#[wasm_bindgen]
 pub struct ConvertResult {
     tcx: String,
     equipment: String,

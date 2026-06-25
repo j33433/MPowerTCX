@@ -122,13 +122,12 @@ export function createChartDemo(canvasId) {
     return { labels, datasets, yLabel };
   }
 
-  async function load(wasmPath, csvPath, mass) {
+  async function load(wasmPath, mass) {
     await loadChartJs();
-    const { default: init, convert_csv_to_tcx } = await import('./pkg/mpowertcx_wasm.js');
+    const { default: init, convert_csv_to_tcx, get_sample_csv } = await import('./pkg/mpowertcx_wasm.js');
     await init(wasmPath);
     convert = convert_csv_to_tcx;
-    const resp = await fetch(csvPath);
-    csvBytes = new Uint8Array(await resp.arrayBuffer());
+    csvBytes = new Uint8Array(get_sample_csv());
     return computeData(mass);
   }
 

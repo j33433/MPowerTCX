@@ -3,12 +3,6 @@ members = [
     "crates/mpowertcx-core",
     "crates/mpowertcx-cli",
     "crates/mpowertcx-wasm",
-    "src-tauri",
-]
-default-members = [
-    "crates/mpowertcx-core",
-    "crates/mpowertcx-cli",
-    "crates/mpowertcx-wasm",
 ]
 resolver = "2"
 

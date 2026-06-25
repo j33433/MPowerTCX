@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Download upload.bike as a desktop app for Windows, macOS, and Linux. Works offline.">
+  <meta name="description" content="Download upload.bike as a portable offline version. Unzip and double-click index.html — no install required.">
   <title>Download | upload.bike</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <link rel="stylesheet" href="./custom.css">
@@ -24,33 +24,34 @@
     <header style="margin-bottom: 1.5rem;">
       <h1>Download</h1>
       <p class="lead muted">
-        Use upload.bike offline as a desktop app.
-        All conversion runs locally &mdash; no server, no internet required.
+        Use upload.bike offline. All conversion runs locally
+        &mdash; no server, no internet required.
       </p>
     </header>
 
-    <article id="desktop-app">
-      <h2>Desktop App</h2>
+    <article id="portable">
+      <h2>Offline Version</h2>
       <p>
-        A standalone app that works just like the website, but runs in its own
-        window and doesn't need an internet connection. Available for Windows,
-        macOS, and Linux.
+        A single self-contained HTML file with the full converter built in.
+        Download the zip, extract it, and double-click
+        <code>index.html</code> &mdash; no install, no internet, no admin
+        access. Works in any modern browser.
       </p>
 
-      <div class="downloads-grid" x-data="downloadLinks()">
-        <template x-for="p in platforms" :key="p.name">
-          <a :href="p.url" class="download-card" :class="{ unavailable: !p.available }">
-            <strong x-text="p.name"></strong>
-            <small class="muted" x-text="p.detail"></small>
-            <small class="muted" x-show="!p.available" x-cloak>Coming soon</small>
-          </a>
-        </template>
+      <div x-data="downloadCheck()">
+        <a :href="available ? url : null"
+           class="download-card"
+           :class="{ unavailable: !available }"
+           style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; margin-top: 1rem;">
+          <strong>upload.bike-portable.zip</strong>
+          <small class="muted" x-text="available ? '~160 KB' : ''"></small>
+        </a>
+        <p class="muted small" x-show="!available" x-cloak>Coming soon</p>
       </div>
 
       <p class="muted small" style="margin-top: 1rem;">
-        The desktop app uses the same conversion engine as the website.
-        It's open source and built with
-        <a href="https://tauri.app" target="_blank" rel="noopener">Tauri</a>.
+        Contains the full WebAssembly conversion engine in a single HTML file.
+        Same converter as the website, just packaged for offline use.
       </p>
     </article>
 
@@ -63,22 +64,16 @@
   </main>
 
   <script>
-    function downloadLinks() {
+    function downloadCheck() {
       return {
-        platforms: [
-          { name: 'Windows', detail: '.msi installer', url: './downloads/upload.bike-windows.msi', available: false },
-          { name: 'macOS', detail: '.dmg (Apple Silicon)', url: './downloads/upload.bike-macos-arm64.dmg', available: false },
-          { name: 'macOS (Intel)', detail: '.dmg (x86_64)', url: './downloads/upload.bike-macos-x64.dmg', available: false },
-          { name: 'Linux', detail: '.AppImage', url: './downloads/upload.bike-linux.AppImage', available: false },
-        ],
+        url: './downloads/upload.bike-portable.zip',
+        available: false,
         async init() {
-          for (const p of this.platforms) {
-            try {
-              const resp = await fetch(p.url, { method: 'HEAD' });
-              p.available = resp.ok;
-            } catch {
-              p.available = false;
-            }
+          try {
+            const resp = await fetch(this.url, { method: 'HEAD' });
+            this.available = resp.ok;
+          } catch {
+            this.available = false;
           }
         }
       };

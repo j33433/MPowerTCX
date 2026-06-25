@@ -377,7 +377,7 @@
           const { createChartDemo } = await import('./chart-demo.js');
           demo = createChartDemo('physicsChart');
           try {
-            const stats = await demo.load('./pkg/mpowertcx_wasm_bg.wasm', './samples/1122.csv', this.mass);
+            const stats = await demo.load('./pkg/mpowertcx_wasm_bg.wasm', this.mass);
             Object.assign(this, stats);
             this.loading = false;
             this.$nextTick(() => demo.setView(this.view));

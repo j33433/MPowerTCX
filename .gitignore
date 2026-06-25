@@ -8,12 +8,9 @@ venv
 target/
 web/pkg/
 
-# Desktop app downloads (built artifacts)
+# Offline build artifacts
 web/downloads/*
 !web/downloads/.gitkeep
-
-# Tauri
-src-tauri/target/
 
 web-install.sh
 beta-install.sh

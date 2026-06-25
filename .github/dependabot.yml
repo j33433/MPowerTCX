@@ -4,6 +4,3 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    ignore:
-      - dependency-name: "glib"
-        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
