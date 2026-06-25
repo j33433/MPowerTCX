@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="How upload.bike converts indoor bike CSV files to TCX. Physics model for fixing bad speed and distance, interpolation for compatibility, step-by-step guides for Schwinn, Stages, and Wahoo SYSTM.">
   <title>How It Works: Convert Indoor Bike CSV to TCX | upload.bike</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="./custom.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -85,299 +86,261 @@
     ]
   }
   </script>
-  <style>
-    html { scroll-behavior: smooth; }
-    body { background-color: #f8f9fa; }
-    .jumbotron { background-color: #fff; }
-    .jumbotron[id], section[id] { scroll-margin-top: 70px; }
-    .chart-container { position: relative; height: 400px; margin: 1rem 0; }
-    details { margin-bottom: 0.5rem; }
-    summary { cursor: pointer; font-weight: 500; padding: 0.5rem 0; }
-    summary:hover { color: #0056b3; }
-    .loading-spinner {
-      display: inline-block; width: 1.5rem; height: 1.5rem;
-      border: 3px solid #e9ecef; border-top-color: #007bff;
-      border-radius: 50%; animation: spin 1s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    [x-cloak] { display: none !important; }
-  </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom sticky-top">
+  <nav class="topnav">
     <div class="container">
-      <a class="navbar-brand font-weight-bold" href="./index.html">upload.bike</a>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a class="nav-link" href="./index.html">Converter</a></li>
-        <li class="nav-item active"><a class="nav-link" href="./how-it-works.html">How It Works</a></li>
+      <a href="./index.html"><strong>upload.bike</strong></a>
+      <ul>
+        <li><a href="./index.html">Converter</a></li>
+        <li class="active"><a href="./how-it-works.html">How It Works</a></li>
       </ul>
     </div>
   </nav>
 
-  <div class="container py-4">
-    <div class="col-md-10 mx-auto">
+  <main class="container" style="max-width: 880px;">
+    <header style="margin-bottom: 1.5rem;">
+      <h1>How It Works</h1>
+      <p class="lead muted">
+        upload.bike converts CSV files from indoor bikes into TCX format for
+        Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah.
+      </p>
+    </header>
 
-      <article>
-      <header class="mb-4">
-        <h1>How It Works</h1>
-        <p class="lead text-muted">
-          upload.bike converts CSV files from indoor bikes into TCX format for
-          Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah. 
-        </p>
-      </header>
+    <article id="what-is-tcx">
+      <h2>What is a TCX file?</h2>
+      <p>
+        TCX (Training Center XML) is a Garmin file format for workout data. It
+        contains a time series of power, heart rate, cadence, speed, and
+        distance, usually one point per second.
+      </p>
+      <p>
+        Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah all accept TCX
+        uploads. Indoor bikes don't produce TCX though. They produce CSV files:
+        plain text with columns for power, cadence, heart rate, and distance.
+        These platforms won't take CSV. upload.bike reads the CSV and writes a
+        TCX file they'll accept.
+      </p>
+    </article>
 
-      <section class="jumbotron p-4 mb-4" id="what-is-tcx">
-        <h2>What is a TCX file?</h2>
-        <p>
-          TCX (Training Center XML) is a Garmin file format for workout data. It
-          contains a time series of power, heart rate, cadence, speed, and
-          distance, usually one point per second.
-        </p>
-        <p>
-          Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah all accept TCX
-          uploads. Indoor bikes don't produce TCX though. They produce CSV files:
-          plain text with columns for power, cadence, heart rate, and distance.
-          These platforms won't take CSV. upload.bike reads the CSV and writes a
-          TCX file they'll accept.
-        </p>
-      </section>
+    <article id="supported">
+      <h2>Supported Equipment</h2>
+      <p>If your bike exports a CSV with power, cadence, heart rate, and distance, it can probably be supported. Currently built in:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Equipment</th>
+            <th>Power</th>
+            <th>Cadence</th>
+            <th>Heart Rate</th>
+            <th>Speed / Distance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Schwinn MPower Echelon</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Schwinn MPower Echelon 2</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Stages Indoor Cycles</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>The Sufferfest</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>Wahoo SYSTM</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>NordicTrack Studio Cycles</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td>PRO-FORM iFit</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        </tbody>
+      </table>
+      <p class="muted small">Don't see your bike? Email your CSV to upload.bike@gmail.com and I'll take a look.</p>
+    </article>
 
-      <section class="jumbotron p-4 mb-4" id="supported">
-        <h2>Supported Equipment</h2>
-        <p>If your bike exports a CSV with power, cadence, heart rate, and distance, it can probably be supported. Currently built in:</p>
-        <div class="table-responsive">
-          <table class="table table-sm">
-            <thead class="thead-light">
-              <tr>
-                <th>Equipment</th>
-                <th>Power</th>
-                <th>Cadence</th>
-                <th>Heart Rate</th>
-                <th>Speed / Distance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Schwinn MPower Echelon</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>Schwinn MPower Echelon 2</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>Stages Indoor Cycles</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>The Sufferfest</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>Wahoo SYSTM</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>NordicTrack Studio Cycles</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-              <tr><td>PRO-FORM iFit</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p class="text-muted small">Don't see your bike? Email your CSV to upload.bike@gmail.com and I'll take a look.</p>
-      </section>
+    <article id="physics">
+      <h2>The Physics Model: Fixing Bad Speed and Distance</h2>
+      <p>
+        Many indoor bikes estimate speed and distance from wheel RPM or
+        resistance level instead of measuring it. The result can be noticeably
+        wrong. When you upload that to Strava, your ride shows the wrong
+        distance, speed, and calories.
+      </p>
+      <p>
+        The physics model ignores the bike's speed and distance. Instead it takes
+        your actual power output (watts) and your combined mass (rider + bike),
+        then calculates speed using the same forces that govern outdoor cycling:
+      </p>
+      <ul>
+        <li>Aerodynamic drag: 0.5 x Cd x frontal area x air density x v^2</li>
+        <li>Rolling resistance: mg x Crr x cos(theta)</li>
+        <li>Drivetrain efficiency: 97% power transfer</li>
+      </ul>
+      <p>
+        At each time step, the model solves: given the power you produced and the
+        resistive forces at your current speed, what's your new speed? Distance
+        accumulates from speed over time.
+      </p>
 
-      <section class="jumbotron p-4 mb-4" id="physics">
-        <h2>The Physics Model: Fixing Bad Speed and Distance</h2>
-        <p>
-          Many indoor bikes estimate speed and distance from wheel RPM or
-          resistance level instead of measuring it. The result can be noticeably
-          wrong. When you upload that to Strava, your ride shows the wrong
-          distance, speed, and calories.
-        </p>
-        <p>
-          The physics model ignores the bike's speed and distance. Instead it takes
-          your actual power output (watts) and your combined mass (rider + bike),
-          then calculates speed using the same forces that govern outdoor cycling:
-        </p>
-        <ul>
-          <li>Aerodynamic drag: 0.5 x Cd x frontal area x air density x v^2</li>
-          <li>Rolling resistance: mg x Crr x cos(theta)</li>
-          <li>Drivetrain efficiency: 97% power transfer</li>
-        </ul>
-        <p>
-          At each time step, the model solves: given the power you produced and the
-          resistive forces at your current speed, what's your new speed? Distance
-          accumulates from speed over time.
-        </p>
+      <h3>See it in action</h3>
+      <p>
+        The chart below uses a real 73-minute workout from a Schwinn MPower
+        Echelon 2. The bike reported 21.5 miles; the physics model says the same
+        power should produce 23.8 miles. That 11% gap comes from the bike's
+        distance estimation drifting, with flat sections where the console stops
+        updating.
+      </p>
+      <p>Drag the mass slider to see how rider weight affects the modeled speed.</p>
 
-        <h3 class="mt-4">See it in action</h3>
-        <p>
-          The chart below uses a real 73-minute workout from a Schwinn MPower
-          Echelon 2. The bike reported 21.5 miles; the physics model says the same
-          power should produce 23.8 miles. That 11% gap comes from the bike's
-          distance estimation drifting, with flat sections where the console stops
-          updating. 
-        </p>
-          
-        <p>Drag the mass slider to see how rider weight affects the
-          modeled speed.
-        </p>
-
-        <div class="card card-body bg-light" x-data="physicsDemo()">
-          <div class="d-flex justify-content-between align-items-center flex-wrap mb-2">
-            <div class="btn-group btn-group-sm" role="group">
-              <button type="button" class="btn btn-outline-primary" :class="{ active: view === 'speed' }" @click="view = 'speed'">Speed</button>
-              <button type="button" class="btn btn-outline-primary" :class="{ active: view === 'distance' }" @click="view = 'distance'">Distance</button>
-              <button type="button" class="btn btn-outline-primary" :class="{ active: view === 'power' }" @click="view = 'power'">Power</button>
-            </div>
-            <div class="d-flex align-items-center mt-2 mt-sm-0">
-              <label class="mb-0 mr-2 small text-muted">Rider + bike mass:</label>
-              <input type="range" min="40" max="120" step="1" class="custom-range mx-2" style="width: 150px;" x-model.number="mass" @input.debounce.150ms="updateChart()">
-              <span class="font-weight-bold" style="min-width: 3rem;" x-text="mass + ' kg'"></span>
-            </div>
+      <article x-data="physicsDemo()">
+        <div class="chart-controls">
+          <div class="btn-group">
+            <button class="outline" :class="{ active: view === 'speed' }" @click="view = 'speed'">Speed</button>
+            <button class="outline" :class="{ active: view === 'distance' }" @click="view = 'distance'">Distance</button>
+            <button class="outline" :class="{ active: view === 'power' }" @click="view = 'power'">Power</button>
           </div>
-
-          <div class="chart-container" x-show="!loading && !loadError" x-cloak>
-            <canvas id="physicsChart"></canvas>
-          </div>
-
-          <div x-show="loading" class="text-center py-5">
-            <div class="loading-spinner mb-2"></div>
-            <p class="text-muted small">Loading sample data...</p>
-          </div>
-
-          <div x-show="loadError" class="text-center py-5" x-cloak>
-            <p class="text-muted" x-html="loadError"></p>
-          </div>
-
-          <div class="row text-center mt-2" x-show="!loading && !loadError" x-cloak>
-            <div class="col-4">
-              <small class="text-muted d-block">Bike reported</small>
-              <span class="font-weight-bold" x-text="bikeDist"></span>
-            </div>
-            <div class="col-4">
-              <small class="text-muted d-block">Physics model</small>
-              <span class="font-weight-bold" x-text="modelDist"></span>
-            </div>
-            <div class="col-4">
-              <small class="text-muted d-block">Difference</small>
-              <span class="font-weight-bold text-danger" x-text="diffPct"></span>
-            </div>
+          <div class="mass-control">
+            <span class="muted small">Rider + bike mass:</span>
+            <input type="range" min="40" max="120" step="1" style="width: 150px;" x-model.number="mass" @input.debounce.150ms="updateChart()">
+            <span class="mass-display" x-text="mass + ' kg'"></span>
           </div>
         </div>
 
-        <noscript>
-          <p class="text-muted mt-3">
-            <em>The interactive chart needs JavaScript. It compares speed and
-            distance from bike-reported values versus physics-modeled values for a
-            real workout. The bike reported 21.5 miles; the physics model computed
-            23.8 miles for the same power. Try the <a href="./index.html">converter</a>
-            with your own data.</em>
-          </p>
-        </noscript>
-      </section>
-
-      <section class="jumbotron p-4 mb-4" id="interpolation">
-        <h2>Fix Timing: Interpolation for Compatibility</h2>
-        <p>
-          Some indoor bikes record data every 3, 5, or 10 seconds instead of every
-          second. That's fine for the bike's display, but fitness platforms like
-          Strava and Garmin Connect expect 1-second intervals in TCX files. Gaps
-          can cause wrong duration, missing data in analysis charts, segment
-          matching problems, or import errors.
-        </p>
-        <p>
-          The Fix Timing option (on by default) resamples your data to 1-second
-          intervals using cubic spline interpolation. If you were doing 200W at
-          second 0 and 210W at second 5, it fills in reasonable values for seconds
-          1 through 4. The result is a TCX file with clean, continuous data that
-          imports without issues.
-        </p>
-      </section>
-
-      <section class="jumbotron p-4 mb-4" id="getting-csv">
-        <h2>Getting Your CSV File</h2>
-        <h3>Schwinn MPower Echelon</h3>
-        <ol>
-          <li>Insert a USB thumb drive into the slot at the top of the console</li>
-          <li>Do your workout</li>
-          <li>Stop pedalling</li>
-          <li>Press and hold AVG/MAX for 5 seconds</li>
-          <li>Wait for the flashing USB logo to stop, then remove the drive</li>
-          <li>The drive contains a file named something like <code>MPower12.csv</code></li>
-        </ol>
-        <p class="small text-muted">
-          <a href="https://www.youtube.com/watch?v=ENkHdcV_E70" target="_blank" rel="noopener">Exporting Rider Data Onto A USB Drive (video)</a>
-        </p>
-
-        <h3>Stages Indoor Cycles</h3>
-        <ol>
-          <li>From the console, go to the ride summary or history</li>
-          <li>Insert a USB drive and select the export option</li>
-          <li>The file saves with a name like <code>STAGES01.csv</code></li>
-        </ol>
-        <p class="small text-muted">
-          <a href="https://www.youtube.com/watch?v=W8JjfGShEcY" target="_blank" rel="noopener">Stages SIC1 Console Quick Start Tutorial (video)</a>
-        </p>
-
-        <h3>The Sufferfest &amp; Wahoo SYSTM</h3>
-        <p>
-          These apps can export workout data as CSV. Look for the export option in
-          the app's workout history or activity settings.
-        </p>
-
-        <div class="alert alert-warning small">
-          USB drive problems? Some Schwinn consoles crash with newer USB thumb
-          drives. A 1GB drive is your best bet. If the USB logo fails to flash or
-          the unit shuts off, the drive is probably incompatible.
+        <div class="chart-container" x-show="!loading && !loadError" x-cloak>
+          <canvas id="physicsChart"></canvas>
         </div>
-      </section>
 
-      <section class="jumbotron p-4 mb-4" id="convert-upload">
-        <h2>Converting and Uploading</h2>
-        <ol>
-          <li>Go to <a href="./index.html">upload.bike</a></li>
-          <li>Click Choose CSV file and select your exported file</li>
-          <li>Enable Fix Timing (recommended) for 1-second interpolation</li>
-          <li>Enable Fix speed and distance if your bike's distance seems off, and enter your combined rider + bike weight</li>
-          <li>Click Download TCX</li>
-          <li>Upload the TCX file to your platform:</li>
-        </ol>
-        <ul>
-          <li><a href="https://www.strava.com/upload/select" target="_blank" rel="noopener">Strava upload</a></li>
-          <li><a href="https://connect.garmin.com/modern/import-data" target="_blank" rel="noopener">Garmin Connect import</a></li>
-          <li>TrainingPeaks: "Upload Activity" button</li>
-          <li>Golden Cheetah: File > Import Activity</li>
-        </ul>
-      </section>
+        <div x-show="loading" class="center" style="padding-block: 2.5rem;">
+          <div class="loading-spinner" style="margin-bottom: 0.5rem;"></div>
+          <p class="muted small">Loading sample data...</p>
+        </div>
 
-      <section class="jumbotron p-4 mb-4" id="faq" x-data="faqSection()">
-        <h2>FAQ</h2>
-        <template x-for="(q, i) in items" :key="i">
-          <details :open="i === 0">
-            <summary x-text="q.name"></summary>
-            <p class="mt-2" x-text="q.text"></p>
-          </details>
-        </template>
-      </section>
+        <div x-show="loadError" class="center" x-cloak>
+          <p class="muted" x-html="loadError"></p>
+        </div>
 
-      <section class="jumbotron p-4 mb-4" id="troubleshooting">
-        <h2>Troubleshooting</h2>
-        <h3>File won't load</h3>
-        <p>
-          Different bike models and firmware versions produce different CSV
-          formats. If your file doesn't load, email it to
-          <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a> and I'll
-          add support for it.
-        </p>
-        <h3>Distance looks wrong in Strava</h3>
-        <p>
-          Enable Fix speed and distance and enter your weight. This replaces the
-          bike's distance estimate with a physics-based calculation from your power
-          output. See the <a href="#physics">physics model section</a> above.
-        </p>
-      </section>
-
+        <div class="stats" x-show="!loading && !loadError" x-cloak>
+          <div><small class="muted">Bike reported</small><br><strong x-text="bikeDist"></strong></div>
+          <div><small class="muted">Physics model</small><br><strong x-text="modelDist"></strong></div>
+          <div><small class="muted">Difference</small><br><strong class="danger" x-text="diffPct"></strong></div>
+        </div>
       </article>
 
-      <div class="text-center py-4">
-        <a href="./index.html" class="btn btn-primary btn-lg">Convert Your File</a>
-        <div class="mt-3">
-          <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="clanken" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
-        </div>
-        <p class="text-muted small mt-3">
-          upload.bike - CSV to TCX conversion in your browser.
-          Contact <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a>
-          for feedback and troubleshooting.
+      <noscript>
+        <p class="muted">
+          <em>The interactive chart needs JavaScript. It compares speed and
+          distance from bike-reported values versus physics-modeled values for a
+          real workout. The bike reported 21.5 miles; the physics model computed
+          23.8 miles for the same power. Try the <a href="./index.html">converter</a>
+          with your own data.</em>
         </p>
-      </div>
+      </noscript>
+    </article>
 
+    <article id="interpolation">
+      <h2>Fix Timing: Interpolation for Compatibility</h2>
+      <p>
+        Some indoor bikes record data every 3, 5, or 10 seconds instead of every
+        second. That's fine for the bike's display, but fitness platforms like
+        Strava and Garmin Connect expect 1-second intervals in TCX files. Gaps
+        can cause wrong duration, missing data in analysis charts, segment
+        matching problems, or import errors.
+      </p>
+      <p>
+        The Fix Timing option (on by default) resamples your data to 1-second
+        intervals using cubic spline interpolation. If you were doing 200W at
+        second 0 and 210W at second 5, it fills in reasonable values for seconds
+        1 through 4. The result is a TCX file with clean, continuous data that
+        imports without issues.
+      </p>
+    </article>
+
+    <article id="getting-csv">
+      <h2>Getting Your CSV File</h2>
+      <h3>Schwinn MPower Echelon</h3>
+      <ol>
+        <li>Insert a USB thumb drive into the slot at the top of the console</li>
+        <li>Do your workout</li>
+        <li>Stop pedalling</li>
+        <li>Press and hold AVG/MAX for 5 seconds</li>
+        <li>Wait for the flashing USB logo to stop, then remove the drive</li>
+        <li>The drive contains a file named something like <code>MPower12.csv</code></li>
+      </ol>
+      <p class="small muted">
+        <a href="https://www.youtube.com/watch?v=ENkHdcV_E70" target="_blank" rel="noopener">Exporting Rider Data Onto A USB Drive (video)</a>
+      </p>
+
+      <h3>Stages Indoor Cycles</h3>
+      <ol>
+        <li>From the console, go to the ride summary or history</li>
+        <li>Insert a USB drive and select the export option</li>
+        <li>The file saves with a name like <code>STAGES01.csv</code></li>
+      </ol>
+      <p class="small muted">
+        <a href="https://www.youtube.com/watch?v=W8JjfGShEcY" target="_blank" rel="noopener">Stages SIC1 Console Quick Start Tutorial (video)</a>
+      </p>
+
+      <h3>The Sufferfest &amp; Wahoo SYSTM</h3>
+      <p>
+        These apps can export workout data as CSV. Look for the export option in
+        the app's workout history or activity settings.
+      </p>
+
+      <div class="alert alert-warning small">
+        USB drive problems? Some Schwinn consoles crash with newer USB thumb
+        drives. A 1GB drive is your best bet. If the USB logo fails to flash or
+        the unit shuts off, the drive is probably incompatible.
+      </div>
+    </article>
+
+    <article id="convert-upload">
+      <h2>Converting and Uploading</h2>
+      <ol>
+        <li>Go to <a href="./index.html">upload.bike</a></li>
+        <li>Click Choose CSV file and select your exported file</li>
+        <li>Enable Fix Timing (recommended) for 1-second interpolation</li>
+        <li>Enable Fix speed and distance if your bike's distance seems off, and enter your combined rider + bike weight</li>
+        <li>Click Download TCX</li>
+        <li>Upload the TCX file to your platform:</li>
+      </ol>
+      <ul>
+        <li><a href="https://www.strava.com/upload/select" target="_blank" rel="noopener">Strava upload</a></li>
+        <li><a href="https://connect.garmin.com/modern/import-data" target="_blank" rel="noopener">Garmin Connect import</a></li>
+        <li>TrainingPeaks: "Upload Activity" button</li>
+        <li>Golden Cheetah: File > Import Activity</li>
+      </ul>
+    </article>
+
+    <article id="faq" x-data="faqSection()">
+      <h2>FAQ</h2>
+      <template x-for="(q, i) in items" :key="i">
+        <details :open="i === 0">
+          <summary x-text="q.name"></summary>
+          <p x-text="q.text"></p>
+        </details>
+      </template>
+    </article>
+
+    <article id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <h3>File won't load</h3>
+      <p>
+        Different bike models and firmware versions produce different CSV
+        formats. If your file doesn't load, email it to
+        <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a> and I'll
+        add support for it.
+      </p>
+      <h3>Distance looks wrong in Strava</h3>
+      <p>
+        Enable Fix speed and distance and enter your weight. This replaces the
+        bike's distance estimate with a physics-based calculation from your power
+        output. See the <a href="#physics">physics model section</a> above.
+      </p>
+    </article>
+
+    <div class="center" style="margin-block: 2rem;">
+      <a href="./index.html" role="button">Convert Your File</a>
+      <div style="margin-top: 1rem;">
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="clanken" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+      </div>
+      <p class="muted small" style="margin-top: 1rem;">
+        upload.bike - CSV to TCX conversion in your browser.
+        Contact <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a>
+        for feedback and troubleshooting.
+      </p>
     </div>
-  </div>
+  </main>
 
   <script>
     function faqSection() {

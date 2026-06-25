@@ -5,105 +5,90 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Convert indoor bike CSV files to TCX for Strava, TrainingPeaks, Garmin Connect and Golden Cheetah. Runs entirely in your browser - no server needed.">
   <title>upload.bike - CSV to TCX converter for indoor bikes</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-  <style>
-    body { background-color: #f8f9fa; }
-    [x-cloak] { display: none !important; }
-  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="./custom.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom sticky-top">
+  <nav class="topnav">
     <div class="container">
-      <a class="navbar-brand font-weight-bold" href="./index.html">upload.bike</a>
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active"><a class="nav-link" href="./index.html">Converter</a></li>
-        <li class="nav-item"><a class="nav-link" href="./how-it-works.html">How It Works</a></li>
+      <a href="./index.html"><strong>upload.bike</strong></a>
+      <ul>
+        <li class="active"><a href="./index.html">Converter</a></li>
+        <li><a href="./how-it-works.html">How It Works</a></li>
       </ul>
     </div>
   </nav>
-  <div class="container py-4">
-    <div class="row">
-      <div class="jumbotron col-md-8 mx-auto" x-data="converter()">
-        <div class="text-center pb-3 mb-1">
-          <h2 class="display-4 mb-0">upload.bike</h2>
-          <div class="text-muted pt-0">CSV &rarr; TCX (in your browser)</div>
-        </div>
-        <div class="p-3 mb-3">
-          Convert spin bike workouts from CSV to TCX format. Results can be imported into Strava, TrainingPeaks, Garmin Connect, Golden Cheetah and other fitness trackers.
-          <br><small class="text-muted">All processing happens locally in your browser. Your data never leaves your device.</small>
-        </div>
 
-        <div class="form-row col-md-12">
-          <div class="form-group col-md-6">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="checkPhysics" x-model="physics" @change="onFormChange()">
-              <label class="custom-control-label" for="checkPhysics">Fix speed and distance [<a href="./how-it-works.html#physics">?</a>]</label>
-            </div>
-            <small class="form-text text-muted">Use physics model (requires mass)</small>
-          </div>
-          <div class="form-group col-md-3">
-            <label>Mass</label>
-            <input class="form-control" type="number" x-model="mass" @change="onFormChange()">
-            <small class="form-text text-muted">Rider &amp; bike</small>
-          </div>
-          <div class="form-group col-md-3">
-            <label>Units</label>
-            <select class="custom-select" x-model="massUnits" @change="onFormChange()">
-              <option>kg</option>
-              <option>lbs</option>
-            </select>
-          </div>
-        </div>
+  <main class="container" style="max-width: 720px;">
+    <article x-data="converter()">
+      <div class="center" style="margin-bottom: 1rem;">
+        <h1 class="brand">upload.bike</h1>
+        <p class="muted" style="margin-top: 0;">CSV &rarr; TCX (in your browser)</p>
+      </div>
 
-        <div class="form-row col-md-12">
-          <div class="form-group col-md-6">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="checkInterpolate" x-model="interpolate" @change="onFormChange()">
-              <label class="custom-control-label" for="checkInterpolate">Fix timing [<a href="./how-it-works.html#interpolation">?</a>]</label>
-            </div>
-            <small class="form-text text-muted">Recommended for maximum compatibility</small>
-          </div>
-        </div>
+      <p>
+        Convert spin bike workouts from CSV to TCX format. Results can be imported into Strava, TrainingPeaks, Garmin Connect, Golden Cheetah and other fitness trackers.
+      </p>
+      <p class="muted small">
+        All processing happens locally in your browser. Your data never leaves your device.
+      </p>
 
-        <div class="form-row col-md-12">
-          <div class="form-group col-md-12">
-            <div class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile" accept=".csv,text/csv" @change="changeFile($event)">
-              <label class="custom-file-label" for="customFile" x-text="fileName || 'Choose CSV file…'"></label>
-            </div>
-          </div>
+      <div class="form-grid">
+        <div>
+          <label>
+            <input type="checkbox" id="checkPhysics" x-model="physics" @change="onFormChange()">
+            Fix speed and distance [<a href="./how-it-works.html#physics">?</a>]
+          </label>
+          <small class="muted">Use physics model (requires mass)</small>
         </div>
-
-        <div class="form-row col-md-12 mb-0" x-show="resultVisible" x-cloak>
-          <div class="form-group col-md-12">
-            <div class="alert alert-info">
-              <span x-text="resultText"></span>
-              <button class="btn btn-sm btn-success ml-3" @click="downloadTcx()">Download TCX</button>
-            </div>
-          </div>
+        <div>
+          <label for="mass">Mass</label>
+          <input type="number" id="mass" x-model="mass" @change="onFormChange()" style="max-width: 6rem;">
+          <small class="muted">Rider &amp; bike</small>
         </div>
-
-        <div class="form-row col-md-12 mb-0" x-show="errorVisible" x-cloak>
-          <div class="form-group col-md-12">
-            <div class="alert alert-danger" x-text="errorText"></div>
-          </div>
-        </div>
-
-        <div class="p-3">
-          <div>
-            Schwinn MPower Echelon, Stages Indoor Cycles, NordicTrack
-            Studio Cycles, PRO-FORM iFit, The Sufferfest, Wahoo SYSTM and a few other formats supported.
-          </div>
-          <div class="my-4">
-            Contact upload.bike@gmail.com for feedback &amp; troubleshooting.
-          </div>
-          <div class="text-center my-1">
-            <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="clanken" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
-          </div>
+        <div>
+          <label for="massUnits">Units</label>
+          <select id="massUnits" x-model="massUnits" @change="onFormChange()" style="max-width: 5rem;">
+            <option>kg</option>
+            <option>lbs</option>
+          </select>
         </div>
       </div>
-    </div>
-  </div>
+
+      <div class="field">
+        <label>
+          <input type="checkbox" id="checkInterpolate" x-model="interpolate" @change="onFormChange()">
+          Fix timing [<a href="./how-it-works.html#interpolation">?</a>]
+        </label>
+        <small class="muted">Recommended for maximum compatibility</small>
+      </div>
+
+      <div class="field">
+        <input type="file" id="customFile" accept=".csv,text/csv" @change="changeFile($event)" hidden>
+        <label for="customFile" class="file-label" x-text="fileName || 'Choose CSV file…'"></label>
+      </div>
+
+      <div class="alert alert-info result-row" x-show="resultVisible" x-cloak>
+        <span x-text="resultText"></span>
+        <button @click="downloadTcx()">Download TCX</button>
+      </div>
+
+      <div class="alert alert-danger" x-show="errorVisible" x-cloak x-text="errorText"></div>
+
+      <hr>
+
+      <p>
+        Schwinn MPower Echelon, Stages Indoor Cycles, NordicTrack
+        Studio Cycles, PRO-FORM iFit, The Sufferfest, Wahoo SYSTM and a few other formats supported.
+      </p>
+      <p>
+        Contact upload.bike@gmail.com for feedback &amp; troubleshooting.
+      </p>
+      <div class="center">
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="clanken" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
+      </div>
+    </article>
+  </main>
 
   <script>
     function converter() {
