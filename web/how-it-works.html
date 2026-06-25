@@ -17,7 +17,7 @@
         "name": "Why is my distance different after conversion?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Many indoor bikes estimate distance from wheel RPM or resistance level rather than measuring it. The estimate can be off by 10% or more. The physics model recalculates distance from your actual power output, rider mass, and physical constants like aerodynamic drag and rolling resistance, producing a more realistic distance."
+          "text": "Many indoor bikes estimate distance from wheel RPM or resistance, which can be off by 10% or more. The physics model recalculates distance from your actual power output, rider mass, and physical constants, giving a more realistic number."
         }
       },
       {
@@ -25,7 +25,7 @@
         "name": "What if my bike isn't in the supported list?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Email your CSV file to upload.bike@gmail.com. The tool supports Schwinn MPower Echelon (3 firmware variants), Stages Indoor Cycles, The Sufferfest, Wahoo SYSTM, and several other formats. New formats can usually be added quickly if you provide a sample file."
+          "text": "Email your CSV to upload.bike@gmail.com. New formats can usually be added if you provide a sample file."
         }
       },
       {
@@ -33,7 +33,7 @@
         "name": "Is my data sent to a server?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "No. All conversion happens in your browser using WebAssembly. Your workout data never leaves your device."
+          "text": "No. All conversion runs in your browser via WebAssembly. Your data never leaves your device."
         }
       },
       {
@@ -41,7 +41,7 @@
         "name": "Why does the physics model need my weight?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Mass affects how fast you go for a given power output. A heavier rider goes slower at the same wattage on flat ground due to higher rolling resistance. The physics model uses your combined rider plus bike mass to solve the equations of motion."
+          "text": "Mass affects speed for a given power output. A heavier rider goes slower at the same wattage on flat ground. The model uses combined rider + bike mass to solve the equations of motion."
         }
       },
       {
@@ -49,7 +49,7 @@
         "name": "What CSV formats are supported?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Schwinn MPower Echelon (variants 1, 2, and 3), Stages Indoor Cycles (metric and English, with or without headers), The Sufferfest, Wahoo SYSTM, and several NordicTrack and PRO-FORM iFit variants. If your file has power, cadence, heart rate, and distance columns, it can likely be supported."
+          "text": "Schwinn MPower Echelon (3 variants), Stages (metric and English, with or without headers), The Sufferfest, Wahoo SYSTM, and several NordicTrack and PRO-FORM iFit variants. If your file has power, cadence, heart rate, and distance columns, it can probably be added."
         }
       },
       {
@@ -57,7 +57,7 @@
         "name": "Why does Strava show a different time than my bike console?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Some bikes record data every 3 or 5 seconds instead of every second. The Fix Timing option resamples to 1-second intervals using cubic spline interpolation, so the duration matches what fitness platforms expect."
+          "text": "Some bikes record every 3 or 5 seconds instead of every second. Fix Timing resamples to 1-second intervals so the duration matches what fitness platforms expect."
         }
       },
       {
@@ -65,15 +65,7 @@
         "name": "The USB export didn't work on my Schwinn bike. What do I do?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Some consoles crash with newer USB thumb drives. A 1GB drive works best. If the USB logo fails to flash or the unit shuts off during export, the drive is probably incompatible."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I adjust the power readings?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. Power meters on indoor bikes can vary by 5-10% between units. The power adjustment setting lets you apply a percentage correction. Set it to -5 if your bike reads 5% high, or +5 if it reads low."
+          "text": "Some consoles crash with newer USB thumb drives. A 1GB drive works best. If the USB logo fails to flash or the unit shuts off during export, try an older, smaller drive."
         }
       }
     ]
@@ -339,81 +331,7 @@
         </ul>
       </section>
 
-      <section class="jumbotron p-4 mb-4" id="faq">
-        <h2>FAQ</h2>
-
-        <details open>
-          <summary>Why is my distance different after conversion?</summary>
-          <p class="mt-2">
-            Many indoor bikes estimate distance from wheel RPM or resistance, which
-            can be off by 10% or more. The physics model recalculates distance from
-            your actual power output, rider mass, and physical constants, giving a
-            more realistic number.
-          </p>
-        </details>
-
-        <details>
-          <summary>What if my bike isn't in the supported list?</summary>
-          <p class="mt-2">
-            Email your CSV to upload.bike@gmail.com. New formats can usually be
-            added if you provide a sample file.
-          </p>
-        </details>
-
-        <details>
-          <summary>Is my data sent to a server?</summary>
-          <p class="mt-2">
-            No. All conversion runs in your browser via WebAssembly. Your data
-            never leaves your device.
-          </p>
-        </details>
-
-        <details>
-          <summary>Why does the physics model need my weight?</summary>
-          <p class="mt-2">
-            Mass affects speed for a given power output. A heavier rider goes
-            slower at the same wattage on flat ground. The model uses combined
-            rider + bike mass to solve the equations of motion.
-          </p>
-        </details>
-
-        <details>
-          <summary>What CSV formats are supported?</summary>
-          <p class="mt-2">
-            Schwinn MPower Echelon (3 variants), Stages (metric and English, with
-            or without headers), The Sufferfest, Wahoo SYSTM, and several
-            NordicTrack and PRO-FORM iFit variants. If your file has power,
-            cadence, heart rate, and distance columns, it can probably be added.
-          </p>
-        </details>
-
-        <details>
-          <summary>Why does Strava show a different time than my bike console?</summary>
-          <p class="mt-2">
-            Some bikes record every 3 or 5 seconds instead of every second. Fix
-            Timing resamples to 1-second intervals so the duration matches what
-            fitness platforms expect.
-          </p>
-        </details>
-
-        <details>
-          <summary>The USB export didn't work on my Schwinn bike. What do I do?</summary>
-          <p class="mt-2">
-            Some consoles crash with newer USB thumb drives. A 1GB drive works
-            best. If the USB logo fails to flash or the unit shuts off during
-            export, try an older, smaller drive.
-          </p>
-        </details>
-
-        <details>
-          <summary>Can I adjust the power readings?</summary>
-          <p class="mt-2">
-            Yes. Power meters on indoor bikes can vary 5-10% between units. The
-            power adjustment setting (in the CLI) applies a percentage correction.
-            Set it to -5 if your bike reads 5% high, +5 if it reads low.
-          </p>
-        </details>
-      </section>
+      <div id="faq-container"></div>
 
       <section class="jumbotron p-4 mb-4" id="troubleshooting">
         <h2>Troubleshooting</h2>
@@ -449,7 +367,49 @@
     </div>
   </div>
 
-  <script type="module">
+  <script>
+(function() {
+  var scripts = document.querySelectorAll('script[type="application/ld+json"]');
+  var faqData = null;
+  for (var i = 0; i < scripts.length; i++) {
+    try {
+      var parsed = JSON.parse(scripts[i].textContent);
+      if (parsed['@type'] === 'FAQPage') {
+        faqData = parsed.mainEntity;
+        break;
+      }
+    } catch(e) {}
+  }
+  if (!faqData) return;
+
+  var section = document.createElement('section');
+  section.className = 'jumbotron p-4 mb-4';
+  section.id = 'faq';
+
+  var h2 = document.createElement('h2');
+  h2.textContent = 'FAQ';
+  section.appendChild(h2);
+
+  for (var j = 0; j < faqData.length; j++) {
+    var details = document.createElement('details');
+    if (j === 0) details.open = true;
+
+    var summary = document.createElement('summary');
+    summary.textContent = faqData[j].name;
+    details.appendChild(summary);
+
+    var p = document.createElement('p');
+    p.className = 'mt-2';
+    p.textContent = faqData[j].acceptedAnswer.text;
+    details.appendChild(p);
+
+    section.appendChild(details);
+  }
+
+  document.getElementById('faq-container').appendChild(section);
+})();
+</script>
+<script type="module">
     import init, { convert_csv_to_tcx } from './pkg/mpowertcx_wasm.js';
 
     let chart = null;
