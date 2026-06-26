@@ -1,10 +1,49 @@
 [x-cloak] { display: none !important; }
 html { scroll-behavior: smooth; }
 
+h1, h2, h3, h4, h5, h6 { font-weight: 500; line-height: 1.2; }
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+
+:root {
+  --pico-font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --pico-font-family: var(--pico-font-family-sans-serif);
+  --pico-background-color: #f8f9fa;
+  --pico-color: #212529;
+  --pico-muted-color: #6c757d;
+  --pico-muted-border-color: #dee2e6;
+  --pico-border-color: #dee2e6;
+  --pico-primary: #007bff;
+  --pico-primary-background: #007bff;
+  --pico-primary-border: #007bff;
+  --pico-primary-hover: #0062cc;
+  --pico-primary-hover-background: #0062cc;
+  --pico-primary-hover-border: #0062cc;
+  --pico-primary-focus: rgba(0, 123, 255, 0.25);
+  --pico-primary-underline: rgba(0, 123, 255, 0.5);
+  --pico-primary-hover-underline: rgba(0, 98, 204, 0.5);
+  --pico-primary-inverse: #fff;
+  --pico-card-background-color: #e9ecef;
+  --pico-card-border-color: transparent;
+  --pico-card-box-shadow: none;
+  --pico-card-sectioning-background-color: transparent;
+  --pico-h1-color: #212529;
+  --pico-h2-color: #212529;
+  --pico-h3-color: #212529;
+  --pico-h4-color: #212529;
+  --pico-h5-color: #212529;
+  --pico-h6-color: #212529;
+  --pico-form-element-border-color: #ced4da;
+  --pico-text-selection-color: rgba(0, 123, 255, 0.25);
+  --pico-font-size: 100%;
+}
+
 nav.topnav {
   position: sticky; top: 0; z-index: 100;
-  background: var(--pico-card-background-color);
-  border-bottom: 1px solid var(--pico-muted-border-color);
+  background: #fff;
+  border-bottom: 1px solid #dee2e6;
 }
 nav.topnav .container {
   display: flex; align-items: center; justify-content: space-between;
@@ -16,10 +55,10 @@ nav.topnav .active a { color: var(--pico-primary); font-weight: 600; }
 
 section[id], article[id] { scroll-margin-top: 60px; }
 
-.alert { padding: 0.75rem 1rem; border-radius: var(--pico-border-radius); margin-bottom: 1rem; }
-.alert-info { background: #e7f5ff; color: #004085; }
-.alert-danger { background: #fde8e8; color: #842029; }
-.alert-warning { background: #e7f5ff; color: #0172ad; border: 1px solid rgba(1, 114, 173, 0.25); }
+.alert { padding: 0.75rem 1rem; border-radius: 0.25rem; margin-bottom: 1rem; border: 1px solid transparent; }
+.alert-info { background: #d1ecf1; border-color: #bee5eb; color: #0c5460; }
+.alert-danger { background: #f8d7da; border-color: #f5c6cb; color: #721c09; }
+.alert-warning { background: #fff3cd; border-color: #ffeeba; color: #856404; }
 
 .btn-group { display: inline-flex; }
 .btn-group button { margin: 0; border-radius: 0; padding: 0.25rem 0.75rem; font-size: 0.875rem; }
@@ -46,11 +85,12 @@ article > article { margin-top: 1rem; margin-bottom: 0; }
 .muted { color: var(--pico-muted-color); }
 .center { text-align: center; }
 .small { font-size: 0.875rem; }
+small { font-size: 80%; }
 .danger { color: #dc3545; }
-.brand { font-size: 2.5rem; margin-bottom: 0; }
-.lead { font-size: 1.25rem; }
+.brand { font-size: 3.5rem; font-weight: 300; margin-bottom: 0; }
+.lead { font-size: 1.25rem; font-weight: 300; }
 
 .downloads-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
 .download-card { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem; border: 1px solid var(--pico-muted-border-color); border-radius: var(--pico-border-radius); text-decoration: none; color: var(--pico-color); transition: border-color 0.15s, background 0.15s; }
-.download-card:hover { border-color: var(--pico-primary); background: rgba(1, 114, 173, 0.05); text-decoration: none; }
+.download-card:hover { border-color: #007bff; background: rgba(0, 123, 255, 0.05); text-decoration: none; }
 .download-card.unavailable { opacity: 0.5; pointer-events: none; }
