@@ -74,7 +74,13 @@
         <button @click="downloadTcx()">Download TCX</button>
       </div>
 
-      <div class="alert alert-danger" x-show="errorVisible" x-cloak x-text="errorText"></div>
+      <div class="alert alert-danger" x-show="errorVisible" x-cloak>
+        <span x-text="errorText"></span>
+        <details x-show="debugText" x-cloak style="margin-top: 0.5rem;">
+          <summary class="muted small">Details</summary>
+          <pre class="small" style="white-space: pre-wrap; margin: 0.5rem 0 0;" x-text="debugText"></pre>
+        </details>
+      </div>
 
       <hr>
 
@@ -112,6 +118,7 @@
         resultVisible: false,
         errorText: '',
         errorVisible: false,
+        debugText: '',
 
         async init() {
           try {
@@ -140,12 +147,16 @@
           if (this.massUnits === 'lbs') mass *= 0.453592;
           try {
             const result = convert(fileBytes, null, this.interpolate, this.physics, mass, 0);
+            if (result.sample_count === 0) {
+              this.showError('No data was parsed from this file.', result.debug || '');
+              return;
+            }
             lastTcx = result.tcx;
             this.resultText = `Converted ${result.sample_count} samples (${result.equipment}). Click Download TCX to save.`;
             this.resultVisible = true;
             this.errorVisible = false;
           } catch (err) {
-            this.showError('Conversion failed: ' + err);
+            this.showError('Conversion failed: ' + err, '');
           }
         },
 
@@ -181,10 +192,11 @@
           URL.revokeObjectURL(url);
         },
 
-        showError(msg) {
+        showError(msg, debug) {
           this.resultVisible = false;
           this.errorVisible = true;
           this.errorText = msg;
+          this.debugText = debug || '';
         }
       };
     }

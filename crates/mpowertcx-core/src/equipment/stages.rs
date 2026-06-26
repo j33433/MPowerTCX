@@ -120,21 +120,21 @@ impl Stages {
 }
 
 impl BikeParser for Stages {
-    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> bool {
+    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String> {
         if !peek.is_empty() && peek[0] == "Stages_Data" {
             self.load(rows, ride);
-            return true;
+            return Ok(true);
         }
 
         if peek.len() == 6 && peek[0].contains(':') {
             let all_floats = peek[1..].iter().all(|f| f.parse::<f64>().is_ok());
             if all_floats {
                 self.load(rows, ride);
-                return true;
+                return Ok(true);
             }
         }
 
-        false
+        Ok(false)
     }
 
     fn name(&self) -> &str {

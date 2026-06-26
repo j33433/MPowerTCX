@@ -12,6 +12,7 @@ pub struct ConvertResult {
     equipment: String,
     sample_count: usize,
     date_hint: Option<String>,
+    debug: Option<String>,
 }
 
 #[wasm_bindgen]
@@ -34,6 +35,11 @@ impl ConvertResult {
     #[wasm_bindgen(getter)]
     pub fn date_hint(&self) -> Option<String> {
         self.date_hint.clone()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn debug(&self) -> Option<String> {
+        self.debug.clone()
     }
 }
 
@@ -67,11 +73,18 @@ pub fn convert_csv_to_tcx(
 
     let tcx = converter.convert(start_time, &options);
 
+    let debug = if converter.diagnostics().is_empty() {
+        None
+    } else {
+        Some(converter.diagnostics().join("\n"))
+    };
+
     Ok(ConvertResult {
         tcx,
         equipment: converter.equipment_name().to_string(),
         sample_count: converter.count(),
         date_hint: converter.date_hint().map(|dt| dt.format("%Y-%m-%dT%H:%M:%S").to_string()),
+        debug,
     })
 }
 

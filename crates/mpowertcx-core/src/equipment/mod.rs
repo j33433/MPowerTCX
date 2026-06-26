@@ -6,7 +6,7 @@ pub mod thesufferfest;
 pub mod systm;
 
 pub trait BikeParser {
-    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> bool;
+    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String>;
     fn name(&self) -> &str;
 }
 

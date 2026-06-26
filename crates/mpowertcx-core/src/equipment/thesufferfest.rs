@@ -35,16 +35,16 @@ impl TheSufferfest {
 }
 
 impl BikeParser for TheSufferfest {
-    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> bool {
+    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String> {
         let expected = [
             "ticks", "time", "power", "cadence", "heartRate", "speed",
             "targetPower", "targetHeartRateZone", "targetCadence", "targetRpe",
         ];
         if peek.len() == 10 && peek.iter().zip(expected.iter()).all(|(a, b)| a == b) {
             Self::load(rows, ride);
-            true
+            Ok(true)
         } else {
-            false
+            Ok(false)
         }
     }
 

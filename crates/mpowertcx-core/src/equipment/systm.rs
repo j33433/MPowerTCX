@@ -65,13 +65,13 @@ impl Systm {
 }
 
 impl BikeParser for Systm {
-    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> bool {
+    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String> {
         let header = Self::header();
         if peek.len() == header.len() && peek.iter().zip(header.iter()).all(|(a, b)| a == b) {
             Self::load(rows, ride);
-            true
+            Ok(true)
         } else {
-            false
+            Ok(false)
         }
     }
 

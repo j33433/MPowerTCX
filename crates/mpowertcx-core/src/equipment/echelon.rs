@@ -61,17 +61,17 @@ impl EchelonV1 {
 }
 
 impl BikeParser for EchelonV1 {
-    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> bool {
+    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String> {
         if peek.len() == 1 && peek[0] == "Stage_Totals" {
             Self::load_header(rows, ride);
-            return true;
+            return Ok(true);
         }
         let expected = ["Stage_Workout (min)", "Distance(km)", "Speed(km/h)", "Watts ", "HR ", "RPM "];
         if peek.len() == 6 && peek.iter().zip(expected.iter()).all(|(a, b)| a == b) {
             Self::load_data(rows, ride);
-            return true;
+            return Ok(true);
         }
-        false
+        Ok(false)
     }
 
     fn name(&self) -> &str {
@@ -156,20 +156,20 @@ impl EchelonV2 {
 }
 
 impl BikeParser for EchelonV2 {
-    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> bool {
+    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String> {
         if peek.len() >= 2 && peek[0] == "RIDE SUMMARY" && peek[1] == "" {
             Self::load_header(rows, ride);
-            return true;
+            return Ok(true);
         }
         if peek.len() >= 2 && peek[0] == "RIDE DATA" && peek[1] == "" {
             Self::load_data(rows, ride);
-            return true;
+            return Ok(true);
         }
         if Self::is_stage_summary(peek) {
             Self::skip_section(rows);
-            return true;
+            return Ok(true);
         }
-        false
+        Ok(false)
     }
 
     fn name(&self) -> &str {
@@ -225,13 +225,13 @@ impl EchelonV3 {
 }
 
 impl BikeParser for EchelonV3 {
-    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> bool {
+    fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String> {
         let expected = ["Stage_Workout (min)", "Distance(mile)", "Speed (mph)", "Watts ", "HR ", "RPM "];
         if peek.len() == 6 && peek.iter().zip(expected.iter()).all(|(a, b)| a == b) {
             Self::load(rows, ride);
-            return true;
+            return Ok(true);
         }
-        false
+        Ok(false)
     }
 
     fn name(&self) -> &str {

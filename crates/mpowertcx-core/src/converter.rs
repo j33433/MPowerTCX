@@ -23,6 +23,7 @@ impl Default for ConvertOptions {
 pub struct Converter {
     ride: Ride,
     equipment_name: String,
+    diagnostics: Vec<String>,
 }
 
 impl Converter {
@@ -31,24 +32,37 @@ impl Converter {
         let mut ride = Ride::new();
         let mut parsers = all_parsers();
         let mut equipment_name = String::new();
+        let mut diagnostics: Vec<String> = Vec::new();
+        let mut total_rows = 0usize;
 
         while let Some(peek) = rows.next() {
             if peek.is_empty() {
                 continue;
             }
+            total_rows += 1;
 
             let peek = peek.clone();
             let mut found = false;
             for parser in &mut parsers {
-                if parser.try_load(&peek, &mut rows, &mut ride) {
-                    equipment_name = parser.name().to_string();
-                    ride.header.equipment = equipment_name.clone();
-                    found = true;
-                    break;
+                match parser.try_load(&peek, &mut rows, &mut ride) {
+                    Ok(true) => {
+                        equipment_name = parser.name().to_string();
+                        ride.header.equipment = equipment_name.clone();
+                        found = true;
+                        break;
+                    }
+                    Ok(false) => {}
+                    Err(e) => {
+                        diagnostics.push(format!("{}: {}", parser.name(), e));
+                        found = true;
+                        break;
+                    }
                 }
             }
 
             if !found {
+                let preview: Vec<&str> = peek.iter().take(4).map(|s| s.as_str()).collect();
+                diagnostics.push(format!("No parser matched row: [{}]", preview.join(", ")));
                 while let Some(row) = rows.next() {
                     if row.is_empty() {
                         break;
@@ -57,9 +71,31 @@ impl Converter {
             }
         }
 
+        if total_rows == 0 {
+            return Ok(Self {
+                ride,
+                equipment_name,
+                diagnostics,
+            });
+        }
+
+        if ride.count() == 0 {
+            let mut msg = format!(
+                "No data was parsed from {} rows. Tried {} parsers.\n{}",
+                total_rows,
+                parsers.len(),
+                diagnostics.join("\n")
+            );
+            if equipment_name.is_empty() {
+                msg.push_str("\nNo equipment format was recognized.");
+            }
+            return Err(msg);
+        }
+
         Ok(Self {
             ride,
             equipment_name,
+            diagnostics,
         })
     }
 
@@ -73,6 +109,10 @@ impl Converter {
 
     pub fn equipment_name(&self) -> &str {
         &self.equipment_name
+    }
+
+    pub fn diagnostics(&self) -> &[String] {
+        &self.diagnostics
     }
 
     pub fn count(&self) -> usize {
