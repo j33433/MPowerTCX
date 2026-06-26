@@ -7,14 +7,14 @@ h2 { font-size: 2rem; }
 h3 { font-size: 1.75rem; }
 h4 { font-size: 1.5rem; }
 
-:root {
+:root:not([data-theme=dark]) {
   --pico-font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --pico-font-family: var(--pico-font-family-sans-serif);
-  --pico-background-color: #f8f9fa;
-  --pico-color: #212529;
-  --pico-muted-color: #6c757d;
-  --pico-muted-border-color: #dee2e6;
-  --pico-border-color: #dee2e6;
+  --pico-background-color: #e3e6ea;
+  --pico-color: #2b2f33;
+  --pico-muted-color: #62696f;
+  --pico-muted-border-color: #c9ced4;
+  --pico-border-color: #c9ced4;
   --pico-primary: #007bff;
   --pico-primary-background: #007bff;
   --pico-primary-border: #007bff;
@@ -25,25 +25,39 @@ h4 { font-size: 1.5rem; }
   --pico-primary-underline: rgba(0, 123, 255, 0.5);
   --pico-primary-hover-underline: rgba(0, 98, 204, 0.5);
   --pico-primary-inverse: #fff;
-  --pico-card-background-color: #e9ecef;
+  --pico-card-background-color: #eef0f2;
   --pico-card-border-color: transparent;
   --pico-card-box-shadow: none;
   --pico-card-sectioning-background-color: transparent;
-  --pico-h1-color: #212529;
-  --pico-h2-color: #212529;
-  --pico-h3-color: #212529;
-  --pico-h4-color: #212529;
-  --pico-h5-color: #212529;
-  --pico-h6-color: #212529;
-  --pico-form-element-border-color: #ced4da;
+  --pico-h1-color: #2b2f33;
+  --pico-h2-color: #2b2f33;
+  --pico-h3-color: #2b2f33;
+  --pico-h4-color: #2b2f33;
+  --pico-h5-color: #2b2f33;
+  --pico-h6-color: #2b2f33;
+  --pico-form-element-border-color: #bcc2c9;
+  --pico-form-element-background-color: #f6f7f8;
+  --pico-form-element-active-background-color: #fff;
+  --pico-form-element-selected-background-color: #dde1e6;
+  --pico-form-element-color: #2b2f33;
+  --pico-code-background-color: #e3e6ea;
+  --pico-code-color: #62696f;
+  --pico-dropdown-background-color: #eef0f2;
+  --pico-dropdown-hover-background-color: #e3e6ea;
+  --pico-dropdown-color: #2b2f33;
+  --pico-range-border-color: #c9ced4;
+  --pico-range-active-border-color: #b3b9c0;
+  --pico-range-thumb-border-color: #eef0f2;
+  --pico-switch-background-color: #bcc2c9;
+  --pico-table-row-stripped-background-color: rgba(0, 0, 0, 0.035);
   --pico-text-selection-color: rgba(0, 123, 255, 0.25);
   --pico-font-size: 100%;
 }
 
 nav.topnav {
   position: sticky; top: 0; z-index: 100;
-  background: #fff;
-  border-bottom: 1px solid #dee2e6;
+  background: #eef0f2;
+  border-bottom: 1px solid #c9ced4;
 }
 nav.topnav .container {
   display: flex; align-items: center; justify-content: space-between;
@@ -73,7 +87,7 @@ section[id], article[id] { scroll-margin-top: 60px; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; margin-top: 1rem; }
 article > article { margin-top: 1rem; margin-bottom: 0; }
 
-.loading-spinner { display: inline-block; width: 1.5rem; height: 1.5rem; border: 3px solid #e9ecef; border-top-color: var(--pico-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+.loading-spinner { display: inline-block; width: 1.5rem; height: 1.5rem; border: 3px solid #d3d8de; border-top-color: var(--pico-primary); border-radius: 50%; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .form-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 1rem; align-items: start; margin-bottom: 1rem; }
