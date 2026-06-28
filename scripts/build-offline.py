@@ -63,7 +63,7 @@ def build_wasm_no_modules():
     return glue + init_code
 
 
-def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js):
+def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg):
     with open(os.path.join(WEB, "index.html"), "r") as f:
         html = f.read()
 
@@ -88,8 +88,8 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js):
         ''
     )
     html = html.replace(
-        '    <div class="container">\n      <ul>',
-        '    <div class="container">\n      <a href="https://github.com/j33433/MPowerTCX"><strong>upload.bike</strong></a>\n      <ul>'
+        '    <div class="container">\n      <a href="./index.html" class="brand-icon"><img src="./icon.svg" alt="upload.bike"></a>\n      <ul>',
+        f'    <div class="container">\n      <a href="https://github.com/j33433/MPowerTCX" class="brand-icon"><img src="data:image/svg+xml,{icon_svg}" alt="upload.bike"></a>\n      <ul>'
     )
 
     # Replace dynamic import with wasm_bindgen global
@@ -135,9 +135,11 @@ def main():
         custom_css = f.read()
     with open(os.path.join(WEB, "theme.js"), "r") as f:
         theme_js = f.read()
+    with open(os.path.join(WEB, "icon.svg"), "r") as f:
+        icon_svg = f.read().strip()
 
     print("Building self-contained index.html...")
-    index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js)
+    index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg)
 
     readme = (
         "upload.bike - Offline Edition\n"
