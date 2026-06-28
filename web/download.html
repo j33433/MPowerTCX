@@ -74,6 +74,9 @@
           try {
             const resp = await fetch(this.url, { method: 'HEAD' });
             this.available = resp.ok;
+            if (resp.ok) {
+              this.url = this.url + '?t=' + Date.now();
+            }
           } catch {
             this.available = false;
           }
