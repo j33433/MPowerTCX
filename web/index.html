@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
   <meta name="description" content="Convert indoor bike CSV files to TCX for Strava, TrainingPeaks, Garmin Connect and Golden Cheetah. Runs entirely in your browser - no server needed.">
   <title>upload.bike - CSV to TCX converter for indoor bikes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
@@ -16,6 +17,7 @@
         <li class="active"><a href="./index.html">Converter</a></li>
         <li><a href="./how-it-works.html">How It Works</a></li>
         <li><a href="./download.html">Download</a></li>
+        <li><button class="theme-toggle outline" type="button" data-theme-btn onclick="toggleTheme()"></button></li>
       </ul>
     </div>
   </nav>
@@ -201,6 +203,7 @@
       };
     }
   </script>
+  <script src="./theme.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </body>
 </html>

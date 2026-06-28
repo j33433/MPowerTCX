@@ -63,7 +63,7 @@ def build_wasm_no_modules():
     return glue + init_code
 
 
-def build_offline_html(wasm_js, pico_css, alpine_js, custom_css):
+def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js):
     with open(os.path.join(WEB, "index.html"), "r") as f:
         html = f.read()
 
@@ -106,6 +106,12 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css):
         f'  <script>\n{wasm_js}\n  </script>\n  <script>\n    function converter() {{'
     )
 
+    # Inline theme.js
+    html = html.replace(
+        '  <script src="./theme.js"></script>\n',
+        f'  <script>\n{theme_js}\n  </script>\n'
+    )
+
     # Inline Alpine.js (replace the CDN script tag at end of body)
     html = html.replace(
         '  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>',
@@ -127,16 +133,17 @@ def main():
     print("Reading source files...")
     with open(os.path.join(WEB, "custom.css"), "r") as f:
         custom_css = f.read()
+    with open(os.path.join(WEB, "theme.js"), "r") as f:
+        theme_js = f.read()
 
     print("Building self-contained index.html...")
-    index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css)
+    index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js)
 
     readme = (
         "upload.bike - Offline Edition\n"
         "=============================\n\n"
         "Double-click index.html to open the converter.\n\n"
-        "Everything runs in your browser. No internet, no install, no server.\n"
-        "The file is self-contained — all code is inlined.\n\n"
+        "Everything runs in your browser. No internet, installation, or server required.\n"
         "For the full guide with interactive physics chart, visit:\n"
         "https://upload.bike/how-it-works.html\n\n"
         "Source code: https://github.com/j33433/MPowerTCX\n"
