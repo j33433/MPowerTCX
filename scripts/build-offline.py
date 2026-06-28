@@ -83,13 +83,13 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js):
     # point brand to GitHub
     html = html.replace(
         '        <li class="active"><a href="./index.html">Converter</a></li>\n'
-        '        <li><a href="./how-it-works.html">How It Works</a></li>\n'
+        '        <li><a href="./how-it-works.html">About</a></li>\n'
         '        <li><a href="./download.html">Download</a></li>\n',
         ''
     )
     html = html.replace(
-        '<a href="./index.html"><strong>upload.bike</strong></a>',
-        '<a href="https://github.com/j33433/MPowerTCX"><strong>upload.bike</strong></a>'
+        '    <div class="container">\n      <ul>',
+        '    <div class="container">\n      <a href="https://github.com/j33433/MPowerTCX"><strong>upload.bike</strong></a>\n      <ul>'
     )
 
     # Replace dynamic import with wasm_bindgen global

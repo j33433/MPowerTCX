@@ -10,7 +10,7 @@ nav.topnav .container {
   display: flex; align-items: center; justify-content: space-between;
   padding-block: 0.5rem;
 }
-nav.topnav ul { display: flex; gap: 1rem; list-style: none; margin: 0; padding: 0; }
+nav.topnav ul { display: flex; gap: 1rem; list-style: none; margin: 0 0 0 auto; padding: 0; }
 nav.topnav a { text-decoration: none; color: var(--pico-muted-color); }
 nav.topnav .active a { color: var(--pico-primary); font-weight: 600; }
 nav.topnav .theme-toggle { margin: 0; padding: 0.3rem; line-height: 0; width: auto; display: inline-flex; align-items: center; justify-content: center; }
