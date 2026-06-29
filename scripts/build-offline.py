@@ -13,6 +13,7 @@ import base64
 import os
 import shutil
 import subprocess
+import urllib.parse
 import urllib.request
 import zipfile
 
@@ -136,7 +137,7 @@ def main():
     with open(os.path.join(WEB, "theme.js"), "r") as f:
         theme_js = f.read()
     with open(os.path.join(WEB, "icon.svg"), "r") as f:
-        icon_svg = f.read().strip()
+        icon_svg = urllib.parse.quote(f.read().strip(), safe="")
 
     print("Building self-contained index.html...")
     index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg)
