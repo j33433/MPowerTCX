@@ -24,15 +24,17 @@ for csv in samples/*.csv; do
             continue
         fi
         
-        output="/tmp/rust_test_${base}_${variant}.tcx"
+        output=$(mktemp --suffix=.tcx)
         
         if [ "$variant" = "interp" ]; then
             cargo run --quiet -- --csv "$csv" --tcx "$output" --time "$TEST_TIME" --interpolate 2>/dev/null
         else
             cargo run --quiet -- --csv "$csv" --tcx "$output" --time "$TEST_TIME" --model 70 2>/dev/null
         fi
+        rc=$?
         
-        if [ $? -ne 0 ]; then
+        if [ $rc -ne 0 ]; then
+            rm -f "$output"
             echo "FAIL  ${base}_${variant} (conversion error)"
             FAIL=$((FAIL + 1))
             continue
@@ -47,6 +49,7 @@ for csv in samples/*.csv; do
             echo "      $diffs"
             FAIL=$((FAIL + 1))
         fi
+        rm -f "$output"
     done
 done
 

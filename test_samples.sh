@@ -27,10 +27,12 @@ for csv in samples/*.csv; do
     fi
     
     # Run conversion
-    output="/tmp/rust_test_${base}.tcx"
+    output=$(mktemp --suffix=.tcx)
     cargo run --quiet -- --csv "$csv" --tcx "$output" --time "$TEST_TIME" 2>/dev/null
+    rc=$?
     
-    if [ $? -ne 0 ]; then
+    if [ $rc -ne 0 ]; then
+        rm -f "$output"
         echo "FAIL  $base (conversion error)"
         FAIL=$((FAIL + 1))
         continue
@@ -46,6 +48,7 @@ for csv in samples/*.csv; do
         echo "      $diffs"
         FAIL=$((FAIL + 1))
     fi
+    rm -f "$output"
 done
 
 echo ""
