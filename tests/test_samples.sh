@@ -5,13 +5,16 @@ PASS=0
 FAIL=0
 SKIP=0
 
-for csv in samples/*.csv; do
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+for csv in "$ROOT_DIR"/samples/*.csv; do
     base=$(basename "$csv" .csv)
     base_lc=$(echo "$base" | tr '[:upper:]' '[:lower:]')
     
     # Find the expected tcx file (case-insensitive)
     expected=""
-    for f in samples/*.tcx; do
+    for f in "$ROOT_DIR"/samples/*.tcx; do
         f_base=$(basename "$f" .tcx)
         f_base_lc=$(echo "$f_base" | tr '[:upper:]' '[:lower:]')
         if [ "$f_base_lc" = "$base_lc" ] && [[ "$f" != *"_interp"* ]] && [[ "$f" != *"_model"* ]]; then

@@ -92,8 +92,8 @@ cargo test -p mpowertcx-core
 Shell scripts for byte-exact comparison of plain and model outputs:
 
 ```
-bash test_samples.sh
-bash test_samples_advanced.sh
+bash tests/test_samples.sh
+bash tests/test_samples_advanced.sh
 ```
 
 ## Project structure
