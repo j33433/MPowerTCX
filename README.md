@@ -4,7 +4,10 @@ Convert CSV files from indoor cycling bikes to TCX format for Strava, Garmin
 Connect, TrainingPeaks, and Golden Cheetah. All processing runs in the browser
 via WebAssembly, no server needed.
 
-Try it at [upload.bike](https://upload.bike).
+Try it at [upload.bike](https://upload.bike). If the site is down, grab
+the standalone build from the
+[latest release](https://github.com/j33433/MPowerTCX/releases). Just
+unzip and open `index.html` in any browser.
 
 ## Supported equipment
 

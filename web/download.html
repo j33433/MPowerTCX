@@ -40,7 +40,7 @@
         access. Works in any modern browser.
       </p>
 
-      <div x-data="downloadCheck()">
+      <div class="center" x-data="downloadCheck()">
         <a :href="available ? url : null"
            class="download-card"
            :class="{ unavailable: !available }"
