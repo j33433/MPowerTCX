@@ -183,6 +183,7 @@
             <button class="outline" :class="{ active: view === 'speed' }" @click="view = 'speed'">Speed</button>
             <button class="outline" :class="{ active: view === 'distance' }" @click="view = 'distance'">Distance</button>
             <button class="outline" :class="{ active: view === 'power' }" @click="view = 'power'">Power</button>
+            <button class="outline" @click="resetZoom()">Reset zoom</button>
           </div>
           <div class="mass-control">
             <span class="muted small">Rider + bike mass:</span>
@@ -378,8 +379,11 @@
 
         updateChart() {
           if (!demo) return;
-          Object.assign(this, demo.setMass(this.massKg()));
-          demo.setView(this.view);
+          Object.assign(this, demo.updateCurve(this.massKg(), this.view));
+        },
+
+        resetZoom() {
+          if (demo) demo.resetZoom();
         }
       };
     }

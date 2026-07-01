@@ -124,6 +124,8 @@ export function createChartDemo(canvasId) {
 
   async function load(wasmPath, mass) {
     await loadChartJs();
+    const { default: zoomPlugin } = await import('https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/+esm');
+    Chart.register(zoomPlugin);
     const { default: init, convert_csv_to_tcx, get_sample_csv } = await import('./pkg/mpowertcx_wasm.js');
     await init(wasmPath);
     convert = convert_csv_to_tcx;
@@ -137,10 +139,8 @@ export function createChartDemo(canvasId) {
     const { labels, datasets, yLabel } = getChartData(view);
 
     if (chart) {
-      chart.data.labels = labels;
-      chart.data.datasets = datasets;
-      chart.options.scales.y.title.text = yLabel;
-      chart.update('none');
+      refreshChart(view);
+      chart.resetZoom();
       return;
     }
 
@@ -160,6 +160,17 @@ export function createChartDemo(canvasId) {
                 return 'Time: ' + items[0].label;
               }
             }
+          },
+          zoom: {
+            zoom: {
+              wheel: { enabled: true },
+              pinch: { enabled: true },
+              mode: 'x',
+            },
+            pan: {
+              enabled: true,
+              mode: 'x',
+            },
           }
         },
         scales: {
@@ -181,5 +192,24 @@ export function createChartDemo(canvasId) {
     return computeData(mass);
   }
 
-  return { load, setView, setMass };
+  function resetZoom() {
+    if (chart) chart.resetZoom();
+  }
+
+  function refreshChart(view) {
+    if (!chart) return;
+    const { labels, datasets, yLabel } = getChartData(view);
+    chart.data.labels = labels;
+    chart.data.datasets = datasets;
+    chart.options.scales.y.title.text = yLabel;
+    chart.update('none');
+  }
+
+  function updateCurve(mass, view) {
+    const stats = computeData(mass);
+    if (chart) refreshChart(view);
+    return stats;
+  }
+
+  return { load, setView, setMass, resetZoom, updateCurve };
 }
