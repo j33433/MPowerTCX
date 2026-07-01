@@ -32,7 +32,8 @@ section[id], article[id] { scroll-margin-top: 60px; }
 
 .chart-container { position: relative; height: 400px; margin: 1rem 0; }
 .chart-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-.mass-control { display: flex; align-items: center; gap: 0.5rem; }
+.mass-control { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+.mass-control input[type="range"] { margin: 0.15rem 0 0; padding: 0; }
 .mass-display { font-weight: 600; min-width: 3rem; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; margin-top: 1rem; }
 article > article { margin-top: 1rem; margin-bottom: 0; }
