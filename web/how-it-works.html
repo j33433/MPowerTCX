@@ -186,8 +186,8 @@
           </div>
           <div class="mass-control">
             <span class="muted small">Rider + bike mass:</span>
-            <input type="range" min="40" max="120" step="1" style="width: 150px;" x-model.number="mass" @input.debounce.150ms="updateChart()">
-            <span class="mass-display" x-text="mass + ' kg'"></span>
+            <input type="range" min="88" max="265" step="1" style="width: 150px;" x-model.number="mass" @input.debounce.150ms="updateChart()">
+            <span class="mass-display" x-text="mass + ' lbs'"></span>
           </div>
         </div>
 
@@ -349,19 +349,23 @@
       let demo = null;
       return {
         view: 'speed',
-        mass: 70,
+        mass: 154,
         loading: true,
         loadError: null,
         bikeDist: '--',
         modelDist: '--',
         diffPct: '--',
 
+        massKg() {
+          return this.mass * 0.453592;
+        },
+
         async init() {
           this.$watch('view', v => demo && demo.setView(v));
           const { createChartDemo } = await import('./chart-demo.js');
           demo = createChartDemo('physicsChart');
           try {
-            const stats = await demo.load('./pkg/mpowertcx_wasm_bg.wasm', this.mass);
+            const stats = await demo.load('./pkg/mpowertcx_wasm_bg.wasm', this.massKg());
             Object.assign(this, stats);
             this.loading = false;
             this.$nextTick(() => demo.setView(this.view));
@@ -374,7 +378,7 @@
 
         updateChart() {
           if (!demo) return;
-          Object.assign(this, demo.setMass(this.mass));
+          Object.assign(this, demo.setMass(this.massKg()));
           demo.setView(this.view);
         }
       };
