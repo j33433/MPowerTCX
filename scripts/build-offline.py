@@ -83,13 +83,13 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_
     # Replace nav: remove converter/download/how-it-works links,
     # point brand to GitHub
     html = html.replace(
-        '        <li class="active"><a href="./index.html">Converter</a></li>\n'
+        '        <li class="active"><a href="./">Converter</a></li>\n'
         '        <li><a href="./how-it-works.html">About</a></li>\n'
         '        <li><a href="./download.html">Download</a></li>\n',
         ''
     )
     html = html.replace(
-        '    <div class="container">\n      <a href="./index.html" class="brand-icon"><img src="./icon.svg" alt="upload.bike"></a>\n      <ul>',
+        '    <div class="container">\n      <a href="./" class="brand-icon"><img src="./icon.svg" alt="upload.bike"></a>\n      <ul>',
         f'    <div class="container">\n      <a href="https://github.com/j33433/MPowerTCX" class="brand-icon"><img src="data:image/svg+xml,{icon_svg}" alt="upload.bike"></a>\n      <ul>'
     )
 
