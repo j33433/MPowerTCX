@@ -36,22 +36,11 @@ Options:
 
 ## Interpolation
 
-`--interpolate` upsamples the source data (typically 3-second intervals from
-indoor bikes) to 1-second intervals so Strava and Garmin Connect render smooth
-charts. The converter uses linear interpolation with three field-specific
-guards:
-
-- Power and cadence are clamped to >= 0 (no negative overshoot).
-- Heart rate zeros are forward-filled from the last known non-zero value before
-  interpolation; leading zeros stay 0 (no invented HR before the first reading).
-- Distance is enforced monotonic non-decreasing after interpolation (no
-  backwards movement).
-
-Linear interpolation is deliberately chosen over spline/PCHIP/Akima: it
-never overshoots the source min/max and never invents spikes. Whipsaws and
-HR dropouts in the output reflect quirks in the source data (e.g. equipment
-that clamps Watts > 2500, or sensor dropouts that send HR=0), not artifacts of
-interpolation. Use `--lint` to spot them.
+`--interpolate` resamples source data to 1-second intervals using linear
+interpolation, which never overshoots the source min/max or invents spikes.
+Power/cadence are clamped to >= 0, HR zeros are forward-filled, and distance is
+kept monotonic. Any whipsaws or HR dropouts in the output come from the source
+data, not interpolation.
 
 ## Linter
 

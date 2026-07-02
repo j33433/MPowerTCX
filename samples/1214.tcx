@@ -4,8 +4,8 @@
     <Activity Sport="Biking">
       <Id>2010-10-19T20:56:35Z</Id>
       <Lap StartTime="2010-10-19T20:56:35Z">
-        <TotalTimeSeconds>3732.0</TotalTimeSeconds>
-        <DistanceMeters>35341.1064</DistanceMeters>
+        <TotalTimeSeconds>3714</TotalTimeSeconds>
+        <DistanceMeters>35341.10640</DistanceMeters>
         <MaximumSpeed>0</MaximumSpeed>
         <Calories>0</Calories>
         <AverageHeartRateBpm>

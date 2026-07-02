@@ -13,18 +13,24 @@ fn format_time(dt: NaiveDateTime) -> String {
     )
 }
 
-fn float_str(v: f64) -> String {
-    if v == v.trunc() {
-        format!("{:.1}", v)
-    } else {
-        format!("{}", v)
-    }
-}
-
 pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> String {
     let now = format_time(start_time);
 
     let secs_per_sample = ride.delta().max(1.0) as i64;
+
+    // Lap summary must describe the track we actually emit, not the raw source
+    // header. The last trackpoint sits at (count - 1) * secs_per_sample seconds,
+    // and the lap distance is the final trackpoint's cumulative distance.
+    let lap_total_seconds = if ride.count() > 1 {
+        (ride.count() as i64 - 1) * secs_per_sample
+    } else {
+        0
+    };
+    let lap_distance = ride
+        .distance
+        .last()
+        .and_then(|d| d.parse::<f64>().ok())
+        .unwrap_or(ride.header.distance);
 
     let mut out = String::new();
     out.push_str("<?xml version='1.0' encoding='utf-8'?>\n");
@@ -33,8 +39,8 @@ pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> S
     out.push_str("    <Activity Sport=\"Biking\">\n");
     out.push_str(&format!("      <Id>{}</Id>\n", now));
     out.push_str(&format!("      <Lap StartTime=\"{}\">\n", now));
-    out.push_str(&format!("        <TotalTimeSeconds>{}</TotalTimeSeconds>\n", ride.header.time_str));
-    out.push_str(&format!("        <DistanceMeters>{}</DistanceMeters>\n", float_str(ride.header.distance)));
+    out.push_str(&format!("        <TotalTimeSeconds>{}</TotalTimeSeconds>\n", lap_total_seconds));
+    out.push_str(&format!("        <DistanceMeters>{:.5}</DistanceMeters>\n", lap_distance));
     out.push_str("        <MaximumSpeed>0</MaximumSpeed>\n");
     out.push_str("        <Calories>0</Calories>\n");
     out.push_str("        <AverageHeartRateBpm>\n");
