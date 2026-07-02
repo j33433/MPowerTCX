@@ -178,6 +178,7 @@ export function createPreviewChart(canvasId) {
           y: { title: { display: true, text: yLabel }, beginAtZero: true },
         },
         elements: { line: { tension: 0.3 } },
+        animation: false,
       },
     });
   }
