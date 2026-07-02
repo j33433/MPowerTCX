@@ -19,6 +19,34 @@ export function createPreviewChart(canvasId) {
     });
   }
 
+  function zoomRegistered() {
+    try {
+      return typeof Chart !== 'undefined' &&
+        Chart.registry.plugins.get('zoom') != null;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function loadChartDeps() {
+    if (typeof Chart !== 'undefined') {
+      if (!zoomRegistered()) {
+        if (typeof self !== 'undefined' && self.ChartZoom) {
+          Chart.register(self.ChartZoom);
+        } else {
+          const mod = await import('https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/+esm');
+          Chart.register(mod.default);
+        }
+      }
+      chartReady = true;
+      return;
+    }
+    await loadChartJs();
+    const { default: zoomPlugin } = await import('https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/+esm');
+    Chart.register(zoomPlugin);
+    chartReady = true;
+  }
+
   function parseTcx(tcxXml) {
     const doc = new DOMParser().parseFromString(tcxXml, 'text/xml');
 
@@ -164,10 +192,7 @@ export function createPreviewChart(canvasId) {
     let charted = true;
     try {
       if (!chartReady) {
-        await loadChartJs();
-        const { default: zoomPlugin } = await import('https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/+esm');
-        Chart.register(zoomPlugin);
-        chartReady = true;
+        await loadChartDeps();
       }
       drawChart(view || 'power');
     } catch (e) {

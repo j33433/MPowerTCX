@@ -85,7 +85,7 @@ Requires [Rust](https://www.rust-lang.org/tools/install) and
 python3 scripts/build-offline.py
 ```
 
-Output: `web/downloads/upload.bike-portable.zip` (~160 KB).
+Output: `web/downloads/upload.bike-portable.zip`.
 Contains `index.html` (self-contained) and `README.txt`.
 
 ### CI builds

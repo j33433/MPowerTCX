@@ -25,6 +25,8 @@ TMPDIR = os.path.join(ROOT, "target", "offline-build")
 CDN = {
     "pico.css": "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
     "alpine.js": "https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js",
+    "chart.js": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js",
+    "chart-zoom.js": "https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/dist/chartjs-plugin-zoom.min.js",
 }
 
 
@@ -64,7 +66,8 @@ def build_wasm_no_modules():
     return glue + init_code
 
 
-def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg):
+def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg,
+                       chart_js, chart_zoom_js, preview_chart_js):
     with open(os.path.join(WEB, "index.html"), "r") as f:
         html = f.read()
 
@@ -107,6 +110,27 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_
         f'  <script>\n{wasm_js}\n  </script>\n  <script>\n    function converter() {{'
     )
 
+    # Inline Chart.js + zoom plugin (for the preview chart)
+    # These must load before preview-chart.js so Chart is available as a global
+    html = html.replace(
+        f'  <script>\n    function converter() {{',
+        f'  <script>\n{chart_js}\n  </script>\n  <script>\n{chart_zoom_js}\n  </script>\n  <script>\n    function converter() {{'
+    )
+
+    # Inline preview-chart.js (strip export so it's a plain script, not a module)
+    preview_js = preview_chart_js.replace('export function createPreviewChart', 'function createPreviewChart')
+    html = html.replace(
+        '  <script>\n    function converter() {',
+        f'  <script>\n{preview_js}\n  </script>\n  <script>\n    function converter() {{'
+    )
+
+    # Replace dynamic import of preview-chart.js with the now-global function
+    html = html.replace(
+        "const { createPreviewChart } = await import('./preview-chart.js');\n"
+        "              preview = createPreviewChart('previewChart');",
+        "preview = createPreviewChart('previewChart');"
+    )
+
     # Inline theme.js
     html = html.replace(
         '  <script src="./theme.js"></script>\n',
@@ -128,6 +152,8 @@ def main():
     print("Downloading CDN assets...")
     pico_css = download(CDN["pico.css"]).decode()
     alpine_js = download(CDN["alpine.js"]).decode()
+    chart_js = download(CDN["chart.js"]).decode()
+    chart_zoom_js = download(CDN["chart-zoom.js"]).decode()
 
     wasm_js = build_wasm_no_modules()
 
@@ -138,9 +164,12 @@ def main():
         theme_js = f.read()
     with open(os.path.join(WEB, "icon.svg"), "r") as f:
         icon_svg = urllib.parse.quote(f.read().strip(), safe="")
+    with open(os.path.join(WEB, "preview-chart.js"), "r") as f:
+        preview_chart_js = f.read()
 
     print("Building self-contained index.html...")
-    index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg)
+    index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg,
+                                    chart_js, chart_zoom_js, preview_chart_js)
 
     readme = (
         "upload.bike - Offline Edition\n"
