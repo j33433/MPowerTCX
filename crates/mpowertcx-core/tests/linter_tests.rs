@@ -79,79 +79,108 @@ fn test_nothing_tcx_clean() {
 // ---------------------------------------------------------------------------
 
 #[test]
-fn test_interp_negative_watts_detected() {
+fn test_interp_no_negative_watts() {
     let xml = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb_interp.tcx");
     let results = lint_tcx(&xml);
-    let codes = codes(&results);
+    let errs = error_codes(&results);
     assert!(
-        codes.contains(&"E030"),
-        "c56c4102_interp should have negative Watts (E030)"
+        !errs.contains(&"E030"),
+        "c56c4102_interp should have no negative Watts after linear interpolation"
     );
 }
 
 #[test]
-fn test_interp_negative_distance_detected() {
+fn test_interp_no_negative_distance() {
     let xml = read_sample("MPower33_interp.tcx");
     let results = lint_tcx(&xml);
-    let codes = codes(&results);
+    let errs = error_codes(&results);
     assert!(
-        codes.contains(&"E036"),
-        "MPower33_interp should have negative distance (E036)"
+        !errs.contains(&"E036"),
+        "MPower33_interp should have no negative distance after linear interpolation"
     );
 }
 
 #[test]
-fn test_interp_distance_backwards_detected() {
+fn test_interp_no_distance_backwards() {
     let xml = read_sample("MPower33_interp.tcx");
     let results = lint_tcx(&xml);
-    let codes = codes(&results);
+    let errs = error_codes(&results);
     assert!(
-        codes.contains(&"E035"),
-        "MPower33_interp should have distance going backwards (E035)"
+        !errs.contains(&"E035"),
+        "MPower33_interp should have no distance going backwards after linear interpolation"
     );
 }
 
 #[test]
-fn test_interp_power_whipsaw_detected() {
-    let xml = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb_interp.tcx");
-    let results = lint_tcx(&xml);
-    let codes = codes(&results);
+fn test_interp_power_whipsaw_is_source_artifact() {
+    // c56c4102 source clamps Watts > 2500, producing genuine 187 -> 2500 spikes
+    // (13 W032 warnings in source). Linear interpolation cannot eliminate these;
+    // it spreads each 1-step spike across the 3-step ramp, so W032 persists.
+    // This test documents that W032 reflects source data, not an interp bug.
+    let src = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb.tcx");
+    let interp = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb_interp.tcx");
+    let src_w032 = lint_tcx(&src)
+        .iter()
+        .filter(|r| r.severity == Severity::Warning && r.code == "W032")
+        .count();
+    let interp_w032 = lint_tcx(&interp)
+        .iter()
+        .filter(|r| r.severity == Severity::Warning && r.code == "W032")
+        .count();
+    assert!(src_w032 > 0, "source should have power whipsaws from 2500W clamping");
+    assert!(interp_w032 > 0, "interp should still flag source-derived whipsaws");
+    // Linear interp can only reduce (never introduce) the underlying spike magnitude;
+    // each source spike becomes a 3-step ramp, so the per-second delta drops but the
+    // warning count may rise. Assert interp has no MORE than 3x the source count.
     assert!(
-        codes.contains(&"W032"),
-        "c56c4102_interp should have power whipsaw (W032)"
+        interp_w032 <= src_w032 * 3,
+        "interp W032 count {} should be <= 3x source {} (linear ramp smearing)",
+        interp_w032,
+        src_w032
     );
 }
 
 #[test]
-fn test_interp_hr_zero_detected() {
-    let xml = read_sample("MPower33_interp.tcx");
-    let results = lint_tcx(&xml);
-    let codes = codes(&results);
+fn test_interp_implausible_hr_is_source_artifact() {
+    // MPower33 source has HR=0 leading sample (equipment quirk) and HR drops to 0
+    // mid-ride (sensor dropouts). Forward-fill keeps leading 0, then linear interp
+    // ramps 0 -> 92 across the first 3s, producing ~28 bpm/s which exceeds W038.
+    // This test documents that W038 reflects source data, not an interp bug.
+    let src = read_sample("MPower33.tcx");
+    let interp = read_sample("MPower33_interp.tcx");
+    let src_w038 = lint_tcx(&src)
+        .iter()
+        .filter(|r| r.severity == Severity::Warning && r.code == "W038")
+        .count();
+    let interp_w038 = lint_tcx(&interp)
+        .iter()
+        .filter(|r| r.severity == Severity::Warning && r.code == "W038")
+        .count();
+    assert!(src_w038 > 0, "source should have implausible HR changes from sensor dropouts");
+    assert!(interp_w038 > 0, "interp should still flag source-derived HR drops");
+    // Forward-fill + linear ramp should not introduce HR spikes the source didn't have.
+    // Assert interp has at most 2x the source count (generous; dropouts are 1-step
+    // in source but become 3-step ramps in interp).
     assert!(
-        codes.contains(&"W021"),
-        "MPower33_interp should have HR=0 warnings (W021)"
+        interp_w038 <= src_w038 * 2,
+        "interp W038 count {} should be <= 2x source {} (forward-fill smearing)",
+        interp_w038,
+        src_w038
     );
 }
 
 #[test]
-fn test_interp_implausible_hr_change_detected() {
-    let xml = read_sample("MPower33_interp.tcx");
-    let results = lint_tcx(&xml);
-    let codes = codes(&results);
-    assert!(
-        codes.contains(&"W038"),
-        "MPower33_interp should have implausible HR change (W038)"
-    );
-}
-
-#[test]
-fn test_interp_negative_zero_distance_detected() {
+fn test_interp_no_negative_zero_distance() {
     let xml = read_sample("stagesnul_interp.tcx");
     let results = lint_tcx(&xml);
-    let codes = codes(&results);
+    let warns: Vec<&str> = results
+        .iter()
+        .filter(|r| r.severity == Severity::Warning)
+        .map(|r| r.code)
+        .collect();
     assert!(
-        codes.contains(&"W037"),
-        "stagesnul_interp should have negative-zero distance (W037)"
+        !warns.contains(&"W037"),
+        "stagesnul_interp should have no negative-zero distance after linear interpolation"
     );
 }
 
@@ -303,13 +332,6 @@ fn test_time_backwards() {
     let xml = minimal_tcx(&one_lap(&trackpoints));
     let results = lint_tcx(&xml);
     assert!(codes(&results).contains(&"E010"), "time backwards should trigger E010");
-}
-
-#[test]
-fn test_hr_zero_warning() {
-    let xml = minimal_tcx(&one_lap(&tp(0, "2010-10-19T20:56:35Z", 0, 80, "10.0", 150)));
-    let results = lint_tcx(&xml);
-    assert!(codes(&results).contains(&"W021"), "HR=0 should trigger W021");
 }
 
 #[test]

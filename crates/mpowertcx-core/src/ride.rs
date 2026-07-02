@@ -188,18 +188,22 @@ impl Ride {
 
         let power_f: Vec<f64> = self.power.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect();
         let rpm_f: Vec<f64> = self.rpm.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect();
-        let hr_f: Vec<f64> = self.hr.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect();
+        let mut hr_f: Vec<f64> = self.hr.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect();
         let dist_f: Vec<f64> = self.distance.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect();
 
-        let interp_power = spline_interp(&xa, &power_f, &xb);
-        let interp_rpm = spline_interp(&xa, &rpm_f, &xb);
-        let interp_hr = spline_interp(&xa, &hr_f, &xb);
-        let interp_dist = spline_interp(&xa, &dist_f, &xb);
+        forward_fill(&mut hr_f);
 
-        self.power = interp_power.iter().map(|v| (*v as i64).to_string()).collect();
-        self.rpm = interp_rpm.iter().map(|v| (*v as i64).to_string()).collect();
-        self.hr = interp_hr.iter().map(|v| (*v as i64).to_string()).collect();
-        self.distance = interp_dist.iter().map(|v| float_to_str(*v)).collect();
+        let interp_power = linear_interp(&xa, &power_f, &xb);
+        let interp_rpm = linear_interp(&xa, &rpm_f, &xb);
+        let interp_hr = linear_interp(&xa, &hr_f, &xb);
+        let mut interp_dist = linear_interp(&xa, &dist_f, &xb);
+
+        enforce_monotonic(&mut interp_dist);
+
+        self.power = interp_power.iter().map(|&v| (v.max(0.0) as i64).to_string()).collect();
+        self.rpm = interp_rpm.iter().map(|&v| (v.max(0.0) as i64).to_string()).collect();
+        self.hr = interp_hr.iter().map(|&v| (v as i64).to_string()).collect();
+        self.distance = interp_dist.iter().map(|&v| float_to_str(v)).collect();
     }
 
     pub fn model_distance(&mut self, mass: f64) {
@@ -229,138 +233,57 @@ pub fn python_float(v: f64) -> String {
     }
 }
 
-fn spline_interp(xa: &[f64], ya: &[f64], xb: &[f64]) -> Vec<f64> {
+fn linear_interp(xa: &[f64], ya: &[f64], xb: &[f64]) -> Vec<f64> {
     let n = xa.len();
-    if n < 2 || xb.is_empty() {
-        return xb.iter().map(|&x| {
-            if n == 1 { return ya[0]; }
-            linear_extrap(xa, ya, x)
-        }).collect();
+    if n == 0 || xb.is_empty() {
+        return Vec::new();
     }
-    if n == 2 {
-        return xb.iter().map(|&x| {
-            if x < xa[0] || x > xa[1] { linear_extrap(xa, ya, x) }
-            else { let t = (x - xa[0]) / (xa[1] - xa[0]); ya[0] + t * (ya[1] - ya[0]) }
-        }).collect();
+    if n == 1 {
+        return xb.iter().map(|_| ya[0]).collect();
     }
 
-    let mut h = vec![0.0f64; n - 1];
-    for i in 0..n - 1 {
-        h[i] = xa[i + 1] - xa[i];
-    }
-
-    // Not-a-knot boundary conditions, solving for c[1..n-1] (size m = n-2)
-    // c[0] is expressed from the left not-a-knot condition:
-    //   -h[1]*c[0] + (h[0]+h[1])*c[1] - h[0]*c[2] = 0
-    //   c[0] = ((h[0]+h[1])*c[1] - h[0]*c[2]) / h[1]
-    // c[n-1] from the right not-a-knot:
-    //   -h[n-2]*c[n-3] + (h[n-3]+h[n-2])*c[n-2] - h[n-3]*c[n-1] = 0
-    //   c[n-1] = ((h[n-3]+h[n-2])*c[n-2] - h[n-2]*c[n-3]) / h[n-3]
-
-    let m = n - 2; // number of interior unknowns: c[1]..c[n-2]
-
-    // Build tridiagonal system for c[1]..c[n-2]
-    let mut dl = vec![0.0f64; m]; // sub-diagonal
-    let mut dd = vec![0.0f64; m]; // diagonal
-    let mut du = vec![0.0f64; m]; // super-diagonal
-    let mut rhs = vec![0.0f64; m];
-
-    // Interior equations (rows 1..n-2 of the full system map to rows 0..m-1)
-    // Row j in reduced system corresponds to c[j+1]
-    for j in 0..m {
-        let i = j + 1; // original index
-        rhs[j] = 3.0 * ((ya[i + 1] - ya[i]) / h[i] - (ya[i] - ya[i - 1]) / h[i - 1]);
-        if j > 0 {
-            dl[j] = h[i - 1];
-        }
-        dd[j] = 2.0 * (h[i - 1] + h[i]);
-        if j < m - 1 {
-            du[j] = h[i];
-        }
-    }
-
-    // Modify first row (j=0, i=1): substitute c[0] = alpha*c[1] + beta*c[2]
-    // c[0] = ((h0+h1)*c[1] - h0*c[2]) / h1
-    let h0 = h[0];
-    let h1 = h[1];
-    let alpha = (h0 + h1) / h1;
-    let beta = -h0 / h1;
-    // Row 1: h0*c[0] + 2*(h0+h1)*c[1] + h1*c[2] = rhs[1]
-    // => h0*(alpha*c[1] + beta*c[2]) + 2*(h0+h1)*c[1] + h1*c[2] = rhs[1]
-    // => (h0*alpha + 2*(h0+h1))*c[1] + (h0*beta + h1)*c[2] = rhs[1]
-    dd[0] = h0 * alpha + 2.0 * (h0 + h1);
-    du[0] = h0 * beta + h1;
-
-    // Modify last row (j=m-1, i=n-2): substitute c[n-1] = gamma*c[n-2] + delta*c[n-3]
-    let hnm2 = h[n - 2];
-    let hnm3 = h[n - 3];
-    let gamma = (hnm3 + hnm2) / hnm3;
-    let delta = -hnm2 / hnm3;
-    // Row n-2: h[n-3]*c[n-3] + 2*(h[n-3]+h[n-2])*c[n-2] + h[n-2]*c[n-1] = rhs[n-2]
-    // => h[n-3]*c[n-3] + 2*(hnm3+hnm2)*c[n-2] + hnm2*(gamma*c[n-2] + delta*c[n-3]) = rhs[n-2]
-    // => (hnm3 + hnm2*delta)*c[n-3] + (2*(hnm3+hnm2) + hnm2*gamma)*c[n-2] = rhs[n-2]
-    dl[m - 1] = hnm3 + hnm2 * delta;
-    dd[m - 1] = 2.0 * (hnm3 + hnm2) + hnm2 * gamma;
-
-    // Solve tridiagonal system using Thomas algorithm
-    let mut cp = vec![0.0f64; m];
-    let mut dp = vec![0.0f64; m];
-
-    cp[0] = du[0] / dd[0];
-    dp[0] = rhs[0] / dd[0];
-
-    for j in 1..m {
-        let denom = dd[j] - dl[j] * cp[j - 1];
-        cp[j] = if j < m - 1 { du[j] / denom } else { 0.0 };
-        dp[j] = (rhs[j] - dl[j] * dp[j - 1]) / denom;
-    }
-
-    let mut c_int = vec![0.0f64; m];
-    c_int[m - 1] = dp[m - 1];
-    for j in (0..m - 1).rev() {
-        c_int[j] = dp[j] - cp[j] * c_int[j + 1];
-    }
-
-    // Full c array: c[0]..c[n-1]
-    let mut c = vec![0.0f64; n];
-    for j in 0..m {
-        c[j + 1] = c_int[j];
-    }
-    // c[0] from not-a-knot
-    c[0] = alpha * c[1] + beta * c[2];
-    // c[n-1] from not-a-knot
-    c[n - 1] = gamma * c[n - 2] + delta * c[n - 3];
-
-    // Compute b and d coefficients
-    let mut b = vec![0.0f64; n];
-    let mut d = vec![0.0f64; n];
-    for i in 0..n - 1 {
-        b[i] = (ya[i + 1] - ya[i]) / h[i] - h[i] * (c[i + 1] + 2.0 * c[i]) / 3.0;
-        d[i] = (c[i + 1] - c[i]) / (3.0 * h[i]);
-    }
-
-    // Evaluate spline at query points
-    let mut result = Vec::with_capacity(xb.len());
-    for &x in xb {
-        if x < xa[0] || x > xa[n - 1] {
-            result.push(linear_extrap(xa, ya, x));
-            continue;
-        }
-        let mut lo = 0usize;
-        let mut hi = n - 1;
-        while hi - lo > 1 {
-            let mid = (lo + hi) / 2;
-            if xa[mid] <= x {
-                lo = mid;
-            } else {
-                hi = mid;
+    xb.iter()
+        .map(|&x| {
+            if x < xa[0] || x > xa[n - 1] {
+                return linear_extrap(xa, ya, x);
             }
+
+            let mut lo = 0usize;
+            let mut hi = n - 1;
+            while hi - lo > 1 {
+                let mid = (lo + hi) / 2;
+                if xa[mid] <= x {
+                    lo = mid;
+                } else {
+                    hi = mid;
+                }
+            }
+            let t = (x - xa[lo]) / (xa[lo + 1] - xa[lo]);
+            ya[lo] + t * (ya[lo + 1] - ya[lo])
+        })
+        .collect()
+}
+
+fn forward_fill(vals: &mut [f64]) {
+    let mut last = 0.0;
+    for v in vals.iter_mut() {
+        if *v == 0.0 {
+            *v = last;
+        } else {
+            last = *v;
         }
-        let dx = x - xa[lo];
-        let val = ya[lo] + b[lo] * dx + c[lo] * dx * dx + d[lo] * dx * dx * dx;
-        result.push(val);
     }
-    result
+}
+
+fn enforce_monotonic(vals: &mut [f64]) {
+    let mut max_val = f64::NEG_INFINITY;
+    for v in vals.iter_mut() {
+        if *v < max_val {
+            *v = max_val;
+        } else {
+            max_val = *v;
+        }
+    }
 }
 
 fn linear_extrap(xa: &[f64], ya: &[f64], x: f64) -> f64 {

@@ -32,6 +32,38 @@ Options:
 - `--time <TIME>` - workout start time (defaults to file timestamp)
 - `--interpolate` - resample to 1-second intervals (recommended)
 - `--model <MASS_KG>` - use physics model for speed and distance
+- `--lint <FILE>` - check a TCX file for errors/warnings, exit 1 on errors
+
+## Interpolation
+
+`--interpolate` upsamples the source data (typically 3-second intervals from
+indoor bikes) to 1-second intervals so Strava and Garmin Connect render smooth
+charts. The converter uses linear interpolation with three field-specific
+guards:
+
+- Power and cadence are clamped to >= 0 (no negative overshoot).
+- Heart rate zeros are forward-filled from the last known non-zero value before
+  interpolation; leading zeros stay 0 (no invented HR before the first reading).
+- Distance is enforced monotonic non-decreasing after interpolation (no
+  backwards movement).
+
+Linear interpolation is deliberately chosen over spline/PCHIP/Akima: it
+never overshoots the source min/max and never invents spikes. Whipsaws and
+HR dropouts in the output reflect quirks in the source data (e.g. equipment
+that clamps Watts > 2500, or sensor dropouts that send HR=0), not artifacts of
+interpolation. Use `--lint` to spot them.
+
+## Linter
+
+`--lint <FILE>` checks any TCX file (your own, or one produced by
+`--interpolate`) for structural problems and implausible values:
+
+```
+cargo run --release -- --lint output.tcx
+```
+
+Errors (E001-E036) cause exit code 1; warnings (W013-W038) print but exit 0.
+See `crates/mpowertcx-core/src/linter.rs` for the full list of checks.
 
 ## Web version
 

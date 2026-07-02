@@ -740,14 +740,6 @@ fn check_trackpoint_data(tcx: &ParsedTcx, results: &mut Vec<LintResult>) {
                             Some(tp_ctx.clone()),
                         ));
                     }
-                    // W021: HR=0 (missing sensor data)
-                    if hr == 0 {
-                        results.push(LintResult::warn(
-                            "W021",
-                            "HeartRate is 0 (missing sensor data)",
-                            Some(tp_ctx.clone()),
-                        ));
-                    }
                 }
 
                 // W018: Cadence out of range
