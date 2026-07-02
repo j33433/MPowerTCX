@@ -76,6 +76,10 @@
         <button @click="downloadTcx()">Download TCX</button>
       </div>
 
+      <div class="alert alert-warning" x-show="noticeVisible" x-cloak>
+        <span x-text="noticeText"></span>
+      </div>
+
       <div class="alert alert-danger" x-show="errorVisible" x-cloak>
         <span x-text="errorText"></span>
         <details x-show="debugText" x-cloak style="margin-top: 0.5rem;">
@@ -119,6 +123,8 @@
         fileName: '',
         resultText: '',
         resultVisible: false,
+        noticeText: '',
+        noticeVisible: false,
         errorText: '',
         errorVisible: false,
         debugText: '',
@@ -158,6 +164,12 @@
             this.resultText = `Converted ${result.sample_count} samples (${result.equipment}). Click Download TCX to save.`;
             this.resultVisible = true;
             this.errorVisible = false;
+            if (result.lint_error_count > 0) {
+              this.noticeText = `A few unusual values were spotted in the data. The file should still import fine into most apps. If something looks off after importing, send the CSV our way and we'll take a look.`;
+              this.noticeVisible = true;
+            } else {
+              this.noticeVisible = false;
+            }
           } catch (err) {
             this.showError('Conversion failed: ' + err, '');
           }
@@ -197,6 +209,7 @@
 
         showError(msg, debug) {
           this.resultVisible = false;
+          this.noticeVisible = false;
           this.errorVisible = true;
           this.errorText = msg;
           this.debugText = debug || '';
