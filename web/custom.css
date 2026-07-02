@@ -36,6 +36,10 @@ section[id], article[id] { scroll-margin-top: 60px; }
 .mass-control input[type="range"] { margin: 0.15rem 0 0; padding: 0; }
 .mass-display { font-weight: 600; min-width: 3rem; }
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; margin-top: 1rem; }
+.stats-preview { grid-template-columns: repeat(4, 1fr); gap: 0.75rem 0.5rem; }
+@media (max-width: 576px) { .stats-preview { grid-template-columns: repeat(2, 1fr); } }
+.preview { margin-bottom: 1rem; }
+.preview .chart-controls { margin-top: 1rem; justify-content: center; }
 article > article { margin-top: 1rem; margin-bottom: 0; }
 
 .loading-spinner { display: inline-block; width: 1.5rem; height: 1.5rem; border: 3px solid var(--pico-muted-border-color); border-top-color: var(--pico-primary); border-radius: 50%; animation: spin 1s linear infinite; }

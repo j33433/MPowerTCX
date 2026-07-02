@@ -76,6 +76,31 @@
         <button @click="downloadTcx()">Download TCX</button>
       </div>
 
+      <div class="preview" x-show="previewVisible" x-cloak>
+        <div class="stats stats-preview">
+          <div><small class="muted">Duration</small><br><strong x-text="previewStats.duration"></strong></div>
+          <div><small class="muted">Distance</small><br><strong x-text="previewStats.distance"></strong></div>
+          <div><small class="muted">Avg power</small><br><strong x-text="previewStats.avgPower"></strong></div>
+          <div><small class="muted">Max power</small><br><strong x-text="previewStats.maxPower"></strong></div>
+          <div><small class="muted">Avg HR</small><br><strong x-text="previewStats.avgHr"></strong></div>
+          <div><small class="muted">Max HR</small><br><strong x-text="previewStats.maxHr"></strong></div>
+          <div><small class="muted">Avg cadence</small><br><strong x-text="previewStats.avgCadence"></strong></div>
+          <div><small class="muted">Avg speed</small><br><strong x-text="previewStats.avgSpeed"></strong></div>
+        </div>
+
+        <div class="chart-controls" x-show="chartVisible">
+          <div class="btn-group">
+            <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
+            <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'">Speed</button>
+            <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart rate</button>
+            <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
+          </div>
+        </div>
+        <div class="chart-container" x-show="chartVisible">
+          <canvas id="previewChart"></canvas>
+        </div>
+      </div>
+
       <div class="alert alert-warning" x-show="noticeVisible" x-cloak>
         <span x-text="noticeText"></span>
       </div>
@@ -113,6 +138,7 @@
       let fileBytes = null;
       let lastTcx = '';
       let lastFilename = 'output.tcx';
+      let preview = null;
 
       return {
         wasmReady: false,
@@ -128,6 +154,10 @@
         errorText: '',
         errorVisible: false,
         debugText: '',
+        previewVisible: false,
+        chartVisible: false,
+        previewView: 'power',
+        previewStats: {},
 
         async init() {
           try {
@@ -135,6 +165,7 @@
             await init('./pkg/mpowertcx_wasm_bg.wasm');
             convert = convert_csv_to_tcx;
             this.wasmReady = true;
+            this.$watch('previewView', (v) => preview && preview.setView(v));
             if (fileBytes) this.runConversion();
           } catch (e) {
             console.error('Failed to load WASM:', e);
@@ -170,8 +201,26 @@
             } else {
               this.noticeVisible = false;
             }
+            this.renderPreview();
           } catch (err) {
             this.showError('Conversion failed: ' + err, '');
+          }
+        },
+
+        async renderPreview() {
+          try {
+            if (!preview) {
+              const { createPreviewChart } = await import('./preview-chart.js');
+              preview = createPreviewChart('previewChart');
+            }
+            this.previewVisible = true;
+            const { stats, charted } = await preview.render(lastTcx, this.previewView);
+            this.previewStats = stats;
+            this.chartVisible = charted;
+          } catch (e) {
+            console.error('Preview failed:', e);
+            this.previewVisible = false;
+            this.chartVisible = false;
           }
         },
 
@@ -210,6 +259,8 @@
         showError(msg, debug) {
           this.resultVisible = false;
           this.noticeVisible = false;
+          this.previewVisible = false;
+          this.chartVisible = false;
           this.errorVisible = true;
           this.errorText = msg;
           this.debugText = debug || '';
