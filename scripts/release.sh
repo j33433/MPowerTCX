@@ -8,6 +8,12 @@ if [ $# -ne 1 ]; then
 fi
 
 VERSION="$1"
+
+if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Error: version must be in n.n.n format (e.g. 3.1.3)"
+  exit 1
+fi
+
 TAG="v${VERSION}"
 INDEX="web/index.html"
 
