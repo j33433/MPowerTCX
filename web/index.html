@@ -22,7 +22,7 @@
     </div>
   </nav>
 
-  <main class="container" style="max-width: 720px;">
+  <main class="container" style="max-width: 880px;">
     <article x-data="converter()">
       <div class="center" style="margin-bottom: 1rem;">
         <h1 class="brand">upload.bike</h1>
@@ -71,16 +71,15 @@
           <input type="file" id="customFile" accept=".csv,text/csv" @change="changeFile($event)" hidden>
           <label for="customFile" class="file-label" x-text="fileName || 'Choose CSV file…'"></label>
         </div>
-        <button class="outline" x-show="resultVisible" x-cloak @click="downloadTcx()" style="width: auto; margin: 0; white-space: nowrap;">Download TCX</button>
+        <button x-show="resultVisible" x-cloak @click="downloadTcx()" style="width: auto; margin: 0; white-space: nowrap;">Download TCX</button>
       </div>
-
-      <p x-show="resultVisible" x-cloak class="muted small" style="text-align: center; margin-bottom: 1rem;">
-        <span x-text="resultText"></span>
-      </p>
 
       <div class="preview" x-show="previewVisible" x-cloak>
         <div class="chart-container" x-show="chartVisible">
           <canvas id="previewChart"></canvas>
+          <div class="chart-overlay" x-show="resultVisible && !resultFaded" x-transition.opacity x-cloak>
+            <span x-text="resultText"></span>
+          </div>
         </div>
 
         <div class="chart-controls" x-show="chartVisible">
@@ -152,6 +151,7 @@
         fileName: '',
         resultText: '',
         resultVisible: false,
+        resultFaded: false,
         noticeText: '',
         noticeVisible: false,
         errorText: '',
@@ -197,7 +197,9 @@
             lastTcx = result.tcx;
             this.resultText = `Converted ${result.sample_count} samples (${result.equipment}).`;
             this.resultVisible = true;
+            this.resultFaded = false;
             this.errorVisible = false;
+            setTimeout(() => { this.resultFaded = true; }, 3000);
             if (result.lint_error_count > 0) {
               this.noticeText = `A few unusual values were spotted in the data. The file should still import fine into most apps. If something looks off after importing, send the CSV our way and we'll take a look.`;
               this.noticeVisible = true;
