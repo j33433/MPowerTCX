@@ -52,6 +52,7 @@ impl Systm {
             let distance = python_float(Self::get(row, "distanceVirtualMeters"));
 
             ride.add_sample(power, cadence, hr, distance);
+            ride.add_incline(python_float(Self::get(row, "grade")));
         }
 
         if let Some(stamp) = start_stamp {

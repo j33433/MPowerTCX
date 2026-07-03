@@ -149,7 +149,7 @@ fn test_plain_conversions_exact() {
         tested += 1;
     }
 
-    assert_eq!(tested, 25, "Expected 25 plain test cases");
+    assert_eq!(tested, 26, "Expected 26 plain test cases");
 }
 
 #[test]
@@ -181,7 +181,7 @@ fn test_model_conversions_exact() {
         tested += 1;
     }
 
-    assert_eq!(tested, 25, "Expected 25 model test cases");
+    assert_eq!(tested, 26, "Expected 26 model test cases");
 }
 
 #[test]
@@ -247,5 +247,5 @@ fn test_interpolated_conversions_semantic() {
         tested += 1;
     }
 
-    assert_eq!(tested, 25, "Expected 25 interp test cases");
+    assert_eq!(tested, 26, "Expected 26 interp test cases");
 }

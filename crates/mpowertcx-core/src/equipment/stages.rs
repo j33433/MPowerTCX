@@ -109,6 +109,9 @@ impl Stages {
                         &row[4],
                         to_meters(distance, self.metric),
                     );
+                    if row.len() >= 9 {
+                        ride.add_incline(&row[8]);
+                    }
                 }
             }
         }

@@ -1,4 +1,4 @@
-use crate::ride::Ride;
+use crate::ride::{python_float, Ride};
 use chrono::{Datelike, NaiveDateTime, Timelike};
 
 fn format_time(dt: NaiveDateTime) -> String {
@@ -54,6 +54,26 @@ pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> S
     out.push_str("        <TriggerMethod>Manual</TriggerMethod>\n");
     out.push_str("        <Track>\n");
 
+    let altitudes: Vec<f64> = if !ride.incline.is_empty() && ride.incline.len() == ride.count() {
+        let mut alts = Vec::with_capacity(ride.count());
+        let mut elev = 0.0f64;
+        let mut prev_dist = 0.0f64;
+        for i in 0..ride.count() {
+            if i > 0 {
+                let dist = ride.distance[i].parse::<f64>().unwrap_or(0.0);
+                let incline = ride.incline[i].parse::<f64>().unwrap_or(0.0);
+                elev += (incline / 100.0) * (dist - prev_dist);
+                prev_dist = dist;
+            } else {
+                prev_dist = ride.distance[0].parse::<f64>().unwrap_or(0.0);
+            }
+            alts.push(elev);
+        }
+        alts
+    } else {
+        Vec::new()
+    };
+
     for i in 0..ride.count() {
         let delta_time = start_time + chrono::Duration::seconds(i as i64 * secs_per_sample);
         let time_str = format_time(delta_time);
@@ -63,6 +83,9 @@ pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> S
 
         out.push_str("          <Trackpoint>\n");
         out.push_str(&format!("            <Time>{}</Time>\n", time_str));
+        if !altitudes.is_empty() {
+            out.push_str(&format!("            <AltitudeMeters>{}</AltitudeMeters>\n", python_float(altitudes[i])));
+        }
         out.push_str("            <HeartRateBpm>\n");
         out.push_str(&format!("              <Value>{}</Value>\n", ride.hr[i]));
         out.push_str("            </HeartRateBpm>\n");

@@ -54,6 +54,7 @@ fn test_clean_samples_no_errors() {
         "STAGES98.tcx",
         "STAGES01-JS.tcx",
         "MPower1RJ.tcx",
+        "2021_09_15_11_09_Get_STRONG_Torque_Workout_2.tcx",
     ];
 
     for name in &clean {

@@ -125,6 +125,7 @@ impl Converter {
             rpm: self.ride.rpm.clone(),
             hr: self.ride.hr.clone(),
             distance: self.ride.distance.clone(),
+            incline: self.ride.incline.clone(),
             header: crate::ride::RideHeader::new(),
         };
 

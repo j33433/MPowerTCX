@@ -74,6 +74,7 @@ pub struct Ride {
     pub rpm: Vec<String>,
     pub hr: Vec<String>,
     pub distance: Vec<String>,
+    pub incline: Vec<String>,
     pub header: RideHeader,
 }
 
@@ -90,6 +91,7 @@ impl Ride {
             rpm: Vec::new(),
             hr: Vec::new(),
             distance: Vec::new(),
+            incline: Vec::new(),
             header: RideHeader::new(),
         }
     }
@@ -99,6 +101,10 @@ impl Ride {
         self.rpm.push(rpm.to_string());
         self.hr.push(hr.to_string());
         self.distance.push(distance.to_string());
+    }
+
+    pub fn add_incline(&mut self, incline: impl ToString) {
+        self.incline.push(incline.to_string());
     }
 
     pub fn count(&self) -> usize {
@@ -204,6 +210,14 @@ impl Ride {
         self.rpm = interp_rpm.iter().map(|&v| (v.max(0.0) as i64).to_string()).collect();
         self.hr = interp_hr.iter().map(|&v| (v as i64).to_string()).collect();
         self.distance = interp_dist.iter().map(|&v| float_to_str(v)).collect();
+
+        if !self.incline.is_empty() && self.incline.len() == power_f.len() {
+            let incline_f: Vec<f64> = self.incline.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect();
+            let interp_incline = linear_interp(&xa, &incline_f, &xb);
+            self.incline = interp_incline.iter().map(|&v| float_to_str(v)).collect();
+        } else {
+            self.incline.clear();
+        }
     }
 
     pub fn model_distance(&mut self, mass: f64) {
@@ -211,9 +225,14 @@ impl Ride {
         let mut bike = crate::physics::SimpleBike::new(mass);
         bike.set_time_delta(delta);
 
+        let has_incline = !self.incline.is_empty() && self.incline.len() == self.power.len();
+
         self.distance.clear();
-        for p in &self.power {
-            let (_power, _v_mph, distance) = bike.next_sample(p.parse::<f64>().unwrap_or(0.0));
+        for i in 0..self.power.len() {
+            if has_incline {
+                bike.set_grade(self.incline[i].parse::<f64>().unwrap_or(0.0));
+            }
+            let (_power, _v_mph, distance) = bike.next_sample(self.power[i].parse::<f64>().unwrap_or(0.0));
             self.distance.push(float_to_str(distance));
         }
 
