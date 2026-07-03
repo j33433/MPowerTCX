@@ -174,7 +174,7 @@ export function createPreviewChart(canvasId) {
           },
         },
         scales: {
-          x: { title: { display: true, text: 'Time' }, ticks: { maxTicksLimit: 12 } },
+          x: { ticks: { maxTicksLimit: 12 } },
           y: { title: { display: true, text: yLabel }, beginAtZero: true },
         },
         elements: { line: { tension: 0.3 } },

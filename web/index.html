@@ -66,17 +66,32 @@
         <small class="muted">Recommended for maximum compatibility</small>
       </div>
 
-      <div class="field">
-        <input type="file" id="customFile" accept=".csv,text/csv" @change="changeFile($event)" hidden>
-        <label for="customFile" class="file-label" x-text="fileName || 'Choose CSV file…'"></label>
+      <div class="file-row">
+        <div class="field" style="margin-bottom: 0; flex: 1;">
+          <input type="file" id="customFile" accept=".csv,text/csv" @change="changeFile($event)" hidden>
+          <label for="customFile" class="file-label" x-text="fileName || 'Choose CSV file…'"></label>
+        </div>
+        <button class="outline" x-show="resultVisible" x-cloak @click="downloadTcx()" style="width: auto; margin: 0; white-space: nowrap;">Download TCX</button>
       </div>
 
-      <div class="alert alert-info result-row" x-show="resultVisible" x-cloak>
+      <p x-show="resultVisible" x-cloak class="muted small" style="text-align: center; margin-bottom: 1rem;">
         <span x-text="resultText"></span>
-        <button @click="downloadTcx()">Download TCX</button>
-      </div>
+      </p>
 
       <div class="preview" x-show="previewVisible" x-cloak>
+        <div class="chart-container" x-show="chartVisible">
+          <canvas id="previewChart"></canvas>
+        </div>
+
+        <div class="chart-controls" x-show="chartVisible">
+          <div class="btn-group">
+            <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'">Speed</button>
+            <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
+            <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart rate</button>
+            <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
+          </div>
+        </div>
+
         <div class="stats stats-preview">
           <div><small class="muted">Duration</small><br><strong x-text="previewStats.duration"></strong></div>
           <div><small class="muted">Distance</small><br><strong x-text="previewStats.distance"></strong></div>
@@ -86,18 +101,6 @@
           <div><small class="muted">Max HR</small><br><strong x-text="previewStats.maxHr"></strong></div>
           <div><small class="muted">Avg cadence</small><br><strong x-text="previewStats.avgCadence"></strong></div>
           <div><small class="muted">Avg speed</small><br><strong x-text="previewStats.avgSpeed"></strong></div>
-        </div>
-
-        <div class="chart-controls" x-show="chartVisible">
-          <div class="btn-group">
-            <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
-            <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'">Speed</button>
-            <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart rate</button>
-            <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
-          </div>
-        </div>
-        <div class="chart-container" x-show="chartVisible">
-          <canvas id="previewChart"></canvas>
         </div>
       </div>
 
@@ -156,7 +159,7 @@
         debugText: '',
         previewVisible: false,
         chartVisible: false,
-        previewView: 'power',
+        previewView: 'speed',
         previewStats: {},
 
         async init() {
