@@ -33,10 +33,6 @@ impl SimpleBike {
         self.time_delta = delta;
     }
 
-    pub fn set_grade(&mut self, grade_pct: f64) {
-        self.grade = grade_pct / 100.0;
-    }
-
     fn drag(&self, velocity: f64) -> f64 {
         0.5 * self.drag_coefficient * self.frontal_area * self.rho * velocity * velocity
     }

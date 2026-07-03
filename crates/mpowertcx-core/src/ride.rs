@@ -225,14 +225,14 @@ impl Ride {
         let mut bike = crate::physics::SimpleBike::new(mass);
         bike.set_time_delta(delta);
 
-        let has_incline = !self.incline.is_empty() && self.incline.len() == self.power.len();
-
+        // Note: grade is deliberately NOT applied here. Indoor trainer power
+        // already reflects the simulated hill (the trainer raises resistance on
+        // climbs), so adding gravity on top would double-count the effort and
+        // produce unrealistically low speeds. Incline is still emitted as
+        // AltitudeMeters for the elevation profile.
         self.distance.clear();
-        for i in 0..self.power.len() {
-            if has_incline {
-                bike.set_grade(self.incline[i].parse::<f64>().unwrap_or(0.0));
-            }
-            let (_power, _v_mph, distance) = bike.next_sample(self.power[i].parse::<f64>().unwrap_or(0.0));
+        for p in &self.power {
+            let (_power, _v_mph, distance) = bike.next_sample(p.parse::<f64>().unwrap_or(0.0));
             self.distance.push(float_to_str(distance));
         }
 

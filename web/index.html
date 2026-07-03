@@ -88,6 +88,7 @@
             <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
             <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart rate</button>
             <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
+            <button class="outline" x-show="previewStats.hasAltitude" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'">Elevation</button>
           </div>
         </div>
 
@@ -100,6 +101,7 @@
           <div><small class="muted">Max HR</small><br><strong x-text="previewStats.maxHr"></strong></div>
           <div><small class="muted">Avg cadence</small><br><strong x-text="previewStats.avgCadence"></strong></div>
           <div><small class="muted">Avg speed</small><br><strong x-text="previewStats.avgSpeed"></strong></div>
+          <div x-show="previewStats.hasAltitude"><small class="muted">Elev gain</small><br><strong x-text="previewStats.elevGain"></strong></div>
         </div>
       </div>
 
@@ -160,7 +162,11 @@
         previewVisible: false,
         chartVisible: false,
         previewView: 'speed',
-        previewStats: {},
+        previewStats: {
+          duration: '', distance: '', avgPower: '', maxPower: '',
+          avgHr: '', maxHr: '', avgCadence: '', avgSpeed: '',
+          hasAltitude: false, elevGain: '',
+        },
 
         async init() {
           try {
@@ -220,6 +226,10 @@
             }
             this.previewVisible = true;
             const { stats, charted } = await preview.render(lastTcx, this.previewView);
+            if (this.previewView === 'elevation' && !stats.hasAltitude) {
+              this.previewView = 'speed';
+              preview.setView('speed');
+            }
             this.previewStats = stats;
             this.chartVisible = charted;
           } catch (e) {

@@ -57,7 +57,7 @@ export function createPreviewChart(canvasId) {
     const n = points.length;
     const secsPerSample = n > 1 ? totalTime / (n - 1) : 1;
 
-    const out = { time: [], watts: [], cadence: [], hr: [], distance: [], secsPerSample };
+    const out = { time: [], watts: [], cadence: [], hr: [], distance: [], altitude: [], secsPerSample };
     for (let i = 0; i < n; i++) {
       const tp = points[i];
       const num = (tag) => {
@@ -68,6 +68,8 @@ export function createPreviewChart(canvasId) {
       out.cadence.push(num('Cadence'));
       out.hr.push(num('Value')); // first <Value> in a trackpoint is HR
       out.distance.push(num('DistanceMeters'));
+      const altEl = tp.getElementsByTagName('AltitudeMeters')[0];
+      out.altitude.push(altEl ? parseFloat(altEl.textContent) || 0 : null);
       out.time.push(i * secsPerSample);
     }
     return out;
@@ -101,6 +103,17 @@ export function createPreviewChart(canvasId) {
     const speeds = speedSeries(d);
     const lastDist = d.distance[d.distance.length - 1] || 0;
     const duration = d.time[d.time.length - 1] || 0;
+    const hasAlt = d.altitude.some((v) => v !== null);
+    let elevGain = 0;
+    if (hasAlt) {
+      for (let i = 1; i < d.altitude.length; i++) {
+        const prev = d.altitude[i - 1];
+        const cur = d.altitude[i];
+        if (prev !== null && cur !== null && cur > prev) {
+          elevGain += cur - prev;
+        }
+      }
+    }
 
     return {
       duration: fmtDuration(duration),
@@ -111,6 +124,8 @@ export function createPreviewChart(canvasId) {
       maxHr: d.hr.some((v) => v > 0) ? Math.round(Math.max(0, ...d.hr)) + ' bpm' : '--',
       avgCadence: Math.round(avg(d.cadence, true)) + ' rpm',
       avgSpeed: avg(speeds, false).toFixed(1) + ' mph',
+      hasAltitude: hasAlt,
+      elevGain: hasAlt ? Math.round(elevGain) + ' m' : '--',
     };
   }
 
@@ -119,6 +134,7 @@ export function createPreviewChart(canvasId) {
     speed:   { label: 'Speed',      y: 'Speed (mph)',    color: 'rgb(54, 162, 235)',  series: speedSeries },
     hr:      { label: 'Heart rate', y: 'Heart rate (bpm)', color: 'rgb(235, 77, 75)', series: (d) => d.hr },
     cadence: { label: 'Cadence',    y: 'Cadence (rpm)',  color: 'rgb(46, 174, 122)',  series: (d) => d.cadence },
+    elevation: { label: 'Elevation', y: 'Elevation (m)', color: 'rgb(139, 105, 20)', series: (d) => d.altitude.map(v => v === null ? 0 : v) },
   };
 
   function chartData(view) {
