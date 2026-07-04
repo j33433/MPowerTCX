@@ -96,6 +96,17 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_
         f'    <div class="container">\n      <a href="https://github.com/j33433/MPowerTCX" class="brand-icon"><img src="data:image/svg+xml,{icon_svg}" alt="upload.bike"></a>\n      <ul>'
     )
 
+    # Remove the [?] help links. They point at how-it-works.html, which
+    # doesn't exist in the single-file offline build.
+    html = html.replace(
+        ' <a class="help-link" href="./how-it-works.html#interpolation">[?]</a>',
+        ''
+    )
+    html = html.replace(
+        ' <a class="help-link" href="./how-it-works.html#physics">[?]</a>',
+        ''
+    )
+
     # Replace dynamic import with wasm_bindgen global
     html = html.replace(
         "const { default: init, convert_csv_to_tcx } = await import('./pkg/mpowertcx_wasm.js');\n"

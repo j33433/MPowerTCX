@@ -195,9 +195,9 @@ small { font-size: 80%; }
 .footer-support { margin-top: 1.25rem; }
 
 /* Content pages (About, Download) */
-.page-hero { text-align: center; margin: 1.5rem 0 2rem; }
+.page-hero { margin: 1.5rem 0 2rem; }
 .page-hero h1 { font-size: clamp(1.9rem, 4.5vw, 2.75rem); font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
-.page-hero p { color: var(--pico-muted-color); font-size: 1.1rem; margin: 0 auto; max-width: 46rem; }
+.page-hero p { color: var(--pico-muted-color); font-size: 1.1rem; margin: 0; max-width: 46rem; }
 
 .page-card { margin-bottom: 1.25rem; }
 .page-card h2 { font-size: 1.4rem; font-weight: 700; margin: 0 0 0.75rem; }

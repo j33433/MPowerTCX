@@ -75,7 +75,7 @@
 
           <div class="card">
             <h3 class="card-title">Rider + bike weight</h3>
-            <p class="card-sub">Used only for distance estimates</p>
+            <p class="card-sub">Used for speed and distance</p>
             <div class="weight-row">
               <input type="number" id="mass" x-model="mass" @change="onFormChange()" aria-label="Rider and bike weight">
               <select id="massUnits" x-model="massUnits" @change="onFormChange()" aria-label="Weight units">
@@ -83,7 +83,6 @@
                 <option>lbs</option>
               </select>
             </div>
-            <a href="./how-it-works.html" class="advanced-link">Show advanced options</a>
           </div>
         </div>
       </div>
