@@ -118,7 +118,7 @@
               <div class="btn-group">
                 <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'">Speed</button>
                 <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
-                <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart rate</button>
+                <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart</button>
                 <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
                 <button class="outline" x-show="previewStats.hasAltitude" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'">Elevation</button>
               </div>
@@ -363,7 +363,7 @@
           switch (this.previewView) {
             case 'speed': return metric ? 'Speed \u00b7 km/h' : 'Speed \u00b7 mph';
             case 'power': return 'Power \u00b7 watts';
-            case 'hr': return 'Heart rate \u00b7 bpm';
+            case 'hr': return 'Heart \u00b7 bpm';
             case 'cadence': return 'Cadence \u00b7 rpm';
             case 'elevation': return metric ? 'Elevation \u00b7 m' : 'Elevation \u00b7 ft';
             default: return '';

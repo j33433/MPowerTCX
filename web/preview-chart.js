@@ -144,7 +144,7 @@ export function createPreviewChart(canvasId) {
   const VIEWS = {
     power:   { label: 'Power',      color: 'rgb(214, 40, 158)',  series: (d) => d.watts },
     speed:   { label: 'Speed',      color: 'rgb(54, 162, 235)',  series: speedSeries },
-    hr:      { label: 'Heart rate', color: 'rgb(235, 77, 75)',   series: (d) => d.hr },
+    hr:      { label: 'Heart',      color: 'rgb(235, 77, 75)',   series: (d) => d.hr },
     cadence: { label: 'Cadence',    color: 'rgb(46, 174, 122)',  series: (d) => d.cadence },
     elevation: { label: 'Elevation', color: 'rgb(139, 105, 20)', series: (d) => d.altitude.map(v => v === null ? 0 : v) },
   };
