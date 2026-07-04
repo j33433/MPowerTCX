@@ -1,3 +1,4 @@
+use quick_xml::escape::unescape;
 use quick_xml::events::Event;
 use quick_xml::Reader;
 
@@ -187,7 +188,8 @@ fn parse(xml: &str) -> Result<ParsedTcx, String> {
                 }
             }
             Ok(Event::Text(t)) => {
-                text.push_str(&t.unescape().map_err(|e| e.to_string())?);
+                let decoded = t.decode().map_err(|e| e.to_string())?;
+                text.push_str(&unescape(&decoded).map_err(|e| e.to_string())?);
             }
             Ok(Event::End(e)) => {
                 let name = local_name(e.name().as_ref());
