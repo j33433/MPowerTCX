@@ -22,90 +22,155 @@
     </div>
   </nav>
 
-  <main class="container" style="max-width: 880px;">
+  <main class="container" style="max-width: 960px;">
     <article x-data="converter()">
-      <div class="center" style="margin-bottom: 1rem;">
-        <h1 class="brand">upload.bike</h1>
-        <p class="muted" style="margin-top: 0;">CSV &rarr; TCX (in your browser)</p>
+      <!-- Hero -->
+      <div class="hero">
+        <h1 class="hero-title">Convert CSV to TCX</h1>
+        <p class="hero-sub">For indoor bike workouts from Schwinn, Stages, NordicTrack, Wahoo SYSTM, and more</p>
       </div>
 
-      <p>
-        Convert spin bike workouts from CSV to TCX format. Results can be imported into Strava, TrainingPeaks, Garmin Connect, Golden Cheetah and other fitness trackers.
-      </p>
-      <p class="muted small">
-        All processing happens locally in your browser. Your data never leaves your device.
-      </p>
+      <!-- ==================== INITIAL STATE ==================== -->
+      <div x-show="!resultVisible">
+        <div class="privacy-pill center">
+          <svg class="pill-check" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9" fill="currentColor"/><path d="M6 10l3 3 5-6" stroke="var(--pico-card-background-color)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Private by design &mdash; your file never leaves your browser</span>
+        </div>
 
-      <div class="form-grid">
-        <div>
-          <div style="margin-bottom: 0.75rem;">
-            <label>
-              <input type="checkbox" id="checkPhysics" x-model="physics" @change="onFormChange()">
-              Fix speed and distance [<a href="./how-it-works.html#physics">?</a>]
-            </label>
-            <small class="muted">Use physics model (requires mass)</small>
-          </div>
-          <div>
-            <label>
+        <!-- Drag & drop upload zone -->
+        <input type="file" id="customFile" accept=".csv,text/csv" @change="changeFile($event)" hidden>
+        <label for="customFile" class="dropzone" :class="{ dragging: isDragging }"
+               @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false"
+               @drop.prevent="dropFile($event)">
+          <span class="dropzone-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M24 32V10M24 10l-8 8M24 10l8 8M12 33h24"/>
+            </svg>
+          </span>
+          <span class="dropzone-title">Drop your CSV file here</span>
+          <span class="dropzone-sub">or choose a file from your computer</span>
+          <span class="dropzone-btn contrast">Choose CSV file</span>
+        </label>
+
+        <!-- Settings cards -->
+        <div class="settings-grid">
+          <div class="card">
+            <h3 class="card-title">Recommended fixes</h3>
+            <p class="card-sub">Enabled by default for best compatibility</p>
+            <label class="check-row">
               <input type="checkbox" id="checkInterpolate" x-model="interpolate" @change="onFormChange()">
-              Fix timing [<a href="./how-it-works.html#interpolation">?</a>]
+              <span>
+                <span class="check-label"><strong>Repair workout timing</strong> <a class="help-link" href="./how-it-works.html#interpolation">[?]</a></span>
+                <small class="muted">Improves imports into Strava, Garmin, and TrainingPeaks</small>
+              </span>
             </label>
-            <small class="muted">Recommended for maximum compatibility</small>
+            <label class="check-row">
+              <input type="checkbox" id="checkPhysics" x-model="physics" @change="onFormChange()">
+              <span>
+                <span class="check-label"><strong>Estimate missing speed and distance</strong> <a class="help-link" href="./how-it-works.html#physics">[?]</a></span>
+                <small class="muted">Uses a physics model based on rider weight</small>
+              </span>
+            </label>
           </div>
-        </div>
-        <div>
-          <label for="mass">Mass</label>
-          <input type="number" id="mass" x-model="mass" @change="onFormChange()" style="max-width: 6rem;">
-          <small class="muted">Rider &amp; bike</small>
-        </div>
-        <div>
-          <label for="massUnits">Units</label>
-          <select id="massUnits" x-model="massUnits" @change="onFormChange()" style="max-width: 5rem;">
-            <option>kg</option>
-            <option>lbs</option>
-          </select>
+
+          <div class="card">
+            <h3 class="card-title">Rider + bike weight</h3>
+            <p class="card-sub">Used only for distance estimates</p>
+            <div class="weight-row">
+              <input type="number" id="mass" x-model="mass" @change="onFormChange()" aria-label="Rider and bike weight">
+              <select id="massUnits" x-model="massUnits" @change="onFormChange()" aria-label="Weight units">
+                <option>kg</option>
+                <option>lbs</option>
+              </select>
+            </div>
+            <a href="./how-it-works.html" class="advanced-link">Show advanced options</a>
+          </div>
         </div>
       </div>
 
-      <div class="file-row">
-        <div class="field" style="margin-bottom: 0; flex: 1;">
-          <input type="file" id="customFile" accept=".csv,text/csv" @change="changeFile($event)" hidden>
-          <label for="customFile" class="file-label" x-text="fileName || 'Choose CSV file…'"></label>
-        </div>
-        <button x-show="resultVisible" x-cloak @click="downloadTcx()" style="width: auto; margin: 0; white-space: nowrap;">Download TCX</button>
-      </div>
-
-      <div class="preview" x-show="previewVisible" x-cloak>
-        <div class="chart-container" x-show="chartVisible">
-          <canvas id="previewChart"></canvas>
-          <div class="chart-overlay" x-show="resultVisible && !resultFaded" x-transition.opacity x-cloak>
-            <span x-text="resultText"></span>
+      <!-- ==================== RESULT STATE ==================== -->
+      <div class="preview" x-show="resultVisible" x-cloak>
+        <!-- Success header -->
+        <div class="success-header">
+          <div class="success-icon" aria-hidden="true">
+            <svg viewBox="0 0 36 36" width="36" height="36"><circle cx="18" cy="18" r="18" fill="currentColor"/><path d="M11 18l5 5 9-11" stroke="var(--pico-card-background-color)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="success-body">
+            <h2 class="success-title">Your TCX file is ready</h2>
+            <p class="success-sub">Converted locally in your browser. Your data never left your device.</p>
+            <p class="success-file" x-text="fileName"></p>
+            <p class="success-format muted">Detected format: <span x-text="equipment"></span></p>
+          </div>
+          <div class="success-actions">
+            <button @click="downloadTcx()">Download TCX</button>
+            <button class="secondary" @click="reset()">Convert another file</button>
           </div>
         </div>
 
-        <div class="chart-controls" x-show="chartVisible">
-          <div class="btn-group">
-            <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'">Speed</button>
-            <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
-            <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart rate</button>
-            <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
-            <button class="outline" x-show="previewStats.hasAltitude" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'">Elevation</button>
+        <!-- Two-column result layout -->
+        <div class="result-grid">
+          <div class="card chart-card">
+            <h3 class="card-title">Workout preview</h3>
+            <p class="card-sub" x-text="chartSubLabel()"></p>
+            <div class="chart-container" x-show="chartVisible">
+              <canvas id="previewChart"></canvas>
+            </div>
+            <div class="chart-controls" x-show="chartVisible">
+              <div class="btn-group">
+                <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'">Speed</button>
+                <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
+                <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart rate</button>
+                <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
+                <button class="outline" x-show="previewStats.hasAltitude" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'">Elevation</button>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="stats stats-preview">
-          <div><small class="muted">Duration</small><br><strong x-text="previewStats.duration"></strong></div>
-          <div><small class="muted">Distance</small><br><strong x-text="previewStats.distance"></strong></div>
-          <div><small class="muted">Avg power</small><br><strong x-text="previewStats.avgPower"></strong></div>
-          <div><small class="muted">Max power</small><br><strong x-text="previewStats.maxPower"></strong></div>
-          <div><small class="muted">Avg HR</small><br><strong x-text="previewStats.avgHr"></strong></div>
-          <div><small class="muted">Max HR</small><br><strong x-text="previewStats.maxHr"></strong></div>
-          <div><small class="muted">Avg cadence</small><br><strong x-text="previewStats.avgCadence"></strong></div>
-          <div><small class="muted">Avg speed</small><br><strong x-text="previewStats.avgSpeed"></strong></div>
-          <div x-show="previewStats.hasAltitude"><small class="muted">Elev gain</small><br><strong x-text="previewStats.elevGain"></strong></div>
+          <div class="result-side">
+            <div class="card">
+              <h3 class="card-title">Conversion settings</h3>
+              <label class="check-row compact">
+                <input type="checkbox" x-model="interpolate" @change="onFormChange()">
+                <span><strong>Repair timing</strong></span>
+              </label>
+              <label class="check-row compact">
+                <input type="checkbox" x-model="physics" @change="onFormChange()">
+                <span><strong>Estimate distance</strong></span>
+              </label>
+              <p class="card-sub" style="margin-top:0.75rem;">Rider + bike weight</p>
+              <div class="weight-row">
+                <input type="number" x-model="mass" @change="onFormChange()" aria-label="Rider and bike weight">
+                <select x-model="massUnits" @change="onFormChange()" aria-label="Weight units">
+                  <option>kg</option>
+                  <option>lbs</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card" x-data="{ showAll: false }">
+              <h3 class="card-title">Summary</h3>
+              <div class="summary-grid">
+                <div><small class="muted">Duration</small><br><strong x-text="previewStats.duration"></strong></div>
+                <div><small class="muted">Distance</small><br><strong x-text="previewStats.distance"></strong></div>
+                <div><small class="muted">Avg power</small><br><strong x-text="previewStats.avgPower"></strong></div>
+                <div><small class="muted">Avg HR</small><br><strong x-text="previewStats.avgHr"></strong></div>
+                <template x-if="showAll">
+                  <div style="display:contents;">
+                    <div><small class="muted">Max power</small><br><strong x-text="previewStats.maxPower"></strong></div>
+                    <div><small class="muted">Max HR</small><br><strong x-text="previewStats.maxHr"></strong></div>
+                    <div><small class="muted">Avg cadence</small><br><strong x-text="previewStats.avgCadence"></strong></div>
+                    <div><small class="muted">Avg speed</small><br><strong x-text="previewStats.avgSpeed"></strong></div>
+                    <div x-show="previewStats.hasAltitude"><small class="muted">Elev gain</small><br><strong x-text="previewStats.elevGain"></strong></div>
+                  </div>
+                </template>
+              </div>
+              <a href="#" class="advanced-link" @click.prevent="showAll = !showAll" x-text="showAll ? 'Hide metrics' : 'View all metrics'"></a>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Alerts -->
       <div class="alert alert-warning" x-show="noticeVisible" x-cloak>
         <span x-text="noticeText"></span>
       </div>
@@ -118,17 +183,23 @@
         </details>
       </div>
 
+      <!-- Supported formats -->
       <hr>
+      <div class="formats-section">
+        <span class="formats-label muted">Supported formats</span>
+        <div class="format-pills">
+          <span class="format-pill">Schwinn</span>
+          <span class="format-pill">Stages</span>
+          <span class="format-pill">NordicTrack</span>
+          <span class="format-pill">PRO-FORM</span>
+          <span class="format-pill">Wahoo SYSTM</span>
+          <span class="format-pill">Sufferfest</span>
+        </div>
+      </div>
 
-      <p>
-        Schwinn MPower Echelon, Stages Indoor Cycles, NordicTrack
-        Studio Cycles, PRO-FORM iFit, The Sufferfest, Wahoo SYSTM and a few other formats supported.
-      </p>
-      <p>
-        Contact <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a> for feedback &amp; troubleshooting.
-      </p>
-      <p class="muted small">
-        Open source: <a href="https://github.com/j33433/MPowerTCX">github.com/j33433/MPowerTCX</a>
+      <p class="footer-support muted small center">
+        Need help? Contact <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a>
+        &middot; Open source on <a href="https://github.com/j33433/MPowerTCX">GitHub</a>
       </p>
       <div class="center">
         <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="clanken" data-color="#5F7FFF" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff" data-coffee-color="#FFDD00"></script>
@@ -152,6 +223,8 @@
         mass: localStorage.getItem('mass') || '55',
         massUnits: localStorage.getItem('massUnits') || 'kg',
         fileName: '',
+        equipment: '',
+        isDragging: false,
         resultText: '',
         resultVisible: false,
         resultFaded: false,
@@ -202,6 +275,7 @@
               return;
             }
             lastTcx = result.tcx;
+            this.equipment = result.equipment || 'Unknown';
             this.resultText = `Converted ${result.sample_count} samples (${result.equipment}).`;
             this.resultVisible = true;
             this.resultFaded = false;
@@ -241,7 +315,16 @@
         },
 
         changeFile(event) {
-          const file = event.target.files[0];
+          this.readFile(event.target.files[0]);
+        },
+
+        dropFile(event) {
+          this.isDragging = false;
+          const file = event.dataTransfer.files[0];
+          this.readFile(file);
+        },
+
+        readFile(file) {
           if (!file) return;
           this.fileName = file.name;
           lastFilename = file.name.replace(/\.csv$/i, '') + '.tcx';
@@ -258,6 +341,32 @@
             this.showError('Failed to read the file.');
           };
           reader.readAsArrayBuffer(file);
+        },
+
+        reset() {
+          fileBytes = null;
+          lastTcx = '';
+          lastFilename = 'output.tcx';
+          this.fileName = '';
+          this.equipment = '';
+          this.resultVisible = false;
+          this.previewVisible = false;
+          this.chartVisible = false;
+          this.noticeVisible = false;
+          this.errorVisible = false;
+          this.previewView = 'speed';
+        },
+
+        chartSubLabel() {
+          const metric = this.massUnits === 'kg';
+          switch (this.previewView) {
+            case 'speed': return metric ? 'Speed \u00b7 km/h' : 'Speed \u00b7 mph';
+            case 'power': return 'Power \u00b7 watts';
+            case 'hr': return 'Heart rate \u00b7 bpm';
+            case 'cadence': return 'Cadence \u00b7 rpm';
+            case 'elevation': return metric ? 'Elevation \u00b7 m' : 'Elevation \u00b7 ft';
+            default: return '';
+          }
         },
 
         downloadTcx() {
