@@ -49,7 +49,7 @@
           </span>
           <span class="dropzone-title">Drop your CSV file here</span>
           <span class="dropzone-sub">or choose a file from your computer</span>
-          <span class="dropzone-btn contrast">Choose CSV file</span>
+          <span class="dropzone-btn">Choose CSV file</span>
         </label>
 
         <!-- Settings cards -->
@@ -226,9 +226,7 @@
         fileName: '',
         equipment: '',
         isDragging: false,
-        resultText: '',
         resultVisible: false,
-        resultFaded: false,
         noticeText: '',
         noticeVisible: false,
         errorText: '',
@@ -277,11 +275,8 @@
             }
             lastTcx = result.tcx;
             this.equipment = result.equipment || 'Unknown';
-            this.resultText = `Converted ${result.sample_count} samples (${result.equipment}).`;
             this.resultVisible = true;
-            this.resultFaded = false;
             this.errorVisible = false;
-            setTimeout(() => { this.resultFaded = true; }, 3000);
             if (result.lint_error_count > 0) {
               this.noticeText = `A few unusual values were spotted in the data. The file should still import fine into most apps. If something looks off after importing, send the CSV our way and we'll take a look.`;
               this.noticeVisible = true;

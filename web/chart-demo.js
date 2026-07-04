@@ -188,10 +188,6 @@ export function createChartDemo(canvasId) {
     });
   }
 
-  function setMass(mass) {
-    return computeData(mass);
-  }
-
   function resetZoom() {
     if (chart) chart.resetZoom();
   }
@@ -211,5 +207,5 @@ export function createChartDemo(canvasId) {
     return stats;
   }
 
-  return { load, setView, setMass, resetZoom, updateCurve };
+  return { load, setView, resetZoom, updateCurve };
 }

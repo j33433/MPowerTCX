@@ -142,24 +142,19 @@ export function createPreviewChart(canvasId) {
   }
 
   const VIEWS = {
-    power:   { label: 'Power',      y: 'Power (watts)',  color: 'rgb(214, 40, 158)',  series: (d) => d.watts },
-    speed:   { label: 'Speed',      y: 'Speed (mph)',    color: 'rgb(54, 162, 235)',  series: speedSeries },
-    hr:      { label: 'Heart rate', y: 'Heart rate (bpm)', color: 'rgb(235, 77, 75)', series: (d) => d.hr },
-    cadence: { label: 'Cadence',    y: 'Cadence (rpm)',  color: 'rgb(46, 174, 122)',  series: (d) => d.cadence },
-    elevation: { label: 'Elevation', y: 'Elevation (m)', color: 'rgb(139, 105, 20)', series: (d) => d.altitude.map(v => v === null ? 0 : v) },
+    power:   { label: 'Power',      color: 'rgb(214, 40, 158)',  series: (d) => d.watts },
+    speed:   { label: 'Speed',      color: 'rgb(54, 162, 235)',  series: speedSeries },
+    hr:      { label: 'Heart rate', color: 'rgb(235, 77, 75)',   series: (d) => d.hr },
+    cadence: { label: 'Cadence',    color: 'rgb(46, 174, 122)',  series: (d) => d.cadence },
+    elevation: { label: 'Elevation', color: 'rgb(139, 105, 20)', series: (d) => d.altitude.map(v => v === null ? 0 : v) },
   };
 
   function viewConfig(view) {
     const v = VIEWS[view] || VIEWS.power;
-    if (view === 'speed') {
-      const metric = currentUnits === 'kg';
-      return { ...v, y: metric ? 'Speed (km/h)' : 'Speed (mph)' };
-    }
     if (view === 'elevation') {
       const metric = currentUnits === 'kg';
       return {
         ...v,
-        y: metric ? 'Elevation (m)' : 'Elevation (ft)',
         series: (d) => d.altitude.map((val) => {
           if (val === null) return 0;
           return metric ? val : val * 3.28084;
@@ -178,7 +173,6 @@ export function createPreviewChart(canvasId) {
     });
     return {
       labels,
-      yLabel: v.y,
       datasets: [{
         label: v.label,
         data: v.series(data),
@@ -256,9 +250,5 @@ export function createPreviewChart(canvasId) {
     drawChart(view);
   }
 
-  function resetZoom() {
-    if (chart) chart.resetZoom();
-  }
-
-  return { render, setView, resetZoom };
+  return { render, setView };
 }
