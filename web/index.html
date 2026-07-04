@@ -175,7 +175,7 @@
             await init('./pkg/mpowertcx_wasm_bg.wasm');
             convert = convert_csv_to_tcx;
             this.wasmReady = true;
-            this.$watch('previewView', (v) => preview && preview.setView(v));
+            this.$watch('previewView', (v) => preview && preview.setView(v, this.massUnits));
             if (fileBytes) this.runConversion();
           } catch (e) {
             console.error('Failed to load WASM:', e);
@@ -226,7 +226,7 @@
               preview = createPreviewChart('previewChart');
             }
             this.previewVisible = true;
-            const { stats, charted } = await preview.render(lastTcx, this.previewView);
+            const { stats, charted } = await preview.render(lastTcx, this.previewView, this.massUnits);
             if (this.previewView === 'elevation' && !stats.hasAltitude) {
               this.previewView = 'speed';
               preview.setView('speed');

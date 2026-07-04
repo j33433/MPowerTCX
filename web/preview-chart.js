@@ -75,12 +75,15 @@ export function createPreviewChart(canvasId) {
     return out;
   }
 
+  let currentUnits = 'kg'; // 'kg' = metric, 'lbs' = imperial
+
   function speedSeries(d) {
     const spm = d.secsPerSample || 1;
+    const factor = currentUnits === 'lbs' ? 2.23694 : 3.6; // m/s -> mph or km/h
     return d.distance.map((v, i) => {
       if (i === 0) return 0;
       const delta = v - d.distance[i - 1];
-      return Math.max(0, (delta / spm) * 2.23694); // m/s -> mph
+      return Math.max(0, (delta / spm) * factor);
     });
   }
 
@@ -115,17 +118,26 @@ export function createPreviewChart(canvasId) {
       }
     }
 
+    const metric = currentUnits === 'kg';
+    const distStr = metric
+      ? (lastDist / 1000).toFixed(2) + ' km'
+      : (lastDist / 1609.34).toFixed(1) + ' mi';
+    const speedStr = avg(speeds, false).toFixed(1) + (metric ? ' km/h' : ' mph');
+    const elevStr = hasAlt
+      ? (metric ? Math.round(elevGain) + ' m' : Math.round(elevGain * 3.28084) + ' ft')
+      : '--';
+
     return {
       duration: fmtDuration(duration),
-      distance: (lastDist / 1609.34).toFixed(1) + ' mi',
+      distance: distStr,
       avgPower: Math.round(avg(d.watts, false)) + ' W',
       maxPower: Math.round(Math.max(0, ...d.watts)) + ' W',
       avgHr: d.hr.some((v) => v > 0) ? Math.round(avg(d.hr, true)) + ' bpm' : '--',
       maxHr: d.hr.some((v) => v > 0) ? Math.round(Math.max(0, ...d.hr)) + ' bpm' : '--',
       avgCadence: Math.round(avg(d.cadence, true)) + ' rpm',
-      avgSpeed: avg(speeds, false).toFixed(1) + ' mph',
+      avgSpeed: speedStr,
       hasAltitude: hasAlt,
-      elevGain: hasAlt ? Math.round(elevGain) + ' m' : '--',
+      elevGain: elevStr,
     };
   }
 
@@ -137,8 +149,28 @@ export function createPreviewChart(canvasId) {
     elevation: { label: 'Elevation', y: 'Elevation (m)', color: 'rgb(139, 105, 20)', series: (d) => d.altitude.map(v => v === null ? 0 : v) },
   };
 
-  function chartData(view) {
+  function viewConfig(view) {
     const v = VIEWS[view] || VIEWS.power;
+    if (view === 'speed') {
+      const metric = currentUnits === 'kg';
+      return { ...v, y: metric ? 'Speed (km/h)' : 'Speed (mph)' };
+    }
+    if (view === 'elevation') {
+      const metric = currentUnits === 'kg';
+      return {
+        ...v,
+        y: metric ? 'Elevation (m)' : 'Elevation (ft)',
+        series: (d) => d.altitude.map((val) => {
+          if (val === null) return 0;
+          return metric ? val : val * 3.28084;
+        }),
+      };
+    }
+    return v;
+  }
+
+  function chartData(view) {
+    const v = viewConfig(view);
     const labels = data.time.map((t) => {
       const m = Math.floor(t / 60);
       const s = Math.floor(t % 60);
@@ -202,7 +234,8 @@ export function createPreviewChart(canvasId) {
   // Parse + compute stats immediately (no Chart.js needed), then draw the
   // chart once Chart.js is available. Returns { stats, charted } where
   // `charted` is false if the chart library could not be loaded.
-  async function render(tcxXml, view) {
+  async function render(tcxXml, view, units) {
+    currentUnits = units || 'kg';
     data = parseTcx(tcxXml);
     const stats = computeStats(data);
 
@@ -219,7 +252,8 @@ export function createPreviewChart(canvasId) {
     return { stats, charted };
   }
 
-  function setView(view) {
+  function setView(view, units) {
+    if (units) currentUnits = units;
     drawChart(view);
   }
 
