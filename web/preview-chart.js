@@ -192,12 +192,11 @@ export function createPreviewChart(canvasId) {
 
   function drawChart(view) {
     if (!chartReady || !data) return;
-    const { labels, datasets, yLabel } = chartData(view);
+    const { labels, datasets } = chartData(view);
 
     if (chart) {
       chart.data.labels = labels;
       chart.data.datasets = datasets;
-      chart.options.scales.y.title.text = yLabel;
       chart.resetZoom();
       chart.update('none');
       return;
@@ -223,7 +222,7 @@ export function createPreviewChart(canvasId) {
         },
         scales: {
           x: { ticks: { maxTicksLimit: 12 } },
-          y: { title: { display: true, text: yLabel }, beginAtZero: true },
+          y: { beginAtZero: true },
         },
         elements: { line: { tension: 0.3 } },
         animation: false,
