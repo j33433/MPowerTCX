@@ -22,42 +22,35 @@
     </div>
   </nav>
 
-  <main class="container" style="max-width: 880px;">
-    <header style="margin-bottom: 1.5rem;">
+  <main class="container" style="max-width: 960px;">
+    <div class="page-hero">
       <h1>Download</h1>
-      <p class="lead muted">
-        Use upload.bike offline. All conversion runs locally
+      <p>
+        Run upload.bike offline. The same converter, packaged as a single file
         with no server or internet connection.
       </p>
-    </header>
+    </div>
 
-    <article id="portable">
-      <h2>Offline Version</h2>
+    <article class="card page-card" id="portable">
+      <h2>Offline version</h2>
       <p>
-        A single self-contained HTML file with the full converter built in.
-        Download the zip, extract it, and double-click
-        <code>index.html</code>. No install, no internet, no admin
-        access. Works in any modern browser.
+        One self-contained HTML file with the WebAssembly converter built in.
+        Download the zip, extract it, and open <code>index.html</code> in any
+        modern browser. No install, no internet, no admin access.
       </p>
 
-      <div class="center" x-data="downloadCheck()">
+      <div class="download-hero" x-data="downloadCheck()" style="margin-top: 1.5rem;">
         <a :href="available ? url : null"
-           class="download-card"
-           :class="{ unavailable: !available }"
-           style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; margin-top: 1rem;">
-          <strong>upload.bike-portable.zip</strong>
+           class="download-btn"
+           :class="{ unavailable: !available }">
+          upload.bike-portable.zip
         </a>
         <p class="muted small" x-show="!available" x-cloak>Coming soon</p>
       </div>
-
-      <p class="muted small" style="margin-top: 1rem;">
-        Contains the full WebAssembly conversion engine in a single HTML file.
-        Same converter as the website, just packaged for offline use.
-      </p>
     </article>
 
     <div class="center" style="margin-block: 2rem;">
-      <a href="./" role="button">Use the Web Converter</a>
+      <a href="./" role="button">Use the web converter</a>
     </div>
   </main>
 

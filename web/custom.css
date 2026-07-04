@@ -193,3 +193,27 @@ small { font-size: 80%; }
   background: var(--pico-primary-focus); color: var(--pico-primary);
 }
 .footer-support { margin-top: 1.25rem; }
+
+/* Content pages (About, Download) */
+.page-hero { text-align: center; margin: 1.5rem 0 2rem; }
+.page-hero h1 { font-size: clamp(1.9rem, 4.5vw, 2.75rem); font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
+.page-hero p { color: var(--pico-muted-color); font-size: 1.1rem; margin: 0 auto; max-width: 46rem; }
+
+.page-card { margin-bottom: 1.25rem; }
+.page-card h2 { font-size: 1.4rem; font-weight: 700; margin: 0 0 0.75rem; }
+.page-card h3 { font-size: 1.1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+.page-card > :last-child { margin-bottom: 0; }
+.page-card ul, .page-card ol { margin-bottom: 0.75rem; }
+
+.page-card details { border-bottom: 1px solid var(--pico-muted-border-color); }
+.page-card details:last-child { border-bottom: none; }
+.page-card details summary { font-weight: 600; }
+
+.download-hero { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; text-align: center; }
+.download-btn {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0.8rem 1.6rem; border-radius: 12px; font-weight: 700;
+  background: var(--pico-primary); color: var(--pico-primary-inverse);
+  text-decoration: none;
+}
+.download-btn.unavailable { opacity: 0.5; pointer-events: none; }
