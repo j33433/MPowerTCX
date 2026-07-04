@@ -141,11 +141,12 @@ small { font-size: 80%; }
 .check-row { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 1rem; cursor: pointer; }
 .check-row:last-child { margin-bottom: 0; }
 .check-row input[type="checkbox"] { margin-top: 0.15rem; flex-shrink: 0; }
-.check-row span { display: flex; flex-direction: column; gap: 0.15rem; }
+.check-row > span { display: flex; flex-direction: column; gap: 0.15rem; }
 .check-row small { color: var(--pico-muted-color); }
 .check-row.compact { margin-bottom: 0.6rem; }
-.check-label { display: inline; }
-.help-link { text-decoration: none; color: var(--pico-primary); font-weight: 400; }
+.check-label { display: block; }
+.check-label strong { font-weight: 600; }
+.help-link { text-decoration: none; color: var(--pico-primary); font-weight: 400; white-space: nowrap; }
 
 .weight-row { display: flex; gap: 0.6rem; align-items: center; }
 .weight-row input[type="number"] { max-width: 7rem; margin: 0; }
@@ -181,9 +182,10 @@ small { font-size: 80%; }
 .summary-grid strong { font-size: 1.35rem; font-weight: 800; }
 
 /* Supported format pills */
-.formats-section { margin: 1.25rem 0 1rem; }
-.formats-label { display: block; font-size: 0.9rem; margin-bottom: 0.6rem; }
-.format-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.formats-section { margin: 1.25rem 0 1rem; display: flex; justify-content: center; }
+.formats-inner { display: inline-flex; flex-direction: column; align-items: center; gap: 0.6rem; }
+.formats-label { font-size: 0.9rem; }
+.format-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
 .format-pill {
   padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.85rem;
   background: var(--pico-primary-focus); color: var(--pico-primary);
