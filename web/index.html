@@ -22,7 +22,7 @@
     </div>
   </nav>
 
-  <main class="container" style="max-width: 1120px;">
+  <main class="container" style="max-width: 1240px;">
     <article x-data="converter()">
       <!-- Hero -->
       <div class="hero">
@@ -67,7 +67,7 @@
             <label class="check-row">
               <input type="checkbox" id="checkPhysics" x-model="physics" @change="onFormChange()">
               <span>
-                <span class="check-label"><strong>Estimate missing speed and distance</strong> <a class="help-link" href="./how-it-works.html#physics">[?]</a></span>
+                <span class="check-label"><strong>Repair speed and distance</strong> <a class="help-link" href="./how-it-works.html#physics">[?]</a></span>
                 <small class="muted">Uses a physics model based on rider weight</small>
               </span>
             </label>
@@ -135,7 +135,7 @@
               </label>
               <label class="check-row compact">
                 <input type="checkbox" x-model="physics" @change="onFormChange()">
-                <span><strong>Estimate distance</strong></span>
+                <span><strong>Repair speed/distance</strong></span>
               </label>
               <p class="card-sub" style="margin-top:0.75rem;">Rider + bike weight</p>
               <div class="weight-row">

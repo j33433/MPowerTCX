@@ -90,13 +90,15 @@ small { font-size: 80%; }
 /* Privacy pill */
 .privacy-pill {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  margin: 0 auto 1.5rem; padding: 0.55rem 1.1rem;
-  border-radius: 999px; font-size: 0.9rem;
-  background: var(--pico-primary-focus); color: var(--pico-primary);
+  margin: 0 auto 1.5rem; padding: 0.45rem 1rem;
+  border-radius: 999px; font-size: 0.85rem;
+  background: var(--pico-card-sectioning-background-color, var(--pico-card-background-color));
+  border: 1px solid var(--pico-muted-border-color);
+  color: var(--pico-muted-color);
 }
 .center > .privacy-pill { display: inline-flex; }
 .privacy-pill.center { display: flex; width: fit-content; }
-.pill-check { width: 20px; height: 20px; flex-shrink: 0; }
+.pill-check { width: 18px; height: 18px; flex-shrink: 0; color: var(--pico-primary); opacity: 0.85; }
 
 /* Cards */
 .card {
@@ -177,7 +179,7 @@ small { font-size: 80%; }
 .result-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1rem; }
 @media (max-width: 768px) { .result-grid { grid-template-columns: 1fr; } }
 .result-side { display: flex; flex-direction: column; gap: 1rem; }
-.chart-card .chart-container { height: 340px; margin: 0.5rem 0 0.75rem; }
+.chart-card .chart-container { height: 460px; margin: 0.5rem 0 0.75rem; }
 .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 0.5rem; }
 .summary-grid strong { font-size: 1.35rem; font-weight: 800; }
 
