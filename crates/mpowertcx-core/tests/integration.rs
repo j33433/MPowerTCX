@@ -120,6 +120,64 @@ fn run_conversion(csv_path: &str, interpolate: bool, physics: bool) -> String {
     converter.convert(start_time, &options)
 }
 
+fn detect_parser(csv_path: &PathBuf) -> String {
+    let data = fs::read(csv_path).unwrap();
+    let converter = Converter::from_csv(&data).unwrap();
+    let name = converter.equipment_name();
+    if name.is_empty() {
+        "(none)".to_string()
+    } else {
+        name.to_string()
+    }
+}
+
+fn sample_csv_paths() -> Vec<PathBuf> {
+    let mut paths: Vec<PathBuf> = fs::read_dir(samples_dir())
+        .unwrap()
+        .filter_map(|e| e.ok().map(|e| e.path()))
+        .filter(|p| {
+            p.file_name()
+                .and_then(|n| n.to_str())
+                .map(|n| n.to_lowercase().ends_with(".csv"))
+                .unwrap_or(false)
+        })
+        .collect();
+    paths.sort();
+    paths
+}
+
+/// Reports which parser (equipment format) handled each sample CSV.
+/// Run with `cargo test -p mpowertcx-core report_parsers -- --nocapture`.
+#[test]
+fn report_parsers() {
+    use std::collections::BTreeMap;
+
+    let paths = sample_csv_paths();
+    let mut counts: BTreeMap<String, usize> = BTreeMap::new();
+    let name_width = paths
+        .iter()
+        .map(|p| p.file_name().unwrap().to_string_lossy().len())
+        .max()
+        .unwrap_or(0);
+
+    println!("\nParser used per sample file:");
+    println!("{:-<width$}", "", width = name_width + 24);
+    for path in &paths {
+        let name = path.file_name().unwrap().to_string_lossy().to_string();
+        let parser = detect_parser(path);
+        *counts.entry(parser.clone()).or_insert(0) += 1;
+        println!("{:<width$}  {}", name, parser, width = name_width);
+    }
+
+    println!("\nParser totals:");
+    println!("{:-<32}", "");
+    for (parser, count) in &counts {
+        println!("{:<24}  {}", parser, count);
+    }
+    println!("{:<24}  {}", "TOTAL", paths.len());
+    println!();
+}
+
 #[test]
 fn test_plain_conversions_exact() {
     let dir = samples_dir();
