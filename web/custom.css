@@ -159,7 +159,7 @@ small { font-size: 80%; }
 .result-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1rem; }
 @media (max-width: 768px) { .result-grid { grid-template-columns: 1fr; } }
 .result-side { display: flex; flex-direction: column; gap: 1rem; }
-.chart-card .chart-container { height: 460px; margin: 0.5rem 0 0.75rem; }
+.chart-card .chart-container { height: 393px; margin: 0.5rem 0 0.75rem; }
 .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 0.5rem; }
 .summary-grid strong { font-size: 1.35rem; font-weight: 800; }
 
