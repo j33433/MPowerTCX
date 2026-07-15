@@ -172,6 +172,8 @@ small { font-size: 80%; }
   padding: 0.35rem 0.9rem; border-radius: 999px; font-size: 0.85rem;
   background: var(--pico-primary-focus); color: var(--pico-primary);
 }
+.sample-link { margin: -0.25rem 0 1.5rem; }
+.sample-link a { font-weight: 600; }
 .footer-support { margin-top: 1.25rem; }
 
 /* Content pages (About, Download) */

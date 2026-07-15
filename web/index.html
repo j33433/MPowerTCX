@@ -52,6 +52,8 @@
           <span class="dropzone-btn">Choose CSV file</span>
         </label>
 
+        <p class="sample-link center"><span class="muted small">No file? <a href="#" @click.prevent="loadSample()">Try a sample</a>.</span></p>
+
         <!-- Settings cards -->
         <div class="settings-grid">
           <div class="card">
@@ -321,6 +323,24 @@
           this.isDragging = false;
           const file = event.dataTransfer.files[0];
           this.readFile(file);
+        },
+
+        async loadSample() {
+          if (!this.wasmReady) {
+            this.showError('The conversion engine is still loading. Please try again in a moment.');
+            return;
+          }
+          try {
+            const res = await fetch('./samples/sample.csv');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const buf = new Uint8Array(await res.arrayBuffer());
+            this.fileName = 'sample.csv';
+            lastFilename = 'sample.tcx';
+            fileBytes = buf;
+            this.runConversion();
+          } catch (err) {
+            this.showError('Failed to load the sample file.', '');
+          }
         },
 
         readFile(file) {
