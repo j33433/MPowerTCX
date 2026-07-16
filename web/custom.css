@@ -39,8 +39,9 @@ section[id], article[id] { scroll-margin-top: 60px; }
 
 .btn-group { display: inline-flex; }
 .btn-group button { margin: 0; border-radius: 0; padding: 0.25rem 0.75rem; font-size: 0.875rem; min-width: 4.25rem; text-align: center; }
-.btn-group button:first-child { border-radius: var(--pico-border-radius) 0 0 var(--pico-border-radius); }
-.btn-group button:last-child { border-radius: 0 var(--pico-border-radius) var(--pico-border-radius) 0; }
+/* of-type so a leftover <template x-if> is not treated as the end cap */
+.btn-group > button:first-of-type { border-radius: var(--pico-border-radius) 0 0 var(--pico-border-radius); }
+.btn-group > button:last-of-type { border-radius: 0 var(--pico-border-radius) var(--pico-border-radius) 0; }
 .btn-group button.active { background: var(--pico-primary); color: var(--pico-primary-inverse); border-color: var(--pico-primary); }
 
 .chart-container { position: relative; height: 400px; margin: 1rem 0; }

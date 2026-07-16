@@ -122,7 +122,9 @@
                 <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'" aria-label="Power">W</button>
                 <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'" aria-label="Heart rate">BPM</button>
                 <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'" aria-label="Cadence">RPM</button>
-                <button class="outline" x-show="previewStats.hasAltitude" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'" aria-label="Elevation" x-text="massUnits === 'kg' ? 'M' : 'FT'"></button>
+                <template x-if="previewStats.hasAltitude">
+                  <button class="outline" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'" aria-label="Elevation" x-text="massUnits === 'kg' ? 'M' : 'FT'"></button>
+                </template>
               </div>
             </div>
           </div>
