@@ -38,7 +38,7 @@ section[id], article[id] { scroll-margin-top: 60px; }
 .alert-warning { background: var(--pico-card-background-color); border-color: var(--pico-muted-border-color); color: var(--pico-muted-color); }
 
 .btn-group { display: inline-flex; }
-.btn-group button { margin: 0; border-radius: 0; padding: 0.25rem 0.75rem; font-size: 0.875rem; min-width: 4.25rem; text-align: center; }
+.btn-group button { margin: 0; border-radius: 0; padding: 0.1rem 0.4rem; font-size: 0.875rem; min-width: 3rem; text-align: center; }
 /* of-type so a leftover <template x-if> is not treated as the end cap */
 .btn-group > button:first-of-type { border-radius: var(--pico-border-radius) 0 0 var(--pico-border-radius); }
 .btn-group > button:last-of-type { border-radius: 0 var(--pico-border-radius) var(--pico-border-radius) 0; }
@@ -160,7 +160,8 @@ small { font-size: 80%; }
 .result-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 1rem; }
 @media (max-width: 768px) { .result-grid { grid-template-columns: 1fr; } }
 .result-side { display: flex; flex-direction: column; gap: 1rem; }
-.chart-card .chart-container { height: 393px; margin: 0.5rem 0 0.75rem; }
+.chart-card { padding: 1.25rem 1rem 0.85rem; }
+.chart-card .chart-container { height: 393px; margin: 0.5rem 0 0.35rem; }
 .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem 0.5rem; }
 .summary-grid strong { font-size: 1.35rem; font-weight: 800; }
 
