@@ -79,7 +79,7 @@
             <h3 class="card-title">Rider + bike weight</h3>
             <p class="card-sub">Used for speed and distance</p>
             <div class="weight-row">
-              <input type="number" id="mass" x-model="mass" @change="onFormChange()" aria-label="Rider and bike weight">
+              <input type="number" id="mass" x-model="mass" step="0.1" @change="onMassChange()" aria-label="Rider and bike weight">
               <select id="massUnits" x-model="massUnits" @change="onFormChange()" aria-label="Weight units">
                 <option>kg</option>
                 <option>lbs</option>
@@ -140,7 +140,7 @@
               </label>
               <p class="card-sub" style="margin-top:0.75rem;">Rider + bike weight</p>
               <div class="weight-row">
-                <input type="number" x-model="mass" @change="onFormChange()" aria-label="Rider and bike weight">
+                <input type="number" x-model="mass" step="0.1" @change="onMassChange()" aria-label="Rider and bike weight">
                 <select x-model="massUnits" @change="onFormChange()" aria-label="Weight units">
                   <option>kg</option>
                   <option>lbs</option>
@@ -212,19 +212,33 @@
   </main>
 
   <script>
+    const KG_PER_LB = 0.453592;
+
     function converter() {
       let convert = null;
       let fileBytes = null;
       let lastTcx = '';
       let lastFilename = 'output.tcx';
       let preview = null;
+      const roundMass = (v) => {
+        const n = parseFloat(v);
+        if (!Number.isFinite(n)) return '0';
+        return String(parseFloat(n.toFixed(1)));
+      };
+      const initialMass = roundMass(localStorage.getItem('mass') || '55');
+      const initialUnits = localStorage.getItem('massUnits') || 'kg';
 
       return {
         wasmReady: false,
         interpolate: localStorage.getItem('checkInterpolate') !== 'false',
         physics: localStorage.getItem('checkPhysics') === 'true',
-        mass: localStorage.getItem('mass') || '55',
-        massUnits: localStorage.getItem('massUnits') || 'kg',
+        mass: initialMass,
+        massUnits: initialUnits,
+        _prevMassUnits: initialUnits,
+        _massCache: {
+          kg: initialUnits === 'kg' ? initialMass : null,
+          lbs: initialUnits === 'lbs' ? initialMass : null,
+        },
         fileName: '',
         equipment: '',
         isDragging: false,
@@ -257,7 +271,42 @@
           }
         },
 
+        roundMassDisplay(v) {
+          const n = parseFloat(v);
+          if (!Number.isFinite(n)) return '0';
+          return String(parseFloat(n.toFixed(1)));
+        },
+
+        formatMassValue(kg, units) {
+          const v = units === 'lbs' ? kg / KG_PER_LB : kg;
+          return this.roundMassDisplay(v);
+        },
+
+        convertMassUnits(from, to) {
+          if (from === to) return;
+          this._massCache[from] = this.roundMassDisplay(this.mass);
+          if (this._massCache[to] != null) {
+            this.mass = this.roundMassDisplay(this._massCache[to]);
+            return;
+          }
+          const v = parseFloat(this.mass) || 0;
+          const kg = from === 'lbs' ? v * KG_PER_LB : v;
+          this.mass = this.formatMassValue(kg, to);
+          this._massCache[to] = this.mass;
+        },
+
+        onMassChange() {
+          this.mass = this.roundMassDisplay(this.mass);
+          this._massCache[this.massUnits] = this.mass;
+          this._massCache[this.massUnits === 'kg' ? 'lbs' : 'kg'] = null;
+          this.onFormChange();
+        },
+
         onFormChange() {
+          if (this.massUnits !== this._prevMassUnits) {
+            this.convertMassUnits(this._prevMassUnits, this.massUnits);
+            this._prevMassUnits = this.massUnits;
+          }
           localStorage.setItem('checkInterpolate', this.interpolate);
           localStorage.setItem('checkPhysics', this.physics);
           localStorage.setItem('mass', this.mass);
@@ -268,7 +317,7 @@
         runConversion() {
           if (!this.wasmReady || !fileBytes) return;
           let mass = parseFloat(this.mass) || 0;
-          if (this.massUnits === 'lbs') mass *= 0.453592;
+          if (this.massUnits === 'lbs') mass *= KG_PER_LB;
           try {
             const result = convert(fileBytes, null, this.interpolate, this.physics, mass, 0);
             if (result.sample_count === 0) {
