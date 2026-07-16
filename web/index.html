@@ -6,17 +6,17 @@
   <script>(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
   <meta name="description" content="Convert indoor bike CSV files to TCX for Strava, TrainingPeaks, Garmin Connect and Golden Cheetah. Runs entirely in your browser - no server needed.">
   <title>upload.bike - CSV to TCX converter for indoor bikes</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-  <link rel="stylesheet" href="./custom.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" data-inline="pico.css">
+  <link rel="stylesheet" href="./custom.css" data-inline="custom.css">
 </head>
 <body>
   <nav class="topnav">
     <div class="container">
-      <a href="./" class="brand-icon"><img src="./icon.svg" alt="upload.bike"></a>
+      <a href="./" class="brand-icon" data-offline-href="https://github.com/j33433/MPowerTCX"><img src="./icon.svg" alt="upload.bike" data-inline="icon.svg"></a>
       <ul>
-        <li class="active"><a href="./">Converter</a></li>
-        <li><a href="./how-it-works.html">About</a></li>
-        <li><a href="./download.html">Download</a></li>
+        <li class="active" data-online-only><a href="./">Converter</a></li>
+        <li data-online-only><a href="./how-it-works.html">About</a></li>
+        <li data-online-only><a href="./download.html">Download</a></li>
         <li><button class="theme-toggle outline" type="button" data-theme-btn onclick="toggleTheme()"></button></li>
       </ul>
     </div>
@@ -52,7 +52,7 @@
           <span class="dropzone-btn">Choose CSV file</span>
         </label>
 
-        <p class="sample-link center"><span class="muted small">No file? <a href="#" @click.prevent="loadSample()">Try a sample</a>.</span></p>
+        <p class="sample-link center" data-online-only><span class="muted small">No file? <a href="#" @click.prevent="loadSample()">Try a sample</a>.</span></p>
 
         <!-- Settings cards -->
         <div class="settings-grid">
@@ -62,14 +62,14 @@
             <label class="check-row">
               <input type="checkbox" id="checkInterpolate" x-model="interpolate" @change="onFormChange()">
               <span>
-                <span class="check-label"><strong>Repair workout timing</strong> <a class="help-link" href="./how-it-works.html#interpolation">[?]</a></span>
+                <span class="check-label"><strong>Repair workout timing</strong> <a class="help-link" data-online-only href="./how-it-works.html#interpolation">[?]</a></span>
                 <small class="muted">Improves imports into Strava, Garmin, and TrainingPeaks</small>
               </span>
             </label>
             <label class="check-row">
               <input type="checkbox" id="checkPhysics" x-model="physics" @change="onFormChange()">
               <span>
-                <span class="check-label"><strong>Repair speed and distance</strong> <a class="help-link" href="./how-it-works.html#physics">[?]</a></span>
+                <span class="check-label"><strong>Repair speed and distance</strong> <a class="help-link" data-online-only href="./how-it-works.html#physics">[?]</a></span>
                 <small class="muted">Uses a physics model based on rider weight</small>
               </span>
             </label>
@@ -259,9 +259,13 @@
 
         async init() {
           try {
-            const { default: init, convert_csv_to_tcx } = await import('./pkg/mpowertcx_wasm.js');
-            await init('./pkg/mpowertcx_wasm_bg.wasm');
-            convert = convert_csv_to_tcx;
+            if (window.MPOWERTCX_OFFLINE) {
+              convert = wasm_bindgen.convert_csv_to_tcx;
+            } else {
+              const { default: init, convert_csv_to_tcx } = await import('./pkg/mpowertcx_wasm.js');
+              await init('./pkg/mpowertcx_wasm_bg.wasm');
+              convert = convert_csv_to_tcx;
+            }
             this.wasmReady = true;
             this.$watch('previewView', (v) => preview && preview.setView(v, this.massUnits));
             if (fileBytes) this.runConversion();
@@ -343,8 +347,12 @@
         async renderPreview() {
           try {
             if (!preview) {
-              const { createPreviewChart } = await import('./preview-chart.js');
-              preview = createPreviewChart('previewChart');
+              if (window.MPOWERTCX_OFFLINE) {
+                preview = createPreviewChart('previewChart');
+              } else {
+                const { createPreviewChart } = await import('./preview-chart.js');
+                preview = createPreviewChart('previewChart');
+              }
             }
             this.previewVisible = true;
             const { stats, charted } = await preview.render(lastTcx, this.previewView, this.massUnits);
@@ -463,7 +471,8 @@
       };
     }
   </script>
-  <script src="./theme.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <!-- offline-inject: wasm, chart.js, zoom, preview-chart -->
+  <script src="./theme.js" data-inline="theme.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer data-inline="alpine.js"></script>
 </body>
 </html>

@@ -5,6 +5,14 @@ Produces web/downloads/upload.bike-portable.zip containing a single
 self-contained index.html with all CSS, JS, and WASM inlined.
 Works from file://, inside a zip without extracting, or anywhere.
 
+The source page (web/index.html) marks differences with attributes:
+  data-online-only     removed in the offline build
+  data-offline-href    applied to href when building offline
+  data-inline="id"     replaced with inlined asset contents
+  <!-- offline-inject -->  injection point for wasm/chart/preview scripts
+
+Runtime dual-boot uses window.MPOWERTCX_OFFLINE (set by this builder).
+
 Usage:
     python3 scripts/build-offline.py
 """
@@ -31,6 +39,8 @@ CDN = {
     "chart-zoom.js": "https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.2.0/dist/chartjs-plugin-zoom.min.js",
 }
 
+OFFLINE_INJECT_MARKER = "<!-- offline-inject: wasm, chart.js, zoom, preview-chart -->"
+
 
 def run(cmd, **kw):
     print(f"  $ {' '.join(cmd)}")
@@ -41,15 +51,6 @@ def download(url):
     print(f"  Downloading {url}")
     with urllib.request.urlopen(url) as resp:
         return resp.read()
-
-
-def must_replace(html, old, new, label):
-    count = html.count(old)
-    if count != 1:
-        raise SystemExit(
-            f"offline build: expected pattern once for {label}, found {count}:\n{old!r}"
-        )
-    return html.replace(old, new)
 
 
 def wasm_bytes_init(b64):
@@ -98,7 +99,6 @@ def build_wasm_from_pkg():
     with open(wasm_path, "rb") as f:
         wasm_bytes = f.read()
 
-    # Classic script: drop ES module exports and import.meta (illegal outside modules)
     glue = glue.replace("export class ConvertResult", "class ConvertResult")
     glue = glue.replace("export function convert_csv_to_tcx", "function convert_csv_to_tcx")
     glue = glue.replace("export function get_sample_csv", "function get_sample_csv")
@@ -126,17 +126,76 @@ def build_wasm_js():
     return build_wasm_from_pkg()
 
 
-def inject_before_converter_script(html, script_sources):
-    """Insert classic <script> blocks immediately before the converter app script."""
-    marker = "function converter()"
-    idx = html.find(marker)
-    if idx < 0:
-        raise SystemExit("offline build: function converter() not found in index.html")
-    script_start = html.rfind("<script>", 0, idx)
-    if script_start < 0:
-        raise SystemExit("offline build: <script> before converter() not found")
-    inject = "".join(f"  <script>\n{src}\n  </script>\n" for src in script_sources)
-    return html[:script_start] + inject + html[script_start:]
+def strip_online_only(html):
+    """Remove elements that carry data-online-only (simple nesting, no same-tag nest)."""
+    pattern = re.compile(
+        r"<([a-zA-Z][\w:-]*)([^>]*\bdata-online-only\b[^>]*)>(.*?)</\1\s*>",
+        re.S,
+    )
+    prev = None
+    while prev != html:
+        prev = html
+        html = pattern.sub("", html)
+    if re.search(r"\bdata-online-only\b", html):
+        raise SystemExit("offline build: unstripped data-online-only remains")
+    return html
+
+
+def apply_offline_href(html):
+    """Copy data-offline-href into href and drop the marker attribute."""
+    tag_pat = re.compile(
+        r"<([a-zA-Z][\w:-]*)([^>]*\bdata-offline-href=\"([^\"]*)\"[^>]*)>",
+    )
+
+    def tag_repl(m):
+        tag, attrs, href = m.group(1), m.group(2), m.group(3)
+        attrs = re.sub(r'\s*data-offline-href="[^"]*"', "", attrs)
+        if re.search(r'\bhref="', attrs):
+            attrs = re.sub(r'\bhref="[^"]*"', f'href="{href}"', attrs, count=1)
+        else:
+            attrs = f' href="{href}"' + attrs
+        return f"<{tag}{attrs}>"
+
+    html2, n = tag_pat.subn(tag_repl, html)
+    if n == 0 and "data-offline-href" in html:
+        raise SystemExit("offline build: data-offline-href present but not applied")
+    return html2
+
+
+def inline_marked_assets(html, assets):
+    """Replace tags with data-inline="id" using assets[id] -> replacement HTML."""
+    tag_pat = re.compile(
+        r"<([a-zA-Z][\w:-]*)([^>]*\bdata-inline=\"([^\"]+)\"[^>]*)\s*>"
+        r"(?:</\1\s*>)?",
+        re.S,
+    )
+    missing = set()
+
+    def repl(m):
+        key = m.group(3)
+        if key not in assets:
+            missing.add(key)
+            return m.group(0)
+        return assets[key]
+
+    html2, n = tag_pat.subn(repl, html)
+    if missing:
+        raise SystemExit(f"offline build: unknown data-inline ids: {sorted(missing)}")
+    if "data-inline=" in html2:
+        raise SystemExit("offline build: unreplaced data-inline remains")
+    if n == 0:
+        raise SystemExit("offline build: no data-inline tags found")
+    return html2
+
+
+def inject_offline_bundle(html, scripts):
+    if OFFLINE_INJECT_MARKER not in html:
+        raise SystemExit(f"offline build: missing marker {OFFLINE_INJECT_MARKER!r}")
+    inject = (
+        '  <script>window.MPOWERTCX_OFFLINE = true;</script>\n'
+        + "".join(f"  <script>\n{src}\n  </script>\n" for src in scripts)
+    )
+    return html.replace(OFFLINE_INJECT_MARKER, inject.rstrip("\n"), 1)
 
 
 def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg,
@@ -144,115 +203,33 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_
     with open(os.path.join(WEB, "index.html"), "r") as f:
         html = f.read()
 
-    # Inline Pico CSS
-    html = must_replace(
-        html,
-        '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">',
-        f'<style>\n{pico_css}\n</style>',
-        "pico.css link",
-    )
-
-    # Inline custom.css
-    html = must_replace(
-        html,
-        '<link rel="stylesheet" href="./custom.css">',
-        f'<style>\n{custom_css}\n</style>',
-        "custom.css link",
-    )
-
-    # Replace nav: remove converter/download/how-it-works links,
-    # point brand to GitHub
-    html = must_replace(
-        html,
-        '        <li class="active"><a href="./">Converter</a></li>\n'
-        '        <li><a href="./how-it-works.html">About</a></li>\n'
-        '        <li><a href="./download.html">Download</a></li>\n',
-        '',
-        "nav links",
-    )
-    html = must_replace(
-        html,
-        '    <div class="container">\n      <a href="./" class="brand-icon"><img src="./icon.svg" alt="upload.bike"></a>\n      <ul>',
-        f'    <div class="container">\n      <a href="https://github.com/j33433/MPowerTCX" class="brand-icon"><img src="data:image/svg+xml,{icon_svg}" alt="upload.bike"></a>\n      <ul>',
-        "brand icon",
-    )
-
-    # Remove the [?] help links. They point at how-it-works.html, which
-    # doesn't exist in the single-file offline build.
-    html = must_replace(
-        html,
-        ' <a class="help-link" href="./how-it-works.html#interpolation">[?]</a>',
-        '',
-        "interpolation help link",
-    )
-    html = must_replace(
-        html,
-        ' <a class="help-link" href="./how-it-works.html#physics">[?]</a>',
-        '',
-        "physics help link",
-    )
-
-    # Sample CSV is not bundled offline (fetch would fail under file://).
-    html = must_replace(
-        html,
-        '\n        <p class="sample-link center"><span class="muted small">No file? <a href="#" @click.prevent="loadSample()">Try a sample</a>.</span></p>\n',
-        '\n',
-        "try a sample link",
-    )
-
-    # Replace dynamic import with wasm_bindgen global
-    html = must_replace(
-        html,
-        "const { default: init, convert_csv_to_tcx } = await import('./pkg/mpowertcx_wasm.js');\n"
-        "            await init('./pkg/mpowertcx_wasm_bg.wasm');\n"
-        "            convert = convert_csv_to_tcx;",
-        "convert = wasm_bindgen.convert_csv_to_tcx;",
-        "wasm import",
-    )
-
-    # Inline preview-chart.js (strip export so it's a plain script, not a module)
     preview_js = preview_chart_js.replace(
-        'export function createPreviewChart',
-        'function createPreviewChart',
+        "export function createPreviewChart",
+        "function createPreviewChart",
     )
     if preview_js == preview_chart_js:
         raise SystemExit("offline build: export function createPreviewChart not found")
 
-    # WASM + Chart.js + zoom + preview, before the converter app script
-    html = inject_before_converter_script(html, [
+    assets = {
+        "pico.css": f"<style>\n{pico_css}\n</style>",
+        "custom.css": f"<style>\n{custom_css}\n</style>",
+        "theme.js": f"<script>\n{theme_js}\n</script>",
+        "alpine.js": f"<script>\n{alpine_js}\n</script>",
+        "icon.svg": f'<img src="data:image/svg+xml,{icon_svg}" alt="upload.bike">',
+    }
+
+    html = strip_online_only(html)
+    html = apply_offline_href(html)
+    html = inline_marked_assets(html, assets)
+    html = inject_offline_bundle(html, [
         wasm_js,
         chart_js,
         chart_zoom_js,
         preview_js,
     ])
 
-    # Replace dynamic import of preview-chart.js with the now-global function
-    html = must_replace(
-        html,
-        "const { createPreviewChart } = await import('./preview-chart.js');\n"
-        "              preview = createPreviewChart('previewChart');",
-        "preview = createPreviewChart('previewChart');",
-        "preview-chart import",
-    )
-
-    # Inline theme.js
-    html = must_replace(
-        html,
-        '  <script src="./theme.js"></script>\n',
-        f'  <script>\n{theme_js}\n  </script>\n',
-        "theme.js",
-    )
-
-    # Inline Alpine.js (replace the CDN script tag at end of body)
-    html = must_replace(
-        html,
-        '  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>',
-        f'  <script>\n{alpine_js}\n  </script>',
-        "alpine.js",
-    )
-
-    # Sanity checks so silent breakage is harder next time
     for needle, label in (
+        ("MPOWERTCX_OFFLINE", "offline flag"),
         ("wasm_bindgen", "wasm_bindgen global"),
         ("_wasmBytes", "inlined WASM bytes"),
         ("createPreviewChart", "preview chart"),
@@ -260,8 +237,8 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_
     ):
         if needle not in html:
             raise SystemExit(f"offline build: missing {label} in output HTML")
-    if "import('./pkg/" in html or "import('./preview-chart" in html:
-        raise SystemExit("offline build: dynamic imports still present in output HTML")
+    if re.search(r"\bdata-online-only\b|\bdata-inline=|\bdata-offline-href\b", html):
+        raise SystemExit("offline build: leftover offline-build attributes in output")
 
     return html
 
@@ -288,8 +265,10 @@ def main():
         preview_chart_js = f.read()
 
     print("Building self-contained index.html...")
-    index_html = build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg,
-                                    chart_js, chart_zoom_js, preview_chart_js)
+    index_html = build_offline_html(
+        wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_svg,
+        chart_js, chart_zoom_js, preview_chart_js,
+    )
 
     readme = (
         "upload.bike - Offline Edition\n"
