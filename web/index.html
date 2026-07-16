@@ -118,11 +118,11 @@
             </div>
             <div class="chart-controls" x-show="chartVisible">
               <div class="btn-group">
-                <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'">Speed</button>
-                <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'">Power</button>
-                <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'">Heart</button>
-                <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'">Cadence</button>
-                <button class="outline" x-show="previewStats.hasAltitude" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'">Elevation</button>
+                <button class="outline" :class="{ active: previewView === 'speed' }" @click="previewView = 'speed'" aria-label="Speed" x-text="massUnits === 'kg' ? 'KM/H' : 'MPH'"></button>
+                <button class="outline" :class="{ active: previewView === 'power' }" @click="previewView = 'power'" aria-label="Power">W</button>
+                <button class="outline" :class="{ active: previewView === 'hr' }" @click="previewView = 'hr'" aria-label="Heart rate">BPM</button>
+                <button class="outline" :class="{ active: previewView === 'cadence' }" @click="previewView = 'cadence'" aria-label="Cadence">RPM</button>
+                <button class="outline" x-show="previewStats.hasAltitude" :class="{ active: previewView === 'elevation' }" @click="previewView = 'elevation'" aria-label="Elevation" x-text="massUnits === 'kg' ? 'M' : 'FT'"></button>
               </div>
             </div>
           </div>

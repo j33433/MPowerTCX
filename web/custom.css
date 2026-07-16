@@ -38,7 +38,7 @@ section[id], article[id] { scroll-margin-top: 60px; }
 .alert-warning { background: var(--pico-card-background-color); border-color: var(--pico-muted-border-color); color: var(--pico-muted-color); }
 
 .btn-group { display: inline-flex; }
-.btn-group button { margin: 0; border-radius: 0; padding: 0.25rem 0.75rem; font-size: 0.875rem; }
+.btn-group button { margin: 0; border-radius: 0; padding: 0.25rem 0.75rem; font-size: 0.875rem; min-width: 4.25rem; text-align: center; }
 .btn-group button:first-child { border-radius: var(--pico-border-radius) 0 0 var(--pico-border-radius); }
 .btn-group button:last-child { border-radius: 0 var(--pico-border-radius) var(--pico-border-radius) 0; }
 .btn-group button.active { background: var(--pico-primary); color: var(--pico-primary-inverse); border-color: var(--pico-primary); }
