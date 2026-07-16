@@ -146,8 +146,14 @@ web/
   downloads/          built offline zip (gitignored)
   samples/            sample CSV embedded in the WASM for the chart demo
 samples/              test CSVs and expected TCX outputs
-legacy/               original Python/PySide2 desktop app (unmaintained)
 ```
+
+## Historical desktop app
+
+The original Python/PySide2 desktop app is no longer in this repository.
+Browse the last revision that still included it:
+
+https://github.com/j33433/MPowerTCX/tree/legacy-python/legacy
 
 ## License
 

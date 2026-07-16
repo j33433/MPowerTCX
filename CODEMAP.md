@@ -25,7 +25,6 @@ CSV bytes
 | `tests/` | Shell + Python golden-file comparison |
 | `scripts/` | Offline build, release helpers |
 | `.github/workflows/` | CI (offline zip / releases) |
-| `legacy/` | Unmaintained Python/PySide2 desktop app |
 
 ---
 
@@ -168,22 +167,6 @@ Also: `cargo test -p mpowertcx-core`
 
 ---
 
-## legacy/
-
-Unmaintained Python desktop app (reference only).
-
-| Path | Purpose |
-|------|---------|
-| `source/mpowertcx.py`, `mpower.py` | Conversion entrypoints |
-| `source/equipment/` | Original bike parsers (Python) |
-| `source/physics/` | Physics model (+ optional Cython) |
-| `source/ui/`, `mpowertcxui.py` | PySide2 GUI |
-| `source/xml_templates.py` | TCX templates |
-| `images/` | Icons/screenshots |
-| `INSTRUCTIONS.md` | Old desktop docs |
-
----
-
 ## Where to change what
 
 | Task | Start here |
@@ -203,4 +186,7 @@ Unmaintained Python desktop app (reference only).
 
 ## Skipped from this map
 
-Trivial/config noise (`.gitignore`, lockfile-only noise), binary assets under `legacy/images/`, individual sample filenames, generated `web/pkg/*`, and untracked local install scripts.
+Trivial/config noise (`.gitignore`, lockfile-only noise), individual sample filenames, generated `web/pkg/*`, and untracked local install scripts.
+
+Historical Python/PySide2 desktop app: tag `legacy-python` at
+https://github.com/j33433/MPowerTCX/tree/legacy-python/legacy
