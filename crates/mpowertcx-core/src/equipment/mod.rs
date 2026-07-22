@@ -5,6 +5,7 @@ pub mod fit;
 pub mod stages;
 pub mod thesufferfest;
 pub mod systm;
+pub mod tcx_in;
 pub mod trainerroad;
 
 pub trait BikeParser {

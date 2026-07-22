@@ -1,4 +1,4 @@
-use crate::equipment::{all_parsers, fit, CsvRows};
+use crate::equipment::{all_parsers, fit, tcx_in, CsvRows};
 use crate::ride::Ride;
 use chrono::NaiveDateTime;
 
@@ -32,6 +32,18 @@ impl Converter {
             let mut ride = Ride::new();
             fit::load_fit(data, &mut ride)?;
             let equipment_name = "FIT".to_string();
+            ride.header.equipment = equipment_name.clone();
+            return Ok(Self {
+                ride,
+                equipment_name,
+                diagnostics: Vec::new(),
+            });
+        }
+
+        if tcx_in::is_tcx(data) {
+            let mut ride = Ride::new();
+            tcx_in::load_tcx(data, &mut ride)?;
+            let equipment_name = "TCX".to_string();
             ride.header.equipment = equipment_name.clone();
             return Ok(Self {
                 ride,

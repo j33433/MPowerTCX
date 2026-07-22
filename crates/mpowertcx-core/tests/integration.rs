@@ -362,3 +362,24 @@ fn test_fit_black() {
     assert!(tcx.contains("<Cadence>67.0</Cadence>") || tcx.contains("<Cadence>67</Cadence>"));
     assert!(tcx.contains("<Value>86.0</Value>") || tcx.contains("<Value>86</Value>"));
 }
+
+#[test]
+fn test_tcx_black() {
+    let path = samples_dir().join("Black.tcx");
+    let data = fs::read(&path).unwrap();
+    let converter = Converter::from_csv(&data).unwrap();
+    assert_eq!(converter.equipment_name(), "TCX");
+    assert_eq!(converter.count(), 3600);
+    assert_eq!(
+        converter.date_hint(),
+        Some(NaiveDateTime::parse_from_str("2026-07-22T15:15:21", "%Y-%m-%dT%H:%M:%S").unwrap())
+    );
+    assert!((converter.ride().header.time - 3599.0).abs() < 1.0);
+    assert!(converter.ride().header.distance > 24000.0);
+
+    let start = converter.date_hint().unwrap();
+    let tcx = converter.convert(start, &ConvertOptions::default());
+    assert!(tcx.contains("<Watts>75</Watts>"));
+    assert!(tcx.contains("<Cadence>67.0</Cadence>") || tcx.contains("<Cadence>67</Cadence>"));
+    assert!(tcx.contains("<Value>86.0</Value>") || tcx.contains("<Value>86</Value>"));
+}
