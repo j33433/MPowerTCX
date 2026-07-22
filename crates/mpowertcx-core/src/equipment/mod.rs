@@ -4,6 +4,7 @@ pub mod echelon;
 pub mod stages;
 pub mod thesufferfest;
 pub mod systm;
+pub mod trainerroad;
 
 pub trait BikeParser {
     fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String>;
@@ -17,6 +18,7 @@ pub fn all_parsers() -> Vec<Box<dyn BikeParser>> {
         Box::new(echelon::EchelonV2::new()),
         Box::new(echelon::EchelonV3::new()),
         Box::new(systm::Systm::new()),
+        Box::new(trainerroad::TrainerRoad::new()),
         Box::new(stages::Stages::new()),
     ]
 }
@@ -44,9 +46,10 @@ impl CsvRows {
             .replace("\r\n", "\n")
             .replace("\r", "\n");
 
+        let delimiter = detect_delimiter(&normalized);
         let rows: Vec<Vec<String>> = normalized
             .split('\n')
-            .map(parse_csv_line)
+            .map(|line| parse_csv_line(line, delimiter))
             .collect();
 
         Self { rows, pos: 0 }
@@ -63,9 +66,27 @@ impl CsvRows {
     }
 }
 
-fn parse_csv_line(line: &str) -> Vec<String> {
+fn detect_delimiter(text: &str) -> char {
+    for line in text.lines().take(20) {
+        if line.is_empty() {
+            continue;
+        }
+        if line.contains('\t') {
+            return '\t';
+        }
+        break;
+    }
+    ','
+}
+
+fn parse_csv_line(line: &str, delimiter: char) -> Vec<String> {
     if line.is_empty() {
         return Vec::new();
     }
-    line.split(',').map(|s| s.trim_start().to_string()).collect()
+    // CSV headers (e.g. Echelon "Watts ") keep trailing spaces; TSV trims fully.
+    if delimiter == '\t' {
+        line.split(delimiter).map(|s| s.trim().to_string()).collect()
+    } else {
+        line.split(delimiter).map(|s| s.trim_start().to_string()).collect()
+    }
 }

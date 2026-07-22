@@ -45,6 +45,7 @@ Library: parse CSV, build ride, interpolate, physics model, emit TCX, lint TCX.
 | `src/equipment/stages.rs` | 146 | Stages Indoor Cycles |
 | `src/equipment/systm.rs` | 82 | Wahoo SYSTM |
 | `src/equipment/thesufferfest.rs` | 54 | The Sufferfest |
+| `src/equipment/trainerroad.rs` | — | TrainerRoad TSV `.txt` from WorkoutRecords |
 | `tests/integration.rs` | — | Sample-based conversion tests |
 | `tests/linter_tests.rs` | — | Linter unit tests |
 
@@ -63,7 +64,8 @@ Library: parse CSV, build ride, interpolate, physics model, emit TCX, lint TCX.
 1. TheSufferfest  
 2. EchelonV1, EchelonV2, EchelonV3  
 3. Systm  
-4. Stages (fallback / broad CSV shapes)
+4. TrainerRoad  
+5. Stages (fallback / broad CSV shapes)
 
 ### Key types
 

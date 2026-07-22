@@ -50,7 +50,7 @@
         "name": "What CSV formats are supported?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Schwinn MPower Echelon (3 variants), Stages (metric and English, with or without headers), The Sufferfest, Wahoo SYSTM, and several NordicTrack and PRO-FORM iFit variants. If your file has power, cadence, heart rate, and distance columns, it can probably be added."
+          "text": "Schwinn MPower Echelon (3 variants), Stages (metric and English, with or without headers), The Sufferfest, Wahoo SYSTM, TrainerRoad, and several NordicTrack and PRO-FORM iFit variants. If your file has power, cadence, heart rate, and distance columns, it can probably be added."
         }
       },
       {
@@ -131,6 +131,7 @@
         <span class="format-pill">Stages Indoor Cycles</span>
         <span class="format-pill">The Sufferfest</span>
         <span class="format-pill">Wahoo SYSTM</span>
+        <span class="format-pill">TrainerRoad</span>
         <span class="format-pill">NordicTrack</span>
         <span class="format-pill">PRO-FORM iFit</span>
       </div>
@@ -261,6 +262,15 @@
       <h3>The Sufferfest and Wahoo SYSTM</h3>
       <p>Both export CSV under workout history or activity settings.</p>
 
+      <h3>TrainerRoad</h3>
+      <p>
+        Activity files are <code>.txt</code> (tab-separated), not CSV. On the
+        computer where TrainerRoad is installed they live in the user's
+        <code>WorkoutRecords</code> folder (UUID-named files such as
+        <code>dca6f8c2-3171-40ad-9e17-1b6a89898af2.txt</code>). Upload those
+        <code>.txt</code> files directly.
+      </p>
+
       <div class="alert alert-warning small">
         USB drive problems? Some Schwinn consoles reject newer thumb drives. A
         1GB drive usually works. If the USB logo won't flash or the console shuts
@@ -272,7 +282,7 @@
       <h2>Converting and uploading</h2>
       <h3>Convert</h3>
       <ol>
-        <li>Open <a href="./">upload.bike</a> and choose your CSV file</li>
+        <li>Open <a href="./">upload.bike</a> and choose your CSV or TXT file</li>
         <li>Repair timing is on by default</li>
         <li>Turn on Repair speed and distance if the distance looks off, then enter your combined rider + bike weight</li>
         <li>Download the TCX</li>
