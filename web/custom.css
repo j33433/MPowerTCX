@@ -31,7 +31,7 @@ nav.topnav a { text-decoration: none; color: var(--pico-muted-color); }
 nav.topnav .active a { color: var(--pico-primary); font-weight: 600; }
 nav.topnav .theme-toggle { margin: 0; padding: 0.3rem; line-height: 0; width: auto; display: inline-flex; align-items: center; justify-content: center; }
 
-section[id], article[id] { scroll-margin-top: 60px; }
+section[id], article[id], #convert-error { scroll-margin-top: 60px; }
 
 .alert { padding: 0.75rem 1rem; border-radius: 0.25rem; margin-bottom: 1rem; border: 1px solid transparent; }
 .alert-danger { background: var(--pico-card-background-color); border-color: var(--pico-form-element-invalid-border-color); color: var(--pico-form-element-invalid-border-color); }

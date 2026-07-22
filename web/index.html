@@ -37,6 +37,14 @@
           <span>Private by design. 100% browser-based file processing.</span>
         </div>
 
+        <div id="convert-error" class="alert alert-danger" x-show="errorVisible" x-cloak>
+          <span x-text="errorText"></span>
+          <details x-show="debugText" x-cloak style="margin-top: 0.5rem;">
+            <summary class="muted small">Details</summary>
+            <pre class="small" style="white-space: pre-wrap; margin: 0.5rem 0 0;" x-text="debugText"></pre>
+          </details>
+        </div>
+
         <!-- Drag & drop upload zone -->
         <input type="file" id="customFile" accept=".csv,.txt,text/csv,text/plain" @change="changeFile($event)" hidden>
         <label for="customFile" class="dropzone" :class="{ dragging: isDragging }"
@@ -176,14 +184,6 @@
       <!-- Alerts -->
       <div class="alert alert-warning" x-show="noticeVisible" x-cloak>
         <span x-text="noticeText"></span>
-      </div>
-
-      <div class="alert alert-danger" x-show="errorVisible" x-cloak>
-        <span x-text="errorText"></span>
-        <details x-show="debugText" x-cloak style="margin-top: 0.5rem;">
-          <summary class="muted small">Details</summary>
-          <pre class="small" style="white-space: pre-wrap; margin: 0.5rem 0 0;" x-text="debugText"></pre>
-        </details>
       </div>
 
       <!-- Supported formats -->
@@ -470,6 +470,9 @@
           this.errorVisible = true;
           this.errorText = msg;
           this.debugText = debug || '';
+          this.$nextTick(() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
         }
       };
     }
