@@ -343,7 +343,7 @@
             }
             this.renderPreview();
           } catch (err) {
-            this.showError('Conversion failed: ' + err, '');
+            this.showError('Conversion failed: ' + this.safeErrorText(err), '');
           }
         },
 
@@ -462,14 +462,22 @@
           URL.revokeObjectURL(url);
         },
 
+        safeErrorText(err) {
+          let s = (err && err.message) ? err.message : String(err || '');
+          // Drop non-printable junk that binary uploads can produce.
+          s = s.replace(/[^\t\n\r\x20-\x7E]/g, '?');
+          if (s.length > 400) s = s.slice(0, 400) + '…';
+          return s.trim() || 'unrecognized or invalid file';
+        },
+
         showError(msg, debug) {
           this.resultVisible = false;
           this.noticeVisible = false;
           this.previewVisible = false;
           this.chartVisible = false;
           this.errorVisible = true;
-          this.errorText = msg;
-          this.debugText = debug || '';
+          this.errorText = this.safeErrorText(msg);
+          this.debugText = debug ? this.safeErrorText(debug) : '';
           this.$nextTick(() => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           });

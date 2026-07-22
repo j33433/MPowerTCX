@@ -383,3 +383,21 @@ fn test_tcx_black() {
     assert!(tcx.contains("<Cadence>67.0</Cadence>") || tcx.contains("<Cadence>67</Cadence>"));
     assert!(tcx.contains("<Value>86.0</Value>") || tcx.contains("<Value>86</Value>"));
 }
+
+#[test]
+fn test_binary_upload_clean_error() {
+    let data: Vec<u8> = (0u8..=255).cycle().take(800).collect();
+    let err = match Converter::from_csv(&data) {
+        Ok(_) => panic!("expected error for binary input"),
+        Err(e) => e,
+    };
+    assert!(!err.chars().any(|c| c.is_control() && c != '\n' && c != '\t'));
+    assert!(err.len() < 200, "error too long: {err}");
+    assert!(!err.contains('\u{0001}'));
+    assert!(err.contains("Could not recognize") || err.contains("recognize"));
+
+    let mut jpeg = b"\xff\xd8\xff\xe0JFIF".to_vec();
+    jpeg.extend_from_slice(&[1u8; 300]);
+    let err = Converter::from_csv(&jpeg).err().expect("jpeg should fail");
+    assert!(err.chars().all(|c| c == '\n' || c == '\t' || c.is_ascii_graphic() || c == ' '));
+}
