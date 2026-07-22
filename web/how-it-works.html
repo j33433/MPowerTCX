@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
-  <meta name="description" content="How upload.bike converts indoor bike CSV files to TCX. Physics model for fixing bad speed and distance, interpolation for compatibility, step-by-step guides for Schwinn, Stages, and Wahoo SYSTM.">
-  <title>How It Works: Convert Indoor Bike CSV to TCX | upload.bike</title>
+  <meta name="description" content="How upload.bike converts indoor bike files to TCX. Physics model for fixing bad speed and distance, interpolation for compatibility, step-by-step guides for Schwinn, Stages, and Wahoo SYSTM.">
+  <title>How It Works: Convert Indoor Bike Files to TCX | upload.bike</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <link rel="stylesheet" href="./custom.css">
   <script type="application/ld+json">
@@ -26,7 +26,7 @@
         "name": "What if my bike isn't in the supported list?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Email your CSV to upload.bike@gmail.com. New formats can usually be added if you provide a sample file."
+          "text": "Missing your bike? Send a sample file to upload.bike@gmail.com. If it has power, cadence, heart rate, and distance, support is usually straightforward."
         }
       },
       {
@@ -47,10 +47,10 @@
       },
       {
         "@type": "Question",
-        "name": "What CSV formats are supported?",
+        "name": "What formats are supported?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Schwinn MPower Echelon (3 variants), Stages (metric and English, with or without headers), The Sufferfest, Wahoo SYSTM, TrainerRoad, and several NordicTrack and PRO-FORM iFit variants. If your file has power, cadence, heart rate, and distance columns, it can probably be added."
+          "text": "File types: .csv, .txt, .fit, and .tcx.\n\nSupported equipment:\n• Schwinn MPower Echelon (3 variants)\n• Stages Indoor Cycles (metric and English, with or without headers)\n• The Sufferfest\n• Wahoo SYSTM\n• TrainerRoad\n• NordicTrack\n• PRO-FORM iFit\n\nMissing your bike? Send a sample file to upload.bike@gmail.com."
         }
       },
       {
@@ -76,11 +76,11 @@
   {
     "@context": "https://schema.org",
     "@type": "HowTo",
-    "name": "Convert Indoor Bike CSV to TCX",
-    "description": "Convert CSV files from stationary bikes to TCX format for import into Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah.",
+    "name": "Convert Indoor Bike Files to TCX",
+    "description": "Convert indoor bike workout files to TCX format for import into Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah.",
     "step": [
       {"@type": "HowToStep", "position": 1, "name": "Export your ride", "text": "Export your workout from the bike console to a USB thumb drive. On Schwinn MPower, press AVG/MAX for 5 seconds after stopping. On Stages, use the console export menu."},
-      {"@type": "HowToStep", "position": 2, "name": "Load the CSV", "text": "Go to upload.bike and click Choose CSV file. Select the file from your USB drive. The tool detects your bike model and parses the data automatically."},
+      {"@type": "HowToStep", "position": 2, "name": "Load your file", "text": "Go to upload.bike and choose your workout file. Select the file from your USB drive. The tool detects your bike model and parses the data automatically."},
       {"@type": "HowToStep", "position": 3, "name": "Choose options", "text": "Repair timing (1-second resampling) is on by default. Enable Repair speed and distance if your bike reports inaccurate distance, and enter your combined rider and bike weight."},
       {"@type": "HowToStep", "position": 4, "name": "Download TCX", "text": "Click Download TCX to save the converted file."},
       {"@type": "HowToStep", "position": 5, "name": "Upload to your platform", "text": "Upload the TCX file to Strava, Garmin Connect, TrainingPeaks, or Golden Cheetah using their import feature."}
@@ -105,9 +105,8 @@
     <div class="page-hero">
       <h1>How it works</h1>
       <p>
-        upload.bike turns indoor bike CSV files into TCX for Strava, Garmin
-        Connect, TrainingPeaks, and Golden Cheetah. Everything runs in your
-        browser.
+        Convert indoor bike files to TCX for Strava, Garmin Connect,
+        TrainingPeaks, and Golden Cheetah. Everything runs in your browser.
       </p>
     </div>
 
@@ -119,8 +118,9 @@
         TrainingPeaks, and Golden Cheetah all read it.
       </p>
       <p>
-        Indoor bikes don't write TCX. They write CSV, which those platforms
-        won't read. upload.bike reads the CSV and writes a TCX they accept.
+        Strava and Garmin want TCX. Many indoor bikes export CSV (or other
+        formats) instead. upload.bike reads those files and saves a TCX they
+        accept.
       </p>
     </article>
 
@@ -136,8 +136,9 @@
         <span class="format-pill">PRO-FORM iFit</span>
       </div>
       <p class="muted small">
-        If your bike exports a CSV with power, cadence, heart rate, and distance,
-        it can usually be added. Email a sample to upload.bike@gmail.com.
+        Missing your bike? Send a sample file to upload.bike@gmail.com. If it
+        has power, cadence, heart rate, and distance, support is usually
+        straightforward.
       </p>
     </article>
 
@@ -166,7 +167,7 @@
         You can also use this to fix workouts that already exported as TCX or
         FIT. Drop the file in, enable Repair speed and distance, and set your
         combined weight. Power, cadence, and heart rate stay as recorded; speed
-        and distance are rebuilt from power, then written out as a clean TCX for
+        and distance are rebuilt from power, then saved as a clean TCX for
         Strava, Garmin Connect, or TrainingPeaks.
       </p>
 
@@ -242,8 +243,8 @@
       </p>
     </article>
 
-    <article class="card page-card" id="getting-csv">
-      <h2>Getting your CSV file</h2>
+    <article class="card page-card" id="getting-file">
+      <h2>Getting your file</h2>
       <h3>Schwinn MPower Echelon</h3>
       <ol>
         <li>Insert a USB thumb drive into the slot at the top of the console</li>
@@ -288,7 +289,7 @@
       <h2>Converting and uploading</h2>
       <h3>Convert</h3>
       <ol>
-        <li>Open <a href="./">upload.bike</a> and choose your CSV or TXT file</li>
+        <li>Open <a href="./">upload.bike</a> and choose your workout file</li>
         <li>Repair timing is on by default</li>
         <li>Turn on Repair speed and distance if the distance looks off, then enter your combined rider + bike weight</li>
         <li>Download the TCX</li>
@@ -307,7 +308,7 @@
       <template x-for="(q, i) in items" :key="i">
         <details :open="i === 0">
           <summary x-text="q.name"></summary>
-          <p x-text="q.text"></p>
+          <p style="white-space: pre-line;" x-text="q.text"></p>
         </details>
       </template>
     </article>
@@ -316,8 +317,8 @@
       <h2>Troubleshooting</h2>
       <h3>File won't load</h3>
       <p>
-        Bikes and firmware versions write CSV differently. If yours won't load,
-        email it to
+        Bikes and firmware versions export files differently. If yours won't
+        load, email it to
         <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a> and it
         can usually be added.
       </p>

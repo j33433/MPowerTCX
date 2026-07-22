@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
-  <meta name="description" content="Convert indoor bike CSV files to TCX for Strava, TrainingPeaks, Garmin Connect and Golden Cheetah. Runs entirely in your browser - no server needed.">
-  <title>upload.bike - CSV to TCX converter for indoor bikes</title>
+  <meta name="description" content="Convert indoor bike files to TCX for Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah. Everything runs in your browser.">
+  <title>upload.bike - Convert to TCX for indoor bikes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" data-inline="pico.css">
   <link rel="stylesheet" href="./custom.css" data-inline="custom.css">
 </head>
@@ -26,8 +26,8 @@
     <article x-data="converter()">
       <!-- Hero -->
       <div class="hero">
-        <h1 class="hero-title">Convert CSV to TCX</h1>
-        <p class="hero-sub">For indoor bike workouts from Schwinn, Stages, NordicTrack, Wahoo SYSTM, and more</p>
+        <h1 class="hero-title">Convert to TCX</h1>
+        <p class="hero-sub">Convert indoor bike files to TCX for Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah. Everything runs in your browser.</p>
       </div>
 
       <!-- ==================== INITIAL STATE ==================== -->
@@ -39,6 +39,11 @@
 
         <div id="convert-error" class="alert alert-danger" x-show="errorVisible" x-cloak>
           <span x-text="errorText"></span>
+          <p class="small" style="margin: 0.5rem 0 0;">
+            If this keeps happening, email the file to
+            <a href="mailto:upload.bike@gmail.com">upload.bike@gmail.com</a>
+            and we can take a look.
+          </p>
           <details x-show="debugText" x-cloak style="margin-top: 0.5rem;">
             <summary class="muted small">Details</summary>
             <pre class="small" style="white-space: pre-wrap; margin: 0.5rem 0 0;" x-text="debugText"></pre>
@@ -55,7 +60,7 @@
               <path d="M24 32V10M24 10l-8 8M24 10l8 8M12 33h24"/>
             </svg>
           </span>
-          <span class="dropzone-title">Drop your CSV or TXT file here</span>
+          <span class="dropzone-title">Drop your workout file here</span>
           <span class="dropzone-sub">or choose a file from your computer</span>
           <span class="dropzone-btn">Choose file</span>
         </label>
