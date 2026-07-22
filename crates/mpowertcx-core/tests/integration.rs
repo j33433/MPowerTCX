@@ -341,3 +341,24 @@ fn test_trainerroad_outdoor_distance() {
     assert!(tcx.contains("9919.4") || tcx.contains("9919.40"));
     assert!(converter.ride().distance.first().unwrap().starts_with("9919"));
 }
+
+#[test]
+fn test_fit_black() {
+    let path = samples_dir().join("Black.fit");
+    let data = fs::read(&path).unwrap();
+    let converter = Converter::from_csv(&data).unwrap();
+    assert_eq!(converter.equipment_name(), "FIT");
+    assert_eq!(converter.count(), 3601);
+    assert_eq!(
+        converter.date_hint(),
+        Some(NaiveDateTime::parse_from_str("2026-07-22T15:15:21", "%Y-%m-%dT%H:%M:%S").unwrap())
+    );
+    assert!((converter.ride().header.time - 3600.0).abs() < 1.0);
+    assert!(converter.ride().header.distance > 16000.0);
+
+    let start = converter.date_hint().unwrap();
+    let tcx = converter.convert(start, &ConvertOptions::default());
+    assert!(tcx.contains("<Watts>75</Watts>"));
+    assert!(tcx.contains("<Cadence>67.0</Cadence>") || tcx.contains("<Cadence>67</Cadence>"));
+    assert!(tcx.contains("<Value>86.0</Value>") || tcx.contains("<Value>86</Value>"));
+}

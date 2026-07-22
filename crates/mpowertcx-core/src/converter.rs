@@ -1,4 +1,4 @@
-use crate::equipment::{all_parsers, CsvRows};
+use crate::equipment::{all_parsers, fit, CsvRows};
 use crate::ride::Ride;
 use chrono::NaiveDateTime;
 
@@ -28,6 +28,18 @@ pub struct Converter {
 
 impl Converter {
     pub fn from_csv(data: &[u8]) -> Result<Self, String> {
+        if fit::is_fit(data) {
+            let mut ride = Ride::new();
+            fit::load_fit(data, &mut ride)?;
+            let equipment_name = "FIT".to_string();
+            ride.header.equipment = equipment_name.clone();
+            return Ok(Self {
+                ride,
+                equipment_name,
+                diagnostics: Vec::new(),
+            });
+        }
+
         let mut rows = CsvRows::new(data);
         let mut ride = Ride::new();
         let mut parsers = all_parsers();

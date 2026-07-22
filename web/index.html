@@ -46,7 +46,7 @@
         </div>
 
         <!-- Drag & drop upload zone -->
-        <input type="file" id="customFile" accept=".csv,.txt,text/csv,text/plain" @change="changeFile($event)" hidden>
+        <input type="file" id="customFile" accept=".csv,.txt,.fit,text/csv,text/plain" @change="changeFile($event)" hidden>
         <label for="customFile" class="dropzone" :class="{ dragging: isDragging }"
                @dragover.prevent="isDragging = true" @dragleave.prevent="isDragging = false"
                @drop.prevent="dropFile($event)">
@@ -406,7 +406,7 @@
         readFile(file) {
           if (!file) return;
           this.fileName = file.name;
-          lastFilename = file.name.replace(/\.(csv|txt)$/i, '') + '.tcx';
+          lastFilename = file.name.replace(/\.(csv|txt|fit)$/i, '') + '.tcx';
           if (!this.wasmReady) {
             this.showError('The conversion engine is still loading. Please try again in a moment.');
             return;

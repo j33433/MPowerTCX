@@ -1,6 +1,7 @@
 use crate::ride::Ride;
 
 pub mod echelon;
+pub mod fit;
 pub mod stages;
 pub mod thesufferfest;
 pub mod systm;
