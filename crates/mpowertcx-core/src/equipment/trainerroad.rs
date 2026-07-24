@@ -37,7 +37,14 @@ impl TrainerRoad {
         }
     }
 
-    fn load_row(row: &[String], ride: &mut Ride, last_time: &mut f64, max_distance: &mut f64) {
+    fn load_row(
+        row: &[String],
+        ride: &mut Ride,
+        last_time: &mut f64,
+        max_distance: &mut f64,
+        prev_altitude: &mut Option<f64>,
+        prev_dist_for_alt: &mut f64,
+    ) {
         if row.first().map(|s| s.as_str()) != Some("2") || row.len() < 15 {
             return;
         }
@@ -72,18 +79,46 @@ impl TrainerRoad {
             python_float(hr),
             python_float(sample_distance),
         );
+
+        // Elevation: column 12 (0-based), in meters
+        let elev_raw = row.get(12).map(|s| s.as_str()).unwrap_or("");
+        let altitude = if elev_raw.is_empty() || elev_raw == "null" {
+            None
+        } else {
+            elev_raw.parse::<f64>().ok()
+        };
+
+        if let Some(alt) = altitude {
+            let grade = if let Some(prev_alt) = prev_altitude {
+                let d_delta = sample_distance - *prev_dist_for_alt;
+                if d_delta > 0.0 {
+                    ((alt - *prev_alt) / d_delta) * 100.0
+                } else {
+                    0.0
+                }
+            } else {
+                0.0
+            };
+            ride.add_incline(python_float(grade));
+            *prev_altitude = Some(alt);
+            *prev_dist_for_alt = sample_distance;
+        } else {
+            ride.add_incline("0");
+        }
     }
 
     fn load(peek: &[String], rows: &mut CsvRows, ride: &mut Ride) {
         let mut last_time = 0.0f64;
         let mut max_distance = 0.0f64;
+        let mut prev_altitude: Option<f64> = None;
+        let mut prev_dist_for_alt: f64 = 0.0;
 
-        Self::load_row(peek, ride, &mut last_time, &mut max_distance);
+        Self::load_row(peek, ride, &mut last_time, &mut max_distance, &mut prev_altitude, &mut prev_dist_for_alt);
         while let Some(row) = rows.next() {
             if row.is_empty() {
                 continue;
             }
-            Self::load_row(row, ride, &mut last_time, &mut max_distance);
+            Self::load_row(row, ride, &mut last_time, &mut max_distance, &mut prev_altitude, &mut prev_dist_for_alt);
         }
 
         ride.infer_header(last_time, python_float(last_time));

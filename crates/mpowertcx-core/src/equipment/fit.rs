@@ -17,6 +17,8 @@ pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
     let mut session_timer: Option<f64> = None;
     let mut session_distance: Option<f64> = None;
     let mut max_distance = 0.0f64;
+    let mut prev_altitude: Option<f64> = None;
+    let mut prev_dist_for_alt: f64 = 0.0;
 
     for rec in &records {
         match rec.kind() {
@@ -27,6 +29,7 @@ pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
                 let mut distance = 0.0f64;
                 let mut has_metrics = false;
                 let mut ts: Option<NaiveDateTime> = None;
+                let mut altitude: Option<f64> = None;
 
                 for field in rec.fields() {
                     match field.name() {
@@ -57,6 +60,11 @@ pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
                             if let Some(v) = value_f64(field.value()) {
                                 distance = v;
                                 has_metrics = true;
+                            }
+                        }
+                        "altitude" | "enhanced_altitude" => {
+                            if altitude.is_none() {
+                                altitude = value_f64(field.value());
                             }
                         }
                         _ => {}
@@ -93,6 +101,20 @@ pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
                     python_float(hr),
                     python_float(sample_distance),
                 );
+
+                if let Some(alt) = altitude {
+                    let grade = match (prev_altitude, sample_distance - prev_dist_for_alt) {
+                        (Some(prev_alt), d_delta) if d_delta > 0.0 => {
+                            ((alt - prev_alt) / d_delta) * 100.0
+                        }
+                        _ => 0.0,
+                    };
+                    ride.add_incline(python_float(grade));
+                    prev_altitude = Some(alt);
+                    prev_dist_for_alt = sample_distance;
+                } else {
+                    ride.add_incline("0");
+                }
             }
             MesgNum::Session => {
                 for field in rec.fields() {

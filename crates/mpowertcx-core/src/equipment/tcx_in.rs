@@ -26,6 +26,8 @@ pub fn load_tcx(data: &[u8], ride: &mut Ride) -> Result<(), String> {
     let mut lap_timer_sum = 0.0f64;
     let mut max_distance = 0.0f64;
     let mut max_lap_distance = 0.0f64;
+    let mut prev_altitude: Option<f64> = None;
+    let mut prev_dist_for_alt: f64 = 0.0;
 
     for activity in &activities.activities {
         if ride.get_date_hint().is_none() {
@@ -76,6 +78,20 @@ pub fn load_tcx(data: &[u8], ride: &mut Ride) -> Result<(), String> {
                         python_float(hr),
                         python_float(sample_distance),
                     );
+
+                    if let Some(alt) = tp.altitude_meters {
+                        let grade = match (prev_altitude, sample_distance - prev_dist_for_alt) {
+                            (Some(prev_alt), d_delta) if d_delta > 0.0 => {
+                                ((alt - prev_alt) / d_delta) * 100.0
+                            }
+                            _ => 0.0,
+                        };
+                        ride.add_incline(python_float(grade));
+                        prev_altitude = Some(alt);
+                        prev_dist_for_alt = sample_distance;
+                    } else {
+                        ride.add_incline("0");
+                    }
                 }
             }
         }
