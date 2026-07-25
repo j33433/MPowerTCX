@@ -77,6 +77,10 @@ impl BikeParser for EchelonV1 {
     fn name(&self) -> &str {
         "Echelon Variant 1"
     }
+
+    fn incline_is_simulated(&self) -> bool {
+        true
+    }
 }
 
 pub struct EchelonV2;
@@ -175,6 +179,10 @@ impl BikeParser for EchelonV2 {
     fn name(&self) -> &str {
         "Echelon Variant 2"
     }
+
+    fn incline_is_simulated(&self) -> bool {
+        true
+    }
 }
 
 pub struct EchelonV3;
@@ -236,5 +244,9 @@ impl BikeParser for EchelonV3 {
 
     fn name(&self) -> &str {
         "Echelon Variant 3"
+    }
+
+    fn incline_is_simulated(&self) -> bool {
+        true
     }
 }

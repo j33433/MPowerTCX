@@ -11,6 +11,13 @@ pub mod trainerroad;
 pub trait BikeParser {
     fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String>;
     fn name(&self) -> &str;
+
+    /// When true, incline data is a visual display value only (the trainer
+    /// does NOT adjust resistance to match it). The physics model should not
+    /// apply grade because the power goes entirely into flywheel speed.
+    fn incline_is_simulated(&self) -> bool {
+        false
+    }
 }
 
 pub fn all_parsers() -> Vec<Box<dyn BikeParser>> {

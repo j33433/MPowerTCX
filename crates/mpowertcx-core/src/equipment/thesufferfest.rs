@@ -51,4 +51,8 @@ impl BikeParser for TheSufferfest {
     fn name(&self) -> &str {
         "The Sufferfest"
     }
+
+    fn incline_is_simulated(&self) -> bool {
+        true
+    }
 }
