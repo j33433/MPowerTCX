@@ -30,31 +30,31 @@ fn read_sample(name: &str) -> String {
 #[test]
 fn test_clean_samples_no_errors() {
     let clean = [
-        "MPower33.tcx",
-        "STAGES01.tcx",
-        "STAGES16.tcx",
-        "MPower88.tcx",
-        "MPower14.tcx",
-        "MPower27.tcx",
-        "sufferfest.tcx",
-        "bmstages02.tcx",
-        "bmstages06.tcx",
-        "cordis.tcx",
-        "1122.tcx",
-        "1214.tcx",
-        "wahoo_systm_activity.tcx",
-        "echelon1 workout.tcx",
-        "stages_header_at_end.tcx",
-        "STAGES01-no-header.tcx",
-        "v1_no_header.tcx",
-        "STAGES28null.tcx",
-        "stagesnul.tcx",
-        "c56c4102-0555-4144-8c74-2a00be281cfb.tcx",
-        "STAGES18.tcx",
-        "STAGES98.tcx",
-        "STAGES01-JS.tcx",
-        "MPower1RJ.tcx",
-        "2021_09_15_11_09_Get_STRONG_Torque_Workout_2.tcx",
+        "MPower33.csv.tcx",
+        "STAGES01.csv.tcx",
+        "STAGES16.CSV.tcx",
+        "MPower88.csv.tcx",
+        "MPower14.csv.tcx",
+        "MPower27.csv.tcx",
+        "sufferfest.csv.tcx",
+        "bmstages02.csv.tcx",
+        "bmstages06.csv.tcx",
+        "cordis.csv.tcx",
+        "1122.csv.tcx",
+        "1214.csv.tcx",
+        "wahoo_systm_activity.csv.tcx",
+        "echelon1 workout.csv.tcx",
+        "stages_header_at_end.csv.tcx",
+        "STAGES01-no-header.CSV.tcx",
+        "v1_no_header.csv.tcx",
+        "STAGES28null.CSV.tcx",
+        "stagesnul.csv.tcx",
+        "c56c4102-0555-4144-8c74-2a00be281cfb.csv.tcx",
+        "STAGES18.CSV.tcx",
+        "STAGES98.CSV.tcx",
+        "STAGES01-JS.CSV.tcx",
+        "MPower1RJ.csv.tcx",
+        "2021_09_15_11_09_Get_STRONG_Torque_Workout_2.csv.tcx",
     ];
 
     for name in &clean {
@@ -67,7 +67,7 @@ fn test_clean_samples_no_errors() {
 
 #[test]
 fn test_nothing_tcx_clean() {
-    let xml = read_sample("nothing.tcx");
+    let xml = read_sample("nothing.csv.tcx");
     let results = lint_tcx(&xml);
     assert!(!has_errors(&results), "nothing.tcx should have no errors");
     let codes = codes(&results);
@@ -81,7 +81,7 @@ fn test_nothing_tcx_clean() {
 
 #[test]
 fn test_interp_no_negative_watts() {
-    let xml = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb_interp.tcx");
+    let xml = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb.csv_interp.tcx");
     let results = lint_tcx(&xml);
     let errs = error_codes(&results);
     assert!(
@@ -92,7 +92,7 @@ fn test_interp_no_negative_watts() {
 
 #[test]
 fn test_interp_no_negative_distance() {
-    let xml = read_sample("MPower33_interp.tcx");
+    let xml = read_sample("MPower33.csv_interp.tcx");
     let results = lint_tcx(&xml);
     let errs = error_codes(&results);
     assert!(
@@ -103,7 +103,7 @@ fn test_interp_no_negative_distance() {
 
 #[test]
 fn test_interp_no_distance_backwards() {
-    let xml = read_sample("MPower33_interp.tcx");
+    let xml = read_sample("MPower33.csv_interp.tcx");
     let results = lint_tcx(&xml);
     let errs = error_codes(&results);
     assert!(
@@ -118,8 +118,8 @@ fn test_interp_power_whipsaw_is_source_artifact() {
     // (13 W032 warnings in source). Linear interpolation cannot eliminate these;
     // it spreads each 1-step spike across the 3-step ramp, so W032 persists.
     // This test documents that W032 reflects source data, not an interp bug.
-    let src = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb.tcx");
-    let interp = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb_interp.tcx");
+    let src = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb.csv.tcx");
+    let interp = read_sample("c56c4102-0555-4144-8c74-2a00be281cfb.csv_interp.tcx");
     let src_w032 = lint_tcx(&src)
         .iter()
         .filter(|r| r.severity == Severity::Warning && r.code == "W032")
@@ -147,8 +147,8 @@ fn test_interp_implausible_hr_is_source_artifact() {
     // mid-ride (sensor dropouts). Forward-fill keeps leading 0, then linear interp
     // ramps 0 -> 92 across the first 3s, producing ~28 bpm/s which exceeds W038.
     // This test documents that W038 reflects source data, not an interp bug.
-    let src = read_sample("MPower33.tcx");
-    let interp = read_sample("MPower33_interp.tcx");
+    let src = read_sample("MPower33.csv.tcx");
+    let interp = read_sample("MPower33.csv_interp.tcx");
     let src_w038 = lint_tcx(&src)
         .iter()
         .filter(|r| r.severity == Severity::Warning && r.code == "W038")
@@ -172,7 +172,7 @@ fn test_interp_implausible_hr_is_source_artifact() {
 
 #[test]
 fn test_interp_no_negative_zero_distance() {
-    let xml = read_sample("stagesnul_interp.tcx");
+    let xml = read_sample("stagesnul.csv_interp.tcx");
     let results = lint_tcx(&xml);
     let warns: Vec<&str> = results
         .iter()

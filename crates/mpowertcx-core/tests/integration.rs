@@ -192,8 +192,7 @@ fn test_plain_conversions_exact() {
             continue;
         }
 
-        let base = name.trim_end_matches(".csv").trim_end_matches(".CSV");
-        let tcx_name = format!("{}.tcx", base);
+        let tcx_name = format!("{}.tcx", name);
         let tcx_path = dir.join(&tcx_name);
 
         if !tcx_path.exists() {
@@ -224,8 +223,7 @@ fn test_model_conversions_exact() {
             continue;
         }
 
-        let base = name.trim_end_matches(".csv").trim_end_matches(".CSV");
-        let tcx_name = format!("{}_model.tcx", base);
+        let tcx_name = format!("{}_model.tcx", name);
         let tcx_path = dir.join(&tcx_name);
 
         if !tcx_path.exists() {
@@ -256,8 +254,7 @@ fn test_interpolated_conversions_semantic() {
             continue;
         }
 
-        let base = name.trim_end_matches(".csv").trim_end_matches(".CSV");
-        let tcx_name = format!("{}_interp.tcx", base);
+        let tcx_name = format!("{}_interp.tcx", name);
         let tcx_path = dir.join(&tcx_name);
 
         if !tcx_path.exists() {
@@ -365,7 +362,7 @@ fn test_fit_black() {
 
 #[test]
 fn test_tcx_black() {
-    let path = samples_dir().join("Black.tcx");
+    let path = samples_dir().join("Black.fit.tcx");
     let data = fs::read(&path).unwrap();
     let converter = Converter::from_csv(&data).unwrap();
     assert_eq!(converter.equipment_name(), "TCX");

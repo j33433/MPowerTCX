@@ -1,5 +1,5 @@
 #!/bin/bash
-# Test all sample CSVs and compare with expected TCX output
+# Test all sample source files and compare with expected TCX output
 TEST_TIME="2010-10-19T20:56:35.450686"
 PASS=0
 FAIL=0
@@ -8,46 +8,39 @@ SKIP=0
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-for csv in "$ROOT_DIR"/samples/*.csv; do
-    base=$(basename "$csv" .csv)
-    base_lc=$(echo "$base" | tr '[:upper:]' '[:lower:]')
-    
-    # Find the expected tcx file (case-insensitive)
-    expected=""
-    for f in "$ROOT_DIR"/samples/*.tcx; do
-        f_base=$(basename "$f" .tcx)
-        f_base_lc=$(echo "$f_base" | tr '[:upper:]' '[:lower:]')
-        if [ "$f_base_lc" = "$base_lc" ] && [[ "$f" != *"_interp"* ]] && [[ "$f" != *"_model"* ]]; then
-            expected="$f"
-            break
-        fi
-    done
-    
-    if [ -z "$expected" ]; then
-        echo "SKIP  $base (no expected .tcx)"
+shopt -s nullglob
+
+for src in "$ROOT_DIR"/samples/*.csv "$ROOT_DIR"/samples/*.CSV "$ROOT_DIR"/samples/*.fit "$ROOT_DIR"/samples/*.txt; do
+    name=$(basename "$src")
+    echo "$0: $name"
+
+    expected="$ROOT_DIR/samples/${name}.tcx"
+
+    if [ ! -f "$expected" ]; then
+        echo "SKIP  $name (no expected ${name}.tcx)"
         SKIP=$((SKIP + 1))
         continue
     fi
-    
+
     # Run conversion
     output=$(mktemp --suffix=.tcx)
-    cargo run --quiet -- --csv "$csv" --tcx "$output" --time "$TEST_TIME" 2>/dev/null
+    cargo run --quiet -- --csv "$src" --tcx "$output" --time "$TEST_TIME" 2>/dev/null
     rc=$?
-    
+
     if [ $rc -ne 0 ]; then
         rm -f "$output"
-        echo "FAIL  $base (conversion error)"
+        echo "FAIL  $name (conversion error)"
         FAIL=$((FAIL + 1))
         continue
     fi
-    
+
     # Compare
     if diff -q "$output" "$expected" > /dev/null 2>&1; then
-        echo "PASS  $base"
+        echo "PASS  $name"
         PASS=$((PASS + 1))
     else
         diffs=$(diff "$output" "$expected" | head -5)
-        echo "FAIL  $base"
+        echo "FAIL  $name"
         echo "      $diffs"
         FAIL=$((FAIL + 1))
     fi
