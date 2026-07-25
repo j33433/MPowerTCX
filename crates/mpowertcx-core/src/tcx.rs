@@ -54,7 +54,9 @@ pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> S
     out.push_str("        <TriggerMethod>Manual</TriggerMethod>\n");
     out.push_str("        <Track>\n");
 
-    let altitudes: Vec<f64> = if !ride.incline.is_empty() && ride.incline.len() == ride.count() {
+    let altitudes: Vec<f64> = if !ride.altitude.is_empty() && ride.altitude.len() == ride.count() {
+        ride.altitude.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect()
+    } else if !ride.incline.is_empty() && ride.incline.len() == ride.count() {
         let mut alts = Vec::with_capacity(ride.count());
         let mut elev = 0.0f64;
         let mut prev_dist = 0.0f64;

@@ -87,10 +87,12 @@ pub fn load_tcx(data: &[u8], ride: &mut Ride) -> Result<(), String> {
                             _ => 0.0,
                         };
                         ride.add_incline(python_float(grade));
+                        ride.add_altitude(python_float(alt));
                         prev_altitude = Some(alt);
                         prev_dist_for_alt = sample_distance;
                     } else {
                         ride.add_incline("0");
+                        ride.add_altitude("0");
                     }
                 }
             }
