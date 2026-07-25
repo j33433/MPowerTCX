@@ -4,10 +4,10 @@ Convert CSV files from indoor cycling bikes to TCX format for Strava, Garmin
 Connect, TrainingPeaks, and Golden Cheetah. All processing runs in the browser
 via WebAssembly, no server needed.
 
-Try it live at [upload.bike](https://upload.bike). 
+Try it live at [upload.bike](https://upload.bike).
 
 If the site is down, download the standalone build from the
-[latest release](https://github.com/j33433/MPowerTCX/releases). 
+[latest release](https://github.com/j33433/MPowerTCX/releases).
 Unzip and open `index.html` in any browser.
 
 ## Supported equipment
@@ -21,140 +21,31 @@ Unzip and open `index.html` in any browser.
 
 Don't see your bike? Email your CSV to upload.bike@gmail.com.
 
-## CLI usage
+## Quick start (CLI)
 
 ```
-cargo run -- --csv input.csv --tcx output.tcx
+cargo build --release
+./target/release/mpowertcx --csv workout.csv --tcx workout.tcx
 ```
 
-Options:
-- `--csv <FILE>` - input CSV file (required)
-- `--tcx <FILE>` - output TCX file (required)
-- `--time <TIME>` - workout start time (defaults to file timestamp)
-- `--interpolate` - resample to 1-second intervals (recommended)
-- `--model <MASS_KG>` - use physics model for speed and distance
-- `--lint <FILE>` - check a TCX file for errors/warnings, exit 1 on errors
+For the full CLI reference (all options, input formats, interpolation, physics
+model, linter, exit codes, and examples) see **[doc/CLI.md](doc/CLI.md)**.
 
-## Interpolation
+## Documentation
 
-`--interpolate` resamples source data to 1-second intervals using linear
-interpolation, which never overshoots the source min/max or invents spikes.
-Power/cadence are clamped to >= 0, HR zeros are forward-filled, and distance is
-kept monotonic. Any whipsaws or HR dropouts in the output come from the source
-data, not interpolation.
-
-## Linter
-
-`--lint <FILE>` checks any TCX file (your own, or one produced by
-`--interpolate`) for structural problems and implausible values:
-
-```
-cargo run --release -- --lint output.tcx
-```
-
-Errors (E001-E036) cause exit code 1; warnings (W013-W038) print but exit 0.
-See `crates/mpowertcx-core/src/linter.rs` for the full list of checks.
-
-## Web version
-
-The static site in `web/` runs entirely client-side. To preview locally:
-
-```
-cd web && python3 -m http.server
-```
-
-Then open http://localhost:8000.
-
-### Rebuild the WASM package
-
-```
-wasm-pack build crates/mpowertcx-wasm --target web --out-dir ../../web/pkg
-```
-
-## Offline version
-
-A self-contained HTML file with the full converter built in. All CSS, JS,
-and WASM are inlined into a single `index.html`. It runs from `file://`,
-inside a zip without extracting, or anywhere. No server, no install.
-
-### Build
-
-Requires [Rust](https://www.rust-lang.org/tools/install) and
-[wasm-pack](https://rustwasm.github.io/wasm-pack/installer/).
-
-```
-python3 scripts/build-offline.py
-```
-
-Output: `web/downloads/upload.bike-portable.zip`.
-Contains `index.html` (self-contained) and `README.txt`.
-
-### CI builds
-
-A GitHub Actions workflow (`.github/workflows/build-offline.yml`) builds
-the zip automatically. Push a tag like `v3.1.0` to trigger it:
-
-```
-git tag v3.1.0
-git push origin v3.1.0
-```
-
-The workflow creates a GitHub Release with the zip attached.
-Download it and copy to `web/downloads/`. You can also run it manually
-from the Actions tab (workflow_dispatch).
+| File | Covers |
+|------|--------|
+| [doc/CLI.md](doc/CLI.md) | CLI usage, flags, input formats, interpolation, physics model, linter codes, examples |
+| [doc/PHYSICS.md](doc/PHYSICS.md) | Physics model equations, grade/altitude handling, simulated incline |
+| [doc/CODEMAP.md](doc/CODEMAP.md) | Codebase map, workspace layout, file listing, task guide |
 
 ## Tests
 
-Integration tests compare output against the 30 sample files in `samples/`,
-covering plain, physics-model, and interpolated conversions:
-
 ```
 cargo test -p mpowertcx-core
-```
-
-The `report_parsers` test prints which parser handled each sample file:
-
-```
-cargo test -p mpowertcx-core report_parsers -- --nocapture
-```
-
-Shell scripts for byte-exact comparison of plain and model outputs:
-
-```
 bash tests/test_samples.sh
 bash tests/test_samples_advanced.sh
 ```
-
-## Project structure
-
-```
-crates/
-  mpowertcx-core/     conversion library (no I/O, WASM-compatible)
-  mpowertcx-cli/      command-line binary
-  mpowertcx-wasm/     WebAssembly build for the web frontend
-scripts/
-  build-offline.py    builds the portable offline zip
-web/
-  index.html          converter page
-  how-it-works.html   about page with interactive physics graph
-  download.html       offline version download page
-  custom.css          shared styles (Pico CSS plus custom rules)
-  theme.js            light/dark theme toggle
-  preview-chart.js    workout preview chart for the converter (ES module)
-  chart-demo.js       physics model chart engine (ES module)
-  icon.svg            site logo
-  pkg/                WASM package (generated by wasm-pack)
-  downloads/          built offline zip (gitignored)
-  samples/            sample CSV embedded in the WASM for the chart demo
-samples/              test CSVs and expected TCX outputs
-```
-
-## Historical desktop app
-
-The original Python/PySide2 desktop app is no longer in this repository.
-Browse the last revision that still included it:
-
-https://github.com/j33433/MPowerTCX/tree/legacy-python/legacy
 
 ## License
 
