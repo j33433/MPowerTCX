@@ -385,6 +385,52 @@ fn test_tcx_black() {
 }
 
 #[test]
+fn test_fit_mywhoosh() {
+    let path = samples_dir().join("MyNewActivity-5.8.1.fit");
+    let data = fs::read(&path).unwrap();
+    let converter = Converter::from_csv(&data).unwrap();
+    assert_eq!(converter.equipment_name(), "FIT");
+    assert_eq!(converter.count(), 3782);
+    assert_eq!(
+        converter.date_hint(),
+        Some(NaiveDateTime::parse_from_str("2026-07-24T15:08:04", "%Y-%m-%dT%H:%M:%S").unwrap())
+    );
+    assert!((converter.ride().header.time - 3782.0).abs() < 1.0);
+
+    let ride = converter.ride();
+    assert_eq!(ride.altitude.len(), 3782, "altitude vec populated");
+    assert_eq!(ride.incline.len(), 3782, "incline vec populated");
+    let alt_vec: Vec<f64> = ride.altitude.iter().map(|s| s.parse().unwrap_or(0.0)).collect();
+    assert!(alt_vec.iter().cloned().fold(f64::NAN, f64::max) - alt_vec.iter().cloned().fold(f64::NAN, f64::min) > 100.0,
+        "meaningful elevation range");
+
+    // physics model: altitude must not drift (altitude vec breaks circularity)
+    let start = converter.date_hint().unwrap();
+    let plain = converter.convert(start, &ConvertOptions::default());
+    let model = converter.convert(start, &ConvertOptions {
+        physics: true,
+        physics_mass_kg: 70.0,
+        ..ConvertOptions::default()
+    });
+    fn extract_alts(tcx: &str) -> Vec<f64> {
+        tcx.lines()
+            .filter(|l| l.contains("<AltitudeMeters>"))
+            .map(|l| {
+                let start = l.find('>').unwrap() + 1;
+                let end = l[start..].find('<').unwrap();
+                l[start..start + end].parse::<f64>().unwrap()
+            })
+            .collect()
+    }
+    let plain_alts = extract_alts(&plain);
+    let model_alts = extract_alts(&model);
+    assert_eq!(plain_alts.len(), model_alts.len());
+    for (i, (a, b)) in plain_alts.iter().zip(model_alts.iter()).enumerate() {
+        assert!((a - b).abs() < 0.001, "altitude drift at sample {i}: {a} vs {b}");
+    }
+}
+
+#[test]
 fn test_binary_upload_clean_error() {
     let data: Vec<u8> = (0u8..=255).cycle().take(800).collect();
     let err = match Converter::from_csv(&data) {
