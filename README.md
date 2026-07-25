@@ -105,7 +105,7 @@ from the Actions tab (workflow_dispatch).
 
 ## Tests
 
-Integration tests compare output against the 26 sample CSVs in `samples/`,
+Integration tests compare output against the 30 sample files in `samples/`,
 covering plain, physics-model, and interpolated conversions:
 
 ```

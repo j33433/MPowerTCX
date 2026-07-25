@@ -119,7 +119,7 @@ TCX renderer:
 
 ### `samples/2021_09_15_11_09_Get_STRONG_Torque_Workout_2.csv`
 
-2113-sample Stages CSV with 9 columns including an `Incline` column (col 8).
+Stages CSV with 9 columns including an `Incline` column (col 8).
 Grade ranges from -1% to 10% (mean 4%) across 12 distinct values. This is
 the richest elevation dataset in the sample set.
 
@@ -154,7 +154,7 @@ immune to distance recomputation.
 
 ### `samples/wahoo_systm_activity.csv`
 
-8796-sample Wahoo SYSTM export with a `grade` column (0 to 0.1%, mean
+Wahoo SYSTM export with a `grade` column (0 to 0.1%, mean
 0.035%). `incline` populated but not `altitude` (no absolute elevation in
 the source). The physics model applies grade; the renderer falls back to
 grade × distance. Tiny grades → 0.4% distance delta with the model.

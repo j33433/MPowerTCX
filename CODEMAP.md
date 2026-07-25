@@ -4,8 +4,8 @@ Map of the MPowerTCX codebase: indoor-bike CSV → TCX for Strava/Garmin/etc.
 Rust workspace (v2.1.0), browser WASM frontend at [upload.bike](https://upload.bike).
 
 ```
-CSV bytes
-  → equipment parsers (BikeParser trait)
+CSV / FIT / TCX bytes
+  → equipment parsers (BikeParser trait) + FIT/TCX readers
   → Ride (samples + header)
   → optional interpolate / physics model
   → TCX XML (render_tcx)
@@ -32,22 +32,24 @@ CSV bytes
 
 Library: parse CSV, build ride, interpolate, physics model, emit TCX, lint TCX.
 
-| File | Lines | Purpose |
-|------|------:|---------|
-| `src/lib.rs` | 12 | Module exports; `VERSION` |
-| `src/converter.rs` | 150 | Orchestration: detect parser, convert with options |
-| `src/ride.rs` | 320 | `Ride` / `RideHeader`; interpolate; physics distance |
-| `src/tcx.rs` | 109 | `render_tcx` → Garmin TCX XML |
-| `src/physics.rs` | 76 | `SimpleBike` power → speed/distance model |
-| `src/linter.rs` | 906 | TCX structural + plausibility checks (E/W codes) |
-| `src/equipment/mod.rs` | 71 | `BikeParser`, `CsvRows`, `all_parsers()`, unit helpers |
-| `src/equipment/echelon.rs` | 240 | Schwinn MPower Echelon V1/V2/V3 |
-| `src/equipment/stages.rs` | 146 | Stages Indoor Cycles |
-| `src/equipment/systm.rs` | 82 | Wahoo SYSTM |
-| `src/equipment/thesufferfest.rs` | 54 | The Sufferfest |
-| `src/equipment/trainerroad.rs` | — | TrainerRoad TSV `.txt` from WorkoutRecords |
-| `tests/integration.rs` | — | Sample-based conversion tests |
-| `tests/linter_tests.rs` | — | Linter unit tests |
+| File | Purpose |
+|------|---------|
+| `src/lib.rs` | Module exports; `VERSION` |
+| `src/converter.rs` | Orchestration: detect parser, convert with options |
+| `src/ride.rs` | `Ride` / `RideHeader`; interpolate; physics distance |
+| `src/tcx.rs` | `render_tcx` → Garmin TCX XML |
+| `src/physics.rs` | `SimpleBike` power → speed/distance model |
+| `src/linter.rs` | TCX structural + plausibility checks (E/W codes) |
+| `src/equipment/mod.rs` | `BikeParser`, `CsvRows`, `all_parsers()`, unit helpers |
+| `src/equipment/echelon.rs` | Schwinn MPower Echelon V1/V2/V3 |
+| `src/equipment/stages.rs` | Stages Indoor Cycles |
+| `src/equipment/systm.rs` | Wahoo SYSTM |
+| `src/equipment/thesufferfest.rs` | The Sufferfest |
+| `src/equipment/trainerroad.rs` | TrainerRoad TSV `.txt` from WorkoutRecords |
+| `src/equipment/fit.rs` | FIT file reader (binary .fit from bike computers) |
+| `src/equipment/tcx_in.rs` | TCX file reader (round-trip re-conversion) |
+| `tests/integration.rs` | Sample-based conversion tests |
+| `tests/linter_tests.rs` | Linter unit tests |
 
 ### Data flow (core)
 
