@@ -75,6 +75,7 @@ pub struct Ride {
     pub hr: Vec<String>,
     pub distance: Vec<String>,
     pub incline: Vec<String>,
+    pub altitude: Vec<String>,
     pub header: RideHeader,
 }
 
@@ -92,6 +93,7 @@ impl Ride {
             hr: Vec::new(),
             distance: Vec::new(),
             incline: Vec::new(),
+            altitude: Vec::new(),
             header: RideHeader::new(),
         }
     }
@@ -105,6 +107,10 @@ impl Ride {
 
     pub fn add_incline(&mut self, incline: impl ToString) {
         self.incline.push(incline.to_string());
+    }
+
+    pub fn add_altitude(&mut self, altitude_m: impl ToString) {
+        self.altitude.push(altitude_m.to_string());
     }
 
     pub fn count(&self) -> usize {
@@ -218,20 +224,28 @@ impl Ride {
         } else {
             self.incline.clear();
         }
+
+        if !self.altitude.is_empty() && self.altitude.len() == power_f.len() {
+            let alt_f: Vec<f64> = self.altitude.iter().map(|s| s.parse::<f64>().unwrap_or(0.0)).collect();
+            let interp_alt = linear_interp(&xa, &alt_f, &xb);
+            self.altitude = interp_alt.iter().map(|&v| float_to_str(v)).collect();
+        } else {
+            self.altitude.clear();
+        }
     }
 
-    pub fn model_distance(&mut self, mass: f64) {
+    pub fn model_distance(&mut self, mass: f64, use_incline: bool) {
         let delta = self.delta();
         let mut bike = crate::physics::SimpleBike::new(mass);
         bike.set_time_delta(delta);
 
-        // Note: grade is deliberately NOT applied here. Indoor trainer power
-        // already reflects the simulated hill (the trainer raises resistance on
-        // climbs), so adding gravity on top would double-count the effort and
-        // produce unrealistically low speeds. Incline is still emitted as
-        // AltitudeMeters for the elevation profile.
+        let has_incline = use_incline && !self.incline.is_empty() && self.incline.len() == self.count();
+
         self.distance.clear();
-        for p in &self.power {
+        for (i, p) in self.power.iter().enumerate() {
+            if has_incline {
+                bike.set_grade(self.incline[i].parse::<f64>().unwrap_or(0.0) / 100.0);
+            }
             let (_power, _v_mph, distance) = bike.next_sample(p.parse::<f64>().unwrap_or(0.0));
             self.distance.push(float_to_str(distance));
         }

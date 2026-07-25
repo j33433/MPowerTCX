@@ -26,6 +26,7 @@ impl Default for ConvertOptions {
 pub struct Converter {
     ride: Ride,
     equipment_name: String,
+    incline_is_simulated: bool,
     diagnostics: Vec<String>,
 }
 
@@ -39,6 +40,7 @@ impl Converter {
             return Ok(Self {
                 ride,
                 equipment_name,
+                incline_is_simulated: false,
                 diagnostics: Vec::new(),
             });
         }
@@ -51,6 +53,7 @@ impl Converter {
             return Ok(Self {
                 ride,
                 equipment_name,
+                incline_is_simulated: false,
                 diagnostics: Vec::new(),
             });
         }
@@ -63,6 +66,7 @@ impl Converter {
         let mut ride = Ride::new();
         let mut parsers = all_parsers();
         let mut equipment_name = String::new();
+        let mut incline_is_simulated = false;
         let mut diagnostics: Vec<String> = Vec::new();
         let mut total_rows = 0usize;
         let mut unmatched_rows = 0usize;
@@ -79,6 +83,7 @@ impl Converter {
                 match parser.try_load(&peek, &mut rows, &mut ride) {
                     Ok(true) => {
                         equipment_name = parser.name().to_string();
+                        incline_is_simulated = parser.incline_is_simulated();
                         ride.header.equipment = equipment_name.clone();
                         found = true;
                         break;
@@ -113,6 +118,7 @@ impl Converter {
             return Ok(Self {
                 ride,
                 equipment_name,
+                incline_is_simulated,
                 diagnostics,
             });
         }
@@ -142,6 +148,7 @@ impl Converter {
         Ok(Self {
             ride,
             equipment_name,
+            incline_is_simulated,
             diagnostics,
         })
     }
@@ -173,6 +180,7 @@ impl Converter {
             hr: self.ride.hr.clone(),
             distance: self.ride.distance.clone(),
             incline: self.ride.incline.clone(),
+            altitude: self.ride.altitude.clone(),
             header: crate::ride::RideHeader::new(),
         };
 
@@ -187,7 +195,7 @@ impl Converter {
         }
 
         if options.physics {
-            ride.model_distance(options.physics_mass_kg);
+            ride.model_distance(options.physics_mass_kg, !self.incline_is_simulated);
         }
 
         let power_fudge = 1.0 + options.power_adjust_percent / 100.0;
