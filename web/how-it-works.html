@@ -136,6 +136,11 @@
         <span class="format-pill">PRO-FORM iFit</span>
       </div>
       <p class="muted small">
+        Also accepts <code>.fit</code> and <code>.tcx</code> files from Garmin
+        devices, MyWhoosh, Zwift, Apple Watch, or any app that records power
+        data. Drop one in to fix bad speed/distance or re-export as a clean TCX.
+      </p>
+      <p class="muted small">
         Missing your bike? Send a sample file to upload.bike@gmail.com. If it
         has power, cadence, heart rate, and distance, support is usually
         straightforward.
@@ -257,6 +262,12 @@
         <a href="https://www.youtube.com/watch?v=ENkHdcV_E70" target="_blank" rel="noopener">Video: exporting rider data to a USB drive</a>
       </p>
 
+      <div class="alert alert-warning small">
+        USB drive problems? Some Schwinn consoles reject newer thumb drives. A
+        1GB drive usually works. If the USB logo won't flash or the console shuts
+        off, try a smaller drive.
+      </div>
+
       <h3>Stages Indoor Cycles</h3>
       <ol>
         <li>From the console, open the ride summary or history</li>
@@ -278,11 +289,12 @@
         <code>dca6f8c2-3171-40ad-9e17-1b6a89898af2.txt</code>).
       </p>
 
-      <div class="alert alert-warning small">
-        USB drive problems? Some Schwinn consoles reject newer thumb drives. A
-        1GB drive usually works. If the USB logo won't flash or the console shuts
-        off, try a smaller drive.
-      </div>
+      <h3>MyWhoosh</h3>
+      <p>
+        MyWhoosh exports FIT files. On Windows they live in your local
+        AppData directory:
+      </p>
+      <pre style="white-space: pre-wrap; word-break: break-all"><code>%LocalAppData%\Packages\MyWhooshTechnologyService.MyWhoosh_eps1123pz0kt0\LocalCache\Local\MyWhoosh\Content\Data</code></pre>
     </article>
 
     <article class="card page-card" id="convert-upload">
