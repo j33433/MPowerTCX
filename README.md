@@ -28,9 +28,6 @@ cargo build --release
 ./target/release/mpowertcx --csv workout.csv --tcx workout.tcx
 ```
 
-For the full CLI reference (all options, input formats, interpolation, physics
-model, linter, exit codes, and examples) see **[doc/CLI.md](doc/CLI.md)**.
-
 ## Documentation
 
 | File | Covers |
