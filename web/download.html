@@ -6,6 +6,18 @@
   <script>(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
   <meta name="description" content="Download upload.bike as a portable offline version. Unzip and double-click index.html. No install required.">
   <title>Download | upload.bike</title>
+  <link rel="canonical" href="https://upload.bike/download.html">
+  <link rel="icon" href="./favicon.ico">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="upload.bike">
+  <meta property="og:title" content="Download | upload.bike">
+  <meta property="og:description" content="Download upload.bike as a portable offline version. Unzip and double-click index.html. No install required.">
+  <meta property="og:url" content="https://upload.bike/download.html">
+  <meta property="og:image" content="https://upload.bike/og-image.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Download | upload.bike">
+  <meta name="twitter:description" content="Download upload.bike as a portable offline version. Unzip and double-click index.html. No install required.">
+  <meta name="twitter:image" content="https://upload.bike/og-image.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <link rel="stylesheet" href="./custom.css">
 </head>
@@ -40,7 +52,8 @@
       </p>
 
       <div class="download-hero" x-data="downloadCheck()" style="margin-top: 1.5rem;">
-        <a :href="available ? url : null"
+        <a href="./downloads/upload.bike-portable.zip"
+           :href="available ? url : null"
            class="download-btn"
            :class="{ unavailable: !available }">
           upload.bike-portable.zip

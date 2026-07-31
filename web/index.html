@@ -4,8 +4,39 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
-  <meta name="description" content="Convert indoor bike files to TCX for Strava, Garmin Connect, TrainingPeaks, and Golden Cheetah. Repair speed and distance.">
-  <title>upload.bike - Convert to TCX for indoor bikes</title>
+  <meta name="description" content="Free CSV to TCX converter. Turn indoor bike CSV, TXT, FIT, or TCX files into Garmin TCX for Strava, Garmin Connect, and TrainingPeaks. 100% in your browser.">
+  <title>Convert CSV, TXT &amp; FIT to TCX | upload.bike</title>
+  <link rel="canonical" href="https://upload.bike/">
+  <link rel="icon" href="./favicon.ico">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="upload.bike">
+  <meta property="og:title" content="Convert CSV, TXT &amp; FIT to TCX | upload.bike">
+  <meta property="og:description" content="Free CSV to TCX converter. Turn indoor bike CSV, TXT, FIT, or TCX files into Garmin TCX for Strava, Garmin Connect, and TrainingPeaks. 100% in your browser.">
+  <meta property="og:url" content="https://upload.bike/">
+  <meta property="og:image" content="https://upload.bike/og-image.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Convert CSV, TXT &amp; FIT to TCX | upload.bike">
+  <meta name="twitter:description" content="Free CSV to TCX converter. Turn indoor bike CSV, TXT, FIT, or TCX files into Garmin TCX for Strava, Garmin Connect, and TrainingPeaks. 100% in your browser.">
+  <meta name="twitter:image" content="https://upload.bike/og-image.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "upload.bike",
+    "url": "https://upload.bike/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "description": "Free CSV to TCX converter. Turn indoor bike CSV, TXT, FIT, or TCX files into Garmin TCX for Strava, Garmin Connect, and TrainingPeaks. 100% in your browser.",
+    "keywords": ["CSV to TCX", "TXT to TCX", "FIT to TCX", "indoor bike converter", "Garmin TCX"],
+    "featureList": [
+      "Convert CSV, TXT, and FIT files to Garmin TCX",
+      "Repair workout timing with 1-second interpolation",
+      "Repair speed and distance with a physics model",
+      "100% browser-based, no data leaves your device"
+    ],
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css" data-inline="pico.css">
   <link rel="stylesheet" href="./custom.css" data-inline="custom.css">
 </head>
@@ -26,10 +57,10 @@
     <article x-data="converter()">
       <!-- Hero -->
       <div class="hero">
-        <h1 class="hero-title">Convert to TCX</h1>
+        <h1 class="hero-title">Convert CSV, TXT, or FIT to TCX</h1>
         <p class="hero-sub">
-        Convert indoor workouts to TCX for Strava, Garmin Connect, TrainingPeaks, etc.
-        <br>Repair speed and distance estimates.
+        Turn indoor bike workout files into Garmin TCX for Strava, Garmin Connect, TrainingPeaks, etc.
+        Repair speed and distance estimates.
         </p>
       </div>
 

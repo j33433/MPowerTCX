@@ -4,8 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>(function(){var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
-  <meta name="description" content="How upload.bike converts indoor bike files to TCX. Physics model for fixing bad speed and distance, interpolation for compatibility, step-by-step guides for Schwinn, Stages, and Wahoo SYSTM.">
+  <meta name="description" content="How upload.bike converts indoor bike files to TCX. Physics-based speed/distance repair, timing interpolation, and guides for Schwinn, Stages, and Wahoo SYSTM.">
   <title>How It Works: Convert Indoor Bike Files to TCX | upload.bike</title>
+  <link rel="canonical" href="https://upload.bike/how-it-works.html">
+  <link rel="icon" href="./favicon.ico">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="upload.bike">
+  <meta property="og:title" content="How It Works: Convert Indoor Bike Files to TCX | upload.bike">
+  <meta property="og:description" content="How upload.bike converts indoor bike files to TCX. Physics-based speed/distance repair, timing interpolation, and guides for Schwinn, Stages, and Wahoo SYSTM.">
+  <meta property="og:url" content="https://upload.bike/how-it-works.html">
+  <meta property="og:image" content="https://upload.bike/og-image.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="How It Works: Convert Indoor Bike Files to TCX | upload.bike">
+  <meta name="twitter:description" content="How upload.bike converts indoor bike files to TCX. Physics-based speed/distance repair, timing interpolation, and guides for Schwinn, Stages, and Wahoo SYSTM.">
+  <meta name="twitter:image" content="https://upload.bike/og-image.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <link rel="stylesheet" href="./custom.css">
   <script type="application/ld+json">
@@ -13,6 +25,22 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I convert a CSV file to TCX?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Open upload.bike and drop your CSV workout file in the converter. The tool detects your bike model, repairs timing and distance as needed, then Download TCX saves a Garmin TCX file you can upload to Strava, Garmin Connect, TrainingPeaks, or Golden Cheetah."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert a TrainerRoad TXT file to TCX?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "TrainerRoad activity files end in .txt and live in the WorkoutRecords folder on the computer where TrainerRoad is installed. Drop the .txt file into upload.bike, and it parses it automatically: the TSV rows are converted to Garmin TCX for Strava or Garmin Connect."
+        }
+      },
       {
         "@type": "Question",
         "name": "Why is my distance different after conversion?",
@@ -315,14 +343,55 @@
       </ul>
     </article>
 
-    <article class="card page-card" id="faq" x-data="faqSection()">
+    <article class="card page-card" id="faq">
       <h2>FAQ</h2>
-      <template x-for="(q, i) in items" :key="i">
-        <details :open="i === 0">
-          <summary x-text="q.name"></summary>
-          <p style="white-space: pre-line;" x-text="q.text"></p>
-        </details>
-      </template>
+      <details open>
+        <summary>How do I convert a CSV file to TCX?</summary>
+        <p>Open upload.bike and drop your CSV workout file in the converter. The tool detects your bike model, repairs timing and distance as needed, then Download TCX saves a Garmin TCX file you can upload to Strava, Garmin Connect, TrainingPeaks, or Golden Cheetah.</p>
+      </details>
+      <details>
+        <summary>How do I convert a TrainerRoad TXT file to TCX?</summary>
+        <p>TrainerRoad activity files end in .txt and live in the WorkoutRecords folder on the computer where TrainerRoad is installed. Drop the .txt file into upload.bike, and it parses it automatically: the TSV rows are converted to Garmin TCX for Strava or Garmin Connect.</p>
+      </details>
+      <details>
+        <summary>Why is my distance different after conversion?</summary>
+        <p>Many indoor bikes estimate distance from wheel RPM or resistance, which can be off by 10% or more. The physics model recalculates distance from your actual power output, rider mass, and physical constants, so the number is more realistic.</p>
+      </details>
+      <details>
+        <summary>What if my bike isn't in the supported list?</summary>
+        <p>Missing your bike? Send a sample file to upload.bike@gmail.com. If it has power, cadence, heart rate, and distance, support is usually straightforward.</p>
+      </details>
+      <details>
+        <summary>Is my data sent to a server?</summary>
+        <p>No. All conversion runs in your browser via WebAssembly. Your data never leaves your device.</p>
+      </details>
+      <details>
+        <summary>Why does the physics model need my weight?</summary>
+        <p>Mass affects speed for a given power output. A heavier rider goes slower at the same wattage on flat ground. The model uses combined rider + bike mass to solve the equations of motion.</p>
+      </details>
+      <details>
+        <summary>What formats are supported?</summary>
+        <p style="white-space: pre-line;">File types: .csv, .txt, .fit, and .tcx.
+
+Supported equipment:
+• Schwinn MPower Echelon (3 variants)
+• Stages Indoor Cycles (metric and English, with or without headers)
+• The Sufferfest
+• Wahoo SYSTM
+• TrainerRoad
+• NordicTrack
+• PRO-FORM iFit
+
+Missing your bike? Send a sample file to upload.bike@gmail.com.</p>
+      </details>
+      <details>
+        <summary>Why does Strava show a different time than my bike console?</summary>
+        <p>Some bikes record every 3 or 5 seconds instead of every second. Repair timing resamples to 1-second intervals so the duration matches what fitness platforms expect.</p>
+      </details>
+      <details>
+        <summary>The USB export didn't work on my Schwinn bike. What do I do?</summary>
+        <p>Some consoles crash with newer USB thumb drives. A 1GB drive works best. If the USB logo fails to flash or the unit shuts off during export, try an older, smaller drive.</p>
+      </details>
     </article>
 
     <article class="card page-card" id="troubleshooting">
@@ -348,23 +417,6 @@
   </main>
 
   <script>
-    function faqSection() {
-      var scripts = document.querySelectorAll('script[type="application/ld+json"]');
-      for (var i = 0; i < scripts.length; i++) {
-        try {
-          var parsed = JSON.parse(scripts[i].textContent);
-          if (parsed['@type'] === 'FAQPage') {
-            return {
-              items: parsed.mainEntity.map(function(q) {
-                return { name: q.name, text: q.acceptedAnswer.text };
-              })
-            };
-          }
-        } catch (e) {}
-      }
-      return { items: [] };
-    }
-
     function physicsDemo() {
       let demo = null;
       return {
