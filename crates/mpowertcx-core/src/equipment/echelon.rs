@@ -78,6 +78,10 @@ impl BikeParser for EchelonV1 {
         "Echelon Variant 1"
     }
 
+    fn slug(&self) -> &str {
+        "echelon-v1"
+    }
+
     fn incline_is_simulated(&self) -> bool {
         true
     }
@@ -180,6 +184,10 @@ impl BikeParser for EchelonV2 {
         "Echelon Variant 2"
     }
 
+    fn slug(&self) -> &str {
+        "echelon-v2"
+    }
+
     fn incline_is_simulated(&self) -> bool {
         true
     }
@@ -244,6 +252,10 @@ impl BikeParser for EchelonV3 {
 
     fn name(&self) -> &str {
         "Echelon Variant 3"
+    }
+
+    fn slug(&self) -> &str {
+        "echelon-v3"
     }
 
     fn incline_is_simulated(&self) -> bool {

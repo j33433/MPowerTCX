@@ -144,6 +144,10 @@ impl BikeParser for Stages {
         "Stages"
     }
 
+    fn slug(&self) -> &str {
+        "stages"
+    }
+
     fn incline_is_simulated(&self) -> bool {
         true
     }

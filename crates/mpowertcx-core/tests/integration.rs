@@ -179,6 +179,70 @@ fn report_parsers() {
 }
 
 #[test]
+fn test_equipment_slugs() {
+    let expected = [
+        ("Stages", "stages"),
+        ("Wahoo SYSTM", "systm"),
+        ("The Sufferfest", "sufferfest"),
+        ("TrainerRoad", "trainerroad"),
+        ("Echelon Variant 1", "echelon-v1"),
+        ("Echelon Variant 2", "echelon-v2"),
+        ("Echelon Variant 3", "echelon-v3"),
+    ];
+
+    let mut seen: std::collections::HashMap<String, String> = std::collections::HashMap::new();
+    let mut checked = 0usize;
+
+    for path in fs::read_dir(samples_dir()).unwrap().filter_map(|e| e.ok()) {
+        let path = path.path();
+        let ext_ok = path
+            .file_name()
+            .and_then(|n| n.to_str())
+            .map(|n| {
+                ["csv", "txt"]
+                    .iter()
+                    .any(|ext| n.to_lowercase().ends_with(&format!(".{ext}")))
+            })
+            .unwrap_or(false);
+        if !ext_ok {
+            continue;
+        }
+
+        let Ok(converter) = fs::read(&path).map(|data| Converter::from_csv(&data)).unwrap_or(Err(String::new())) else {
+            continue;
+        };
+        let name = converter.equipment_name();
+        if name.is_empty() {
+            continue;
+        }
+        let slug = converter.equipment_slug();
+        seen.entry(name.to_string()).or_insert_with(|| slug.to_string());
+        checked += 1;
+
+        if let Some(&(_, want)) = expected.iter().find(|(n, _)| *n == name) {
+            assert_eq!(slug, want, "slug mismatch for {name} in {:?}", path);
+        } else {
+            assert!(!slug.is_empty(), "empty slug for {name} in {:?}", path);
+            assert!(
+                slug.chars().all(|c| c.is_ascii_lowercase() || c == '-'),
+                "slug not lowercase/dashed: {slug} for {name}"
+            );
+        }
+    }
+
+    assert!(checked > 0, "no sample files parsed");
+    for (name, want) in expected {
+        assert_eq!(
+            seen.get(name)
+                .map(|s| s.as_str())
+                .unwrap_or_else(|| panic!("no sample exercises parser {name}")),
+            want,
+            "slug mismatch for {name}"
+        );
+    }
+}
+
+#[test]
 fn test_plain_conversions_exact() {
     let dir = samples_dir();
     let mut tested = 0;
@@ -311,6 +375,7 @@ fn test_trainerroad_indoor() {
     let data = fs::read(&path).unwrap();
     let converter = Converter::from_csv(&data).unwrap();
     assert_eq!(converter.equipment_name(), "TrainerRoad");
+    assert_eq!(converter.equipment_slug(), "trainerroad");
     assert_eq!(converter.count(), 60);
     assert_eq!(
         converter.date_hint(),
@@ -345,6 +410,7 @@ fn test_fit_black() {
     let data = fs::read(&path).unwrap();
     let converter = Converter::from_csv(&data).unwrap();
     assert_eq!(converter.equipment_name(), "FIT");
+    assert_eq!(converter.equipment_slug(), "fit");
     assert_eq!(converter.count(), 3601);
     assert_eq!(
         converter.date_hint(),
@@ -366,6 +432,7 @@ fn test_tcx_black() {
     let data = fs::read(&path).unwrap();
     let converter = Converter::from_csv(&data).unwrap();
     assert_eq!(converter.equipment_name(), "TCX");
+    assert_eq!(converter.equipment_slug(), "tcx");
     assert_eq!(converter.count(), 3600);
     assert_eq!(
         converter.date_hint(),

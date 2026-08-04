@@ -260,12 +260,24 @@
   <script>
     const KG_PER_LB = 0.453592;
 
+    // noffline:start
+    function sendEventBeacon(slug) {
+      if (window.MPOWERTCX_OFFLINE) return;
+      try {
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('./e/decode/' + slug);
+        }
+      } catch (e) {}
+    }
+    // noffline:end
+
     function converter() {
       let convert = null;
       let fileBytes = null;
       let lastTcx = '';
       let lastFilename = 'output.tcx';
       let preview = null;
+      let eventSource = null;
       const roundMass = (v) => {
         const n = parseFloat(v);
         if (!Number.isFinite(n)) return '0';
@@ -288,6 +300,7 @@
         fileName: '',
         equipment: '',
         isDragging: false,
+        _eventSent: false,
         resultVisible: false,
         noticeText: '',
         noticeVisible: false,
@@ -376,6 +389,12 @@
             }
             lastTcx = result.tcx;
             this.equipment = result.equipment || 'Unknown';
+            if (!this._eventSent) {
+              this._eventSent = true;
+              // noffline:start
+              sendEventBeacon(eventSource === 'sample' ? 'sample' : (result.equipment_slug || 'unknown'));
+              // noffline:end
+            }
             this.resultVisible = true;
             this.errorVisible = false;
             if (result.lint_error_count > 0) {
@@ -440,6 +459,8 @@
             this.fileName = 'sample.csv';
             lastFilename = 'sample.tcx';
             fileBytes = buf;
+            this._eventSent = false;
+            eventSource = 'sample';
             this.runConversion();
           } catch (err) {
             this.showError('Failed to load the sample file.', '');
@@ -450,6 +471,8 @@
           if (!file) return;
           this.fileName = file.name;
           lastFilename = file.name.replace(/\.(csv|txt|fit|tcx)$/i, '') + '.tcx';
+          this._eventSent = false;
+          eventSource = 'user';
           if (!this.wasmReady) {
             this.showError('The conversion engine is still loading. Please try again in a moment.');
             return;
@@ -471,6 +494,8 @@
           lastFilename = 'output.tcx';
           this.fileName = '';
           this.equipment = '';
+          this._eventSent = false;
+          eventSource = null;
           this.resultVisible = false;
           this.previewVisible = false;
           this.chartVisible = false;

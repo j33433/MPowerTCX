@@ -52,6 +52,10 @@ impl BikeParser for TheSufferfest {
         "The Sufferfest"
     }
 
+    fn slug(&self) -> &str {
+        "sufferfest"
+    }
+
     fn incline_is_simulated(&self) -> bool {
         true
     }

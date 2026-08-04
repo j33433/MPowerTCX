@@ -10,6 +10,7 @@ pub fn get_sample_csv() -> Vec<u8> {
 pub struct ConvertResult {
     tcx: String,
     equipment: String,
+    equipment_slug: String,
     sample_count: usize,
     date_hint: Option<String>,
     debug: Option<String>,
@@ -26,6 +27,11 @@ impl ConvertResult {
     #[wasm_bindgen(getter)]
     pub fn equipment(&self) -> String {
         self.equipment.clone()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn equipment_slug(&self) -> String {
+        self.equipment_slug.clone()
     }
 
     #[wasm_bindgen(getter)]
@@ -93,6 +99,7 @@ pub fn convert_csv_to_tcx(
     Ok(ConvertResult {
         tcx,
         equipment: converter.equipment_name().to_string(),
+        equipment_slug: converter.equipment_slug().to_string(),
         sample_count: converter.count(),
         date_hint: converter.date_hint().map(|dt| dt.format("%Y-%m-%dT%H:%M:%S").to_string()),
         debug,

@@ -147,4 +147,8 @@ impl BikeParser for TrainerRoad {
     fn name(&self) -> &str {
         "TrainerRoad"
     }
+
+    fn slug(&self) -> &str {
+        "trainerroad"
+    }
 }

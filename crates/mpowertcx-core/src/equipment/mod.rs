@@ -11,6 +11,7 @@ pub mod trainerroad;
 pub trait BikeParser {
     fn try_load(&mut self, peek: &[String], rows: &mut CsvRows, ride: &mut Ride) -> Result<bool, String>;
     fn name(&self) -> &str;
+    fn slug(&self) -> &str;
 
     /// When true, incline data is a visual display value only (the trainer
     /// does NOT adjust resistance to match it). The physics model should not

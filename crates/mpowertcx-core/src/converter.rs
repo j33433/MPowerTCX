@@ -26,6 +26,7 @@ impl Default for ConvertOptions {
 pub struct Converter {
     ride: Ride,
     equipment_name: String,
+    equipment_slug: String,
     incline_is_simulated: bool,
     diagnostics: Vec<String>,
 }
@@ -40,6 +41,7 @@ impl Converter {
             return Ok(Self {
                 ride,
                 equipment_name,
+                equipment_slug: "fit".to_string(),
                 incline_is_simulated: false,
                 diagnostics: Vec::new(),
             });
@@ -53,6 +55,7 @@ impl Converter {
             return Ok(Self {
                 ride,
                 equipment_name,
+                equipment_slug: "tcx".to_string(),
                 incline_is_simulated: false,
                 diagnostics: Vec::new(),
             });
@@ -66,6 +69,7 @@ impl Converter {
         let mut ride = Ride::new();
         let mut parsers = all_parsers();
         let mut equipment_name = String::new();
+        let mut equipment_slug = String::new();
         let mut incline_is_simulated = false;
         let mut diagnostics: Vec<String> = Vec::new();
         let mut total_rows = 0usize;
@@ -83,6 +87,7 @@ impl Converter {
                 match parser.try_load(&peek, &mut rows, &mut ride) {
                     Ok(true) => {
                         equipment_name = parser.name().to_string();
+                        equipment_slug = parser.slug().to_string();
                         incline_is_simulated = parser.incline_is_simulated();
                         ride.header.equipment = equipment_name.clone();
                         found = true;
@@ -118,6 +123,7 @@ impl Converter {
             return Ok(Self {
                 ride,
                 equipment_name,
+                equipment_slug,
                 incline_is_simulated,
                 diagnostics,
             });
@@ -148,6 +154,7 @@ impl Converter {
         Ok(Self {
             ride,
             equipment_name,
+            equipment_slug,
             incline_is_simulated,
             diagnostics,
         })
@@ -163,6 +170,10 @@ impl Converter {
 
     pub fn equipment_name(&self) -> &str {
         &self.equipment_name
+    }
+
+    pub fn equipment_slug(&self) -> &str {
+        &self.equipment_slug
     }
 
     pub fn diagnostics(&self) -> &[String] {

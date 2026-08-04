@@ -126,6 +126,15 @@ def build_wasm_js():
     return build_wasm_from_pkg()
 
 
+def strip_noffline(html):
+    """Remove code marked // noffline:start..// noffline:end from the download build."""
+    pattern = re.compile(r"// noffline:start\n(?:(?!// noffline:end).)*// noffline:end\n?", re.S)
+    html2, n = pattern.subn("", html)
+    if n == 0:
+        raise SystemExit("offline build: noffline markers not found")
+    return html2
+
+
 def strip_online_only(html):
     """Remove elements that carry data-online-only (simple nesting, no same-tag nest)."""
     pattern = re.compile(
@@ -219,6 +228,7 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_
     }
 
     html = strip_online_only(html)
+    html = strip_noffline(html)
     html = apply_offline_href(html)
     html = inline_marked_assets(html, assets)
     html = inject_offline_bundle(html, [
@@ -237,6 +247,12 @@ def build_offline_html(wasm_js, pico_css, alpine_js, custom_css, theme_js, icon_
     ):
         if needle not in html:
             raise SystemExit(f"offline build: missing {label} in output HTML")
+    for needle, label in (
+        ("sendEventBeacon", "beacon code"),
+        ("navigator.sendBeacon", "beacon call"),
+    ):
+        if needle in html:
+            raise SystemExit(f"offline build: {label} still present in output HTML")
     if re.search(r"\bdata-online-only\b|\bdata-inline=|\bdata-offline-href\b", html):
         raise SystemExit("offline build: leftover offline-build attributes in output")
 

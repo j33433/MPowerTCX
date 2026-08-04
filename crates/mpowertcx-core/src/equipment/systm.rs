@@ -79,4 +79,8 @@ impl BikeParser for Systm {
     fn name(&self) -> &str {
         "Wahoo SYSTM"
     }
+
+    fn slug(&self) -> &str {
+        "systm"
+    }
 }
