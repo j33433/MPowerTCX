@@ -1,7 +1,6 @@
 use crate::ride::{python_float, Ride};
 use chrono::{DateTime, NaiveDateTime};
-use fitparser::profile::MesgNum;
-use fitparser::Value;
+use rustyfit::profile::{mesgdef, typedef};
 
 /// True when bytes look like a Garmin/ANT FIT file (".FIT" signature at offset 8).
 pub fn is_fit(data: &[u8]) -> bool {
@@ -10,7 +9,12 @@ pub fn is_fit(data: &[u8]) -> bool {
 
 /// Parse a FIT activity into a Ride. Expects record messages with power/cadence/hr/distance.
 pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
-    let records = fitparser::from_bytes(data).map_err(|e| format!("FIT parse error: {e}"))?;
+    let mut decoder = rustyfit::Decoder::new();
+    let mut reader: &[u8] = data;
+    let fit = decoder
+        .decode(&mut reader)
+        .map_err(|e| format!("FIT parse error: {e}"))?;
+    let records = fit.map(|f| f.messages).unwrap_or_default();
 
     let mut first_ts: Option<NaiveDateTime> = None;
     let mut last_ts: Option<NaiveDateTime> = None;
@@ -20,59 +24,40 @@ pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
     let mut prev_altitude: Option<f64> = None;
     let mut prev_dist_for_alt: f64 = 0.0;
 
-    for rec in &records {
-        match rec.kind() {
-            MesgNum::Record => {
+    for mesg in &records {
+        match mesg.num {
+            typedef::MesgNum::RECORD => {
+                let rec = mesgdef::Record::from(mesg);
+
                 let mut power = 0.0f64;
                 let mut cadence = 0.0f64;
                 let mut hr = 0.0f64;
                 let mut distance = 0.0f64;
                 let mut has_metrics = false;
                 let mut ts: Option<NaiveDateTime> = None;
-                let mut altitude: Option<f64> = None;
-                let mut grade: Option<f64> = None;
+                let altitude = rec
+                    .altitude_scaled()
+                    .or_else(|| rec.enhanced_altitude_scaled());
+                let grade = rec.grade_scaled();
 
-                for field in rec.fields() {
-                    match field.name() {
-                        "timestamp" => {
-                            if let Some(t) = value_timestamp(field.value()) {
-                                ts = Some(t);
-                            }
-                        }
-                        "power" => {
-                            if let Some(v) = value_f64(field.value()) {
-                                power = v;
-                                has_metrics = true;
-                            }
-                        }
-                        "cadence" => {
-                            if let Some(v) = value_f64(field.value()) {
-                                cadence = v;
-                                has_metrics = true;
-                            }
-                        }
-                        "heart_rate" => {
-                            if let Some(v) = value_f64(field.value()) {
-                                hr = v;
-                                has_metrics = true;
-                            }
-                        }
-                        "distance" => {
-                            if let Some(v) = value_f64(field.value()) {
-                                distance = v;
-                                has_metrics = true;
-                            }
-                        }
-                        "altitude" | "enhanced_altitude" => {
-                            if altitude.is_none() {
-                                altitude = value_f64(field.value());
-                            }
-                        }
-                        "grade" => {
-                            grade = value_f64(field.value());
-                        }
-                        _ => {}
-                    }
+                if rec.power != u16::MAX {
+                    power = rec.power as f64;
+                    has_metrics = true;
+                }
+                if rec.cadence != u8::MAX {
+                    cadence = rec.cadence as f64;
+                    has_metrics = true;
+                }
+                if rec.heart_rate != u8::MAX {
+                    hr = rec.heart_rate as f64;
+                    has_metrics = true;
+                }
+                if let Some(d) = rec.distance_scaled() {
+                    distance = d;
+                    has_metrics = true;
+                }
+                if rec.timestamp.0 != u32::MAX {
+                    ts = fit_epoch_to_naive(rec.timestamp.0);
                 }
 
                 if !has_metrics {
@@ -130,37 +115,30 @@ pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
                     ride.add_altitude("0");
                 }
             }
-            MesgNum::Session => {
-                for field in rec.fields() {
-                    match field.name() {
-                        "start_time" => {
-                            if ride.get_date_hint().is_none() {
-                                if let Some(t) = value_timestamp(field.value()) {
-                                    ride.set_date_hint(t);
-                                }
-                            }
-                        }
-                        "total_timer_time" => {
-                            if let Some(v) = value_f64(field.value()) {
-                                session_timer = Some(v);
-                            }
-                        }
-                        "total_distance" => {
-                            if let Some(v) = value_f64(field.value()) {
-                                session_distance = Some(v);
-                            }
-                        }
-                        _ => {}
+            typedef::MesgNum::SESSION => {
+                let ses = mesgdef::Session::from(mesg);
+                if ride.get_date_hint().is_none() && ses.start_time.0 != u32::MAX {
+                    if let Some(t) = fit_epoch_to_naive(ses.start_time.0) {
+                        ride.set_date_hint(t);
                     }
                 }
+                if let Some(v) = ses.total_timer_time_scaled() {
+                    session_timer = Some(v);
+                }
+                if let Some(v) = ses.total_distance_scaled() {
+                    session_distance = Some(v);
+                }
             }
-            MesgNum::Activity => {
-                for field in rec.fields() {
-                    if field.name() == "timestamp" || field.name() == "local_timestamp" {
-                        if ride.get_date_hint().is_none() {
-                            if let Some(t) = value_timestamp(field.value()) {
-                                ride.set_date_hint(t);
-                            }
+            typedef::MesgNum::ACTIVITY => {
+                let act = mesgdef::Activity::from(mesg);
+                if ride.get_date_hint().is_none() {
+                    if act.timestamp.0 != u32::MAX {
+                        if let Some(t) = fit_epoch_to_naive(act.timestamp.0) {
+                            ride.set_date_hint(t);
+                        }
+                    } else if act.local_timestamp.0 != u32::MAX {
+                        if let Some(t) = fit_epoch_to_naive(act.local_timestamp.0) {
+                            ride.set_date_hint(t);
                         }
                     }
                 }
@@ -197,25 +175,7 @@ pub fn load_fit(data: &[u8], ride: &mut Ride) -> Result<(), String> {
     Ok(())
 }
 
-fn value_f64(v: &Value) -> Option<f64> {
-    match v {
-        Value::Invalid => None,
-        other => other.clone().try_into().ok(),
-    }
-}
-
-fn value_timestamp(v: &Value) -> Option<NaiveDateTime> {
-    match v {
-        Value::Timestamp(dt) => Some(dt.naive_utc()),
-        _ => {
-            // Some decoders leave raw seconds; convert FIT epoch if numeric.
-            let secs: i64 = v.clone().try_into().ok()?;
-            fit_epoch_to_naive(secs)
-        }
-    }
-}
-
-fn fit_epoch_to_naive(secs: i64) -> Option<NaiveDateTime> {
+fn fit_epoch_to_naive(secs: u32) -> Option<NaiveDateTime> {
     // FIT timestamps < 0x10000000 are device-relative, not absolute.
     if secs < 0x1000_0000 {
         return None;
@@ -224,5 +184,5 @@ fn fit_epoch_to_naive(secs: i64) -> Option<NaiveDateTime> {
     let base = DateTime::parse_from_rfc3339("1989-12-31T00:00:00Z")
         .ok()?
         .naive_utc();
-    base.checked_add_signed(chrono::Duration::seconds(secs))
+    base.checked_add_signed(chrono::Duration::seconds(secs as i64))
 }

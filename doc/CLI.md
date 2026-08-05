@@ -215,10 +215,11 @@ reproduces the repair on the original file: simulated-incline rides skip grade
 in both passes, and real-incline rides apply the same exact grade in both
 passes.
 
-The FIT encoder lives in `crates/mpowertcx-core/src/fit_out.rs` and uses the
+The FIT encoder and decoder live in `crates/mpowertcx-core/src/fit_out.rs`
+and `crates/mpowertcx-core/src/equipment/fit.rs`, both using the
 [`rustyfit`](https://crates.io/crates/rustyfit) crate (BSD-3-Clause). Note that
 rustyfit's README carries an ANT+/Garmin FIT Protocol license notice; the same
-regime already applies to reading FIT files with `fitparser`.
+regime already applies to reading and writing FIT files with it.
 
 ## STDERR output
 

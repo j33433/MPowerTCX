@@ -8,7 +8,6 @@ license.workspace = true
 csv = "1.3"
 chrono = { version = "0.4", default-features = false, features = ["clock"] }
 quick-xml = "0.41"
-fitparser = "0.11.0"
 tcx = "0.9.3"
 rustyfit = "0.10"
 embedded-io = { version = "0.7", features = ["alloc"] }

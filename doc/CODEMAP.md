@@ -83,7 +83,7 @@ Library: parse CSV, build ride, interpolate, physics model, emit TCX, lint TCX.
 | `render_fit` | [`fit_out.rs`](../crates/mpowertcx-core/src/fit_out.rs) | Ride &rarr; FIT bytes (file_id/activity/session/lap/records) |
 | `lint_tcx` / `has_errors` | [`linter.rs`](../crates/mpowertcx-core/src/linter.rs) | Errors E001&ndash;E036 fail; warnings W013&ndash;W038 informational |
 
-Deps: `csv`, `chrono`, `quick-xml`, `fitparser` (FIT read), `rustyfit` + `embedded-io` (FIT write), `tcx` (TCX read).
+Deps: `csv`, `chrono`, `quick-xml`, `rustyfit` + `embedded-io` (FIT read and write), `tcx` (TCX read).
 
 ---
 

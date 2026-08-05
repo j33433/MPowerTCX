@@ -527,13 +527,16 @@ fn test_fit_output_roundtrip() {
     }
 
     // Message structure: one file_id, activity, session, lap, then records.
-    let records = fitparser::from_bytes(&fit).unwrap();
-    let kinds: Vec<fitparser::profile::MesgNum> = records.iter().map(|m| m.kind()).collect();
-    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::FileId).count(), 1);
-    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Activity).count(), 1);
-    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Session).count(), 1);
-    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Lap).count(), 1);
-    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Record).count(), ride.count());
+    let mut decoder = rustyfit::Decoder::new();
+    let mut reader: &[u8] = &fit;
+    let decoded = decoder.decode(&mut reader).unwrap().unwrap();
+    use rustyfit::profile::typedef::MesgNum;
+    let kinds: Vec<MesgNum> = decoded.messages.iter().map(|m| m.num).collect();
+    assert_eq!(kinds.iter().filter(|k| **k == MesgNum::FILE_ID).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == MesgNum::ACTIVITY).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == MesgNum::SESSION).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == MesgNum::LAP).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == MesgNum::RECORD).count(), ride.count());
 }
 
 /// Extract trackpoint-level cumulative distances from a rendered TCX.
@@ -609,16 +612,22 @@ fn test_fit_roundtrip_repair_parity() {
         // Simulated equipment must not leak grade/altitude into the FIT (that
         // is what made re-parsed incline look real); real-incline equipment
         // must carry an exact grade field and no synthesized altitude.
-        let records = fitparser::from_bytes(&fit).unwrap();
+        let mut decoder = rustyfit::Decoder::new();
+        let mut reader: &[u8] = &fit;
+        let decoded = decoder.decode(&mut reader).unwrap().unwrap();
         let mut saw_grade = false;
         let mut saw_altitude = false;
-        for m in records.iter().filter(|m| m.kind() == fitparser::profile::MesgNum::Record) {
-            for f in m.fields() {
-                match f.name() {
-                    "grade" => saw_grade = true,
-                    "altitude" | "enhanced_altitude" => saw_altitude = true,
-                    _ => {}
-                }
+        for mesg in decoded
+            .messages
+            .iter()
+            .filter(|m| m.num == rustyfit::profile::typedef::MesgNum::RECORD)
+        {
+            let rec = rustyfit::profile::mesgdef::Record::from(mesg);
+            if rec.grade != i16::MAX {
+                saw_grade = true;
+            }
+            if rec.altitude != u16::MAX || rec.enhanced_altitude != u32::MAX {
+                saw_altitude = true;
             }
         }
         assert_eq!(saw_grade, expect_grade, "{label}: grade field presence");
