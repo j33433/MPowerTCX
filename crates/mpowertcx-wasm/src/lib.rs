@@ -9,6 +9,7 @@ pub fn get_sample_csv() -> Vec<u8> {
 #[wasm_bindgen]
 pub struct ConvertResult {
     tcx: String,
+    fit: Vec<u8>,
     equipment: String,
     equipment_slug: String,
     sample_count: usize,
@@ -22,6 +23,11 @@ impl ConvertResult {
     #[wasm_bindgen(getter)]
     pub fn tcx(&self) -> String {
         self.tcx.clone()
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn fit(&self) -> Vec<u8> {
+        self.fit.clone()
     }
 
     #[wasm_bindgen(getter)]
@@ -84,6 +90,7 @@ pub fn convert_csv_to_tcx(
     };
 
     let tcx = converter.convert(start_time, &options);
+    let fit = converter.convert_fit(start_time, &options);
 
     let debug = if converter.diagnostics().is_empty() {
         None
@@ -98,6 +105,7 @@ pub fn convert_csv_to_tcx(
 
     Ok(ConvertResult {
         tcx,
+        fit,
         equipment: converter.equipment_name().to_string(),
         equipment_slug: converter.equipment_slug().to_string(),
         sample_count: converter.count(),

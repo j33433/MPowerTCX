@@ -495,6 +495,160 @@ fn test_fit_mywhoosh() {
 }
 
 #[test]
+fn test_fit_output_roundtrip() {
+    let path = samples_dir().join("1122.csv");
+    let data = fs::read(&path).unwrap();
+    let converter = Converter::from_csv(&data).unwrap();
+    let start_time = NaiveDateTime::parse_from_str("2010-10-19T20:56:35", "%Y-%m-%dT%H:%M:%S").unwrap();
+    let options = ConvertOptions {
+        interpolate: true,
+        physics: false,
+        physics_mass_kg: 0.0,
+        power_adjust_percent: 0.0,
+    };
+
+    let fit = converter.convert_fit(start_time, &options);
+    assert!(fit.len() > 1000, "FIT output too small");
+
+    let mut ride = mpowertcx_core::Ride::new();
+    mpowertcx_core::equipment::fit::load_fit(&fit, &mut ride).unwrap();
+
+    let golden = fs::read_to_string(samples_dir().join("1122.csv_interp.tcx")).unwrap();
+    let expected = parse_tcx(&golden);
+    assert_eq!(expected.trackpoints.len(), ride.count());
+
+    for (i, tp) in expected.trackpoints.iter().enumerate() {
+        let watts = ride.power[i].parse::<f64>().unwrap();
+        assert!(compare_f64(&tp.watts, &watts.to_string(), 0.6), "power at sample {i}");
+        assert!(compare_f64(&tp.cadence, &ride.rpm[i], 0.6), "cadence at sample {i}");
+        assert!(compare_f64(&tp.hr, &ride.hr[i], 0.6), "hr at sample {i}");
+        // FIT stores distance at 0.01 m resolution
+        assert!(compare_f64(&tp.distance, &ride.distance[i], 0.02), "distance at sample {i}");
+    }
+
+    // Message structure: one file_id, activity, session, lap, then records.
+    let records = fitparser::from_bytes(&fit).unwrap();
+    let kinds: Vec<fitparser::profile::MesgNum> = records.iter().map(|m| m.kind()).collect();
+    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::FileId).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Activity).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Session).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Lap).count(), 1);
+    assert_eq!(kinds.iter().filter(|k| **k == fitparser::profile::MesgNum::Record).count(), ride.count());
+}
+
+/// Extract trackpoint-level cumulative distances from a rendered TCX.
+fn tcx_track_distances(tcx: &str) -> Vec<f64> {
+    let mut in_track = false;
+    tcx.lines()
+        .filter(|l| {
+            let l = l.trim();
+            if l == "<Track>" {
+                in_track = true;
+                return false;
+            }
+            if l == "</Track>" {
+                in_track = false;
+                return false;
+            }
+            in_track && l.starts_with("<DistanceMeters>")
+        })
+        .map(|l| {
+            let l = l.trim();
+            l.trim_start_matches("<DistanceMeters>")
+                .trim_end_matches("</DistanceMeters>")
+                .parse::<f64>()
+                .unwrap()
+        })
+        .collect()
+}
+
+/// Applying the physics model to a FIT round trip must reproduce the repair on
+/// the original file. Before this fix, grade-derived altitude was written into
+/// the FIT at 0.5 m resolution; re-parsing it produced noisy "real" incline,
+/// and the repair applied it, giving wild speed/distance.
+#[test]
+fn test_fit_roundtrip_repair_parity() {
+    let web_sample = samples_dir().parent().unwrap().join("web/samples/sample.csv");
+    let cases: Vec<(PathBuf, &str, f64, bool)> = vec![
+        // Simulated incline (Stages, elevation column): repair must skip grade
+        // both times. This is the upload.bike sample from the bug report.
+        (web_sample, "stages sample (simulated incline)", 0.5, false),
+        // Real incline (smart trainer): exact grade must survive the round trip.
+        (
+            samples_dir().join("wahoo_systm_activity.csv"),
+            "SYSTM (real incline)",
+            5.0,
+            true,
+        ),
+    ];
+
+    for (path, label, tolerance_m, expect_grade) in cases {
+        let data = fs::read(&path).unwrap();
+        let converter = Converter::from_csv(&data).unwrap();
+        let start_time =
+            NaiveDateTime::parse_from_str("2010-10-19T20:56:35", "%Y-%m-%dT%H:%M:%S").unwrap();
+        let options = ConvertOptions {
+            interpolate: false,
+            physics: true,
+            physics_mass_kg: 70.0,
+            power_adjust_percent: 0.0,
+        };
+
+        let reference = tcx_track_distances(&converter.convert(start_time, &options));
+
+        let fit = converter.convert_fit(start_time, &options);
+
+        // Simulated equipment must not leak grade/altitude into the FIT (that
+        // is what made re-parsed incline look real); real-incline equipment
+        // must carry an exact grade field and no synthesized altitude.
+        let records = fitparser::from_bytes(&fit).unwrap();
+        let mut saw_grade = false;
+        let mut saw_altitude = false;
+        for m in records.iter().filter(|m| m.kind() == fitparser::profile::MesgNum::Record) {
+            for f in m.fields() {
+                match f.name() {
+                    "grade" => saw_grade = true,
+                    "altitude" | "enhanced_altitude" => saw_altitude = true,
+                    _ => {}
+                }
+            }
+        }
+        assert_eq!(saw_grade, expect_grade, "{label}: grade field presence");
+        assert!(!saw_altitude, "{label}: no synthesized altitude in FIT");
+
+        let mut ride = mpowertcx_core::Ride::new();
+        mpowertcx_core::equipment::fit::load_fit(&fit, &mut ride).unwrap();
+        assert_eq!(ride.count(), reference.len(), "{label}: sample count preserved");
+
+        let mut repaired = mpowertcx_core::Ride {
+            power: ride.power.clone(),
+            rpm: ride.rpm.clone(),
+            hr: ride.hr.clone(),
+            distance: ride.distance.clone(),
+            incline: ride.incline.clone(),
+            altitude: ride.altitude.clone(),
+            header: mpowertcx_core::RideHeader::new(),
+        };
+        repaired.header.time = ride.header.time;
+        repaired.header.time_str = ride.header.time_str.clone();
+        if options.interpolate {
+            repaired.interpolate();
+        }
+        if options.physics {
+            repaired.model_distance(options.physics_mass_kg, true);
+        }
+
+        for (i, (a, b)) in reference.iter().zip(repaired.distance.iter()).enumerate() {
+            let b: f64 = b.parse().unwrap_or(0.0);
+            assert!(
+                (a - b).abs() <= tolerance_m,
+                "{label}: distance diverged at sample {i}: {a} vs {b}"
+            );
+        }
+    }
+}
+
+#[test]
 fn test_binary_upload_clean_error() {
     let data: Vec<u8> = (0u8..=255).cycle().take(800).collect();
     let err = match Converter::from_csv(&data) {

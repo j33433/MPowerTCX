@@ -1,5 +1,6 @@
 pub mod converter;
 pub mod equipment;
+pub mod fit_out;
 pub mod linter;
 pub mod physics;
 pub mod ride;

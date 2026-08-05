@@ -81,6 +81,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "embedded-io"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9eb1aa714776b75c7e67e1da744b81a129b3ff919c8712b5e1b32252c1f07cc7"
+
+[[package]]
 name = "find-msvc-tools"
 version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -194,8 +200,10 @@ version = "2.1.0"
 dependencies = [
  "chrono",
  "csv",
+ "embedded-io",
  "fitparser",
  "quick-xml",
+ "rustyfit",
  "tcx",
 ]
 
@@ -272,6 +280,15 @@ name = "rustversion"
 version = "1.0.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
+
+[[package]]
+name = "rustyfit"
+version = "0.10.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dd2f321b6705e714671ca4380a7b2d4fb7a56f462e138010c2e9e6038e56a188"
+dependencies = [
+ "embedded-io",
+]
 
 [[package]]
 name = "ryu"

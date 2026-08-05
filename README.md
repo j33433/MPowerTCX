@@ -1,8 +1,8 @@
 # MPowerTCX
 
-Convert CSV files from indoor cycling bikes to TCX format for Strava, Garmin
-Connect, TrainingPeaks, and Golden Cheetah. All processing runs in the browser
-via WebAssembly, no server needed.
+Convert CSV files from indoor cycling bikes to TCX or FIT format for Strava,
+Garmin Connect, TrainingPeaks, and Golden Cheetah. All processing runs in the
+browser via WebAssembly, no server needed.
 
 Try it live at [upload.bike](https://upload.bike).
 
@@ -26,6 +26,7 @@ Don't see your bike? Email your CSV to upload.bike@gmail.com.
 ```
 cargo build --release
 ./target/release/mpowertcx --csv workout.csv --tcx workout.tcx
+./target/release/mpowertcx --csv workout.csv --fit workout.fit
 ```
 
 ## Documentation
@@ -42,6 +43,7 @@ cargo build --release
 cargo test -p mpowertcx-core
 bash tests/test_samples.sh
 bash tests/test_samples_advanced.sh
+bash tests/test_samples_fit.sh
 ```
 
 ## License

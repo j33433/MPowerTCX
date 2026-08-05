@@ -62,6 +62,15 @@ from the grade and distance data:
 elev[i] = elev[i-1] + (grade[i] / 100) × (dist[i] - dist[i-1])
 ```
 
+The FIT output (`render_fit`) deliberately does **not** use this fallback.
+FIT altitude resolution is 0.5 m, so the fallback trace would be quantized
+into noise. If that noise were re-parsed as real incline on a round trip, the
+physics model would apply it and produce wild speed/distance. FIT output
+instead writes absolute altitude when present, writes the exact `grade` field
+when the source incline is real, and emits neither when the incline is
+display-only (simulated). See `doc/CLI.md` for the full FIT round-trip
+guarantee.
+
 ### Simulated vs. real incline
 
 Some indoor bikes report a grade value that is purely a visual display —

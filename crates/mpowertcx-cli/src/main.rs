@@ -31,13 +31,14 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
 
     if args.len() < 2 {
-        eprintln!("Usage: mpowertcx --csv <FILE> --tcx <FILE> [--time <TIME>] [--interpolate] [--model <MASS_KG>]");
+        eprintln!("Usage: mpowertcx --csv <FILE> --tcx <FILE> [--fit <FILE>] [--time <TIME>] [--interpolate] [--model <MASS_KG>]");
         eprintln!("       mpowertcx --lint <FILE>");
         exit(1);
     }
 
     let mut csv_file = None;
     let mut tcx_file = None;
+    let mut fit_file = None;
     let mut time_str = None;
     let mut interpolate = false;
     let mut model: Option<f64> = None;
@@ -53,6 +54,10 @@ fn main() {
             "--tcx" => {
                 i += 1;
                 tcx_file = args.get(i).cloned();
+            }
+            "--fit" => {
+                i += 1;
+                fit_file = args.get(i).cloned();
             }
             "--time" => {
                 i += 1;
@@ -72,12 +77,13 @@ fn main() {
             "--help" | "-h" => {
                 eprintln!("MPowerTCX {} - Convert indoor bike CSV to TCX", mpowertcx_core::VERSION);
                 eprintln!();
-                eprintln!("Usage: mpowertcx --csv <FILE> --tcx <FILE> [OPTIONS]");
+                eprintln!("Usage: mpowertcx --csv <FILE> --tcx <FILE> [--fit <FILE>] [OPTIONS]");
                 eprintln!("       mpowertcx --lint <FILE>");
                 eprintln!();
                 eprintln!("Options:");
                 eprintln!("  --csv <FILE>       Input CSV file");
                 eprintln!("  --tcx <FILE>       Output TCX file");
+                eprintln!("  --fit <FILE>       Output FIT file");
                 eprintln!("  --time <TIME>      Workout start time");
                 eprintln!("  --interpolate      Produce samples at 1-second intervals");
                 eprintln!("  --model <MASS_KG>  Use physics model for speed/distance");
@@ -109,7 +115,10 @@ fn main() {
     }
 
     let csv_path = csv_file.expect("--csv is required");
-    let tcx_path = tcx_file.expect("--tcx is required");
+    if tcx_file.is_none() && fit_file.is_none() {
+        eprintln!("--tcx or --fit is required");
+        exit(1);
+    }
 
     let data = fs::read(&csv_path).expect("failed to read CSV file");
 
@@ -134,8 +143,16 @@ fn main() {
     };
 
     let tcx = converter.convert(start_time, &options);
-    fs::write(&tcx_path, tcx).expect("failed to write TCX file");
+    if let Some(ref tcx_path) = tcx_file {
+        fs::write(tcx_path, tcx).expect("failed to write TCX file");
+        eprintln!("Converted {} -> {} ({} samples, {})",
+            csv_path, tcx_path, converter.count(), converter.equipment_name());
+    }
 
-    eprintln!("Converted {} -> {} ({} samples, {})",
-        csv_path, tcx_path, converter.count(), converter.equipment_name());
+    if let Some(ref fit_path) = fit_file {
+        let fit = converter.convert_fit(start_time, &options);
+        fs::write(fit_path, fit).expect("failed to write FIT file");
+        eprintln!("Converted {} -> {} ({} samples, {})",
+            csv_path, fit_path, converter.count(), converter.equipment_name());
+    }
 }

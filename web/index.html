@@ -144,13 +144,14 @@
             <svg viewBox="0 0 36 36" width="36" height="36"><circle cx="18" cy="18" r="18" fill="currentColor"/><path d="M11 18l5 5 9-11" stroke="var(--pico-card-background-color)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <div class="success-body">
-            <h2 class="success-title">Your TCX file is ready</h2>
+            <h2 class="success-title">Your workout file is ready</h2>
             <p class="success-sub">Converted locally in your browser. Your data never left your device.</p>
             <p class="success-file" x-text="fileName"></p>
             <p class="success-format muted">Detected format: <span x-text="equipment"></span></p>
           </div>
           <div class="success-actions">
             <button @click="downloadTcx()">Download TCX</button>
+            <button @click="downloadFit()">Download FIT</button>
             <button class="secondary" @click="reset()">Convert another file</button>
           </div>
         </div>
@@ -275,6 +276,7 @@
       let convert = null;
       let fileBytes = null;
       let lastTcx = '';
+      let lastFit = null;
       let lastFilename = 'output.tcx';
       let preview = null;
       let eventSource = null;
@@ -388,6 +390,7 @@
               return;
             }
             lastTcx = result.tcx;
+            lastFit = result.fit;
             this.equipment = result.equipment || 'Unknown';
             if (!this._eventSent) {
               this._eventSent = true;
@@ -491,6 +494,7 @@
         reset() {
           fileBytes = null;
           lastTcx = '';
+          lastFit = null;
           lastFilename = 'output.tcx';
           this.fileName = '';
           this.equipment = '';
@@ -524,6 +528,19 @@
           const a = document.createElement('a');
           a.href = url;
           a.download = lastFilename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        },
+
+        downloadFit() {
+          if (!lastFit) return;
+          const blob = new Blob([lastFit], { type: 'application/x.fit' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = lastFilename.replace(/\.tcx$/i, '.fit');
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);

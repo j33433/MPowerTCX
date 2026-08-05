@@ -185,6 +185,18 @@ impl Converter {
     }
 
     pub fn convert(&self, start_time: NaiveDateTime, options: &ConvertOptions) -> String {
+        let ride = self.prepared_ride(options);
+        let power_fudge = 1.0 + options.power_adjust_percent / 100.0;
+        crate::tcx::render_tcx(&ride, start_time, power_fudge)
+    }
+
+    pub fn convert_fit(&self, start_time: NaiveDateTime, options: &ConvertOptions) -> Vec<u8> {
+        let ride = self.prepared_ride(options);
+        let power_fudge = 1.0 + options.power_adjust_percent / 100.0;
+        crate::fit_out::render_fit(&ride, start_time, power_fudge, self.incline_is_simulated)
+    }
+
+    fn prepared_ride(&self, options: &ConvertOptions) -> Ride {
         let mut ride = Ride {
             power: self.ride.power.clone(),
             rpm: self.ride.rpm.clone(),
@@ -209,9 +221,7 @@ impl Converter {
             ride.model_distance(options.physics_mass_kg, !self.incline_is_simulated);
         }
 
-        let power_fudge = 1.0 + options.power_adjust_percent / 100.0;
-
-        crate::tcx::render_tcx(&ride, start_time, power_fudge)
+        ride
     }
 }
 

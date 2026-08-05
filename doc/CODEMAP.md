@@ -8,7 +8,7 @@ CSV / FIT / TCX bytes
   &rarr; equipment parsers (BikeParser trait) + FIT/TCX readers
   &rarr; Ride (samples + header)
   &rarr; optional interpolate / physics model
-  &rarr; TCX XML (render_tcx)
+  &rarr; TCX XML (render_tcx) or FIT bytes (render_fit)
   &rarr; optional lint_tcx
 ```
 
@@ -38,6 +38,7 @@ Library: parse CSV, build ride, interpolate, physics model, emit TCX, lint TCX.
 | [`src/converter.rs`](../crates/mpowertcx-core/src/converter.rs) | Orchestration: detect parser, convert with options |
 | [`src/ride.rs`](../crates/mpowertcx-core/src/ride.rs) | `Ride` / `RideHeader`; interpolate; physics distance |
 | [`src/tcx.rs`](../crates/mpowertcx-core/src/tcx.rs) | `render_tcx` &rarr; Garmin TCX XML |
+| [`src/fit_out.rs`](../crates/mpowertcx-core/src/fit_out.rs) | `render_fit` &rarr; Garmin FIT activity file (absolute altitude only; exact `grade` for real-incline equipment) |
 | [`src/physics.rs`](../crates/mpowertcx-core/src/physics.rs) | `SimpleBike` power &rarr; speed/distance model |
 | [`src/linter.rs`](../crates/mpowertcx-core/src/linter.rs) | TCX structural + plausibility checks (E/W codes) |
 | [`src/equipment/mod.rs`](../crates/mpowertcx-core/src/equipment/mod.rs) | `BikeParser`, `CsvRows`, `all_parsers()`, unit helpers |
@@ -58,7 +59,7 @@ Library: parse CSV, build ride, interpolate, physics model, emit TCX, lint TCX.
 3. `Converter::convert(start_time, ConvertOptions)`:
    - optional `Ride::interpolate()` (1 Hz linear)
    - optional `Ride::model_distance(mass)` via `SimpleBike`
-   - `render_tcx` with optional power adjust
+   - `render_tcx` with optional power adjust, or `convert_fit` &rarr; `render_fit`
 4. Callers may run `lint_tcx` on the XML
 
 ### Parser order (`all_parsers`)
@@ -74,14 +75,15 @@ Library: parse CSV, build ride, interpolate, physics model, emit TCX, lint TCX.
 | Symbol | Location | Notes |
 |--------|----------|--------|
 | `ConvertOptions` | [`converter.rs`](../crates/mpowertcx-core/src/converter.rs) | `interpolate`, `physics`, `physics_mass_kg`, `power_adjust_percent` |
-| `Converter` | [`converter.rs`](../crates/mpowertcx-core/src/converter.rs) | `from_csv`, `convert`, `date_hint`, `equipment_name` |
+| `Converter` | [`converter.rs`](../crates/mpowertcx-core/src/converter.rs) | `from_csv`, `convert`, `convert_fit`, `date_hint`, `equipment_name` |
 | `Ride` / `RideHeader` | [`ride.rs`](../crates/mpowertcx-core/src/ride.rs) | Sample vectors as strings (legacy float formatting) |
 | `BikeParser` | [`equipment/mod.rs`](../crates/mpowertcx-core/src/equipment/mod.rs) | `try_load`, `name` |
 | `CsvRows` | [`equipment/mod.rs`](../crates/mpowertcx-core/src/equipment/mod.rs) | Null-stripped, line-normalized CSV walk |
 | `SimpleBike` | [`physics.rs`](../crates/mpowertcx-core/src/physics.rs) | `next_sample(power) &rarr; (speed, distance, time)` |
+| `render_fit` | [`fit_out.rs`](../crates/mpowertcx-core/src/fit_out.rs) | Ride &rarr; FIT bytes (file_id/activity/session/lap/records) |
 | `lint_tcx` / `has_errors` | [`linter.rs`](../crates/mpowertcx-core/src/linter.rs) | Errors E001&ndash;E036 fail; warnings W013&ndash;W038 informational |
 
-Deps: `csv`, `chrono`, `quick-xml`.
+Deps: `csv`, `chrono`, `quick-xml`, `fitparser` (FIT read), `rustyfit` + `embedded-io` (FIT write), `tcx` (TCX read).
 
 ---
 
@@ -93,7 +95,7 @@ Thin CLI over core. Binary name: `mpowertcx`.
 |------|---------|
 | [`src/main.rs`](../crates/mpowertcx-cli/src/main.rs) | Arg parse; convert CSV&rarr;TCX or `--lint` TCX |
 
-Flags: `--csv`, `--tcx`, `--time`, `--interpolate`, `--model <MASS_KG>`, `--lint`.
+Flags: `--csv`, `--tcx`, `--fit`, `--time`, `--interpolate`, `--model <MASS_KG>`, `--lint`.
 
 For the full CLI reference see [CLI.md](CLI.md).
 
@@ -108,7 +110,7 @@ Browser API over core.
 | [`src/lib.rs`](../crates/mpowertcx-wasm/src/lib.rs) | `convert_csv_to_tcx`, `get_sample_csv`, `ConvertResult` |
 
 - Embeds `web/samples/1122.csv` for chart demos
-- Returns TCX string, equipment name, sample count, date hint, debug, lint error count
+- Returns TCX string, FIT bytes, equipment name, sample count, date hint, debug, lint error count
 - Built with:  
   `wasm-pack build crates/mpowertcx-wasm --target web --out-dir ../../web/pkg`
 
@@ -145,6 +147,7 @@ Golden fixtures: `*.csv` inputs and expected TCX for three modes:
 | `.tcx` | Plain conversion |
 | `_interp.tcx` | 1-second interpolation |
 | `_model.tcx` | Physics speed/distance model |
+| `.fit` / `_interp.fit` | FIT output (byte-exact, plain / interpolated) |
 
 Covers Echelon, Stages, Sufferfest, SYSTM, edge cases (nulls, missing headers, empty).
 
@@ -156,6 +159,7 @@ Covers Echelon, Stages, Sufferfest, SYSTM, edge cases (nulls, missing headers, e
 |------|---------|
 | [`test_samples.sh`](../tests/test_samples.sh) | Byte-exact plain conversion vs samples |
 | [`test_samples_advanced.sh`](../tests/test_samples_advanced.sh) | Model / advanced comparison |
+| [`test_samples_fit.sh`](../tests/test_samples_fit.sh) | Byte-exact FIT output vs samples |
 | [`compare_tcx.py`](../tests/compare_tcx.py) | TCX comparison helper |
 
 Also: `cargo test -p mpowertcx-core`
@@ -181,6 +185,7 @@ Also: `cargo test -p mpowertcx-core`
 | Interpolation rules | [`ride.rs`](../crates/mpowertcx-core/src/ride.rs) (`interpolate`, helpers) |
 | Speed/distance physics | [`physics.rs`](../crates/mpowertcx-core/src/physics.rs), `Ride::model_distance` |
 | TCX XML shape | [`tcx.rs`](../crates/mpowertcx-core/src/tcx.rs) |
+| FIT output | [`fit_out.rs`](../crates/mpowertcx-core/src/fit_out.rs) |
 | Lint rules / codes | [`linter.rs`](../crates/mpowertcx-core/src/linter.rs) |
 | CLI flags | [`mpowertcx-cli/src/main.rs`](../crates/mpowertcx-cli/src/main.rs) |
 | Browser API surface | [`mpowertcx-wasm/src/lib.rs`](../crates/mpowertcx-wasm/src/lib.rs) |

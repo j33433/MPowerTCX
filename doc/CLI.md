@@ -1,8 +1,8 @@
 # CLI
 
 `mpowertcx` is the command-line binary that converts indoor-bike CSV files to
-Garmin TCX XML. It lives in `crates/mpowertcx-cli/` and delegates all
-conversion logic to `mpowertcx-core`.
+Garmin TCX XML or FIT files. It lives in `crates/mpowertcx-cli/` and delegates
+all conversion logic to `mpowertcx-core`.
 
 ## Installation
 
@@ -23,13 +23,14 @@ The CLI has two modes: **convert** and **lint**.
 
 ### Convert mode
 
-Reads a bike CSV (or FIT/TCX) and writes a Garmin TCX file:
+Reads a bike CSV (or FIT/TCX) and writes a Garmin TCX and/or FIT file:
 
 ```
 mpowertcx --csv input.csv --tcx output.tcx [OPTIONS]
+mpowertcx --csv input.csv --fit output.fit [OPTIONS]
 ```
 
-Both `--csv` and `--tcx` are required.
+`--csv` is required, and at least one of `--tcx` or `--fit` must be given.
 
 ### Lint mode
 
@@ -47,6 +48,7 @@ See [Linter](#linter) for the full list of checks.
 |------|-------|-------------|
 | `--csv` | `<FILE>` | Input file (CSV, FIT, or TCX) |
 | `--tcx` | `<FILE>` | Output TCX file |
+| `--fit` | `<FILE>` | Output FIT file (see [Output format](#output-format)) |
 | `--time` | `<TIME>` | Workout start time (see [Time formats](#time-formats)) |
 | `--interpolate` | *(flag)* | Resample to 1-second intervals (see [Interpolation](#interpolation)) |
 | `--model` | `<MASS_KG>` | Recompute speed/distance from power using the physics model |
@@ -178,9 +180,45 @@ containing one Lap:
 Each trackpoint carries time, altitude (if available), HR, cadence,
 cumulative distance, and watts (via Garmin extension TPX namespace).
 
+### FIT output
+
+`--fit <FILE>` writes a Garmin FIT activity file (protocol v1, little-endian,
+CRC-16) using the same underlying ride data as the TCX path:
+
+- `file_id` (type activity, manufacturer Garmin), then `activity`, `session`,
+  and `lap` messages with workout totals, then one `record` message per sample.
+- Record fields: timestamp, power (watts), cadence (rpm), heart rate (bpm),
+  distance (m, 0.01 m resolution), speed derived from distance deltas, and
+  altitude when the source carries absolute elevation (0.5 m resolution).
+- Elevation policy: only absolute altitude from the source file is emitted.
+  The grade x distance fallback that the TCX renderer uses is intentionally
+  not written, because FIT altitude resolution (0.5 m) would quantize it into
+  noise, and re-parsing that noise as real incline makes the physics model
+  produce wild speed/distance on a round trip.
+- Grade: when the source incline is real (SYSTM, TrainerRoad, FIT, TCX input),
+  it is written verbatim as the record `grade` field (0.01% resolution). When
+  the incline is display-only (Echelon, Stages, Sufferfest), neither altitude
+  nor grade is emitted.
+- Timestamps follow the same convention as the TCX renderer: samples are
+  spaced `max(delta, 1)` seconds from the start time. FIT stores UTC epochs
+  and the source times carry no timezone, so local time is treated as UTC
+  (the same ambiguity the TCX output has).
+- The same options apply: `--interpolate` and `--model <MASS_KG>` shape the
+  records exactly as they shape TCX trackpoints.
+
+Because of this, re-importing a downloaded FIT and applying the physics model
+reproduces the repair on the original file: simulated-incline rides skip grade
+in both passes, and real-incline rides apply the same exact grade in both
+passes.
+
+The FIT encoder lives in `crates/mpowertcx-core/src/fit_out.rs` and uses the
+[`rustyfit`](https://crates.io/crates/rustyfit) crate (BSD-3-Clause). Note that
+rustyfit's README carries an ANT+/Garmin FIT Protocol license notice; the same
+regime already applies to reading FIT files with `fitparser`.
+
 ## STDERR output
 
-On success the CLI prints to stderr:
+On success the CLI prints to stderr, once per output file written:
 
 ```
 Converted input.csv -> output.tcx (3600 samples, Stages)
@@ -258,6 +296,13 @@ Specify a time and interpolate to 1-second trackpoints:
 
 ```
 mpowertcx --csv workout.csv --tcx workout.tcx --time "2025-03-12 08:30" --interpolate
+```
+
+Write a FIT file instead of (or alongside) TCX:
+
+```
+mpowertcx --csv workout.csv --fit workout.fit
+mpowertcx --csv workout.csv --tcx workout.tcx --fit workout.fit --interpolate
 ```
 
 Recompute distance from power (85 kg rider+bike):
