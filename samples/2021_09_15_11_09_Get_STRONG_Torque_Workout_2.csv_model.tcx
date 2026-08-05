@@ -14470,7 +14470,7 @@
             <Time>2010-10-19T21:13:47Z</Time>
             <AltitudeMeters>146.9810548662777</AltitudeMeters>
             <HeartRateBpm>
-              <Value>122.5</Value>
+              <Value>123</Value>
             </HeartRateBpm>
             <Cadence>76</Cadence>
             <DistanceMeters>6364.61920</DistanceMeters>
@@ -15030,7 +15030,7 @@
             <Time>2010-10-19T21:14:27Z</Time>
             <AltitudeMeters>171.02898255745293</AltitudeMeters>
             <HeartRateBpm>
-              <Value>121.5</Value>
+              <Value>122</Value>
             </HeartRateBpm>
             <Cadence>77</Cadence>
             <DistanceMeters>6665.21830</DistanceMeters>
@@ -15296,7 +15296,7 @@
             <Time>2010-10-19T21:14:46Z</Time>
             <AltitudeMeters>182.9414215587122</AltitudeMeters>
             <HeartRateBpm>
-              <Value>121.5</Value>
+              <Value>122</Value>
             </HeartRateBpm>
             <Cadence>77</Cadence>
             <DistanceMeters>6814.12379</DistanceMeters>
@@ -16164,7 +16164,7 @@
             <Time>2010-10-19T21:15:48Z</Time>
             <AltitudeMeters>220.80667842842468</AltitudeMeters>
             <HeartRateBpm>
-              <Value>122.5</Value>
+              <Value>123</Value>
             </HeartRateBpm>
             <Cadence>81</Cadence>
             <DistanceMeters>7287.43950</DistanceMeters>
@@ -18222,7 +18222,7 @@
             <Time>2010-10-19T21:18:15Z</Time>
             <AltitudeMeters>317.03354865243415</AltitudeMeters>
             <HeartRateBpm>
-              <Value>121.5</Value>
+              <Value>122</Value>
             </HeartRateBpm>
             <Cadence>79</Cadence>
             <DistanceMeters>8253.06959</DistanceMeters>
@@ -18306,7 +18306,7 @@
             <Time>2010-10-19T21:18:21Z</Time>
             <AltitudeMeters>320.92914994411234</AltitudeMeters>
             <HeartRateBpm>
-              <Value>121.5</Value>
+              <Value>122</Value>
             </HeartRateBpm>
             <Cadence>78</Cadence>
             <DistanceMeters>8292.02560</DistanceMeters>
@@ -18376,7 +18376,7 @@
             <Time>2010-10-19T21:18:26Z</Time>
             <AltitudeMeters>324.1098713120432</AltitudeMeters>
             <HeartRateBpm>
-              <Value>121.5</Value>
+              <Value>122</Value>
             </HeartRateBpm>
             <Cadence>77</Cadence>
             <DistanceMeters>8324.48494</DistanceMeters>
@@ -18446,7 +18446,7 @@
             <Time>2010-10-19T21:18:31Z</Time>
             <AltitudeMeters>326.7938981341322</AltitudeMeters>
             <HeartRateBpm>
-              <Value>120.5</Value>
+              <Value>121</Value>
             </HeartRateBpm>
             <Cadence>68</Cadence>
             <DistanceMeters>8358.03528</DistanceMeters>
@@ -19272,7 +19272,7 @@
             <Time>2010-10-19T21:19:30Z</Time>
             <AltitudeMeters>360.325159729823</AltitudeMeters>
             <HeartRateBpm>
-              <Value>123.5</Value>
+              <Value>124</Value>
             </HeartRateBpm>
             <Cadence>75</Cadence>
             <DistanceMeters>8777.17605</DistanceMeters>
@@ -20490,7 +20490,7 @@
             <Time>2010-10-19T21:20:57Z</Time>
             <AltitudeMeters>413.61928128169404</AltitudeMeters>
             <HeartRateBpm>
-              <Value>120.5</Value>
+              <Value>121</Value>
             </HeartRateBpm>
             <Cadence>74</Cadence>
             <DistanceMeters>9443.35257</DistanceMeters>
@@ -22212,7 +22212,7 @@
             <Time>2010-10-19T21:23:00Z</Time>
             <AltitudeMeters>462.44759974689504</AltitudeMeters>
             <HeartRateBpm>
-              <Value>123.5</Value>
+              <Value>124</Value>
             </HeartRateBpm>
             <Cadence>80</Cadence>
             <DistanceMeters>10278.18849</DistanceMeters>
@@ -22380,7 +22380,7 @@
             <Time>2010-10-19T21:23:12Z</Time>
             <AltitudeMeters>465.47779249593333</AltitudeMeters>
             <HeartRateBpm>
-              <Value>123.5</Value>
+              <Value>124</Value>
             </HeartRateBpm>
             <Cadence>83</Cadence>
             <DistanceMeters>10353.94331</DistanceMeters>
@@ -24032,7 +24032,7 @@
             <Time>2010-10-19T21:25:10Z</Time>
             <AltitudeMeters>492.7924401640156</AltitudeMeters>
             <HeartRateBpm>
-              <Value>123.5</Value>
+              <Value>124</Value>
             </HeartRateBpm>
             <Cadence>71</Cadence>
             <DistanceMeters>11123.10690</DistanceMeters>
@@ -25194,7 +25194,7 @@
             <Time>2010-10-19T21:26:33Z</Time>
             <AltitudeMeters>488.93523097144583</AltitudeMeters>
             <HeartRateBpm>
-              <Value>120.5</Value>
+              <Value>121</Value>
             </HeartRateBpm>
             <Cadence>73</Cadence>
             <DistanceMeters>11672.41536</DistanceMeters>
@@ -25376,7 +25376,7 @@
             <Time>2010-10-19T21:26:46Z</Time>
             <AltitudeMeters>491.67488251876057</AltitudeMeters>
             <HeartRateBpm>
-              <Value>121.5</Value>
+              <Value>122</Value>
             </HeartRateBpm>
             <Cadence>76</Cadence>
             <DistanceMeters>11763.73708</DistanceMeters>
@@ -25656,7 +25656,7 @@
             <Time>2010-10-19T21:27:06Z</Time>
             <AltitudeMeters>495.9983204203497</AltitudeMeters>
             <HeartRateBpm>
-              <Value>120.5</Value>
+              <Value>121</Value>
             </HeartRateBpm>
             <Cadence>74</Cadence>
             <DistanceMeters>11907.85167</DistanceMeters>
@@ -26510,7 +26510,7 @@
             <Time>2010-10-19T21:28:07Z</Time>
             <AltitudeMeters>508.68422678531516</AltitudeMeters>
             <HeartRateBpm>
-              <Value>128.5</Value>
+              <Value>129</Value>
             </HeartRateBpm>
             <Cadence>77</Cadence>
             <DistanceMeters>12330.71522</DistanceMeters>
@@ -26608,7 +26608,7 @@
             <Time>2010-10-19T21:28:14Z</Time>
             <AltitudeMeters>510.0094055757395</AltitudeMeters>
             <HeartRateBpm>
-              <Value>129.5</Value>
+              <Value>130</Value>
             </HeartRateBpm>
             <Cadence>79</Cadence>
             <DistanceMeters>12374.88784</DistanceMeters>
@@ -26650,7 +26650,7 @@
             <Time>2010-10-19T21:28:17Z</Time>
             <AltitudeMeters>510.8269714547417</AltitudeMeters>
             <HeartRateBpm>
-              <Value>130.5</Value>
+              <Value>131</Value>
             </HeartRateBpm>
             <Cadence>80</Cadence>
             <DistanceMeters>12393.75545</DistanceMeters>
@@ -26776,7 +26776,7 @@
             <Time>2010-10-19T21:28:26Z</Time>
             <AltitudeMeters>513.6562415949858</AltitudeMeters>
             <HeartRateBpm>
-              <Value>129.5</Value>
+              <Value>130</Value>
             </HeartRateBpm>
             <Cadence>83</Cadence>
             <DistanceMeters>12450.34085</DistanceMeters>
@@ -26846,7 +26846,7 @@
             <Time>2010-10-19T21:28:31Z</Time>
             <AltitudeMeters>515.2374849164629</AltitudeMeters>
             <HeartRateBpm>
-              <Value>130.5</Value>
+              <Value>131</Value>
             </HeartRateBpm>
             <Cadence>83</Cadence>
             <DistanceMeters>12481.96572</DistanceMeters>
@@ -26958,7 +26958,7 @@
             <Time>2010-10-19T21:28:39Z</Time>
             <AltitudeMeters>517.7755306971998</AltitudeMeters>
             <HeartRateBpm>
-              <Value>130.5</Value>
+              <Value>131</Value>
             </HeartRateBpm>
             <Cadence>81</Cadence>
             <DistanceMeters>12532.72663</DistanceMeters>
@@ -28498,7 +28498,7 @@
             <Time>2010-10-19T21:30:29Z</Time>
             <AltitudeMeters>536.5329502899192</AltitudeMeters>
             <HeartRateBpm>
-              <Value>122.5</Value>
+              <Value>123</Value>
             </HeartRateBpm>
             <Cadence>83</Cadence>
             <DistanceMeters>13164.56408</DistanceMeters>
@@ -29030,7 +29030,7 @@
             <Time>2010-10-19T21:31:07Z</Time>
             <AltitudeMeters>548.2829433575636</AltitudeMeters>
             <HeartRateBpm>
-              <Value>120.5</Value>
+              <Value>121</Value>
             </HeartRateBpm>
             <Cadence>81</Cadence>
             <DistanceMeters>13360.39729</DistanceMeters>
@@ -29072,7 +29072,7 @@
             <Time>2010-10-19T21:31:10Z</Time>
             <AltitudeMeters>549.2221681795497</AltitudeMeters>
             <HeartRateBpm>
-              <Value>119.5</Value>
+              <Value>120</Value>
             </HeartRateBpm>
             <Cadence>79</Cadence>
             <DistanceMeters>13376.05104</DistanceMeters>

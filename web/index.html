@@ -275,6 +275,7 @@
     function converter() {
       let convert = null;
       let fileBytes = null;
+      let fileModified = null;
       let lastTcx = '';
       let lastFit = null;
       let lastFilename = 'output.tcx';
@@ -379,15 +380,25 @@
           this.runConversion();
         },
 
-        runConversion() {
+        runConversion(startTimeStr) {
           if (!this.wasmReady || !fileBytes) return;
           let mass = parseFloat(this.mass) || 0;
           if (this.massUnits === 'lbs') mass *= KG_PER_LB;
           try {
-            const result = convert(fileBytes, null, this.interpolate, this.physics, mass, 0);
+            const result = convert(fileBytes, startTimeStr || null, this.interpolate, this.physics, mass, 0);
             if (result.sample_count === 0) {
               this.showError('No data was parsed from this file.', result.debug || '');
               return;
+            }
+            // Files without an embedded date hint get a real timestamp from the
+            // file's modified time, matching the CLI's fallback. The wasm
+            // engine otherwise falls back to "now".
+            if (!result.date_hint && !startTimeStr && fileModified) {
+              const d = new Date(fileModified);
+              if (!Number.isNaN(d.getTime())) {
+                this.runConversion(d.toISOString().slice(0, 23));
+                return;
+              }
             }
             lastTcx = result.tcx;
             lastFit = result.fit;
@@ -462,6 +473,7 @@
             this.fileName = 'sample.csv';
             lastFilename = 'sample.tcx';
             fileBytes = buf;
+            fileModified = null;
             this._eventSent = false;
             eventSource = 'sample';
             this.runConversion();
@@ -483,6 +495,7 @@
           const reader = new FileReader();
           reader.onload = (e) => {
             fileBytes = new Uint8Array(e.target.result);
+            fileModified = file.lastModified || null;
             this.runConversion();
           };
           reader.onerror = () => {
@@ -493,6 +506,7 @@
 
         reset() {
           fileBytes = null;
+          fileModified = null;
           lastTcx = '';
           lastFit = null;
           lastFilename = 'output.tcx';

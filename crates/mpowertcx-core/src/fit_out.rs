@@ -29,10 +29,18 @@ pub fn render_fit(
     let secs_per_sample = ride.delta().max(1.0) as i64;
     let count = ride.count();
     let start_secs = start_time.and_utc().timestamp();
+    // Record timestamps are integer-spaced (FIT stores u32 seconds). The
+    // session/lap timers carry the source header duration instead, so a
+    // re-import recovers the exact original sample delta (header.time / count).
     let lap_seconds = if count > 1 {
         (count as i64 - 1) * secs_per_sample
     } else {
         0
+    };
+    let duration_seconds = if count > 1 {
+        ride.header.time
+    } else {
+        0.0
     };
     let end_secs = start_secs + lap_seconds;
 
@@ -78,8 +86,8 @@ pub fn render_fit(
     session.event_type = typedef::EventType::START;
     session.sport = typedef::Sport::CYCLING;
     session.sub_sport = typedef::SubSport::INDOOR_CYCLING;
-    session.set_total_elapsed_time_scaled(lap_seconds as f64);
-    session.set_total_timer_time_scaled(lap_seconds as f64);
+    session.set_total_elapsed_time_scaled(duration_seconds);
+    session.set_total_timer_time_scaled(duration_seconds);
     session.set_total_distance_scaled(lap_distance);
     session.avg_heart_rate = avg_hr;
     session.max_heart_rate = max_hr;
@@ -89,8 +97,8 @@ pub fn render_fit(
     session.max_power = max_power;
     session.num_laps = 1;
     session.first_lap_index = 0;
-    if lap_seconds > 0 {
-        session.set_avg_speed_scaled(lap_distance / lap_seconds as f64);
+    if duration_seconds > 0.0 {
+        session.set_avg_speed_scaled(lap_distance / duration_seconds);
         session.set_max_speed_scaled(max_speed);
     }
     messages.push(Message::from(session));
@@ -104,8 +112,8 @@ pub fn render_fit(
     lap.sub_sport = typedef::SubSport::INDOOR_CYCLING;
     lap.intensity = typedef::Intensity::ACTIVE;
     lap.lap_trigger = typedef::LapTrigger::MANUAL;
-    lap.set_total_elapsed_time_scaled(lap_seconds as f64);
-    lap.set_total_timer_time_scaled(lap_seconds as f64);
+    lap.set_total_elapsed_time_scaled(duration_seconds);
+    lap.set_total_timer_time_scaled(duration_seconds);
     lap.set_total_distance_scaled(lap_distance);
     lap.avg_heart_rate = avg_hr;
     lap.max_heart_rate = max_hr;
@@ -113,8 +121,8 @@ pub fn render_fit(
     lap.max_cadence = max_cadence;
     lap.avg_power = avg_power;
     lap.max_power = max_power;
-    if lap_seconds > 0 {
-        lap.set_avg_speed_scaled(lap_distance / lap_seconds as f64);
+    if duration_seconds > 0.0 {
+        lap.set_avg_speed_scaled(lap_distance / duration_seconds);
         lap.set_max_speed_scaled(max_speed);
     }
     messages.push(Message::from(lap));
@@ -126,7 +134,7 @@ pub fn render_fit(
             typedef::DateTime::from_unix_timestamp(start_secs + i as i64 * secs_per_sample);
 
         let power = ride.power[i].parse::<f64>().unwrap_or(0.0) * power_fudge;
-        record.power = power.max(0.0) as u16;
+        record.power = power.clamp(0.0, u16::MAX as f64) as u16;
 
         let cadence = ride.rpm[i].parse::<f64>().unwrap_or(0.0);
         record.cadence = cadence.max(0.0) as u8;
@@ -205,8 +213,8 @@ fn summary_from_samples(
 
     let n = ride.count() as f64;
     (
-        if n > 0.0 { (power_sum / n) as u16 } else { 0 },
-        power_max as u16,
+        if n > 0.0 { (power_sum / n).clamp(0.0, u16::MAX as f64) as u16 } else { 0 },
+        power_max.clamp(0.0, u16::MAX as f64) as u16,
         if n > 0.0 { (cad_sum / n) as u8 } else { 0 },
         cad_max as u8,
         if n > 0.0 { (hr_sum / n) as u8 } else { 0 },

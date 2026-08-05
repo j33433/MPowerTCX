@@ -78,8 +78,7 @@ pub fn convert_csv_to_tcx(
     } else if let Some(hint) = converter.date_hint() {
         hint
     } else {
-        chrono::DateTime::from_timestamp(0, 0)
-            .unwrap_or_default().naive_local()
+        chrono::Local::now().naive_local()
     };
 
     let options = ConvertOptions {

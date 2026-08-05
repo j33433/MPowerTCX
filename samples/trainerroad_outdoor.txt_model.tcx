@@ -22,9 +22,9 @@
             <Time>2010-10-19T20:56:35Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -36,9 +36,9 @@
             <Time>2010-10-19T20:57:25Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -50,9 +50,9 @@
             <Time>2010-10-19T20:58:15Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -64,9 +64,9 @@
             <Time>2010-10-19T20:59:05Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -78,9 +78,9 @@
             <Time>2010-10-19T20:59:55Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -92,9 +92,9 @@
             <Time>2010-10-19T21:00:45Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -106,9 +106,9 @@
             <Time>2010-10-19T21:01:35Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -120,9 +120,9 @@
             <Time>2010-10-19T21:02:25Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -134,9 +134,9 @@
             <Time>2010-10-19T21:03:15Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -148,9 +148,9 @@
             <Time>2010-10-19T21:04:05Z</Time>
             <AltitudeMeters>4.0</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -162,9 +162,9 @@
             <Time>2010-10-19T21:04:55Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -176,9 +176,9 @@
             <Time>2010-10-19T21:05:45Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -190,9 +190,9 @@
             <Time>2010-10-19T21:06:35Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -204,9 +204,9 @@
             <Time>2010-10-19T21:07:25Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -218,9 +218,9 @@
             <Time>2010-10-19T21:08:15Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -232,9 +232,9 @@
             <Time>2010-10-19T21:09:05Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -246,9 +246,9 @@
             <Time>2010-10-19T21:09:55Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -260,9 +260,9 @@
             <Time>2010-10-19T21:10:45Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -274,9 +274,9 @@
             <Time>2010-10-19T21:11:35Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>110.0</Value>
+              <Value>110</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -288,9 +288,9 @@
             <Time>2010-10-19T21:12:25Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -302,9 +302,9 @@
             <Time>2010-10-19T21:13:15Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -316,9 +316,9 @@
             <Time>2010-10-19T21:14:05Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -330,9 +330,9 @@
             <Time>2010-10-19T21:14:55Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -344,9 +344,9 @@
             <Time>2010-10-19T21:15:45Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -358,9 +358,9 @@
             <Time>2010-10-19T21:16:35Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -372,9 +372,9 @@
             <Time>2010-10-19T21:17:25Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -386,9 +386,9 @@
             <Time>2010-10-19T21:18:15Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -400,9 +400,9 @@
             <Time>2010-10-19T21:19:05Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -414,9 +414,9 @@
             <Time>2010-10-19T21:19:55Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -428,9 +428,9 @@
             <Time>2010-10-19T21:20:45Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -442,9 +442,9 @@
             <Time>2010-10-19T21:21:35Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -456,9 +456,9 @@
             <Time>2010-10-19T21:22:25Z</Time>
             <AltitudeMeters>4.2</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -470,9 +470,9 @@
             <Time>2010-10-19T21:23:15Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -484,9 +484,9 @@
             <Time>2010-10-19T21:24:05Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -498,9 +498,9 @@
             <Time>2010-10-19T21:24:55Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -512,9 +512,9 @@
             <Time>2010-10-19T21:25:45Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -526,9 +526,9 @@
             <Time>2010-10-19T21:26:35Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -540,9 +540,9 @@
             <Time>2010-10-19T21:27:25Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -554,9 +554,9 @@
             <Time>2010-10-19T21:28:15Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">
@@ -568,9 +568,9 @@
             <Time>2010-10-19T21:29:05Z</Time>
             <AltitudeMeters>4.4</AltitudeMeters>
             <HeartRateBpm>
-              <Value>111.0</Value>
+              <Value>111</Value>
             </HeartRateBpm>
-            <Cadence>0.0</Cadence>
+            <Cadence>0</Cadence>
             <DistanceMeters>0.00000</DistanceMeters>
             <Extensions>
               <TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2">

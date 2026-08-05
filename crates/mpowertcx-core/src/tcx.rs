@@ -82,6 +82,10 @@ pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> S
         let power = ride.power[i].parse::<f64>().unwrap_or(0.0) * power_fudge;
         let watts = power as i64;
         let distance = ride.distance[i].parse::<f64>().unwrap_or(0.0);
+        // TCX schema types HR and Cadence as unsignedByte: emit integers even
+        // when parsers carried float-formatted values (e.g. "86.0").
+        let hr = ride.hr[i].parse::<f64>().unwrap_or(0.0).round() as i64;
+        let cadence = ride.rpm[i].parse::<f64>().unwrap_or(0.0).round() as i64;
 
         out.push_str("          <Trackpoint>\n");
         out.push_str(&format!("            <Time>{}</Time>\n", time_str));
@@ -89,9 +93,9 @@ pub fn render_tcx(ride: &Ride, start_time: NaiveDateTime, power_fudge: f64) -> S
             out.push_str(&format!("            <AltitudeMeters>{}</AltitudeMeters>\n", python_float(altitudes[i])));
         }
         out.push_str("            <HeartRateBpm>\n");
-        out.push_str(&format!("              <Value>{}</Value>\n", ride.hr[i]));
+        out.push_str(&format!("              <Value>{}</Value>\n", hr));
         out.push_str("            </HeartRateBpm>\n");
-        out.push_str(&format!("            <Cadence>{}</Cadence>\n", ride.rpm[i]));
+        out.push_str(&format!("            <Cadence>{}</Cadence>\n", cadence));
         out.push_str(&format!("            <DistanceMeters>{:.5}</DistanceMeters>\n", distance));
         out.push_str("            <Extensions>\n");
         out.push_str("              <TPX xmlns=\"http://www.garmin.com/xmlschemas/ActivityExtension/v2\">\n");

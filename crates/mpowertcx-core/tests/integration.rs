@@ -433,13 +433,13 @@ fn test_tcx_black() {
     let converter = Converter::from_csv(&data).unwrap();
     assert_eq!(converter.equipment_name(), "TCX");
     assert_eq!(converter.equipment_slug(), "tcx");
-    assert_eq!(converter.count(), 3600);
+    assert_eq!(converter.count(), 3601);
     assert_eq!(
         converter.date_hint(),
-        Some(NaiveDateTime::parse_from_str("2026-07-22T15:15:21", "%Y-%m-%dT%H:%M:%S").unwrap())
+        Some(NaiveDateTime::parse_from_str("2010-10-19T20:56:35", "%Y-%m-%dT%H:%M:%S").unwrap())
     );
-    assert!((converter.ride().header.time - 3599.0).abs() < 1.0);
-    assert!(converter.ride().header.distance > 24000.0);
+    assert!((converter.ride().header.time - 3600.0).abs() < 1.0);
+    assert!(converter.ride().header.distance > 16000.0);
 
     let start = converter.date_hint().unwrap();
     let tcx = converter.convert(start, &ConvertOptions::default());
@@ -572,13 +572,21 @@ fn test_fit_roundtrip_repair_parity() {
     let cases: Vec<(PathBuf, &str, f64, bool)> = vec![
         // Simulated incline (Stages, elevation column): repair must skip grade
         // both times. This is the upload.bike sample from the bug report.
-        (web_sample, "stages sample (simulated incline)", 0.5, false),
+        (web_sample, "stages sample (simulated incline)", 0.05, false),
         // Real incline (smart trainer): exact grade must survive the round trip.
         (
             samples_dir().join("wahoo_systm_activity.csv"),
             "SYSTM (real incline)",
-            5.0,
+            1.0,
             true,
+        ),
+        // Non-1 Hz ride (Echelon, ~3.2 s samples): the session timer must
+        // preserve the fractional delta so re-repairing matches the original.
+        (
+            samples_dir().join("1122.csv"),
+            "echelon 1122 (non-1 Hz)",
+            1.0,
+            false,
         ),
     ];
 

@@ -203,6 +203,10 @@ CRC-16) using the same underlying ride data as the TCX path:
   spaced `max(delta, 1)` seconds from the start time. FIT stores UTC epochs
   and the source times carry no timezone, so local time is treated as UTC
   (the same ambiguity the TCX output has).
+- Session/lap `total_elapsed_time` / `total_timer_time` carry the source
+  header duration (the exact `header.time`, 0.001 s resolution) while record
+  timestamps stay integer-spaced, so a re-import recovers the original sample
+  delta exactly (`header.time / count`) even for non-1 Hz rides.
 - The same options apply: `--interpolate` and `--model <MASS_KG>` shape the
   records exactly as they shape TCX trackpoints.
 
