@@ -65,7 +65,7 @@ small { font-size: 80%; }
 /* ==================== Converter redesign ==================== */
 
 .hero { text-align: center; margin: 1.5rem 0 1.25rem; }
-.hero-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
+.hero-title { font-size: clamp(2rem, 4.2vw, 2.6rem); font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
 .hero-sub { color: var(--pico-muted-color); font-size: 1.125rem; margin: 0 auto; max-width: 44rem; }
 
 /* Privacy pill */
