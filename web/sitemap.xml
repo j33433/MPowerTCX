@@ -12,4 +12,12 @@
     <loc>https://upload.bike/download.html</loc>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://upload.bike/privacy.html</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://upload.bike/terms.html</loc>
+    <priority>0.3</priority>
+  </url>
 </urlset>

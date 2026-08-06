@@ -176,7 +176,19 @@ small { font-size: 80%; }
 }
 .sample-link { margin: -0.25rem 0 1.5rem; }
 .sample-link a { font-weight: 600; }
-.footer-support { margin-top: 1.25rem; }
+.site-footer {
+  margin-top: 0;
+  padding: 0 0 0.5rem;
+}
+.site-footer p { margin-bottom: 0; }
+.site-footer .copyright { margin: 0.5rem 0 0; font-size: 0.75rem; opacity: 0.6; }
+
+.bmc-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 1.3rem; border-radius: 8px; font-weight: 700;
+  background: var(--pico-primary); color: var(--pico-primary-inverse);
+  text-decoration: none;
+}
 
 /* Content pages (About, Download) */
 .page-hero { margin: 1.5rem 0 2rem; }
