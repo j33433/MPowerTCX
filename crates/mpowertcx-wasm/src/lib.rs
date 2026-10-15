@@ -79,7 +79,7 @@ pub fn convert_csv_to_tcx(
         hint
     } else {
         // Date-less exports such as Echelon V2 have no reliable calendar date.
-        chrono::Local::now().naive_local()
+        chrono::Utc::now().naive_utc()
     };
 
     let options = ConvertOptions {
@@ -136,7 +136,7 @@ mod tests {
 
     #[test]
     fn date_less_input_uses_current_time_fallback() {
-        let before = chrono::Local::now().naive_local().and_utc().timestamp();
+        let before = chrono::Utc::now().timestamp();
         let result = match convert_csv_to_tcx(
             include_bytes!("../../../samples/1122.csv"),
             None,
@@ -148,7 +148,7 @@ mod tests {
             Ok(result) => result,
             Err(_) => panic!("conversion failed"),
         };
-        let after = chrono::Local::now().naive_local().and_utc().timestamp();
+        let after = chrono::Utc::now().timestamp();
 
         let id = result
             .tcx
