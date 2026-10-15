@@ -78,6 +78,7 @@ pub fn convert_csv_to_tcx(
     } else if let Some(hint) = converter.date_hint() {
         hint
     } else {
+        // Date-less exports such as Echelon V2 have no reliable calendar date.
         chrono::Local::now().naive_local()
     };
 
@@ -127,4 +128,41 @@ fn parse_time(s: &str) -> Result<chrono::NaiveDateTime, JsValue> {
         }
     }
     Err(JsValue::from_str(&format!("could not parse time: {}", s)))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn date_less_input_uses_current_time_fallback() {
+        let before = chrono::Local::now().naive_local().and_utc().timestamp();
+        let result = match convert_csv_to_tcx(
+            include_bytes!("../../../samples/1122.csv"),
+            None,
+            false,
+            false,
+            0.0,
+            0.0,
+        ) {
+            Ok(result) => result,
+            Err(_) => panic!("conversion failed"),
+        };
+        let after = chrono::Local::now().naive_local().and_utc().timestamp();
+
+        let id = result
+            .tcx
+            .lines()
+            .find_map(|line| line.trim().strip_prefix("<Id>")?.strip_suffix("</Id>"))
+            .expect("TCX activity id");
+        let timestamp = chrono::NaiveDateTime::parse_from_str(id, "%Y-%m-%dT%H:%M:%SZ")
+            .expect("activity id timestamp")
+            .and_utc()
+            .timestamp();
+
+        assert!(
+            (before - 1..=after + 1).contains(&timestamp),
+            "expected current timestamp, got {id}"
+        );
+    }
 }

@@ -243,6 +243,25 @@ fn test_equipment_slugs() {
 }
 
 #[test]
+fn test_echelon_v2_has_no_date_hint() {
+    let path = samples_dir().join("1122.csv");
+    let data = fs::read(path).unwrap();
+    let converter = Converter::from_csv(&data).unwrap();
+
+    assert_eq!(converter.equipment_name(), "Echelon Variant 2");
+    assert_eq!(converter.date_hint(), None);
+
+    let start = NaiveDateTime::parse_from_str(
+        "2025-03-12T08:30:00",
+        "%Y-%m-%dT%H:%M:%S",
+    )
+    .unwrap();
+    let tcx = converter.convert(start, &ConvertOptions::default());
+    assert!(tcx.contains("<Id>2025-03-12T08:30:00Z</Id>"));
+    assert!(tcx.contains("<Time>2025-03-12T08:30:00Z</Time>"));
+}
+
+#[test]
 fn test_plain_conversions_exact() {
     let dir = samples_dir();
     let mut tested = 0;
