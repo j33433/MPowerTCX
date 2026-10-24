@@ -39,6 +39,10 @@ cargo build --release
 
 ## Tests
 
+After code or dependency changes, run the Rust tests and all sample suites below.
+The FIT sample suite checks encode/decode round-trip values rather than
+byte-for-byte output.
+
 ```
 cargo test -p mpowertcx-core
 bash tests/test_samples.sh

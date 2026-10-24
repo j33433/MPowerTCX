@@ -1,18 +1,12 @@
 #!/bin/bash
-# Test FIT output against byte-exact golden files in samples/.
-# Goldens: samples/<source>.fit (plain) and samples/<source>_interp.fit (1 Hz).
-# Byte-exactness holds because FIT output is deterministic given the same
-# source, start time, and encoder version.
+# Encode each sample as FIT, re-import it, then compare with direct TCX output.
 TEST_TIME="2010-10-19T20:56:35.450686"
 PASS=0
 FAIL=0
-SKIP=0
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-# Source files with committed .fit goldens. FIT/TCX inputs keep their own
-# embedded timestamps; the rest use TEST_TIME.
 SOURCES=(
     "1122.csv"
     "1122.csv.tcx"
@@ -25,67 +19,59 @@ SOURCES=(
     "wahoo_systm_activity.csv"
 )
 
+run_roundtrip() {
+    local src_rel="$1"
+    shift
+
+    local src="$ROOT_DIR/samples/$src_rel"
+    echo "$0: $src_rel"
+
+    if [ ! -f "$src" ]; then
+        echo "FAIL  $src_rel (source file not found)"
+        FAIL=$((FAIL + 1))
+        return
+    fi
+
+    local reference fit_output roundtrip result
+    reference=$(mktemp --suffix=.tcx)
+    fit_output=$(mktemp --suffix=.fit)
+    roundtrip=$(mktemp --suffix=.tcx)
+
+    if ! cargo run --quiet -- --csv "$src" --tcx "$reference" --fit "$fit_output" --time "$TEST_TIME" "$@" 2>/dev/null; then
+        rm -f "$reference" "$fit_output" "$roundtrip"
+        echo "FAIL  $src_rel (source conversion error)"
+        FAIL=$((FAIL + 1))
+        return
+    fi
+
+    if ! cargo run --quiet -- --csv "$fit_output" --tcx "$roundtrip" --time "$TEST_TIME" 2>/dev/null; then
+        rm -f "$reference" "$fit_output" "$roundtrip"
+        echo "FAIL  $src_rel (FIT re-import error)"
+        FAIL=$((FAIL + 1))
+        return
+    fi
+
+    result=$(python3 "$SCRIPT_DIR/compare_fit_roundtrip.py" "$roundtrip" "$reference")
+    if [ $? -eq 0 ]; then
+        echo "PASS  $src_rel ($result)"
+        PASS=$((PASS + 1))
+    else
+        echo "FAIL  $src_rel ($result)"
+        FAIL=$((FAIL + 1))
+    fi
+
+    rm -f "$reference" "$fit_output" "$roundtrip"
+}
+
 for src_rel in "${SOURCES[@]}"; do
-    src="$ROOT_DIR/samples/$src_rel"
-    name=$(basename "$src")
-    echo "$0: $name"
-
-    expected="$ROOT_DIR/samples/${name}.fit"
-
-    if [ ! -f "$expected" ]; then
-        echo "SKIP  $name (no expected ${name}.fit)"
-        SKIP=$((SKIP + 1))
-        continue
-    fi
-
-    output=$(mktemp --suffix=.fit)
-    cargo run --quiet -- --csv "$src" --fit "$output" --time "$TEST_TIME" 2>/dev/null
-    rc=$?
-
-    if [ $rc -ne 0 ]; then
-        rm -f "$output"
-        echo "FAIL  $name (conversion error)"
-        FAIL=$((FAIL + 1))
-        continue
-    fi
-
-    if diff -q "$output" "$expected" > /dev/null 2>&1; then
-        echo "PASS  $name"
-        PASS=$((PASS + 1))
-    else
-        echo "FAIL  $name"
-        FAIL=$((FAIL + 1))
-    fi
-    rm -f "$output"
+    run_roundtrip "$src_rel"
 done
 
-for src_base in "1122.csv"; do
-    name="${src_base}_interp.fit"
-    echo "$0: $name"
-
-    src="$ROOT_DIR/samples/$src_base"
-    expected="$ROOT_DIR/samples/$name"
-
-    output=$(mktemp --suffix=.fit)
-    cargo run --quiet -- --csv "$src" --fit "$output" --time "$TEST_TIME" --interpolate 2>/dev/null
-    rc=$?
-
-    if [ $rc -ne 0 ]; then
-        rm -f "$output"
-        echo "FAIL  $name (conversion error)"
-        FAIL=$((FAIL + 1))
-        continue
-    fi
-
-    if diff -q "$output" "$expected" > /dev/null 2>&1; then
-        echo "PASS  $name"
-        PASS=$((PASS + 1))
-    else
-        echo "FAIL  $name"
-        FAIL=$((FAIL + 1))
-    fi
-    rm -f "$output"
-done
+run_roundtrip "1122.csv" --interpolate
 
 echo ""
-echo "Results: $PASS passed, $FAIL failed, $SKIP skipped"
+echo "Results: $PASS passed, $FAIL failed"
+
+if [ "$FAIL" -gt 0 ]; then
+    exit 1
+fi

@@ -262,9 +262,9 @@ checksum = "b39cdef0fa800fc44525c84ccb54a029961a8215f9619753635a9c0d2538d46d"
 
 [[package]]
 name = "rustyfit"
-version = "0.10.2"
+version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f100a37f0672f038671fdd8d983a03d6e5223ee5850dcea7477413798cc69bfc"
+checksum = "9aaf392868350de80411fd4cc3ae213b06798bf077f428df52c530a84cdd9ffb"
 dependencies = [
  "embedded-io",
 ]

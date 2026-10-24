@@ -22,7 +22,7 @@ CSV / FIT / TCX bytes
 | [`crates/mpowertcx-wasm/`](../crates/mpowertcx-wasm/) | `wasm-bindgen` bindings for the web UI |
 | [`web/`](../web/) | Static site (converter, docs, offline zip) |
 | [`samples/`](../samples/) | Fixture CSVs + expected TCX (plain / `_interp` / `_model`) |
-| [`tests/`](../tests/) | Shell + Python golden-file comparison |
+| [`tests/`](../tests/) | Shell + Python sample comparisons and FIT round-trip checks |
 | [`scripts/`](../scripts/) | Offline build, release helpers |
 | [`.github/workflows/`](../.github/workflows/) | CI (offline zip / releases) |
 
@@ -147,7 +147,7 @@ Golden fixtures: `*.csv` inputs and expected TCX for three modes:
 | `.tcx` | Plain conversion |
 | `_interp.tcx` | 1-second interpolation |
 | `_model.tcx` | Physics speed/distance model |
-| `.fit` / `_interp.fit` | FIT output (byte-exact, plain / interpolated) |
+| `.fit` / `_interp.fit` | FIT output fixtures; checked by semantic round-trip tests |
 
 Covers Echelon, Stages, Sufferfest, SYSTM, edge cases (nulls, missing headers, empty).
 
@@ -159,8 +159,9 @@ Covers Echelon, Stages, Sufferfest, SYSTM, edge cases (nulls, missing headers, e
 |------|---------|
 | [`test_samples.sh`](../tests/test_samples.sh) | Byte-exact plain conversion vs samples |
 | [`test_samples_advanced.sh`](../tests/test_samples_advanced.sh) | Model / advanced comparison |
-| [`test_samples_fit.sh`](../tests/test_samples_fit.sh) | Byte-exact FIT output vs samples |
+| [`test_samples_fit.sh`](../tests/test_samples_fit.sh) | FIT encode/decode round-trip vs direct TCX output |
 | [`compare_tcx.py`](../tests/compare_tcx.py) | TCX comparison helper |
+| [`compare_fit_roundtrip.py`](../tests/compare_fit_roundtrip.py) | Semantic comparison for FIT round-trips |
 
 Also: `cargo test -p mpowertcx-core`
 
