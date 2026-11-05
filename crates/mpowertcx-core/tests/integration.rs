@@ -114,6 +114,7 @@ fn run_conversion(csv_path: &str, interpolate: bool, physics: bool) -> String {
         interpolate,
         physics,
         physics_mass_kg: if physics { 70.0 } else { 0.0 },
+        remove_elevation: false,
         power_adjust_percent: 0.0,
     };
 
@@ -523,6 +524,7 @@ fn test_fit_output_roundtrip() {
         interpolate: true,
         physics: false,
         physics_mass_kg: 0.0,
+        remove_elevation: false,
         power_adjust_percent: 0.0,
     };
 
@@ -584,6 +586,61 @@ fn tcx_track_distances(tcx: &str) -> Vec<f64> {
         .collect()
 }
 
+#[test]
+fn test_remove_elevation_for_repair() {
+    let cases = [
+        samples_dir().join("MyNewActivity-5.8.1.fit"),
+        samples_dir().join("wahoo_systm_activity.csv"),
+        samples_dir().parent().unwrap().join("web/samples/sample.csv"),
+    ];
+    let start = NaiveDateTime::parse_from_str("2010-10-19T20:56:35", "%Y-%m-%dT%H:%M:%S").unwrap();
+    for path in cases {
+        let converter = Converter::from_csv(&fs::read(&path).unwrap()).unwrap();
+        assert!(!converter.ride().incline.is_empty(), "{}", path.display());
+        for interpolate in [false, true] {
+            let options = ConvertOptions {
+                interpolate,
+                physics: true,
+                physics_mass_kg: 70.0,
+                remove_elevation: true,
+                ..ConvertOptions::default()
+            };
+            let tcx = converter.convert(start, &options);
+            assert!(!tcx.contains("<AltitudeMeters>"), "{}", path.display());
+
+            let source = converter.ride();
+            let mut flat = mpowertcx_core::Ride {
+                power: source.power.clone(),
+                rpm: source.rpm.clone(),
+                hr: source.hr.clone(),
+                distance: source.distance.clone(),
+                incline: Vec::new(),
+                altitude: Vec::new(),
+                header: mpowertcx_core::RideHeader::new(),
+            };
+            flat.header.time = source.header.time;
+            flat.header.time_str = source.header.time_str.clone();
+            if interpolate { flat.interpolate(); }
+            flat.model_distance(70.0, true);
+            let actual = tcx_track_distances(&tcx);
+            assert_eq!(actual.len(), flat.distance.len());
+            for (actual, expected) in actual.iter().zip(&flat.distance) {
+                assert!((actual - expected.parse::<f64>().unwrap()).abs() < 0.00001);
+            }
+
+            let fit = converter.convert_fit(start, &options);
+            let decoded = rustyfit::Decoder::new().decode(&mut fit.as_slice()).unwrap().unwrap();
+            for message in decoded.messages.iter().filter(|m| m.num == rustyfit::profile::typedef::MesgNum::RECORD) {
+                let record = rustyfit::profile::mesgdef::Record::from(message);
+                assert_eq!(record.grade, i16::MAX);
+                assert_eq!(record.altitude, u16::MAX);
+                assert_eq!(record.enhanced_altitude, u32::MAX);
+            }
+        }
+        assert!(converter.convert(start, &ConvertOptions::default()).contains("<AltitudeMeters>"));
+    }
+}
+
 /// Applying the physics model to a FIT round trip must reproduce the repair on
 /// the original file. Before this fix, grade-derived altitude was written into
 /// the FIT at 0.5 m resolution; re-parsing it produced noisy "real" incline,
@@ -621,6 +678,7 @@ fn test_fit_roundtrip_repair_parity() {
             interpolate: false,
             physics: true,
             physics_mass_kg: 70.0,
+            remove_elevation: false,
             power_adjust_percent: 0.0,
         };
 

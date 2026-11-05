@@ -9,6 +9,7 @@ pub struct ConvertOptions {
     pub interpolate: bool,
     pub physics: bool,
     pub physics_mass_kg: f64,
+    pub remove_elevation: bool,
     pub power_adjust_percent: f64,
 }
 
@@ -18,6 +19,7 @@ impl Default for ConvertOptions {
             interpolate: false,
             physics: false,
             physics_mass_kg: 0.0,
+            remove_elevation: false,
             power_adjust_percent: 0.0,
         }
     }
@@ -212,6 +214,11 @@ impl Converter {
         ride.header.distance = self.ride.header.distance;
         ride.header.average_hr = self.ride.header.average_hr.clone();
         ride.header.max_hr = self.ride.header.max_hr.clone();
+
+        if options.remove_elevation {
+            ride.altitude.clear();
+            ride.incline.clear();
+        }
 
         if options.interpolate {
             ride.interpolate();

@@ -139,6 +139,7 @@ fn main() {
         interpolate,
         physics: model.is_some(),
         physics_mass_kg: model.unwrap_or(0.0),
+        remove_elevation: false,
         power_adjust_percent: 0.0,
     };
 

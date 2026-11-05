@@ -4,6 +4,11 @@ The physics model recalculates speed and distance from power output using a
 simplified bike model. It is enabled with `--model <MASS_KG>` in the CLI or the
 "Repair speed and distance" checkbox in the web UI.
 
+The web UI also offers "Remove elevation" when repairing speed and distance.
+This removes altitude and grade from TCX and FIT downloads and runs the model
+on flat terrain. The option is off by default and only applies while the repair
+is enabled.
+
 ## Model
 
 `SimpleBike` in `crates/mpowertcx-core/src/physics.rs` iterates through each

@@ -69,6 +69,7 @@ pub fn convert_csv_to_tcx(
     physics: bool,
     mass_kg: f64,
     power_adjust_percent: f64,
+    remove_elevation: bool,
 ) -> Result<ConvertResult, JsValue> {
     let converter = Converter::from_csv(csv_bytes)
         .map_err(|e| JsValue::from_str(&e))?;
@@ -86,6 +87,7 @@ pub fn convert_csv_to_tcx(
         interpolate,
         physics,
         physics_mass_kg: mass_kg,
+        remove_elevation,
         power_adjust_percent,
     };
 
@@ -144,6 +146,7 @@ mod tests {
             false,
             0.0,
             0.0,
+            false,
         ) {
             Ok(result) => result,
             Err(_) => panic!("conversion failed"),

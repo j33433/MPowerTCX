@@ -119,6 +119,13 @@
                 <small class="muted">Uses a physics model based on rider weight</small>
               </span>
             </label>
+            <label class="check-row" x-show="physics" x-cloak>
+              <input type="checkbox" id="checkRemoveElevation" x-model="removeElevation" @change="onFormChange()">
+              <span>
+                <span class="check-label"><strong>Remove elevation</strong></span>
+                <small class="muted">Uses flat terrain and removes elevation from downloads</small>
+              </span>
+            </label>
           </div>
 
           <div class="card">
@@ -186,6 +193,10 @@
               <label class="check-row compact">
                 <input type="checkbox" x-model="physics" @change="onFormChange()">
                 <span><strong>Repair speed/distance</strong></span>
+              </label>
+              <label class="check-row compact" x-show="physics" x-cloak>
+                <input type="checkbox" x-model="removeElevation" @change="onFormChange()">
+                <span><strong>Remove elevation</strong></span>
               </label>
               <p class="card-sub" style="margin-top:0.75rem;">Rider + bike weight</p>
               <div class="weight-row">
@@ -290,6 +301,7 @@
         wasmReady: false,
         interpolate: localStorage.getItem('checkInterpolate') !== 'false',
         physics: localStorage.getItem('checkPhysics') === 'true',
+        removeElevation: localStorage.getItem('checkRemoveElevation') === 'true',
         mass: initialMass,
         massUnits: initialUnits,
         _prevMassUnits: initialUnits,
@@ -372,6 +384,7 @@
           }
           localStorage.setItem('checkInterpolate', this.interpolate);
           localStorage.setItem('checkPhysics', this.physics);
+          localStorage.setItem('checkRemoveElevation', this.removeElevation);
           localStorage.setItem('mass', this.mass);
           localStorage.setItem('massUnits', this.massUnits);
           this.runConversion();
@@ -383,7 +396,7 @@
           if (this.massUnits === 'lbs') mass *= KG_PER_LB;
           try {
             // File metadata can contain a console default date, not the workout date.
-            const result = convert(fileBytes, null, this.interpolate, this.physics, mass, 0);
+            const result = convert(fileBytes, null, this.interpolate, this.physics, mass, 0, this.physics && this.removeElevation);
             if (result.sample_count === 0) {
               this.showError('No data was parsed from this file.', result.debug || '');
               return;
